@@ -1,6 +1,3 @@
-/**
- *
- */
 package cz.cvut.fel.schematicEditor.application;
 
 import java.awt.FlowLayout;
@@ -11,9 +8,14 @@ import javax.swing.JSeparator;
 import javax.swing.border.BevelBorder;
 
 /**
- * @author Urban Kravjansky
+ * This class represents status bar GUI elements.
+ *
+ * @author Urban Kravjanský
  */
 public class StatusBar extends JPanel {
+    /**
+     * Status bar singleton instance used for status bar representation.
+     */
     private static StatusBar statusBar         = null;
     /**
      * JLabel for showing coordinates.
