@@ -7,8 +7,8 @@
 	<name>Schematic Editor</name>
 	<packaging>pom</packaging>
 	<modules>
-		<module>../Launchers</module>
-		<module>../VectorEditorEngine</module>
-		<module>../Units</module>
+		<module>Launchers</module>
+		<module>VectorEditorEngine</module>
+		<module>Units</module>
 	</modules>
 </project>
