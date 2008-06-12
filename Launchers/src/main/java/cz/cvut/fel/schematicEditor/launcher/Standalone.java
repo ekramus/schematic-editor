@@ -1,23 +1,24 @@
 package cz.cvut.fel.schematicEditor.launcher;
 
-import javax.swing.SwingUtilities;
-
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.Structures;
 
 /**
- * @author uk
+ * This method implements stand alone launcher. It is used for stand alone launching of
+ * <em>SchematicEditor</em> application.
+ *
+ * @author Urban Kravjanský
  */
 public class Standalone {
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
-        // SwingUtilities.invokeLater(new Runnable() {
-        // public void run() {
-        Gui gui = new Gui();
+        new Gui();
 
         Launcher.loadProperties();
+        Launcher.setUI();
 
         Structures.getGui().getJFrame().setVisible(true);
-        // }
-        // });
     }
 }
