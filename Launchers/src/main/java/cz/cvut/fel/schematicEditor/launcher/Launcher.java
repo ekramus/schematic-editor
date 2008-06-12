@@ -18,22 +18,25 @@ import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 
 /**
- * @author uk
+ * This class implements methods used in all {@link Launcher} classes. This methods are mainly used
+ * for configuration.
+ *
+ * @author Urban Kravjanský
  */
 public abstract class Launcher {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
     static Logger logger;
 
+    /**
+     * Method used for properties loading. It loads global properties file and log4j properties
+     * file.
+     */
     static final void loadProperties() {
         // load properties
         Structures.setProperties(new Properties());
         FileInputStream fis;
-
-        // switch to metal look and feel so there is posibility of button with background.
-        try {
-            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
-        } catch (Exception e) {
-            logger.debug(e.getMessage());
-        }
 
         try {
             fis = new FileInputStream(Constants.GLOBAL_PROPERTIES);
@@ -53,5 +56,16 @@ public abstract class Launcher {
         DOMConfigurator.configure("log4j.xml");
         logger = Logger.getLogger(Gui.class.getName());
         logger.info("Application started.");
+    }
+
+    /**
+     * Set user interface to preferred one (in this case PlasticXP).
+     */
+    static final void setUI() {
+        try {
+            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+        }
     }
 }
