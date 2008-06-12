@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cz.cvut.fel.schematicEditor</groupId>
+	<artifactId>SchematicEditor</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>Schematic Editor</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>../Launchers</module>
+		<module>../VectorEditorEngine</module>
+		<module>../Units</module>
+	</modules>
+</project>
