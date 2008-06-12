@@ -1,0 +1,17 @@
+syntax: glob
+
+# skip Mac OS X files
+.DS_Store
+
+# skip Eclipse workspace files
+.metadata
+
+# skip Eclipse project files
+.classpath
+.project
+.settings
+
+# skip project build files
+*.class
+*.log
+target
