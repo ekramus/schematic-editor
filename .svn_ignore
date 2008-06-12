@@ -1,0 +1,8 @@
+.hg
+.classpath
+.project
+.settings
+.metadata
+*.log
+*.class
+target
