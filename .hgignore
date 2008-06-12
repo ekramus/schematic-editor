@@ -3,6 +3,9 @@ syntax: glob
 # skip Mac OS X files
 .DS_Store
 
+# skip subversion files
+.svn
+
 # skip Eclipse workspace files
 .metadata
 
