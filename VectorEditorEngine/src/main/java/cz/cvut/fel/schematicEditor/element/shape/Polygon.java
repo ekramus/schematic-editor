@@ -6,12 +6,13 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * This class represents polygon element.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class Polygon extends Polyline {
@@ -36,7 +37,7 @@ public class Polygon extends Polyline {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
@@ -54,5 +55,16 @@ public class Polygon extends Polyline {
             return true;
         }
         return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Polygon p = new Polygon();
+        return p;
     }
 }

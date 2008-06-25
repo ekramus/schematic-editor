@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.element.shape;
 
 import java.awt.geom.Point2D;
 
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
@@ -35,6 +36,13 @@ public class Triangle extends Polygon {
     }
 
     /**
+     * 
+     */
+    public Triangle() {
+        // TODO Auto-generated constructor stub
+    }
+    
+    /**
      * @see java.lang.Object#toString()
      */
     @Override
@@ -59,5 +67,14 @@ public class Triangle extends Polygon {
     public int getNumberOfCoordinates() {
         // TODO Auto-generated method stub
         return 3;
+    }
+    
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Triangle t = new Triangle();
+        return t;
     }
 }

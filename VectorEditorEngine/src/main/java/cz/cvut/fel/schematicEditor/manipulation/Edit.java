@@ -1,5 +1,5 @@
 /**
- *
+ * 
  */
 package cz.cvut.fel.schematicEditor.manipulation;
 
@@ -13,7 +13,7 @@ public class Edit extends Manipulation {
     private GroupNode manipulatedGroup;
 
     /**
-     *
+     * 
      */
     public Edit() {
         super(null);
@@ -50,12 +50,23 @@ public class Edit extends Manipulation {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
     public boolean isManipulatingGroups() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.Manipulation)
+     */
+    @Override
+    public Manipulation newInstance(Manipulation manipulation) {
+        Edit e = new Edit();
+        return e;
     }
 }

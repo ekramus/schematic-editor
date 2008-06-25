@@ -41,4 +41,13 @@ public class Wire extends Element {
     public int getNumberOfCoordinates() {
         return 2;
     }
+    
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Wire w = new Wire();
+        return w;
+    }
 }

@@ -103,4 +103,13 @@ public class Polyline extends Shape {
         // TODO Auto-generated method stub
         return Element.INFINITE_COORDINATES;
     }
+
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Polyline p = new Polyline();
+        return p;
+    }
 }

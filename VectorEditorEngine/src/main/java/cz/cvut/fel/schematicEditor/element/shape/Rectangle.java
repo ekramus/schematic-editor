@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.Vector;
 
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -133,5 +134,14 @@ public class Rectangle extends Polygon {
     @Override
     public int getNumberOfCoordinates() {
         return 2;
+    }
+    
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Rectangle r = new Rectangle();
+        return r;
     }
 }

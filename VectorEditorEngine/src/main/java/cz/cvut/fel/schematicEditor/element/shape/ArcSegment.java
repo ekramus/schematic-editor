@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.Support;
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
@@ -62,5 +63,14 @@ public class ArcSegment extends Arc {
     public int getNumberOfCoordinates() {
         // TODO Auto-generated method stub
         return 4;
+    }
+    
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.shape.Ellipse#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        ArcSegment as = new ArcSegment();
+        return as;
     }
 }

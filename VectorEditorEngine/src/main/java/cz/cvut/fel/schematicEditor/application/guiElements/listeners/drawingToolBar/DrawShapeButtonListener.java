@@ -2,11 +2,9 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToo
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 
@@ -45,21 +43,13 @@ public class DrawShapeButtonListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            Structures.setManipulation(new Create(Element.newInstance(getShape().getClass())));
+            Structures.setManipulation(new Create(getShape().newInstance()));
             Structures.getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
             PropertiesToolBar.refresh();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }

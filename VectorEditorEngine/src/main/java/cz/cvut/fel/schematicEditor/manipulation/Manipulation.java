@@ -46,6 +46,14 @@ public abstract class Manipulation {
         this.y = new Vector<Unit>();
     }
 
+    /**
+     * Creates new instance of {@link Manipulation}.
+     * 
+     * @param manipulation
+     * @return
+     */
+    public abstract Manipulation newInstance(Manipulation manipulation);
+    
     public abstract boolean isManipulatingElements();
 
     /**
@@ -116,17 +124,4 @@ public abstract class Manipulation {
     public abstract ManipulationType getManipulationType();
 
     public abstract boolean isManipulatingGroups();
-
-    public static <T> T newInstance(Class<T> clazz) throws IllegalArgumentException,
-            SecurityException, InstantiationException, IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
-        return newInstance(clazz, new Class[0], new Object[0]);
-    }
-
-    public static <T> T newInstance(Class<T> clazz, Class<?>[] paramClazzes, Object[] params)
-            throws IllegalArgumentException, SecurityException, InstantiationException,
-            IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return clazz.getConstructor(paramClazzes).newInstance(params);
-    }
-
 }

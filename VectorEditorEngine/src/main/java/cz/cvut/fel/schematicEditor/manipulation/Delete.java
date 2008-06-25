@@ -44,4 +44,13 @@ public class Delete extends Manipulation {
         // TODO Auto-generated method stub
         return false;
     }
+
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.Manipulation)
+     */
+    @Override
+    public Manipulation newInstance(Manipulation manipulation) {
+        Delete d = new Delete();
+        return d;
+    }
 }
