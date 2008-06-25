@@ -1,6 +1,3 @@
-/**
- * 
- */
 package cz.cvut.fel.schematicEditor.manipulation;
 
 import cz.cvut.fel.schematicEditor.core.Structures;
@@ -9,7 +6,10 @@ import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
- * @author uk
+ * This class represents create {@link Manipulation}. It is created, when user presses any button for new shape
+ * creation.
+ * 
+ * @author Urban Kravjanský
  */
 public class Create extends Manipulation {
     // TODO rewrite as enum
@@ -146,5 +146,14 @@ public class Create extends Manipulation {
      */
     public final void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.Manipulation)
+     */
+    @Override
+    public Manipulation newInstance(Manipulation manipulation) {
+        Create c = new Create(manipulation.getManipulatedElement().newInstance());
+        return c;
     }
 }

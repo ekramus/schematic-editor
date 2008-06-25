@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -102,5 +103,14 @@ public class BezierCurve extends Shape {
     public int getNumberOfCoordinates() {
         // TODO Auto-generated method stub
         return 4;
+    }
+
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        BezierCurve bc = new BezierCurve();
+        return bc;
     }
 }

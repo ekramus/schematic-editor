@@ -16,5 +16,5 @@ syntax: glob
 
 # skip project build files
 *.class
-*.log
+*.log*
 target

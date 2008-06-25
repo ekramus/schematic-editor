@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.element.shape;
 
 import java.awt.geom.Point2D;
 
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
@@ -64,5 +65,14 @@ public class Line extends Polyline {
     @Override
     public int getNumberOfCoordinates() {
         return 2;
+    }
+    
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Line l = new Line();
+        return l;
     }
 }

@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Font;
 
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -48,6 +49,13 @@ public class Text extends Shape {
         setStyle(style);
     }
 
+    /**
+     * 
+     */
+    public Text() {
+        // TODO Auto-generated constructor stub
+    }
+    
     public void setText(String textValue) {
         this.textValue = textValue;
     }
@@ -107,5 +115,14 @@ public class Text extends Shape {
     @Override
     public int getNumberOfCoordinates() {
         return 2;
+    }
+
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Text t = new Text();
+        return t;
     }
 }

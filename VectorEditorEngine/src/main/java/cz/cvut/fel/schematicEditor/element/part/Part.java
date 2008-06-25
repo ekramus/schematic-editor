@@ -40,4 +40,13 @@ public class Part extends Element {
         // TODO Auto-generated method stub
         return Element.INFINITE_COORDINATES;
     }
+    
+    /* (non-Javadoc)
+     * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
+     */
+    @Override
+    public Element newInstance() {
+        Part p = new Part();
+        return p;
+    }
 }

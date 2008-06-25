@@ -113,18 +113,6 @@ public abstract class Element {
      */
     public abstract int getNumberOfCoordinates();
 
-    public static <T> T newInstance(Class<T> clazz) throws IllegalArgumentException,
-            SecurityException, InstantiationException, IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
-        return newInstance(clazz, new Class[0], new Object[0]);
-    }
-
-    public static <T> T newInstance(Class<T> clazz, Class<?>[] paramClazzes, Object[] params)
-            throws IllegalArgumentException, SecurityException, InstantiationException,
-            IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return clazz.getConstructor(paramClazzes).newInstance(params);
-    }
-
     /**
      * @return the elementModificator
      */
@@ -139,4 +127,6 @@ public abstract class Element {
     public void setElementModificator(ElementModificator elementModificator) {
         this.elementModificator = elementModificator;
     }
+    
+    public abstract Element newInstance();
 }
