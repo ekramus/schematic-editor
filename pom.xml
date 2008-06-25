@@ -10,5 +10,8 @@
 		<module>Launchers</module>
 		<module>VectorEditorEngine</module>
 		<module>Units</module>
+<!--
+		<module>Exports</module>
+-->
 	</modules>
 </project>
