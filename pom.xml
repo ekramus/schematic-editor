@@ -11,5 +11,6 @@
 		<module>VectorEditorEngine</module>
 		<module>Units</module>
 		<module>Elements</module>
+		<module>Support</module>
 	</modules>
 </project>

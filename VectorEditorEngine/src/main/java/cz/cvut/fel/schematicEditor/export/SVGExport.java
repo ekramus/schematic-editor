@@ -9,10 +9,10 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.types.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.shape.Ellipse;

@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.types;
+package cz.cvut.fel.schematicEditor.element;
 
 /**
  * @author uk

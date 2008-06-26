@@ -2,9 +2,9 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cz.cvut.fel.schematicEditor</groupId>
-	<artifactId>Elements</artifactId>
+	<artifactId>Support</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>Schematic editor - Elements module</name>
+	<name>Schematic editor - Support module</name>
 	<packaging>jar</packaging>
 	<build>
 		<plugins>
@@ -39,12 +39,6 @@
 		<dependency>
 			<groupId>cz.cvut.fel.schematicEditor</groupId>
 			<artifactId>Units</artifactId>
-			<version>1.0-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>cz.cvut.fel.schematicEditor</groupId>
-			<artifactId>Support</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>

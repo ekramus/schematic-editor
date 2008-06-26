@@ -25,7 +25,6 @@ import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementStyle;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
-import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -33,6 +32,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.shape.Ellipse;
