@@ -14,10 +14,11 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
 
 /**
  * This class implements listener for {@link PropertiesToolBar} fillColorButton.
- * 
+ *
  * @author Urban Kravjansky
  */
-public class FillColorButtonActionListener extends PropertiesToolBarListener implements ActionListener {
+public class FillColorButtonActionListener extends PropertiesToolBarListener implements
+        ActionListener {
     /**
      * Fill color button title.
      */
@@ -28,9 +29,9 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     private JButton             fillColorButton  = null;
 
     /**
-     * {@link FillColorButtonActionListener} constructor. It initializes <code>fillColorButton</code>
-     * field with given parameter.
-     * 
+     * {@link FillColorButtonActionListener} constructor. It initializes
+     * <code>fillColorButton</code> field with given parameter.
+     *
      * @param fillColorButton
      *            fill color {@link JButton} parameter.
      */
@@ -41,9 +42,8 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     /**
      * Method is invoked as result to an action. It initializes {@link JColorChooser} dialog window
      * enabling fill color selection.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * 
      * @param ae
      *            {@link ActionEvent} parameter. This parameter is only for implementing purposes,
      *            it is not used nor needed.
@@ -51,11 +51,11 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     public final void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(Structures.getScenePanel(), FILL_COLOR_TITLE, ep
-                .getFillColor());
+        Color c = JColorChooser.showDialog(Structures.getScenePanel(), FILL_COLOR_TITLE,
+                                           ep.getFillColor());
         if (c != null) {
             ep.setFillColor(c);
-            getFillColorButton().setIcon(PropertiesToolBar.getColorIcon(c));
+            getFillColorButton().setIcon(PropertiesToolBar.getColorIcon(c, ep.getFillColorAlpha()));
         }
 
         // update properties only when using Select manipulation
@@ -64,7 +64,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
 
     /**
      * Getter for <code>fillColorButton</code>.
-     * 
+     *
      * @return the fillColorButton
      */
     private JButton getFillColorButton() {
@@ -73,7 +73,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
 
     /**
      * Setter for <code>fillColorButton</code>.
-     * 
+     *
      * @param fillColorButton
      *            the fillColorButton to set
      */
