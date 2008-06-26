@@ -56,7 +56,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
                 .getContourColor());
         if (c != null) {
             ep.setContourColor(c);
-            getContourColorButton().setBackground(c);
+            getContourColorButton().setIcon(PropertiesToolBar.getColorIcon(c));
         }
 
         // update properties only when using Select manipulation
