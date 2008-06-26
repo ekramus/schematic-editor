@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 
@@ -54,7 +55,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
                 .getFillColor());
         if (c != null) {
             ep.setFillColor(c);
-            getFillColorButton().setBackground(c);
+            getFillColorButton().setIcon(PropertiesToolBar.getColorIcon(c));
         }
 
         // update properties only when using Select manipulation
