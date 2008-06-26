@@ -21,13 +21,25 @@ public class Snap {
     private boolean snap     = false;
 
     /**
+     * Constructor used for {@link Snap} initialization.
      * 
+     * @param gridSize
+     *            size of grid (grid is created from squares).
+     * @param snap
+     *            indicates, whether snap to grid is or is not active.
      */
     public Snap(Unit gridSize, boolean snap) {
         setGridSize(gridSize);
         setSnap(snap);
     }
 
+    /**
+     * Get snapped coordinate. In case snap to grid is disabled, coordinate will be unchanged.
+     * 
+     * @param coordinate
+     *            coordinate to snap.
+     * @return Snapped coordinate value.
+     */
     public Pixel getSnap(double coordinate) {
         Pixel result;
 
@@ -42,32 +54,40 @@ public class Snap {
     }
 
     /**
+     * Getter for <code>gridSize</code>.
+     * 
      * @return the gridSize
      */
-    public Unit getGridSize() {
+    private Unit getGridSize() {
         return this.gridSize;
     }
 
     /**
+     * Setter for <code>gridSize</code>.
+     * 
      * @param gridSize
      *            the gridSize to set
      */
-    public void setGridSize(Unit gridSize) {
+    private void setGridSize(Unit gridSize) {
         this.gridSize = gridSize;
     }
 
     /**
+     * Getter for <code>snap</code>.
+     * 
      * @return the isSnap
      */
-    public boolean isSnap() {
+    private boolean isSnap() {
         return this.snap;
     }
 
     /**
+     * Setter for <code>snap</code>.
+     * 
      * @param snap
      *            the snap to set
      */
-    public void setSnap(boolean snap) {
+    private void setSnap(boolean snap) {
         this.snap = snap;
     }
 }
