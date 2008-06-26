@@ -34,6 +34,8 @@ import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.types.Transformation;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -96,7 +98,7 @@ public class ScenePanel extends JPanel {
     /**
      * This field represents grid interval.
      */
-    private int           gridSize;
+    private Unit          gridSize;
     /**
      * This field represents grid validity.
      */
@@ -147,7 +149,7 @@ public class ScenePanel extends JPanel {
     /**
      * @return the gridSize
      */
-    public int getGridSize() {
+    public Unit getGridSize() {
         return this.gridSize;
     }
 
@@ -286,7 +288,7 @@ public class ScenePanel extends JPanel {
      * @param gridSize
      *            the gridSize to set
      */
-    public void setGridSize(int gridSize) {
+    public void setGridSize(Unit gridSize) {
         this.gridSize = gridSize;
         this.gridValid = false;
     }
@@ -337,17 +339,17 @@ public class ScenePanel extends JPanel {
 
         // draw first rectangle
         gridG2D.setColor(new Color(210, 220, 255));
-        Rectangle r = new Rectangle(this.gridSize, this.gridSize);
+        Rectangle2D r = new Rectangle2D.Double(0, 0, this.gridSize.doubleValue(), this.gridSize.doubleValue());
         gridG2D.draw(r);
 
         // copy rectangle in row
-        for (int i = this.gridSize; i <= grid.getWidth(); i += this.gridSize) {
-            gridG2D.copyArea(0, 0, this.gridSize + 1, this.gridSize + 1, i, 0);
+        for (double d = this.gridSize.doubleValue(); d <= grid.getWidth(); d += this.gridSize.doubleValue()) {
+            gridG2D.copyArea(0, 0, this.gridSize.intValue() + 1, this.gridSize.intValue() + 1, (int) d, 0);
         }
 
         // copy row of rectangles
-        for (int j = 0; j <= grid.getHeight(); j += this.gridSize) {
-            gridG2D.copyArea(0, 0, grid.getWidth(), this.gridSize + 1, 0, j);
+        for (double d = 0; d <= grid.getHeight(); d += this.gridSize.doubleValue()) {
+            gridG2D.copyArea(0, 0, grid.getWidth(), this.gridSize.intValue() + 1, 0, (int) d);
         }
 
         // return result
@@ -521,7 +523,7 @@ public class ScenePanel extends JPanel {
 
         // initialize grid properties
         this.gridVisible = true;
-        this.gridSize = 25;
+        this.gridSize = new Pixel(25);
         this.gridValid = false;
 
         // initialize scheme properties

@@ -7,10 +7,9 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.core.Support;
 import cz.cvut.fel.schematicEditor.element.Element;
-import cz.cvut.fel.schematicEditor.types.ElementType;
+import cz.cvut.fel.schematicEditor.element.ElementType;
+import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
@@ -30,7 +29,7 @@ public class Arc extends Ellipse {
     public Arc() {
         super();
 
-        logger = Logger.getLogger(Gui.class.getName());
+        logger = Logger.getLogger(this.getClass().getName());
     }
 
     /**
@@ -43,7 +42,7 @@ public class Arc extends Ellipse {
     public Arc(Vector<Unit> x, Vector<Unit> y) {
         super(x, y);
 
-        logger = Logger.getLogger(Gui.class.getName());
+        logger = Logger.getLogger(this.getClass().getName());
     }
 
     /**

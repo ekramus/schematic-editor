@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
 import cz.cvut.fel.schematicEditor.element.Element;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.shape.ArcSegment;
 import cz.cvut.fel.schematicEditor.element.shape.BezierCurve;
@@ -15,7 +16,6 @@ import cz.cvut.fel.schematicEditor.element.shape.Triangle;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 

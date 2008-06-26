@@ -1,13 +1,11 @@
 package cz.cvut.fel.schematicEditor.element.shape;
 
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
-import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
-import cz.cvut.fel.schematicEditor.types.ElementType;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**

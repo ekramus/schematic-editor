@@ -5,9 +5,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.element.Element;
-import cz.cvut.fel.schematicEditor.types.ElementType;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
@@ -24,7 +23,7 @@ public class Polygon extends Polyline {
     public Polygon() {
         super();
 
-        logger = Logger.getLogger(Gui.class.getName());
+        logger = Logger.getLogger(Polygon.class.getName());
     }
 
     /**

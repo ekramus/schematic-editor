@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.element.part;
 import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.element.Element;
-import cz.cvut.fel.schematicEditor.types.ElementType;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 public class Wire extends Element {

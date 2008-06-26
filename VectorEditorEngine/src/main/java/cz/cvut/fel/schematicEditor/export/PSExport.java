@@ -18,9 +18,9 @@ import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
-import cz.cvut.fel.schematicEditor.types.ElementType;
 import cz.cvut.fel.schematicEditor.types.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.shape.*;
 
 public class PSExport implements Export {

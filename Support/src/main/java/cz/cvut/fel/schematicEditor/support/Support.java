@@ -1,7 +1,4 @@
-/**
- * 
- */
-package cz.cvut.fel.schematicEditor.core;
+package cz.cvut.fel.schematicEditor.support;
 
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -11,7 +8,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
- * @author Urban Kravjansky
+ * @author Urban Kravjanský
  */
 public class Support {
     /**
@@ -50,20 +47,6 @@ public class Support {
 
     public static Unit avg(Unit a, Unit b) {
         return new Pixel((a.doubleValue() + b.doubleValue()) / 2);
-    }
-
-    public static Pixel snap(double coordinate) {
-        int gridSize = Structures.getScenePanel().getGridSize();
-        boolean isSnap = Structures.getScenePanel().isSnapToGrid();
-
-        Pixel result;
-
-        if (!isSnap) {
-            return new Pixel(coordinate);
-        }
-        result = new Pixel(gridSize * ((int) (coordinate + gridSize / 2) / gridSize));
-
-        return result;
     }
 
     /**

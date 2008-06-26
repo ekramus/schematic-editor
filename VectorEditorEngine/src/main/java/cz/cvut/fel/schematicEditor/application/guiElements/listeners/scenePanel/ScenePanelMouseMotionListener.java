@@ -10,7 +10,8 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.core.Support;
+import cz.cvut.fel.schematicEditor.support.Snap;
+import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
@@ -46,13 +47,13 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      */
     public void mouseDragged(MouseEvent e) {
         Structures.getStatusBar().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
 
         // manipulation is create
         ManipulationType mt = Structures.getManipulation().getManipulationType();
         if (mt == ManipulationType.CREATE) {
             Create create = (Create) Structures.getManipulation();
-            create.replaceLastManipulationCoordinates(Support.snap(e.getX()), Support
-                    .snap(e.getY()));
+            create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
             // just repaint (it takes care of element in progress)
             Structures.getScenePanel().processActualManipulationStep();
@@ -61,7 +62,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         else if (mt == ManipulationType.MOVE) {
             Move move = (Move) Structures.getManipulation();
 
-            move.replaceLastManipulationCoordinates(Support.snap(e.getX()), Support.snap(e.getY()));
+            move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
             // compute delta
             int i = move.getX().size() - 2;
@@ -89,6 +90,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      */
     public void mouseMoved(MouseEvent e) {
         Structures.getStatusBar().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
 
         // manipulation is active
         if (Structures.getManipulation().isActive()) {
@@ -97,8 +99,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                 Create create = (Create) Structures.getManipulation();
                 // manipulation is not in stage one (not the first part of shape is drawn)
                 if (create.getStage() != Create.STAGE_ONE) {
-                    create.replaceLastManipulationCoordinates(Support.snap(e.getX()), Support
-                            .snap(e.getY()));
+                    create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
                     Structures.getScenePanel().processActualManipulationStep();
                 }

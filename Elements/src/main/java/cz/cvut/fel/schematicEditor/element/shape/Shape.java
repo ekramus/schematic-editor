@@ -1,6 +1,5 @@
 package cz.cvut.fel.schematicEditor.element.shape;
 
-import java.awt.geom.Point2D;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.Element;
