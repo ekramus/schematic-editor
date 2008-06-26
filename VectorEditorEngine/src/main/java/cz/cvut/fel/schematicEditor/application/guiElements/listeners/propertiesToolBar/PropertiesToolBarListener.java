@@ -39,15 +39,17 @@ public abstract class PropertiesToolBarListener {
      *            properties to update.
      */
     protected final void updateProperties(final ElementProperties elementProperties) {
+        // refresh all elements on properties toolbar
+        PropertiesToolBar.refresh();
+
         if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
             Select select = (Select) Structures.getManipulation();
             if (select.getManipulatedGroup() != null) {
-                select.getManipulatedGroup().getChildrenParameterNode()
-                        .setProperties(elementProperties);
+                select.getManipulatedGroup().getChildrenParameterNode().setProperties(
+                                                                                      elementProperties);
 
                 Structures.getScenePanel().schemeInvalidate(
-                                                             select.getManipulatedGroup()
-                                                                     .getBounds());
+                                                            select.getManipulatedGroup().getBounds());
             }
         }
     }

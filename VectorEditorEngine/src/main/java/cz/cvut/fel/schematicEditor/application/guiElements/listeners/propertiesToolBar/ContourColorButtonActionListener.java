@@ -13,7 +13,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
 
 /**
  * This class implements listener for {@link PropertiesToolBar} contourColorButton.
- * 
+ *
  * @author Urban Kravjansky
  */
 public final class ContourColorButtonActionListener extends PropertiesToolBarListener implements
@@ -31,7 +31,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
     /**
      * {@link ContourColorButtonActionListener} constructor. It initializes
      * <code>contourColorButton</code> field with given parameter.
-     * 
+     *
      * @param contourColorButton
      *            contour color {@link JButton} parameter.
      */
@@ -42,9 +42,8 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
     /**
      * Method is invoked as result to an action. It initializes {@link JColorChooser} dialog window
      * enabling contour color selection.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * 
      * @param ae
      *            {@link ActionEvent} parameter. This parameter is only for implementing purposes,
      *            it is not used nor needed.
@@ -52,11 +51,14 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
     public void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(Structures.getScenePanel(), CONTOUR_COLOR_TITLE, ep
-                .getContourColor());
+        Color c = JColorChooser.showDialog(Structures.getScenePanel(), CONTOUR_COLOR_TITLE,
+                                           ep.getContourColor());
         if (c != null) {
             ep.setContourColor(c);
-            getContourColorButton().setIcon(PropertiesToolBar.getColorIcon(c));
+            getContourColorButton().setIcon(
+                                            PropertiesToolBar.getColorIcon(
+                                                                           c,
+                                                                           ep.getContourColorAlpha()));
         }
 
         // update properties only when using Select manipulation
@@ -65,7 +67,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
 
     /**
      * Getter for <code>contourColorButton</code>.
-     * 
+     *
      * @return the contourColorButton
      */
     private JButton getContourColorButton() {
@@ -74,7 +76,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
 
     /**
      * Setter for <code>contourColorButton</code>.
-     * 
+     *
      * @param contourColorButton
      *            the contourColorButton to set
      */
