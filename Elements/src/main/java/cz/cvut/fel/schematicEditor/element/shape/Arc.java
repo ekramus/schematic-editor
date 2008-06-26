@@ -55,8 +55,8 @@ public class Arc extends Ellipse {
         try {
             // calculate points
             Point2D.Double arcStart = new Point2D.Double(getX().get(2).doubleValue(), getY().get(2).doubleValue());
-            Point2D.Double arcCenter = new Point2D.Double(Support.avg(getX().get(0), getX().get(1)).doubleValue(),
-                    Support.avg(getY().get(0), getY().get(1)).doubleValue());
+            Point2D.Double arcCenter = new Point2D.Double(Support.average(getX().get(0), getX().get(1)).doubleValue(),
+                    Support.average(getY().get(0), getY().get(1)).doubleValue());
             Point2D.Double arcZero = new Point2D.Double(arcCenter.getX() + 1, arcCenter.getY());
 
             // cosine law
@@ -83,8 +83,8 @@ public class Arc extends Ellipse {
         try {
             // calculate points
             Point2D.Double arcEnd = new Point2D.Double(getX().get(3).doubleValue(), getY().get(3).doubleValue());
-            Point2D.Double arcCenter = new Point2D.Double(Support.avg(getX().get(0), getX().get(1)).doubleValue(),
-                    Support.avg(getY().get(0), getY().get(1)).doubleValue());
+            Point2D.Double arcCenter = new Point2D.Double(Support.average(getX().get(0), getX().get(1)).doubleValue(),
+                    Support.average(getY().get(0), getY().get(1)).doubleValue());
             Point2D.Double arcZero = new Point2D.Double(arcCenter.getX() + 1, arcCenter.getY());
 
             // cosine law
