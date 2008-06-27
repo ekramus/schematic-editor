@@ -3,7 +3,7 @@ rem @echo off
 set DEPLOY=deploy
 set LIB=%DEPLOY%\lib
 set JAR=%DEPLOY%\jar
-set M2_REPO="c:\Documents and Settings\urban.kravjansky\.m2\repository"
+set M2_REPO="%USERPROFILE%\.m2\repository"
 
 del /Q %LIB%
 del /Q %JAR%
