@@ -10,11 +10,12 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class ScenePanelKeyListener implements KeyListener {
@@ -32,9 +33,8 @@ public class ScenePanelKeyListener implements KeyListener {
     }
 
     /**
-     * Key listener for {@link ScenePanel}. It scans pressed keys and invokes action based on
-     * keycodes.
-     *
+     * Key listener for {@link ScenePanel}. It scans pressed keys and invokes action based on keycodes.
+     * 
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
     public void keyPressed(KeyEvent e) {
@@ -46,13 +46,11 @@ public class ScenePanelKeyListener implements KeyListener {
                 if (create.getElementModificator() == ElementModificator.NO_MODIFICATION) {
                     create.setElementModificator(ElementModificator.SYMMETRIC_ELEMENT);
                     // TODO externalize string
-                    Structures.getStatusBar().setSizeLockingLabel(
-                                                                  "to disable size locking, press CTRL");
+                    Structures.getStatusBar().setSizeLockingLabel("to disable size locking, press CTRL");
                 } else {
                     create.setElementModificator(ElementModificator.NO_MODIFICATION);
                     // TODO externalize string
-                    Structures.getStatusBar().setSizeLockingLabel(
-                                                                  "to enable size locking, press CTRL");
+                    Structures.getStatusBar().setSizeLockingLabel("to enable size locking, press CTRL");
                 }
             }
         }

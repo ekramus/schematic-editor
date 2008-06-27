@@ -4,7 +4,6 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.types.Transformation;
 
 /**
  * @author uk
@@ -66,6 +65,12 @@ public class Select extends Manipulation {
     @Override
     public Manipulation newInstance(Manipulation manipulation) {
         Select s = new Select();
+        
+        // duplicate parameters
+        s.setActive(isActive());
+        s.setManipulatedGroup(getManipulatedGroup());
+        s.setManipulationCoordinates(getX(), getY());
+        
         return s;
     }
 }
