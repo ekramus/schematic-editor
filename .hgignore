@@ -17,4 +17,6 @@ syntax: glob
 # skip project build files
 *.class
 *.log*
+*.jar
 target
+deploy/*.xml
