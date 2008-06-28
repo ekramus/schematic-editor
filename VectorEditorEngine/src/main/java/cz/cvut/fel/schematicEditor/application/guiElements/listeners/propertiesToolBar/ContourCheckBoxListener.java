@@ -7,8 +7,12 @@ import javax.swing.JCheckBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.log4j.Logger;
+
+import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementStyle;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements {@link ChangeListener} for <code>contourCheckBox</code>.
@@ -17,9 +21,13 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.ElementStyle;
  */
 public class ContourCheckBoxListener extends PropertiesToolBarListener implements ActionListener {
     /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
+    /**
      * Points to <code>contourCheckBox</code> instance.
      */
-    private JCheckBox contourCheckBox = null;
+    private JCheckBox     contourCheckBox = null;
 
     /**
      * {@link ContourCheckBoxListener} constructor. It initializes <code>contourCheckBox</code>
@@ -29,6 +37,7 @@ public class ContourCheckBoxListener extends PropertiesToolBarListener implement
      *            contour style {@link JCheckBox} parameter.
      */
     public ContourCheckBoxListener(JCheckBox contourCheckBox) {
+        logger = Logger.getLogger(Gui.class.getName());
         setContourCheckBox(contourCheckBox);
     }
 
@@ -48,7 +57,11 @@ public class ContourCheckBoxListener extends PropertiesToolBarListener implement
                                                             : ElementStyle.NONE);
 
         // update properties
-        updateProperties(ep);
+        try {
+            updateProperties(ep);
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
+        }
     }
 
     /**

@@ -3,9 +3,13 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.apache.log4j.Logger;
+
+import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements listener for {@link ScenePanelDrawingPopup}.
@@ -13,12 +17,17 @@ import cz.cvut.fel.schematicEditor.manipulation.Create;
  * @author Urban Kravjansky
  */
 public class EndElementMenuItemListener implements ActionListener {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
 
     /**
      * Default constructor.
      */
     public EndElementMenuItemListener() {
         super();
+        logger = Logger.getLogger(Gui.class.getName());
     }
 
     /**
@@ -30,9 +39,13 @@ public class EndElementMenuItemListener implements ActionListener {
      *            it is not used nor needed.
      */
     public final void actionPerformed(final ActionEvent ae) {
-        Create create = (Create) Structures.getManipulation();
-        create.setFinished(true);
-        Structures.getScenePanel().processFinalManipulationStep();
+        try {
+            Create create = (Create) Structures.getManipulation();
+            create.setFinished(true);
+            Structures.getScenePanel().processFinalManipulationStep();
+        } catch (UnknownManipulationException e) {
+            logger.error(e.getMessage());
+        }
     }
 
 }

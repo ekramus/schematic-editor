@@ -7,9 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 
+import org.apache.log4j.Logger;
+
+import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements listener for {@link PropertiesToolBar} contourColorButton.
@@ -18,7 +22,10 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
  */
 public final class ContourColorButtonActionListener extends PropertiesToolBarListener implements
         ActionListener {
-
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger       logger;
     /**
      * Contour color button title.
      */
@@ -36,6 +43,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
      *            contour color {@link JButton} parameter.
      */
     public ContourColorButtonActionListener(final JButton contourColorButton) {
+        logger = Logger.getLogger(Gui.class.getName());
         setContourColorButton(contourColorButton);
     }
 
@@ -62,7 +70,11 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
         }
 
         // update properties only when using Select manipulation
-        updateProperties(ep);
+        try {
+            updateProperties(ep);
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
+        }
     }
 
     /**

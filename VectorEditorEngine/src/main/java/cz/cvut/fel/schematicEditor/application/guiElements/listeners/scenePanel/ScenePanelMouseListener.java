@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
+import java.lang.management.ManagementFactory;
 
 import javax.swing.JPopupMenu;
 
@@ -24,14 +25,16 @@ import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Move;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.types.Transformation;
 
 /**
  * This class implements {@link MouseListener} for {@link ScenePanel}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ScenePanelMouseListener implements MouseListener {
@@ -59,7 +62,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse click events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
     @SuppressWarnings("unused")
@@ -69,7 +72,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse enter events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
      */
     @SuppressWarnings("unused")
@@ -81,7 +84,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse exit events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
     @SuppressWarnings("unused")
@@ -91,66 +94,76 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse press events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
     public void mousePressed(MouseEvent e) {
-        setMousePressedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
+        try {
+            setMousePressedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
 
-        // get pointer rectangle
-        Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
-                                                                Constants.POINT_SIZE);
+            // get pointer rectangle
+            Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(),
+                    e.getY()), Constants.POINT_SIZE);
 
-        ManipulationType mt = Structures.getManipulation().getManipulationType();
-        if (mt == ManipulationType.CREATE) {
-            createManipulationStart(e);
-        } else if (mt == ManipulationType.EDIT) {
-            editManipulationStart(e, r2d);
-        } else if (mt == ManipulationType.SELECT) {
-            selectManipulationStart(e, r2d);
-        } else if (mt == ManipulationType.MOVE) {
-            moveManipulationStart(e, r2d);
-        } else if (mt == ManipulationType.DELETE) {
-            deleteManipulationStart(r2d);
-        } else {
-            logger.error("unknown MANIPULATION TYPE start");
+            ManipulationType mt;
+            mt = Structures.getManipulation().getManipulationType();
+            if (mt == ManipulationType.CREATE) {
+                createManipulationStart(e);
+            } else if (mt == ManipulationType.EDIT) {
+                editManipulationStart(e, r2d);
+            } else if (mt == ManipulationType.SELECT) {
+                selectManipulationStart(e, r2d);
+            } else if (mt == ManipulationType.MOVE) {
+                moveManipulationStart(e, r2d);
+            } else if (mt == ManipulationType.DELETE) {
+                deleteManipulationStart(r2d);
+            } else {
+                throw new UnknownManipulationException(mt);
+            }
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
         }
     }
 
     /**
      * Method for mouse release events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
     public void mouseReleased(MouseEvent e) {
-        setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
+        try {
+            setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
 
-        // get pointer rectangle
-        Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
-                                                                Constants.POINT_SIZE);
+            // get pointer rectangle
+            Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(),
+                    e.getY()), Constants.POINT_SIZE);
 
-        if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
-            logger.debug("Mouse CLICKED");
-        }
+            if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
+                logger.debug("Mouse CLICKED");
+            }
 
-        ManipulationType mt = Structures.getManipulation().getManipulationType();
-        if (mt == ManipulationType.CREATE) {
-            createManipulationEnd(e);
-        } else if (mt == ManipulationType.EDIT) {
-            editManipulationEnd();
-        } else if (mt == ManipulationType.SELECT) {
-            selectManipulationEnd(r2d);
-        } else if (mt == ManipulationType.MOVE) {
-            moveManipulationEnd(e, r2d);
-        } else if (mt == ManipulationType.DELETE) {
-            deleteManipulationEnd(r2d);
-        } else {
-            logger.error("unknown MANIPULATION TYPE end");
+            ManipulationType mt = Structures.getManipulation().getManipulationType();
+            if (mt == ManipulationType.CREATE) {
+                createManipulationEnd(e);
+            } else if (mt == ManipulationType.EDIT) {
+                editManipulationEnd();
+            } else if (mt == ManipulationType.SELECT) {
+                selectManipulationEnd(r2d);
+            } else if (mt == ManipulationType.MOVE) {
+                moveManipulationEnd(e, r2d);
+            } else if (mt == ManipulationType.DELETE) {
+                deleteManipulationEnd(r2d);
+            } else {
+                throw new UnknownManipulationException(mt);
+            }
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
         }
     }
 
-    private void createManipulationEnd(MouseEvent e) {
-        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+    private void createManipulationEnd(MouseEvent e) throws UnknownManipulationException {
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(),
+                Structures.getScenePanel().isSnapToGrid());
         Create create = (Create) Structures.getManipulation();
         // check, what to do
         switch (create.getPointsLeft()) {
@@ -188,14 +201,15 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
-    private void createManipulationStart(MouseEvent e) {
+    private void createManipulationStart(MouseEvent e) throws UnknownManipulationException {
         logger.debug("manipulation is instance of Create");
 
         Create create = (Create) Structures.getManipulation();
         create.setActive(true);
 
-        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
-        
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(),
+                Structures.getScenePanel().isSnapToGrid());
+
         // mouse press is used only for first stage
         if (create.getStage() == Create.STAGE_ONE) {
             // add two pairs of coordinates (each element needs two)
@@ -208,7 +222,7 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
-    private void deleteManipulationEnd(Rectangle2D.Double r2d) {
+    private void deleteManipulationEnd(Rectangle2D.Double r2d) throws UnknownManipulationException {
         Delete delete = (Delete) Structures.getManipulation();
 
         if (isMouseClicked() && delete.isActive()) {
@@ -218,7 +232,8 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
-    private void deleteManipulationStart(Rectangle2D.Double r2d) {
+    private void deleteManipulationStart(Rectangle2D.Double r2d)
+            throws UnknownManipulationException {
         // this method is not really necessary, but it can be used in the future
         Delete delete = (Delete) Structures.getManipulation();
         delete.setActive(true);
@@ -238,9 +253,10 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
-    private void moveManipulationEnd(MouseEvent e, Double r2d) {
+    private void moveManipulationEnd(MouseEvent e, Double r2d) throws UnknownManipulationException {
         Move move = (Move) Structures.getManipulation();
-        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(),
+                Structures.getScenePanel().isSnapToGrid());
 
         if (move.isActive()) {
             logger.debug("object MOVED");
@@ -249,11 +265,13 @@ public class ScenePanelMouseListener implements MouseListener {
 
             // compute delta
             int i = move.getX().size() - 2;
-            Point2D delta = new Point2D.Double(move.getX().lastElement().doubleValue() - move.getX().get(i)
-                    .doubleValue(), move.getY().lastElement().doubleValue() - move.getY().get(i).doubleValue());
+            Point2D delta = new Point2D.Double(move.getX().lastElement().doubleValue()
+                                               - move.getX().get(i).doubleValue(),
+                    move.getY().lastElement().doubleValue() - move.getY().get(i).doubleValue());
 
             // create transformation node using delta
-            TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(), delta.getY()));
+            TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(),
+                                                                                   delta.getY()));
             // replace last transformation
             GroupNode gn = move.getManipulatedGroup();
             gn.removeLastTransformation();
@@ -268,9 +286,11 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
-    private void moveManipulationStart(MouseEvent e, Double r2d) {
+    private void moveManipulationStart(MouseEvent e, Double r2d)
+            throws UnknownManipulationException {
         Move move = (Move) Structures.getManipulation();
-        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(),
+                Structures.getScenePanel().isSnapToGrid());
 
         GroupNode gn = Structures.getScenePanel().getSchemeSG().getTopNode().findHit(r2d);
         // check, whether move is possible or not
@@ -288,17 +308,19 @@ public class ScenePanelMouseListener implements MouseListener {
         }
         // move is not possible - fall back to Select manipulation
         else {
-            Structures.setManipulation(new Select());
+            Structures.setManipulation(ManipulationFactory.create(ManipulationType.SELECT));
         }
     }
 
     /**
-     * Method called on <code>mouseReleased</code> event when {@link Select} manipulation is selected.
-     * 
+     * Method called on <code>mouseReleased</code> event when {@link Select} manipulation is
+     * selected.
+     *
      * @param r2d
      *            pointer rectangle.
      */
-    private void selectManipulationEnd(final Rectangle2D.Double r2d) {
+    private void selectManipulationEnd(final Rectangle2D.Double r2d)
+            throws UnknownManipulationException {
         Select select = (Select) Structures.getManipulation();
 
         // mouse clicked and hit something
@@ -308,7 +330,7 @@ public class ScenePanelMouseListener implements MouseListener {
                 logger.debug("object SELECTED");
 
                 // create new select object
-                Structures.setManipulation(new Select());
+                Structures.setManipulation(ManipulationFactory.create(ManipulationType.SELECT));
                 select = (Select) Structures.getManipulation();
                 // activate selection
                 select.setActive(true);
@@ -316,7 +338,8 @@ public class ScenePanelMouseListener implements MouseListener {
                 GroupNode gn = Structures.getScenePanel().getSchemeSG().getTopNode().findHit(r2d);
                 select.setManipulatedGroup(gn);
 
-                Structures.getScenePanel().schemeInvalidate(select.getManipulatedGroup().getBounds());
+                Structures.getScenePanel().schemeInvalidate(
+                                                            select.getManipulatedGroup().getBounds());
 
                 // get parameter node and set properties panel according to it
                 ParameterNode pn = gn.getChildrenParameterNode();
@@ -328,7 +351,7 @@ public class ScenePanelMouseListener implements MouseListener {
                 logger.debug("nothing SELECTED");
 
                 // create new select object
-                Structures.setManipulation(new Select());
+                Structures.setManipulation(ManipulationFactory.create(ManipulationType.SELECT));
                 select = (Select) Structures.getManipulation();
 
                 Structures.getScenePanel().schemeInvalidate(null);
@@ -341,13 +364,15 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * When select manipulation starts, this method is called. It initializes all necessary data.
-     * 
+     *
      * @param e
      * @param r2d
      */
-    private void selectManipulationStart(final MouseEvent e, final Rectangle2D.Double r2d) {
+    private void selectManipulationStart(final MouseEvent e, final Rectangle2D.Double r2d)
+            throws UnknownManipulationException {
         Select select = (Select) Structures.getManipulation();
-        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(),
+                Structures.getScenePanel().isSnapToGrid());
 
         // manipulation is not active
         if (!select.isActive()) {
@@ -358,7 +383,7 @@ public class ScenePanelMouseListener implements MouseListener {
             logger.debug("creating MOVE manipulation");
 
             // create Move manipulation
-            Move move = new Move();
+            Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE);
 
             GroupNode gn = select.getManipulatedGroup();
 

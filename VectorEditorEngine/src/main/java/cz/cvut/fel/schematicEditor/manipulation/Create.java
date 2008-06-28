@@ -8,8 +8,8 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 /**
  * This class represents create {@link Manipulation}. It is created, when user presses any button for new shape
  * creation.
- * 
- * @author Urban Kravjanský
+ *
+ * @author Urban Kravjansky
  */
 public class Create extends Manipulation {
     // TODO rewrite as enum
@@ -109,7 +109,7 @@ public class Create extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override

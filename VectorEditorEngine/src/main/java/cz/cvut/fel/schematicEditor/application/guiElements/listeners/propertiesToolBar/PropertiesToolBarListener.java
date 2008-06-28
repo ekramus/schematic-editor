@@ -5,6 +5,7 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This abstract class implements listener model for {@link PropertiesToolBar} other listeners.
@@ -38,7 +39,8 @@ public abstract class PropertiesToolBarListener {
      * @param elementProperties
      *            properties to update.
      */
-    protected final void updateProperties(final ElementProperties elementProperties) {
+    protected final void updateProperties(final ElementProperties elementProperties)
+            throws UnknownManipulationException {
         // refresh all elements on properties toolbar
         PropertiesToolBar.refresh();
 

@@ -1,9 +1,7 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Vector;
@@ -11,9 +9,9 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.types.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -140,16 +138,21 @@ public class GroupNode extends Node {
             return false;
         }
 
-        Select select = (Select) Structures.getManipulation();
-        GroupNode gn = select.getManipulatedGroup();
-        GroupNode pgn = gn.getParent();
+        Select select;
+        try {
+            select = (Select) Structures.getManipulation();
+            GroupNode gn = select.getManipulatedGroup();
+            GroupNode pgn = gn.getParent();
 
-        for (int i = pgn.getChildrenGroupList().size() - 1; i >= 0; i--) {
-            GroupNode child = pgn.getChildrenGroupList().get(i);
-            if (child == gn) {
-                pgn.getChildrenGroupList().remove(i);
-                return true;
+            for (int i = pgn.getChildrenGroupList().size() - 1; i >= 0; i--) {
+                GroupNode child = pgn.getChildrenGroupList().get(i);
+                if (child == gn) {
+                    pgn.getChildrenGroupList().remove(i);
+                    return true;
+                }
             }
+        } catch (UnknownManipulationException e) {
+            logger.error(e.getMessage());
         }
 
         return false;

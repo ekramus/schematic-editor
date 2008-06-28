@@ -4,7 +4,11 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.log4j.Logger;
+
+import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements {@link ChangeListener} for <code>fillColorAlphaSlider</code>.
@@ -14,9 +18,13 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
 public class FillColorAlphaSliderChangeListener extends PropertiesToolBarListener implements
         ChangeListener {
     /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
+    /**
      * Points to <code>fillColorAlphaSlider</code> instance.
      */
-    private JSlider fillColorAlphaSlider = null;
+    private JSlider       fillColorAlphaSlider = null;
 
     /**
      * {@link FillColorAlphaSliderChangeListener} constructor. It initializes
@@ -26,6 +34,7 @@ public class FillColorAlphaSliderChangeListener extends PropertiesToolBarListene
      *            fill color alpha {@link JSlider} parameter.
      */
     public FillColorAlphaSliderChangeListener(JSlider fillColorAlphaSlider) {
+        logger = Logger.getLogger(Gui.class.getName());
         setFillColorAlphaSlider(fillColorAlphaSlider);
     }
 
@@ -44,7 +53,11 @@ public class FillColorAlphaSliderChangeListener extends PropertiesToolBarListene
         ep.setFillColorAlpha(getFillColorAlphaSlider().getValue());
 
         // Select manipulation
-        updateProperties(ep);
+        try {
+            updateProperties(ep);
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
+        }
     }
 
     /**

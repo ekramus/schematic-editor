@@ -13,7 +13,7 @@ public class Delete extends Manipulation {
     /**
      * @param manipulatedElement
      */
-    public Delete() {
+    protected Delete() {
         super(null);
     }
 

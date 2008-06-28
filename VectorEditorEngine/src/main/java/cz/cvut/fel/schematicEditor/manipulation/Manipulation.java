@@ -28,7 +28,7 @@ public abstract class Manipulation {
     /**
      *
      */
-    public Manipulation() {
+    protected Manipulation() {
         setActive(false);
 
         this.x = new Vector<Unit>();
@@ -48,12 +48,12 @@ public abstract class Manipulation {
 
     /**
      * Creates new instance of {@link Manipulation}.
-     * 
+     *
      * @param manipulation
      * @return
      */
     public abstract Manipulation newInstance(Manipulation manipulation);
-    
+
     public abstract boolean isManipulatingElements();
 
     /**
