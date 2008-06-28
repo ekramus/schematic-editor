@@ -8,9 +8,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 
+import org.apache.log4j.Logger;
+
+import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements listener for {@link PropertiesToolBar} fillColorButton.
@@ -19,6 +23,10 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
  */
 public class FillColorButtonActionListener extends PropertiesToolBarListener implements
         ActionListener {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger       logger;
     /**
      * Fill color button title.
      */
@@ -36,6 +44,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
      *            fill color {@link JButton} parameter.
      */
     public FillColorButtonActionListener(final JButton fillColorButton) {
+        logger = Logger.getLogger(Gui.class.getName());
         setFillColorButton(fillColorButton);
     }
 
@@ -59,7 +68,11 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
         }
 
         // update properties only when using Select manipulation
-        updateProperties(ep);
+        try {
+            updateProperties(ep);
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
+        }
     }
 
     /**

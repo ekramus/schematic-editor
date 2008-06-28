@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.management.ManagementFactory;
 
 import org.apache.log4j.Logger;
 
@@ -11,8 +12,10 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.
@@ -40,33 +43,37 @@ public class ScenePanelKeyListener implements KeyListener {
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-            if (Structures.getManipulation().getManipulationType() == ManipulationType.CREATE) {
-                Create create = (Create) Structures.getManipulation();
-                logger.debug("manipulation is instance of Create");
+        try {
+            if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+                if (Structures.getManipulation().getManipulationType() == ManipulationType.CREATE) {
+                    Create create = (Create) Structures.getManipulation();
+                    logger.debug("manipulation is instance of Create");
 
-                if (create.getElementModificator() == ElementModificator.NO_MODIFICATION) {
-                    create.setElementModificator(ElementModificator.SYMMETRIC_ELEMENT);
-                    // TODO externalize string
-                    Structures.getStatusBar().setSizeLockingLabel(
-                                                                  "to disable size locking, press CTRL");
-                } else {
-                    create.setElementModificator(ElementModificator.NO_MODIFICATION);
-                    // TODO externalize string
-                    Structures.getStatusBar().setSizeLockingLabel(
-                                                                  "to enable size locking, press CTRL");
+                    if (create.getElementModificator() == ElementModificator.NO_MODIFICATION) {
+                        create.setElementModificator(ElementModificator.SYMMETRIC_ELEMENT);
+                        // TODO externalize string
+                        Structures.getStatusBar().setSizeLockingLabel(
+                                                                      "to disable size locking, press CTRL");
+                    } else {
+                        create.setElementModificator(ElementModificator.NO_MODIFICATION);
+                        // TODO externalize string
+                        Structures.getStatusBar().setSizeLockingLabel(
+                                                                      "to enable size locking, press CTRL");
+                    }
+                }
+            } else if ((e.getKeyCode() == KeyEvent.VK_DELETE)
+                       || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
+                if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
+                    if (Structures.getScenePanel().getSchemeSG().getTopNode().deleteSelected()) {
+                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE);
+                        delete.setActive(true);
+                        Structures.setManipulation(delete);
+                        Structures.getScenePanel().processFinalManipulationStep();
+                    }
                 }
             }
-        } else if ((e.getKeyCode() == KeyEvent.VK_DELETE)
-                   || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
-            if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
-                if (Structures.getScenePanel().getSchemeSG().getTopNode().deleteSelected()) {
-                    Delete delete = new Delete();
-                    delete.setActive(true);
-                    Structures.setManipulation(delete);
-                    Structures.getScenePanel().processFinalManipulationStep();
-                }
-            }
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
         }
     }
 

@@ -1,7 +1,8 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+
 public class Move extends Select {
-    public Move() {
+    protected Move() {
         super();
     }
 

@@ -3,8 +3,14 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToo
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.apache.log4j.Logger;
+
+import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements listener for {@link Delete} manipulation button.
@@ -12,12 +18,18 @@ import cz.cvut.fel.schematicEditor.manipulation.Delete;
  * @author Urban Kravjansky
  */
 public final class DeleteButtonListener implements ActionListener {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
 
     /**
      * The default constructor.
      */
     public DeleteButtonListener() {
         super();
+
+        logger = Logger.getLogger(Gui.class.getName());
     }
 
     /**
@@ -29,7 +41,11 @@ public final class DeleteButtonListener implements ActionListener {
      *            it is not used nor needed.
      */
     public void actionPerformed(final ActionEvent ae) {
-        Structures.setManipulation(new Delete());
+        try {
+            Structures.setManipulation(ManipulationFactory.create(ManipulationType.DELETE));
+        } catch (UnknownManipulationException ume) {
+            logger.error(ume.getMessage());
+        }
     }
 
 }

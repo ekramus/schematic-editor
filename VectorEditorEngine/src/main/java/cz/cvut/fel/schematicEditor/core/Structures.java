@@ -1,16 +1,15 @@
 package cz.cvut.fel.schematicEditor.core;
 
 import java.util.Properties;
-import java.util.Stack;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.StatusBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
-import cz.cvut.fel.schematicEditor.element.shape.Line;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.Select;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class represents the application core structures.
@@ -102,10 +101,12 @@ public class Structures {
      * Getter for {@link Manipulation}.
      *
      * @return the manipulation
+     * @throws UnknownManipulationException
+     *             In case of unknown manipulation.
      */
-    public static Manipulation getManipulation() {
+    public static Manipulation getManipulation() throws UnknownManipulationException {
         if (manipulation == null) {
-            manipulation = new Select();
+            manipulation = ManipulationFactory.create(ManipulationType.SELECT);
         }
         return manipulation;
     }
