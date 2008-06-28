@@ -10,7 +10,9 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.Select;
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.
@@ -53,6 +55,16 @@ public class ScenePanelKeyListener implements KeyListener {
                     // TODO externalize string
                     Structures.getStatusBar().setSizeLockingLabel(
                                                                   "to enable size locking, press CTRL");
+                }
+            }
+        } else if ((e.getKeyCode() == KeyEvent.VK_DELETE)
+                   || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
+            if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
+                if (Structures.getScenePanel().getSchemeSG().getTopNode().deleteSelected()) {
+                    Delete delete = new Delete();
+                    delete.setActive(true);
+                    Structures.setManipulation(delete);
+                    Structures.getScenePanel().processFinalManipulationStep();
                 }
             }
         }

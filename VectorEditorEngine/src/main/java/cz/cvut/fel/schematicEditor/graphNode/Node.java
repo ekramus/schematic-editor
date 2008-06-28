@@ -13,7 +13,7 @@ public abstract class Node {
     /**
      * This field represents parent of current node.
      */
-    Node            parent;
+    GroupNode       parent;
     /**
      * Indicates, whether node is or is not disabled.
      */
@@ -61,7 +61,7 @@ public abstract class Node {
      * @param parent
      *            the parent to set
      */
-    public void setParent(Node parent) {
+    public void setParent(GroupNode parent) {
         this.parent = parent;
     }
 
@@ -78,5 +78,14 @@ public abstract class Node {
      */
     public boolean isDisabled() {
         return this.disabled;
+    }
+
+    /**
+     * Getter for parent node.
+     *
+     * @return the parent
+     */
+    public GroupNode getParent() {
+        return this.parent;
     }
 }

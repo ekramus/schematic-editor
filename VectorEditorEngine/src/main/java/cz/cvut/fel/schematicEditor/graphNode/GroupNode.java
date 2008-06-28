@@ -12,12 +12,15 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.Constants;
+import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.manipulation.Select;
+import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.types.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class represents Group Node in scene graph.
- * 
+ *
  * @author uk
  */
 public class GroupNode extends Node {
@@ -58,7 +61,7 @@ public class GroupNode extends Node {
 
     /**
      * This method adds child node into this node.
-     * 
+     *
      * @param child
      *            child node to add.
      */
@@ -83,7 +86,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns transformation applied on this group.
-     * 
+     *
      * @return
      */
     public Transformation getTransformation() {
@@ -96,7 +99,7 @@ public class GroupNode extends Node {
 
     /**
      * Getter for group
-     * 
+     *
      * @return group node.
      */
     public GroupNode getGroup() {
@@ -132,6 +135,32 @@ public class GroupNode extends Node {
         return false;
     }
 
+    public boolean deleteSelected() {
+        if (isDisabled()) {
+            return false;
+        }
+
+        Select select = (Select) Structures.getManipulation();
+        GroupNode gn = select.getManipulatedGroup();
+        GroupNode pgn = gn.getParent();
+
+        for (int i = pgn.getChildrenGroupList().size() - 1; i >= 0; i--) {
+            GroupNode child = pgn.getChildrenGroupList().get(i);
+            if (child == gn) {
+                pgn.getChildrenGroupList().remove(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete element, which is hit.
+     *
+     * @param r2d
+     * @return <code>true</code>, if hit and deleted, else <code>false</code>.
+     */
     public boolean deleteHit(Rectangle2D.Double r2d) {
         if (isDisabled()) {
             return false;
@@ -156,7 +185,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns list of GroupNode children
-     * 
+     *
      * @return childrenGroupList;
      */
     public LinkedList<GroupNode> getChildrenGroupList() {
@@ -165,7 +194,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns list of ElementNode children
-     * 
+     *
      * @return childrenElementList;
      */
     public Vector<ElementNode> getChildrenElementList() {
@@ -174,7 +203,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns ParameterNode
-     * 
+     *
      * @return childrenParameterNode;
      */
     public ParameterNode getChildrenParameterNode() {
@@ -202,7 +231,7 @@ public class GroupNode extends Node {
     /**
      * Getter for <code>NodeArray</code> with corrected <code>TransformationNode</code> and
      * <code>ParameterNode</code>.
-     * 
+     *
      * @param tn
      *            transformation node.
      * @param pn
@@ -224,8 +253,8 @@ public class GroupNode extends Node {
         if (tn == null) {
             t = new TransformationNode(getTransformation());
         } else {
-            t = new TransformationNode(Transformation.multiply(getTransformation(), tn
-                    .getTransformation()));
+            t = new TransformationNode(Transformation.multiply(getTransformation(),
+                                                               tn.getTransformation()));
         }
 
         result.add(t);
@@ -274,8 +303,8 @@ public class GroupNode extends Node {
 
     public UnitRectangle getBounds() {
         // get bounds of first element, so there are some defined
-        UnitRectangle bounds = getChildrenElementList().firstElement()
-                .getBounds(getChildrenParameterNode().getWidth());
+        UnitRectangle bounds = getChildrenElementList().firstElement().getBounds(
+                                                                                 getChildrenParameterNode().getWidth());
 
         UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(),
                 bounds.getHeight());
@@ -292,7 +321,7 @@ public class GroupNode extends Node {
     }
 
     /**
-     * 
+     *
      */
     public void removeLastTransformation() {
         try {

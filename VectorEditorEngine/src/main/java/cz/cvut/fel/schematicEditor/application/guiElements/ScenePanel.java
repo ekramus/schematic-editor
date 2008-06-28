@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JPanel;
 
@@ -41,7 +39,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 /**
  * This class encapsulates scene JPanel. All main listeners are implemented here. This class is applications main
  * drawing interface.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ScenePanel extends JPanel {
@@ -56,7 +54,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method instantiates one instance of <code>SceneJPanel</code>.
-     * 
+     *
      * @return <code>SceneJPanel</code> instance to use.
      */
     public static ScenePanel getInstance() {
@@ -267,6 +265,7 @@ public class ScenePanel extends JPanel {
     private void processFinalDeleteStep() {
         logger.debug("processing final DELETE step");
 
+        // this is really not necessary, it is here only for possible future uses
         Delete delete = (Delete) Structures.getManipulation();
 
         schemeInvalidate(null);
@@ -274,7 +273,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method invalidates <code>scheme</code>.
-     * 
+     *
      * @param bounds
      *            bounds of invalid region.
      */
@@ -329,7 +328,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws grid onto <code>BufferedImage</code>.
-     * 
+     *
      * @return <code>BufferedImage</code> with grid.
      */
     private BufferedImage drawGrid() {
@@ -358,7 +357,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws actual manipulated element onto <code>BufferedImage</code>.
-     * 
+     *
      * @return <code>BufferedImage</code> with actual manipulated element.
      */
     private BufferedImage drawManipulatedElement() {
@@ -408,7 +407,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws selection frame onto {@link BufferedImage}.
-     * 
+     *
      * @return {@link BufferedImage} with selection frame.
      */
     private BufferedImage drawSelectionFrame() {
@@ -432,7 +431,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws scene and it's specific features.
-     * 
+     *
      * @param g
      *            <code>Graphics</code> to draw on.
      */
@@ -491,7 +490,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws scheme onto <code>BufferedImage</code>.
-     * 
+     *
      * @return <code>BufferedImage</code> with scheme.
      */
     private BufferedImage drawScheme() {
@@ -568,7 +567,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method paints {@link ScenePanel}.
-     * 
+     *
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     @Override
