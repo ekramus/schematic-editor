@@ -19,7 +19,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class ScenePanelKeyListener implements KeyListener {
@@ -37,9 +37,8 @@ public class ScenePanelKeyListener implements KeyListener {
     }
 
     /**
-     * Key listener for {@link ScenePanel}. It scans pressed keys and invokes action based on
-     * keycodes.
-     *
+     * Key listener for {@link ScenePanel}. It scans pressed keys and invokes action based on keycodes.
+     * 
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
     public void keyPressed(KeyEvent e) {
@@ -48,7 +47,6 @@ public class ScenePanelKeyListener implements KeyListener {
                 if (Structures.getManipulation().getManipulationType() == ManipulationType.CREATE) {
                     Create create = (Create) Structures.getManipulation();
                     logger.debug("manipulation is instance of Create");
-
                     if (create.getElementModificator() == ElementModificator.NO_MODIFICATION) {
                         create.setElementModificator(ElementModificator.SYMMETRIC_ELEMENT);
                         // TODO externalize string
