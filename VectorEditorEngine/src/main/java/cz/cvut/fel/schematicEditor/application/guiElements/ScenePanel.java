@@ -29,6 +29,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -203,14 +204,16 @@ public class ScenePanel extends JPanel {
                 break;
             case MOVE:
                 processFinalSelectStep();
+                break;
             case DELETE:
                 processFinalDeleteStep();
+                break;
             default:
                 break;
         }
 
         // create new manipulation of the same type as previous
-        Structures.setManipulation(m.newInstance(m));
+        Structures.setManipulation(ManipulationFactory.duplicate(m));
     }
 
     /**
@@ -397,7 +400,6 @@ public class ScenePanel extends JPanel {
         Select select = (Select) Structures.getManipulation();
 
         GroupNode g = select.getManipulatedGroup();
-        ParameterNode pn = select.getManipulatedGroup().getChildrenParameterNode();
         sg.setTopNode(g);
 
         // try to draw elements using DisplayExport
@@ -558,6 +560,11 @@ public class ScenePanel extends JPanel {
             case MOVE:
             case SELECT:
                 processActualSelectStep();
+                break;
+            case EDIT:
+                break;
+            case DELETE:
+                break;
         }
     }
 

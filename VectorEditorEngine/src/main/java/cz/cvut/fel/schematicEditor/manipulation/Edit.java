@@ -65,7 +65,7 @@ public class Edit extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.Manipulation)
      */
     @Override
-    public Manipulation newInstance(Manipulation manipulation) {
+    protected Manipulation duplitate() {
         Edit e = new Edit();
         return e;
     }
