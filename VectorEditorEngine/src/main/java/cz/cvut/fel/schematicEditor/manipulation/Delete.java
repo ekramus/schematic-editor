@@ -49,7 +49,7 @@ public class Delete extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.Manipulation)
      */
     @Override
-    public Manipulation newInstance(Manipulation manipulation) {
+    protected Manipulation duplitate() {
         Delete d = new Delete();
         return d;
     }

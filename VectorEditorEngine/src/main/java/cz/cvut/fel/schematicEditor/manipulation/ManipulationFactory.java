@@ -61,4 +61,8 @@ public class ManipulationFactory {
                 throw new UnknownManipulationException(type);
         }
     }
+
+    public static Manipulation duplicate(Manipulation manipulation) {
+        return manipulation.duplitate();
+    }
 }

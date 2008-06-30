@@ -6,8 +6,8 @@ import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
- * This class represents create {@link Manipulation}. It is created, when user presses any button for new shape
- * creation.
+ * This class represents create {@link Manipulation}. It is created, when user presses any button
+ * for new shape creation.
  *
  * @author Urban Kravjansky
  */
@@ -152,8 +152,8 @@ public class Create extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.Manipulation)
      */
     @Override
-    public Manipulation newInstance(Manipulation manipulation) {
-        Create c = new Create(manipulation.getManipulatedElement().newInstance());
+    protected Manipulation duplitate() {
+        Create c = new Create(getManipulatedElement().newInstance());
         return c;
     }
 }

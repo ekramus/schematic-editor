@@ -52,7 +52,7 @@ public abstract class Manipulation {
      * @param manipulation
      * @return
      */
-    public abstract Manipulation newInstance(Manipulation manipulation);
+    protected abstract Manipulation duplitate();
 
     public abstract boolean isManipulatingElements();
 
