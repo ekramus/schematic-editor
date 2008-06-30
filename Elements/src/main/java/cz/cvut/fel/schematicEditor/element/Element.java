@@ -1,8 +1,6 @@
 package cz.cvut.fel.schematicEditor.element;
 
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -127,6 +125,6 @@ public abstract class Element {
     public void setElementModificator(ElementModificator elementModificator) {
         this.elementModificator = elementModificator;
     }
-    
+
     public abstract Element newInstance();
 }
