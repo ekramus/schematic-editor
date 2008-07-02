@@ -9,7 +9,6 @@ import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.DeleteButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.DrawShapeButtonListener;
-import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.EditButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.SelectButtonListener;
 import cz.cvut.fel.schematicEditor.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.shape.ArcSegment;
@@ -22,7 +21,7 @@ import cz.cvut.fel.schematicEditor.element.shape.Rectangle;
 
 /**
  * This class implements drawing tool bar. It is used for drawing tool selection.
- *
+ * 
  * @author Urban Kravjansky
  */
 public final class DrawingToolBar extends JToolBar {
@@ -39,10 +38,6 @@ public final class DrawingToolBar extends JToolBar {
      * Bezier curve button caption.
      */
     private static final String   BEZIER_BTN       = "beziere";
-    /**
-     * Edit button caption.
-     */
-    private static final String   EDIT_BTN         = "edit";
     /**
      * Line tool tip button text.
      */
@@ -74,9 +69,9 @@ public final class DrawingToolBar extends JToolBar {
     private static DrawingToolBar drawingToolBar   = null;
 
     /**
-     * {@link DrawingToolBar} is singleton. This method returns the only one instance, that exists.
-     * If none exist, one is created.
-     *
+     * {@link DrawingToolBar} is singleton. This method returns the only one instance, that exists. If none exist, one
+     * is created.
+     * 
      * @return instance of {@link DrawingToolBar}.
      */
     public static JToolBar getInstance() {
@@ -86,7 +81,6 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.setLayout(new BoxLayout(drawingToolBar, BoxLayout.Y_AXIS));
             // add buttons to the tool bar
             drawingToolBar.add(drawingToolBar.getSelectButton());
-            drawingToolBar.add(drawingToolBar.getEditButton());
             drawingToolBar.add(drawingToolBar.getDeleteButton());
             drawingToolBar.add(drawingToolBar.getLineButton());
             drawingToolBar.add(drawingToolBar.getBeziereButton());
@@ -146,8 +140,8 @@ public final class DrawingToolBar extends JToolBar {
     private JButton deleteButton     = null;
 
     /**
-     * Default constructor. It calls default constructor of super class. It is private, because
-     * {@link DrawingToolBar} is singleton.
+     * Default constructor. It calls default constructor of super class. It is private, because {@link DrawingToolBar}
+     * is singleton.
      */
     private DrawingToolBar() {
         super();
@@ -155,7 +149,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>arcButton</code> getter.
-     *
+     * 
      * @return <code>arcButton</code> instance.
      */
     private JButton getArcButton() {
@@ -169,7 +163,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>arcSegmentButton</code> getter.
-     *
+     * 
      * @return <code>arcSegmentButton</code> instance.
      */
     private JButton getArcSegmentButton() {
@@ -183,7 +177,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>beziereButton</code> getter.
-     *
+     * 
      * @return <code>beziereButton</code> instance.
      */
     private JButton getBeziereButton() {
@@ -196,22 +190,8 @@ public final class DrawingToolBar extends JToolBar {
     }
 
     /**
-     * <code>editButton</code> getter.
-     *
-     * @return <code>editButton</code> instance.
-     */
-    private JButton getEditButton() {
-        if (this.editButton == null) {
-            this.editButton = new JButton();
-            this.editButton.setText(EDIT_BTN);
-            this.editButton.addActionListener(new EditButtonListener());
-        }
-        return this.editButton;
-    }
-
-    /**
      * <code>ellipseButton</code> getter.
-     *
+     * 
      * @return <code>ellipseButton</code> instance.
      */
     private JButton getEllipseButton() {
@@ -227,7 +207,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>lineButton</code> getter.
-     *
+     * 
      * @return <code>lineButton</code> instance.
      */
     private JButton getLineButton() {
@@ -244,7 +224,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>polygonButton</code> getter.
-     *
+     * 
      * @return <code>polygonButton</code> instance.
      */
     private JButton getPolygonButton() {
@@ -258,7 +238,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>polylineButton</code> getter.
-     *
+     * 
      * @return <code>polylineButton</code> instance.
      */
     private JButton getPolylineButton() {
@@ -272,7 +252,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>rectButton</code> getter.
-     *
+     * 
      * @return <code>rectButton</code> instance.
      */
     private JButton getRectButton() {
@@ -286,7 +266,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>selectButton</code> getter.
-     *
+     * 
      * @return <code>selectButton</code> instance.
      */
     private JButton getSelectButton() {
@@ -300,7 +280,7 @@ public final class DrawingToolBar extends JToolBar {
 
     /**
      * <code>selectButton</code> getter.
-     *
+     * 
      * @return <code>selectButton</code> instance.
      */
     private JButton getDeleteButton() {

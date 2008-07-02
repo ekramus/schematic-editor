@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.management.ManagementFactory;
 
 import org.apache.log4j.Logger;
 
