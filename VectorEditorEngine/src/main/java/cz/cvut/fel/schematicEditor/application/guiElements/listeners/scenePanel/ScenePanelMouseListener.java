@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.lang.management.ManagementFactory;
+import java.sql.Struct;
 
 import javax.swing.JPopupMenu;
 
@@ -25,6 +26,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.Edit;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Move;
@@ -146,7 +148,7 @@ public class ScenePanelMouseListener implements MouseListener {
             if (mt == ManipulationType.CREATE) {
                 createManipulationEnd(e);
             } else if (mt == ManipulationType.EDIT) {
-                editManipulationEnd();
+                editManipulationEnd(e, r2d);
             } else if (mt == ManipulationType.SELECT) {
                 selectManipulationEnd(r2d);
             } else if (mt == ManipulationType.MOVE) {
@@ -239,17 +241,42 @@ public class ScenePanelMouseListener implements MouseListener {
         delete.setActive(true);
     }
 
-    private void editManipulationEnd() {
-        // nothing to do
+    private void editManipulationEnd(MouseEvent e, Rectangle2D.Double r2d) throws UnknownManipulationException {
+        Edit edit = (Edit) Structures.getManipulation();
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+
+        if (edit.isActive()) {
+            logger.debug("object EDITED");
+
+            // edit.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
+            // // replace last transformation
+            // GroupNode gn = move.getManipulatedGroup();
+            // gn.removeLastTransformation();
+            // gn.add(tn);
+            //
+            // // enable manipulated group
+            // gn.setDisabled(false);
+
+            Structures.getScenePanel().processFinalManipulationStep();
+        }
     }
 
-    private void editManipulationStart(MouseEvent e, Rectangle2D.Double r2d) {
-        logger.info("Edit element");
-        // Edit edit = (Edit) Structures.getManipulation();
+    private void editManipulationStart(MouseEvent e, Rectangle2D.Double r2d) throws UnknownManipulationException {
+        Edit edit = (Edit) Structures.getManipulation();
+        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
 
-        // in case element is hit
-        if (Structures.getScenePanel().getSchemeSG().getTopNode().isHit(r2d)) {
-            logger.info("Element hit");
+        GroupNode gn = Structures.getScenePanel().getSchemeSG().getTopNode().findHit(r2d);
+
+        // check, whether edit is possible or not
+        if (edit.isActive() && edit.getManipulatedGroup() == gn) {
+            // // set manipulated group disabled
+            // gn.setDisabled(true);
+            Structures.getScenePanel().schemeInvalidate(gn.getBounds());
+        }
+        // edit is not possible - fall back to Select manipulation
+        else {
+            Structures.setManipulation(ManipulationFactory.create(ManipulationType.SELECT));
         }
     }
 
@@ -371,28 +398,44 @@ public class ScenePanelMouseListener implements MouseListener {
         }
         // select is active AND GroupNode is already selected
         else if (Structures.getScenePanel().getSchemeSG().getTopNode().findHit(r2d) == select.getManipulatedGroup()) {
-            logger.debug("creating MOVE manipulation");
+            // select is in edit active zone
+            // TODO implement edit active zone
+            if (select.getManipulatedGroup().isEditZone(r2d)) {
+                logger.debug("creating EDIT manipulation");
 
-            // create Move manipulation
-            Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE);
+                // create Edit manipulation
+                Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT);
+            }
+            // select is in rotate active zone
+            // TODO implement rotate active zone
+            else if (select.getManipulatedGroup().isRotateZone(r2d)) {
 
-            GroupNode gn = select.getManipulatedGroup();
+            }
+            // select can be used for move
+            else if (true) {
+                logger.debug("creating MOVE manipulation");
 
-            // add identity transformation, so it can be later changed
-            gn.add(new TransformationNode(Transformation.getIdentity()));
+                // create Move manipulation
+                Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE);
 
-            move.setManipulatedGroup(gn);
-            // add two copies of same coordinates to be able to replace last one
-            move.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-            move.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-            // set manipulation active
-            move.setActive(true);
+                GroupNode gn = select.getManipulatedGroup();
 
-            // set manipulated group disabled
-            gn.setDisabled(true);
-            Structures.getScenePanel().schemeInvalidate(gn.getBounds());
+                // add identity transformation, so it can be later changed
+                gn.add(new TransformationNode(Transformation.getIdentity()));
 
-            Structures.setManipulation(move);
+                move.setManipulatedGroup(gn);
+                // add two copies of same coordinates to be able to replace last one
+                move.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                move.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                // set manipulation active
+                move.setActive(true);
+
+                // set manipulated group disabled
+                gn.setDisabled(true);
+                Structures.getScenePanel().schemeInvalidate(gn.getBounds());
+
+                Structures.setManipulation(move);
+            }
         }
     }
 

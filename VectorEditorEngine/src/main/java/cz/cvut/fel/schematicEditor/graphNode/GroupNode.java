@@ -18,7 +18,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class represents Group Node in scene graph.
- *
+ * 
  * @author uk
  */
 public class GroupNode extends Node {
@@ -59,7 +59,7 @@ public class GroupNode extends Node {
 
     /**
      * This method adds child node into this node.
-     *
+     * 
      * @param child
      *            child node to add.
      */
@@ -84,7 +84,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns transformation applied on this group.
-     *
+     * 
      * @return
      */
     public Transformation getTransformation() {
@@ -97,7 +97,7 @@ public class GroupNode extends Node {
 
     /**
      * Getter for group
-     *
+     * 
      * @return group node.
      */
     public GroupNode getGroup() {
@@ -160,7 +160,7 @@ public class GroupNode extends Node {
 
     /**
      * Delete element, which is hit.
-     *
+     * 
      * @param r2d
      * @return <code>true</code>, if hit and deleted, else <code>false</code>.
      */
@@ -188,7 +188,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns list of GroupNode children
-     *
+     * 
      * @return childrenGroupList;
      */
     public LinkedList<GroupNode> getChildrenGroupList() {
@@ -197,7 +197,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns list of ElementNode children
-     *
+     * 
      * @return childrenElementList;
      */
     public Vector<ElementNode> getChildrenElementList() {
@@ -206,7 +206,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns ParameterNode
-     *
+     * 
      * @return childrenParameterNode;
      */
     public ParameterNode getChildrenParameterNode() {
@@ -234,7 +234,7 @@ public class GroupNode extends Node {
     /**
      * Getter for <code>NodeArray</code> with corrected <code>TransformationNode</code> and
      * <code>ParameterNode</code>.
-     *
+     * 
      * @param tn
      *            transformation node.
      * @param pn
@@ -256,8 +256,7 @@ public class GroupNode extends Node {
         if (tn == null) {
             t = new TransformationNode(getTransformation());
         } else {
-            t = new TransformationNode(Transformation.multiply(getTransformation(),
-                                                               tn.getTransformation()));
+            t = new TransformationNode(Transformation.multiply(getTransformation(), tn.getTransformation()));
         }
 
         result.add(t);
@@ -306,11 +305,9 @@ public class GroupNode extends Node {
 
     public UnitRectangle getBounds() {
         // get bounds of first element, so there are some defined
-        UnitRectangle bounds = getChildrenElementList().firstElement().getBounds(
-                                                                                 getChildrenParameterNode().getWidth());
+        UnitRectangle bounds = getChildrenElementList().firstElement().getBounds(getChildrenParameterNode().getWidth());
 
-        UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(),
-                bounds.getHeight());
+        UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
         logger.debug("1st getBounds: " + result);
 
@@ -324,7 +321,7 @@ public class GroupNode extends Node {
     }
 
     /**
-     *
+     * 
      */
     public void removeLastTransformation() {
         try {
@@ -332,5 +329,29 @@ public class GroupNode extends Node {
         } catch (NoSuchElementException nsee) {
             logger.debug("no transformation to remove");
         }
+    }
+
+    /**
+     * Detects, whether given rectangle is in edit zone. If it is, it means, edit should be invoked.
+     * 
+     * @param r2d
+     *            rectangle around pointer.
+     * @return <code>true</code> if given rectangle contains any edit point from group, else <code>false</code>.
+     */
+    public boolean isEditZone(Rectangle2D.Double r2d) {
+        // TODO implement functionality
+        return false;
+    }
+
+    /**
+     * Detects, whether given rectangle is in rotate zone. If it is, it means, rotate should be invoked.
+     * 
+     * @param r2d
+     *            rectangle around pointer.
+     * @return <code>true</code> if given rectangle is in rotate point of whole group, else <code>false</code>.
+     */
+    public boolean isRotateZone(Rectangle2D.Double r2d) {
+        // TODO implement functionality
+        return false;
     }
 }
