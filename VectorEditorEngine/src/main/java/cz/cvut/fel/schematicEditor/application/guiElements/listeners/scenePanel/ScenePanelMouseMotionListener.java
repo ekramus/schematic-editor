@@ -21,7 +21,7 @@ import cz.cvut.fel.schematicEditor.types.Transformation;
 
 /**
  * This class impelements {@link MouseMotionListener} for {@link ScenePanel}.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class ScenePanelMouseMotionListener implements MouseMotionListener {
@@ -40,14 +40,14 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
     /**
      * Method for mouse drag events processing.
-     *
+     * 
      * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
      */
     public void mouseDragged(MouseEvent e) {
         try {
             Structures.getStatusBar().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-            Snap s = new Snap(Structures.getScenePanel().getGridSize(),
-                    Structures.getScenePanel().isSnapToGrid());
+            Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+            logger.trace(s);
 
             // manipulation is create
             ManipulationType mt = Structures.getManipulation().getManipulationType();
@@ -66,13 +66,11 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
                 // compute delta
                 int i = move.getX().size() - 2;
-                Point2D delta = new Point2D.Double(move.getX().lastElement().doubleValue()
-                                                   - move.getX().get(i).doubleValue(),
-                        move.getY().lastElement().doubleValue() - move.getY().get(i).doubleValue());
+                Point2D delta = new Point2D.Double(move.getX().lastElement().doubleValue() - move.getX().get(i)
+                        .doubleValue(), move.getY().lastElement().doubleValue() - move.getY().get(i).doubleValue());
 
                 // create transformation node using delta
-                TransformationNode tn = new TransformationNode(
-                        Transformation.getShift(delta.getX(), delta.getY()));
+                TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(), delta.getY()));
                 // replace last transformation
                 GroupNode gn = move.getManipulatedGroup();
                 gn.removeLastTransformation();
@@ -88,14 +86,13 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
     /**
      * Method for mouse move events processing.
-     *
+     * 
      * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
      */
     public void mouseMoved(MouseEvent e) {
         try {
             Structures.getStatusBar().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-            Snap s = new Snap(Structures.getScenePanel().getGridSize(),
-                    Structures.getScenePanel().isSnapToGrid());
+            Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
 
             // manipulation is active
             if (Structures.getManipulation().isActive()) {
@@ -104,8 +101,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                     Create create = (Create) Structures.getManipulation();
                     // manipulation is not in stage one (not the first part of shape is drawn)
                     if (create.getStage() != Create.STAGE_ONE) {
-                        create.replaceLastManipulationCoordinates(s.getSnap(e.getX()),
-                                                                  s.getSnap(e.getY()));
+                        create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
                         Structures.getScenePanel().processActualManipulationStep();
                     }

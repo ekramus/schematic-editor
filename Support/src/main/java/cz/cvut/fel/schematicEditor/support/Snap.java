@@ -47,7 +47,7 @@ public class Snap {
             return new Pixel(coordinate);
         }
         result = new Pixel(
-                getGridSize().doubleValue() * ((int) (coordinate + getGridSize().doubleValue() / 2) / getGridSize()
+                getGridSize().doubleValue() * (int) ((coordinate + getGridSize().doubleValue() / 2) / getGridSize()
                         .doubleValue()));
 
         return result;
@@ -89,5 +89,13 @@ public class Snap {
      */
     private void setSnap(boolean snap) {
         this.snap = snap;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "grid size: " + getGridSize() + "\tis snap: " + isSnap();
     }
 }
