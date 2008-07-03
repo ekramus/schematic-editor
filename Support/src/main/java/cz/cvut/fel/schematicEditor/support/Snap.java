@@ -4,11 +4,10 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
- * This class implements <em>snap to grid</em> feature. It is dependent on <code>gridSize</code> and
- * <code>snap</code> attributes.
- * 
- * @author Urban Kravjanský
- * 
+ * This class implements <em>snap to grid</em> feature. It is dependent on <code>gridSize</code>
+ * and <code>snap</code> attributes.
+ *
+ * @author Urban Kravjanskï¿½
  */
 public class Snap {
     /**
@@ -22,7 +21,7 @@ public class Snap {
 
     /**
      * Constructor used for {@link Snap} initialization.
-     * 
+     *
      * @param gridSize
      *            size of grid (grid is created from squares).
      * @param snap
@@ -35,7 +34,7 @@ public class Snap {
 
     /**
      * Get snapped coordinate. In case snap to grid is disabled, coordinate will be unchanged.
-     * 
+     *
      * @param coordinate
      *            coordinate to snap.
      * @return Snapped coordinate value.
@@ -47,15 +46,15 @@ public class Snap {
             return new Pixel(coordinate);
         }
         result = new Pixel(
-                getGridSize().doubleValue() * (int) ((coordinate + getGridSize().doubleValue() / 2) / getGridSize()
-                        .doubleValue()));
+                getGridSize().doubleValue()
+                        * (int) ((coordinate + getGridSize().doubleValue() / 2) / getGridSize().doubleValue()));
 
         return result;
     }
 
     /**
      * Getter for <code>gridSize</code>.
-     * 
+     *
      * @return the gridSize
      */
     private Unit getGridSize() {
@@ -64,7 +63,7 @@ public class Snap {
 
     /**
      * Setter for <code>gridSize</code>.
-     * 
+     *
      * @param gridSize
      *            the gridSize to set
      */
@@ -74,7 +73,7 @@ public class Snap {
 
     /**
      * Getter for <code>snap</code>.
-     * 
+     *
      * @return the isSnap
      */
     private boolean isSnap() {
@@ -83,7 +82,7 @@ public class Snap {
 
     /**
      * Setter for <code>snap</code>.
-     * 
+     *
      * @param snap
      *            the snap to set
      */

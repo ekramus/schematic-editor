@@ -22,8 +22,8 @@ public abstract class Element {
      */
     public static final int    ZERO_COORDINATES     = 0;
 
-    protected Vector<Unit>   x;
-    protected Vector<Unit>   y;
+    protected Vector<Unit>     x;
+    protected Vector<Unit>     y;
 
     private ElementModificator elementModificator;
 

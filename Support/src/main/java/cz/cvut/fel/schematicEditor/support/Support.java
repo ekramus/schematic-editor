@@ -9,15 +9,15 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
  * This class is used for static support methods. It will be deprecated in time.
- * 
- * @author Urban Kravjanský
+ *
+ * @author Urban Kravjanskï¿½
  */
 @Deprecated
 public class Support {
 
     /**
      * Calculates distance between given point and line.
-     * 
+     *
      * @param p
      *            given point.
      * @param l
@@ -32,14 +32,13 @@ public class Support {
         double y1 = l.getY1();
         double y2 = l.getY2();
 
-        return Math.abs((x2 - x1) * (y1 - b) - (x1 - a) * (y2 - y1)) / Math.sqrt((x2 - x1) * (x2 - x1)
-                + (y2 - y1)
-                * (y2 - y1));
+        return Math.abs((x2 - x1) * (y1 - b) - (x1 - a) * (y2 - y1))
+               / Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     }
 
     /**
      * Calculates distance between two given points.
-     * 
+     *
      * @param p1
      *            given 1st point.
      * @param p2
@@ -57,7 +56,7 @@ public class Support {
 
     /**
      * Calculates middle point between two given points.
-     * 
+     *
      * @param p1
      *            given 1st point.
      * @param p2
@@ -70,7 +69,7 @@ public class Support {
 
     /**
      * Calculates average of two given {@link Unit}s.
-     * 
+     *
      * @param a
      *            given 1st {@link Unit}.
      * @param b
@@ -83,7 +82,7 @@ public class Support {
 
     /**
      * Calculates rectangle of given size around given point.
-     * 
+     *
      * @param point
      *            center point of rectangle.
      * @param size
@@ -91,7 +90,8 @@ public class Support {
      * @return Calculated {@link Rectangle2D.Double}.
      */
     public static Rectangle2D.Double createPointerRectangle(Point2D.Double point, double size) {
-        Rectangle2D.Double result = new Rectangle2D.Double(point.getX() - size, point.getY() - size, 2 * size, 2 * size);
+        Rectangle2D.Double result = new Rectangle2D.Double(point.getX() - size,
+                point.getY() - size, 2 * size, 2 * size);
 
         return result;
     }
