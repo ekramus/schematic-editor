@@ -20,7 +20,7 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 /**
  * This class implements methods used in all {@link Launcher} classes. This methods are mainly used
  * for configuration.
- *
+ * 
  * @author Urban Kravjanský
  */
 public abstract class Launcher {

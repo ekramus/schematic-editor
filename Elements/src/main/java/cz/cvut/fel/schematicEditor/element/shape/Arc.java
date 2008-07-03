@@ -14,7 +14,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * This class implements arc shape. It is represented by two data vectors.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Arc extends Ellipse {
@@ -24,7 +24,8 @@ public class Arc extends Ellipse {
     private static Logger logger;
 
     /**
-     * Default constructor for {@link Arc}. It contains <code>logger</code> instance initialization.
+     * Default constructor for {@link Arc}. It contains <code>logger</code> instance
+     * initialization.
      */
     public Arc() {
         super();
@@ -33,9 +34,10 @@ public class Arc extends Ellipse {
     }
 
     /**
-     * Constructor with parameters. First element contains start point, second contains width and height, third arc
-     * start point and fourth is arc end point. Arc is drawn in counterclockwise direction.
-     * 
+     * Constructor with parameters. First element contains start point, second contains width and
+     * height, third arc start point and fourth is arc end point. Arc is drawn in counterclockwise
+     * direction.
+     *
      * @param x
      * @param y
      */
@@ -46,16 +48,18 @@ public class Arc extends Ellipse {
     }
 
     /**
-     * This method returns value of angle, where arc starts. If no angle is set, it returns default value, which is set
-     * to 0 degrees.
-     * 
+     * This method returns value of angle, where arc starts. If no angle is set, it returns default
+     * value, which is set to 0 degrees.
+     *
      * @return Value of arc start angle.
      */
     public double getStartAngle() {
         try {
             // calculate points
-            Point2D.Double arcStart = new Point2D.Double(getX().get(2).doubleValue(), getY().get(2).doubleValue());
-            Point2D.Double arcCenter = new Point2D.Double(Support.average(getX().get(0), getX().get(1)).doubleValue(),
+            Point2D.Double arcStart = new Point2D.Double(getX().get(2).doubleValue(),
+                    getY().get(2).doubleValue());
+            Point2D.Double arcCenter = new Point2D.Double(
+                    Support.average(getX().get(0), getX().get(1)).doubleValue(),
                     Support.average(getY().get(0), getY().get(1)).doubleValue());
             Point2D.Double arcZero = new Point2D.Double(arcCenter.getX() + 1, arcCenter.getY());
 
@@ -74,16 +78,18 @@ public class Arc extends Ellipse {
     }
 
     /**
-     * This method returns value of angle of arc. If no angle is set, it returns default value, which is set to 360
-     * degrees.
-     * 
+     * This method returns value of angle of arc. If no angle is set, it returns default value,
+     * which is set to 360 degrees.
+     *
      * @return Value of arc angle.
      */
     public double getArcAngle() {
         try {
             // calculate points
-            Point2D.Double arcEnd = new Point2D.Double(getX().get(3).doubleValue(), getY().get(3).doubleValue());
-            Point2D.Double arcCenter = new Point2D.Double(Support.average(getX().get(0), getX().get(1)).doubleValue(),
+            Point2D.Double arcEnd = new Point2D.Double(getX().get(3).doubleValue(),
+                    getY().get(3).doubleValue());
+            Point2D.Double arcCenter = new Point2D.Double(
+                    Support.average(getX().get(0), getX().get(1)).doubleValue(),
                     Support.average(getY().get(0), getY().get(1)).doubleValue());
             Point2D.Double arcZero = new Point2D.Double(arcCenter.getX() + 1, arcCenter.getY());
 
@@ -120,13 +126,13 @@ public class Arc extends Ellipse {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
     public boolean isHit(Rectangle2D.Double rectangle) {
-        Arc2D.Double a2d = new Arc2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight(), getStartAngle(),
-                getArcAngle(), Arc2D.PIE);
+        Arc2D.Double a2d = new Arc2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight(),
+                getStartAngle(), getArcAngle(), Arc2D.PIE);
         if (a2d.intersects(rectangle) || a2d.contains(rectangle)) {
             return true;
         }
@@ -135,7 +141,7 @@ public class Arc extends Ellipse {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -154,7 +160,7 @@ public class Arc extends Ellipse {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Ellipse#newInstance()
      */
     @Override
