@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.element.shape;
 
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import java.util.Vector;
@@ -87,7 +88,6 @@ public class Polyline extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -104,7 +104,8 @@ public class Polyline extends Shape {
         return Element.INFINITE_COORDINATES;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
