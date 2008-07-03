@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element;
 
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
@@ -9,7 +10,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This is abstract class representing all elements.
- *
+ * 
  * @author uk
  */
 public abstract class Element {
@@ -38,7 +39,7 @@ public abstract class Element {
 
     /**
      * This is the constructor.
-     *
+     * 
      * @param x
      *            Vector of x coordinates.
      * @param y
@@ -88,25 +89,40 @@ public abstract class Element {
     /**
      * This method calculates and then returns bounds of element. This bound does not need to be
      * necesserilly the closest.
-     *
+     * 
      * @return Bounds of element.
      */
     public abstract UnitRectangle getBounds();
 
     /**
      * This method indicates, whether given point hits this element.
-     *
+     * 
      * @param point
      *            hit point to check.
      * @return Status of hit.
      */
-    public abstract boolean isHit(Rectangle2D.Double point);
+    public abstract boolean isHit(Rectangle2D.Double r2d);
+
+    /**
+     * Indicates, whether given rectangle is in edit zone or not.
+     */
+    public boolean isEditZone(Rectangle2D.Double r2d) {
+        for (int i = 0; i < getX().size(); i++) {
+            Point2D.Double p = new Point2D.Double(getX().elementAt(i).doubleValue(),
+                    getY().elementAt(i).doubleValue());
+            if (r2d.contains(p)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public abstract int getElementType();
 
     /**
      * This method returns number of coordinates needed to create given {@link Element}.
-     *
+     * 
      * @return Number of coordinates neccesarry to create given element.
      */
     public abstract int getNumberOfCoordinates();

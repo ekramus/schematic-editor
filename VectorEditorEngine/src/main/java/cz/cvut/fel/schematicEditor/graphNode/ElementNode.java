@@ -21,7 +21,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class represents Element Node in scene graph.
- *
+ * 
  * @author uk
  */
 public class ElementNode extends Node {
@@ -36,7 +36,7 @@ public class ElementNode extends Node {
 
     /**
      * This is constructor.
-     *
+     * 
      * @param element
      *            <code>Element</code> to create <code>ElementNode</code> with.
      */
@@ -47,7 +47,7 @@ public class ElementNode extends Node {
 
     /**
      * This is constructor.
-     *
+     * 
      * @param element
      *            <code>Element</code> to create <code>ElementNode</code> with.
      * @param id
@@ -60,7 +60,7 @@ public class ElementNode extends Node {
 
     /**
      * This method is used to initialize element.
-     *
+     * 
      * @param element
      */
 
@@ -101,7 +101,7 @@ public class ElementNode extends Node {
 
     /**
      * Getter for element bounds.
-     *
+     * 
      * @param boundModifier
      *            modifier which affects boundary size of element.
      * @return Bounds of element.
@@ -117,7 +117,7 @@ public class ElementNode extends Node {
 
     /**
      * Getter for <code>elementType</code>.
-     *
+     * 
      * @return the elementType
      */
     public int getElementType() {
@@ -126,7 +126,7 @@ public class ElementNode extends Node {
 
     /**
      * Getter for <code>element</code>.
-     *
+     * 
      * @return the element
      */
     public Element getElement() {
@@ -138,5 +138,12 @@ public class ElementNode extends Node {
             return false;
         }
         return element.isHit(point);
+    }
+
+    public boolean isEditZone(Rectangle2D.Double point) {
+        if (isDisabled()) {
+            return false;
+        }
+        return element.isEditZone(point);
     }
 }
