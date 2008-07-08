@@ -1,8 +1,6 @@
-/**
- *
- */
 package cz.cvut.fel.schematicEditor.manipulation;
 
+import cz.cvut.fel.schematicEditor.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.types.Transformation;
 
@@ -10,25 +8,29 @@ import cz.cvut.fel.schematicEditor.types.Transformation;
  * @author uk
  */
 public class Edit extends Manipulation {
-    private GroupNode manipulatedGroup;
-
-    /**
-     *
-     */
-    protected Edit() {
-        super(null);
-        setManipulatedGroup(null);
-    }
-
-    public final void setManipulatedGroup(GroupNode manipulatedGroup) {
-        this.manipulatedGroup = manipulatedGroup;
-    }
+    private GroupNode manipulatedGroup = null;
 
     /**
      * @return the manipulatedGroup
      */
-    public final GroupNode getManipulatedGroup() {
+    public GroupNode getManipulatedGroup() {
         return this.manipulatedGroup;
+    }
+
+    /**
+     * @param manipulatedGroup
+     *            the groupNode to set
+     */
+    public void setManipulatedGroup(GroupNode manipulatedGroup) {
+        this.manipulatedGroup = manipulatedGroup;
+    }
+
+    /**
+     * 
+     */
+    protected Edit(Element element) {
+        super(element);
+        setManipulatedGroup(null);
     }
 
     /**
@@ -50,7 +52,7 @@ public class Edit extends Manipulation {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
@@ -61,12 +63,12 @@ public class Edit extends Manipulation {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.Manipulation)
      */
     @Override
     protected Manipulation duplitate() {
-        Edit e = new Edit();
+        Edit e = new Edit(getManipulatedElement());
         return e;
     }
 }
