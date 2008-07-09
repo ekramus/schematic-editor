@@ -14,6 +14,7 @@ import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.types.Transformation;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -256,8 +257,7 @@ public class GroupNode extends Node {
         if (tn == null) {
             t = new TransformationNode(getTransformation());
         } else {
-            t = new TransformationNode(Transformation.multiply(getTransformation(),
-                                                               tn.getTransformation()));
+            t = new TransformationNode(Transformation.multiply(getTransformation(), tn.getTransformation()));
         }
 
         result.add(t);
@@ -306,11 +306,9 @@ public class GroupNode extends Node {
 
     public UnitRectangle getBounds() {
         // get bounds of first element, so there are some defined
-        UnitRectangle bounds = getChildrenElementList().firstElement().getBounds(
-                                                                                 getChildrenParameterNode().getWidth());
+        UnitRectangle bounds = getChildrenElementList().firstElement().getBounds(getChildrenParameterNode().getWidth());
 
-        UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(),
-                bounds.getHeight());
+        UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
         logger.debug("1st getBounds: " + result);
 
@@ -339,10 +337,9 @@ public class GroupNode extends Node {
      * 
      * @param r2d
      *            rectangle around pointer.
-     * @return <code>true</code> if given rectangle contains any edit point from group, else
-     *         <code>false</code>.
+     * @return <code>true</code> if given rectangle contains any edit point from group, else <code>false</code>.
      */
-    public boolean isEditZone(Rectangle2D.Double r2d) {
+    public boolean startEditing(Rectangle2D.Double r2d) {
         if (isDisabled()) {
             return false;
         }
@@ -350,15 +347,14 @@ public class GroupNode extends Node {
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isEditZone(getTransformation().shiftInverse(r2d))) {
-                logger.debug("element edit zone HIT: " + child + " transformation: "
-                             + getTransformation());
+            if (child.startEditing(getTransformation().shiftInverse(r2d))) {
+                logger.debug("element edit zone HIT: " + child + " transformation: " + getTransformation());
                 return true;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            if (child.isEditZone(r2d)) {
+            if (child.startEditing(r2d)) {
                 return true;
             }
         }
@@ -367,16 +363,53 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Detects, whether given rectangle is in rotate zone. If it is, it means, rotate should be
-     * invoked.
+     * Detects, whether given rectangle is in rotate zone. If it is, it means, rotate should be invoked.
      * 
      * @param r2d
      *            rectangle around pointer.
-     * @return <code>true</code> if given rectangle is in rotate point of whole group, else
-     *         <code>false</code>.
+     * @return <code>true</code> if given rectangle is in rotate point of whole group, else <code>false</code>.
      */
     public boolean isRotateZone(Rectangle2D.Double r2d) {
         // TODO implement functionality
         return false;
+    }
+
+    public boolean isEdited() {
+        for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
+            ElementNode child = getChildrenElementList().get(i);
+            if (child.isEdited()) {
+                return true;
+            }
+        }
+        for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
+            GroupNode child = getChildrenGroupList().get(i);
+            if (child.isEdited()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param ep
+     */
+    public void stopEditing(UnitPoint delta) {
+        if (isEdited()) {
+            for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
+                ElementNode child = getChildrenElementList().get(i);
+                if (child.isEdited()) {
+                    child.stopEditing(delta);
+                    return;
+                }
+            }
+            for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
+                GroupNode child = getChildrenGroupList().get(i);
+                if (child.isEdited()) {
+                    child.stopEditing(delta);
+                    return;
+                }
+            }
+        }
     }
 }

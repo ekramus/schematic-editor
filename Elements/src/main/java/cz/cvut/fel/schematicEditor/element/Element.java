@@ -2,9 +2,11 @@ package cz.cvut.fel.schematicEditor.element;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -22,6 +24,10 @@ public abstract class Element {
      * Zero number of coordinates.
      */
     public static final int    ZERO_COORDINATES     = 0;
+    /**
+     * Index of edited point.
+     */
+    private int                editedPointIndex     = 0;
 
     protected Vector<Unit>     x;
     protected Vector<Unit>     y;
@@ -87,8 +93,8 @@ public abstract class Element {
     }
 
     /**
-     * This method calculates and then returns bounds of element. This bound does not need to be
-     * necesserilly the closest.
+     * This method calculates and then returns bounds of element. This bound does not need to be necesserilly the
+     * closest.
      * 
      * @return Bounds of element.
      */
@@ -106,15 +112,16 @@ public abstract class Element {
     /**
      * Indicates, whether given rectangle is in edit zone or not.
      */
-    public boolean isEditZone(Rectangle2D.Double r2d) {
+    public boolean startEditing(Rectangle2D.Double r2d) {
         for (int i = 0; i < getX().size(); i++) {
-            Point2D.Double p = new Point2D.Double(getX().elementAt(i).doubleValue(),
-                    getY().elementAt(i).doubleValue());
+            Point2D.Double p = new Point2D.Double(getX().elementAt(i).doubleValue(), getY().elementAt(i).doubleValue());
             if (r2d.contains(p)) {
+                setEditedPointIndex(i);
                 return true;
             }
         }
 
+        setEditedPointIndex(-1);
         return false;
     }
 
@@ -143,4 +150,36 @@ public abstract class Element {
     }
 
     public abstract Element newInstance();
+
+    /**
+     * @param delta
+     */
+    public void stopEditing(UnitPoint delta) {
+        double x = getX().get(getEditedPointIndex()).doubleValue();
+        double y = getY().get(getEditedPointIndex()).doubleValue();
+
+        x += delta.getX();
+        y += delta.getY();
+
+        getX().set(getEditedPointIndex(), new Pixel(x));
+        getY().set(getEditedPointIndex(), new Pixel(y));
+
+        setEditedPointIndex(-1);
+    }
+
+    /**
+     * @return the editedPointIndex
+     */
+    private int getEditedPointIndex() {
+        return this.editedPointIndex;
+    }
+
+    /**
+     * @param editedPointIndex
+     *            the editedPointIndex to set
+     */
+    private void setEditedPointIndex(int editedPointIndex) {
+        this.editedPointIndex = editedPointIndex;
+    }
+
 }
