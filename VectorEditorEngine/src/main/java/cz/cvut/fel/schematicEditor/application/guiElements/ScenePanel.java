@@ -392,10 +392,9 @@ public class ScenePanel extends JPanel {
         // create SceneGraph
         SceneGraph sg = new SceneGraph();
 
-        // TODO remove binding to Select class
-        Select select = (Select) Structures.getManipulation();
-
-        GroupNode g = select.getManipulatedGroup();
+        // get manipulated group
+        Manipulation manipulation = Structures.getManipulation();
+        GroupNode g = manipulation.getManipulatedGroup();
         sg.setTopNode(g);
 
         // try to draw elements using DisplayExport

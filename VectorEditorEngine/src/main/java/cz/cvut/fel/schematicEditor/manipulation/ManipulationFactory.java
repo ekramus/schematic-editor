@@ -33,6 +33,8 @@ public class ManipulationFactory {
                 return new Move();
             case SELECT:
                 return new Select();
+            case EDIT:
+                return new Edit();
             default:
                 throw new UnknownManipulationException(type);
         }
@@ -53,8 +55,6 @@ public class ManipulationFactory {
         switch (type) {
             case CREATE:
                 return new Create((Element) data);
-            case EDIT:
-                return new Edit((Element) data);
             default:
                 throw new UnknownManipulationException(type);
         }
