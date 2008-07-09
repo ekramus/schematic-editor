@@ -244,17 +244,20 @@ public class ScenePanelMouseListener implements MouseListener {
         Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
 
         if (edit.isActive()) {
-            logger.debug("object EDITED");
+            logger.trace("object EDITED");
 
             // edit.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-            // // replace last transformation
-            // GroupNode gn = move.getManipulatedGroup();
-            // gn.removeLastTransformation();
-            // gn.add(tn);
-            //
-            // // enable manipulated group
-            // gn.setDisabled(false);
+            // replace last transformation
+            GroupNode gn = edit.getManipulatedGroup();
+
+            // enable manipulated group
+            gn.setDisabled(false);
+
+            // create select manipulation, so manipulation can proceed as select
+            Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
+            select.setManipulatedGroup(gn);
+            Structures.setManipulation(select);
 
             Structures.getScenePanel().processFinalManipulationStep();
         }
@@ -268,8 +271,8 @@ public class ScenePanelMouseListener implements MouseListener {
 
         // check, whether edit is possible or not
         if (edit.isActive() && edit.getManipulatedGroup() == gn) {
-            // // set manipulated group disabled
-            // gn.setDisabled(true);
+            // set manipulated group disabled
+            gn.setDisabled(true);
             Structures.getScenePanel().schemeInvalidate(gn.getBounds());
         }
         // edit is not possible - fall back to Select manipulation
@@ -302,7 +305,12 @@ public class ScenePanelMouseListener implements MouseListener {
             // enable manipulated group
             gn.setDisabled(false);
 
-            logger.debug("MOVE transformation: " + tn.getTransformation());
+            logger.trace("MOVE transformation: " + tn.getTransformation());
+
+            // create select manipulation, so manipulation can proceed as select
+            Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
+            select.setManipulatedGroup(gn);
+            Structures.setManipulation(select);
 
             Structures.getScenePanel().processFinalManipulationStep();
         }

@@ -202,12 +202,11 @@ public class ScenePanel extends JPanel {
             case CREATE:
                 processFinalCreateStep();
                 break;
-            case MOVE:
-                processFinalSelectStep();
-                break;
             case DELETE:
                 processFinalDeleteStep();
                 break;
+            case SELECT:
+                processFinalSelectStep();
             default:
                 break;
         }
@@ -415,12 +414,10 @@ public class ScenePanel extends JPanel {
         // create new selection frame
         BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        // TODO remove Select class
-        GroupNode gn = ((Select) Structures.getManipulation()).getManipulatedGroup();
-        Transformation t = ((Select) Structures.getManipulation()).getManipulatedGroup().getTransformation();
+        GroupNode gn = Structures.getManipulation().getManipulatedGroup();
+        Transformation t = Structures.getManipulation().getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) selectionFrame.getGraphics();
-        // TODO correct boundary drawing
         Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
                 .getWidth(), gn.getBounds().getHeight());
         rect = t.shift(rect);
@@ -428,6 +425,30 @@ public class ScenePanel extends JPanel {
         g2d.draw(rect);
 
         return selectionFrame;
+    }
+
+    /**
+     * Draws edit frame onto {@link BufferedImage}.
+     * 
+     * @return {@link BufferedImage} with edit frame.
+     * @throws UnknownManipulationException
+     *             In case of unknown manipulation.
+     */
+    private BufferedImage drawEditFrame() throws UnknownManipulationException {
+        // create new edit frame
+        BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        GroupNode gn = Structures.getManipulation().getManipulatedGroup();
+        Transformation t = Structures.getManipulation().getManipulatedGroup().getTransformation();
+
+        Graphics2D g2d = (Graphics2D) editFrame.getGraphics();
+        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
+                .getWidth(), gn.getBounds().getHeight());
+        rect = t.shift(rect);
+        g2d.setColor(Color.ORANGE);
+        g2d.draw(rect);
+
+        return editFrame;
     }
 
     /**
@@ -489,11 +510,20 @@ public class ScenePanel extends JPanel {
             g2d.drawImage(manipulatedElement, 0, 0, null);
         }
 
-        // draw frame around selected element
-        if (Structures.getManipulation().isActive() && Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
-            logger.debug("selected element frame drawing");
-            BufferedImage selectionFrame = drawSelectionFrame();
-            g2d.drawImage(selectionFrame, 0, 0, null);
+        // highlight manipulated group
+        if (Structures.getManipulation().isActive()) {
+            // draw frame around selected group
+            if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
+                logger.trace("selected element frame drawing");
+                BufferedImage selectionFrame = drawSelectionFrame();
+                g2d.drawImage(selectionFrame, 0, 0, null);
+            }
+            // draw frame around selected group
+            else if (Structures.getManipulation().getManipulationType() == ManipulationType.EDIT) {
+                logger.trace("create element frame drawing");
+                BufferedImage selectionFrame = drawEditFrame();
+                g2d.drawImage(selectionFrame, 0, 0, null);
+            }
         }
     }
 
@@ -606,9 +636,10 @@ public class ScenePanel extends JPanel {
      *             In case of unknown manipulation.
      */
     private void processFinalSelectStep() throws UnknownManipulationException {
-        logger.debug("processing final SELECT step");
+        logger.trace("processing final SELECT step");
 
         Select select = (Select) Structures.getManipulation();
+        select.setActive(true);
 
         GroupNode gn = select.getManipulatedGroup();
 
