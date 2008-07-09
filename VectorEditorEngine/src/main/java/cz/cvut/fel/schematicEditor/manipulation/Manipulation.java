@@ -1,5 +1,5 @@
 /**
- *
+ * 
  */
 package cz.cvut.fel.schematicEditor.manipulation;
 
@@ -7,12 +7,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.Element;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * @author uk
  */
 public abstract class Manipulation {
+    private GroupNode    manipulatedGroup;
     private Element      manipulatedElement;
     /**
      * This field represents x coordinates of manipulated element.
@@ -26,29 +28,38 @@ public abstract class Manipulation {
     private boolean      active;
 
     /**
-     *
+     * Finalizes initialization.
      */
-    protected Manipulation() {
+    private void finalizeInit() {
         setActive(false);
 
         this.x = new Vector<Unit>();
         this.y = new Vector<Unit>();
+
+        setManipulatedGroup(null);
     }
 
     /**
-     *
+     * 
+     */
+    protected Manipulation() {
+        setManipulatedElement(null);
+
+        finalizeInit();
+    }
+
+    /**
+     * 
      */
     public Manipulation(Element manipulatedElement) {
-        this.active = false;
-        this.manipulatedElement = manipulatedElement;
+        setManipulatedElement(manipulatedElement);
 
-        this.x = new Vector<Unit>();
-        this.y = new Vector<Unit>();
+        finalizeInit();
     }
 
     /**
      * Creates new instance of {@link Manipulation}.
-     *
+     * 
      * @param manipulation
      * @return
      */
@@ -99,9 +110,8 @@ public abstract class Manipulation {
     }
 
     /**
-     * Manipulation active state. If is manipulation active, it means, it is being currently
-     * processed.
-     *
+     * Manipulation active state. If is manipulation active, it means, it is being currently processed.
+     * 
      * @return active state of current manipulation.
      */
     public boolean isActive() {
@@ -118,10 +128,33 @@ public abstract class Manipulation {
 
     /**
      * This method returns manipulation type of used manipulation.
-     *
+     * 
      * @return Type of {@link Manipulation}.
      */
     public abstract ManipulationType getManipulationType();
 
     public abstract boolean isManipulatingGroups();
+
+    /**
+     * @return the manipulatedGroup
+     */
+    public GroupNode getManipulatedGroup() {
+        return this.manipulatedGroup;
+    }
+
+    /**
+     * @param manipulatedGroup
+     *            the manipulatedGroup to set
+     */
+    public void setManipulatedGroup(GroupNode manipulatedGroup) {
+        this.manipulatedGroup = manipulatedGroup;
+    }
+
+    /**
+     * @param manipulatedElement
+     *            the manipulatedElement to set
+     */
+    private void setManipulatedElement(Element manipulatedElement) {
+        this.manipulatedElement = manipulatedElement;
+    }
 }

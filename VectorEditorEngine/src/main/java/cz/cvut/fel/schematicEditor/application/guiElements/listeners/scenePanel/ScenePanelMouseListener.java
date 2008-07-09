@@ -403,8 +403,8 @@ public class ScenePanelMouseListener implements MouseListener {
 
                 // create Edit manipulation
                 // TODO rewrite for group node possibly, now editing first element
-                Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT, select.getManipulatedGroup()
-                        .getChildrenElementList().firstElement());
+                Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT);
+                edit.setManipulatedGroup(select.getManipulatedGroup());
                 GroupNode gn = select.getManipulatedGroup();
 
                 // add identity transformation, so it can be later changed
