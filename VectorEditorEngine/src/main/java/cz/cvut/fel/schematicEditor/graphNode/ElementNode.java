@@ -15,8 +15,10 @@ import cz.cvut.fel.schematicEditor.element.shape.Triangle;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -28,11 +30,19 @@ public class ElementNode extends Node {
     /**
      * This field represents <code>element</code> of this node.
      */
-    private Element element;
+    private Element   element;
     /**
      * Type of element.
      */
-    private int     elementType;
+    private int       elementType;
+    /**
+     * Indicates edit state.
+     */
+    private boolean   edited;
+    /**
+     * Point, which is being edited.
+     */
+    private UnitPoint editedPoint;
 
     /**
      * This is constructor.
@@ -133,17 +143,44 @@ public class ElementNode extends Node {
         return this.element;
     }
 
-    public boolean isHit(Rectangle2D.Double point) {
+    protected boolean isHit(Rectangle2D.Double point) {
         if (isDisabled()) {
             return false;
         }
         return element.isHit(point);
     }
 
-    public boolean isEditZone(Rectangle2D.Double point) {
+    protected boolean startEditing(Rectangle2D.Double point) {
         if (isDisabled()) {
             return false;
         }
-        return element.isEditZone(point);
+        setEdited(true);
+        return getElement().startEditing(point);
     }
+
+    /**
+     * @return the editing
+     */
+    protected boolean isEdited() {
+        return this.edited;
+    }
+
+    /**
+     * @param edited
+     *            the editing to set
+     */
+    private void setEdited(boolean edited) {
+        this.edited = edited;
+    }
+
+    /**
+     * 
+     */
+    protected void stopEditing(UnitPoint delta) {
+        if (isEdited()) {
+            getElement().stopEditing(delta);
+            setEdited(false);
+        }
+    }
+
 }

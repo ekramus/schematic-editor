@@ -31,6 +31,7 @@ import cz.cvut.fel.schematicEditor.manipulation.Move;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.types.Transformation;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements {@link MouseListener} for {@link ScenePanel}.
@@ -109,12 +110,8 @@ public class ScenePanelMouseListener implements MouseListener {
             mt = Structures.getManipulation().getManipulationType();
             if (mt == ManipulationType.CREATE) {
                 createManipulationStart(e);
-            } else if (mt == ManipulationType.EDIT) {
-                editManipulationStart(e, r2d);
             } else if (mt == ManipulationType.SELECT) {
                 selectManipulationStart(e, r2d);
-            } else if (mt == ManipulationType.MOVE) {
-                moveManipulationStart(e, r2d);
             } else if (mt == ManipulationType.DELETE) {
                 deleteManipulationStart(r2d);
             } else {
@@ -246,10 +243,18 @@ public class ScenePanelMouseListener implements MouseListener {
         if (edit.isActive()) {
             logger.trace("object EDITED");
 
-            // edit.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            // replace last manipulation coordinates for delta
+            edit.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-            // replace last transformation
+            // compute delta
+            Point2D delta = new Point2D.Double(edit.getX().lastElement().doubleValue() - edit.getX().firstElement()
+                    .doubleValue(), edit.getY().lastElement().doubleValue() - edit.getY().firstElement().doubleValue());
+
+            // get manipulated group
             GroupNode gn = edit.getManipulatedGroup();
+
+            // change edited point using delta
+            gn.stopEditing(new UnitPoint(delta));
 
             // enable manipulated group
             gn.setDisabled(false);
@@ -267,16 +272,20 @@ public class ScenePanelMouseListener implements MouseListener {
         Edit edit = (Edit) Structures.getManipulation();
         Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
 
-        GroupNode gn = Structures.getScenePanel().getSchemeSG().getTopNode().findHit(r2d);
+        logger.debug("creating EDIT manipulation");
 
-        // check, whether edit is possible or not
-        if (edit.isActive() && edit.getManipulatedGroup() == gn) {
+        if (edit.isActive()) {
+            GroupNode gn = edit.getManipulatedGroup();
+
+            // add actual coordinates, to be able to calculate delta later
+            edit.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            // add two copies of same coordinates to be able to replace last one
+            edit.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
             // set manipulated group disabled
             gn.setDisabled(true);
             Structures.getScenePanel().schemeInvalidate(gn.getBounds());
-        }
-        // edit is not possible - fall back to Select manipulation
-        else {
+        } else {
             Structures.setManipulation(ManipulationFactory.create(ManipulationType.SELECT));
         }
     }
@@ -321,6 +330,7 @@ public class ScenePanelMouseListener implements MouseListener {
         Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
 
         GroupNode gn = Structures.getScenePanel().getSchemeSG().getTopNode().findHit(r2d);
+
         // check, whether move is possible or not
         if (move.isActive() && move.getManipulatedGroup() == gn) {
             // add identity transformation, so it can be later changed
@@ -405,27 +415,17 @@ public class ScenePanelMouseListener implements MouseListener {
         // select is active AND GroupNode is already selected
         else if (Structures.getScenePanel().getSchemeSG().getTopNode().findHit(r2d) == select.getManipulatedGroup()) {
             // select is in edit active zone
-            // TODO implement edit active zone
-            if (select.getManipulatedGroup().isEditZone(r2d)) {
-                logger.debug("creating EDIT manipulation");
-
+            if (select.getManipulatedGroup().startEditing(r2d)) {
                 // create Edit manipulation
-                // TODO rewrite for group node possibly, now editing first element
                 Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT);
                 edit.setManipulatedGroup(select.getManipulatedGroup());
-                GroupNode gn = select.getManipulatedGroup();
-
-                // add identity transformation, so it can be later changed
-                gn.add(new TransformationNode(Transformation.getIdentity()));
-
-                // set manipulation active
                 edit.setActive(true);
 
-                // set manipulated group disabled
-                gn.setDisabled(true);
-                Structures.getScenePanel().schemeInvalidate(gn.getBounds());
-
+                // set active manipulation edit
                 Structures.setManipulation(edit);
+
+                // continue with edit manipulation start
+                editManipulationStart(e, r2d);
             }
             // select is in rotate active zone
             else if (select.getManipulatedGroup().isRotateZone(r2d)) {
@@ -433,28 +433,18 @@ public class ScenePanelMouseListener implements MouseListener {
             }
             // select can be used for move
             else {
-                logger.debug("creating MOVE manipulation");
+                logger.trace("creating MOVE manipulation");
 
                 // create Move manipulation
                 Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE);
-
-                GroupNode gn = select.getManipulatedGroup();
-
-                // add identity transformation, so it can be later changed
-                gn.add(new TransformationNode(Transformation.getIdentity()));
-
-                move.setManipulatedGroup(gn);
-                // add two copies of same coordinates to be able to replace last one
-                move.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-                move.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-                // set manipulation active
+                move.setManipulatedGroup(select.getManipulatedGroup());
                 move.setActive(true);
 
-                // set manipulated group disabled
-                gn.setDisabled(true);
-                Structures.getScenePanel().schemeInvalidate(gn.getBounds());
-
+                // set active manipulation move
                 Structures.setManipulation(move);
+
+                // continue with move manipulation start
+                moveManipulationStart(e, r2d);
             }
         }
     }

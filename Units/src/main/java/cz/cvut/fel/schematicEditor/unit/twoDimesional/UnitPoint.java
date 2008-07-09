@@ -6,8 +6,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
- * This class represents point in two dimensional space, where coordinates are stored in form of
- * {@link Unit}.
+ * This class represents point in two dimensional space, where coordinates are stored in form of {@link Unit}.
  * 
  * @author Urban Kravjansky
  * 
@@ -31,8 +30,7 @@ public class UnitPoint extends Point2D {
     }
 
     /**
-     * Constructor with coordinate parameters. It initializes new {@link UnitPoint} instance with
-     * given coordinates.
+     * Constructor with coordinate parameters. It initializes new {@link UnitPoint} instance with given coordinates.
      * 
      * @param x
      *            <code>x</code> coordinate of point.
@@ -45,8 +43,19 @@ public class UnitPoint extends Point2D {
     }
 
     /**
-     * Constructor with coordinate parameters. It initializes new {@link UnitPoint} instance with
-     * given double coordinates.
+     * Constructor with coordinate parameter. It initializes new {@link UnitPoint} instance with given coordinate.
+     * 
+     * @param p
+     *            {@link Point2D} defined coordinates of point.
+     */
+    public UnitPoint(Point2D p) {
+        setUnitX(new Pixel(p.getX()));
+        setUnitY(new Pixel(p.getY()));
+    }
+
+    /**
+     * Constructor with coordinate parameters. It initializes new {@link UnitPoint} instance with given double
+     * coordinates.
      * 
      * @param x
      *            <code>x</code> coordinate of point.
@@ -81,8 +90,7 @@ public class UnitPoint extends Point2D {
     }
 
     /**
-     * Sets the location of this <code>Point2D</code> to the specified <code>double</code>
-     * coordinates.
+     * Sets the location of this <code>Point2D</code> to the specified <code>double</code> coordinates.
      * 
      * @param x
      *            the new X coordinate of this {@code Point2D}
