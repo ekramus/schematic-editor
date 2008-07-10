@@ -3,12 +3,11 @@ package cz.cvut.fel.schematicEditor.unit.oneDimensional;
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 
 /**
- * This class defines methods for {@link Unit} subclasses. It also encapsulates data fields used for
- * unit conversions.
- *
+ * This class defines methods for {@link Unit} subclasses. It also encapsulates data fields used for unit conversions.
+ * 
  * @author Urban Kravjansky
  */
-public abstract class Unit {
+public abstract class Unit implements Comparable<Unit> {
     /**
      * Value of given unit.
      */
@@ -18,8 +17,8 @@ public abstract class Unit {
      */
     private double   doubleFactor;
     /**
-     * <code>unitType</code> represents {@link String}, which appears after unit value for unit
-     * specification (e.g. px for pixels, mm for milimeters, etc.).
+     * <code>unitType</code> represents {@link String}, which appears after unit value for unit specification (e.g.
+     * px for pixels, mm for milimeters, etc.).
      */
     private UnitType unitType;
 
@@ -34,7 +33,7 @@ public abstract class Unit {
 
     /**
      * Getter for <code>doubleFactor</code>. Value means, how many dots are in one unit.
-     *
+     * 
      * @return <code>doubleFactor</code> value.
      */
     private double getDoubleFactor() {
@@ -43,7 +42,7 @@ public abstract class Unit {
 
     /**
      * Setter for <code>doubleFactor</code>. Value means, how many dots are in one unit.
-     *
+     * 
      * @param doubleFactor
      *            value of <code>doubleFactor</code> to set.
      */
@@ -53,7 +52,7 @@ public abstract class Unit {
 
     /**
      * Getter for <code>double</code> value of this {@link Unit}.
-     *
+     * 
      * @return <code>double</code> value.
      */
     public final double doubleValue() {
@@ -62,7 +61,7 @@ public abstract class Unit {
 
     /**
      * Getter for <code>int</code> value of this {@link Unit}.
-     *
+     * 
      * @return <code>int</code> value.
      */
     public final int intValue() {
@@ -71,7 +70,7 @@ public abstract class Unit {
 
     /**
      * Getter for <code>float</code> value of this {@link Unit}.
-     *
+     * 
      * @return <code>float</code> value.
      */
     public final float floatValue() {
@@ -80,7 +79,7 @@ public abstract class Unit {
 
     /**
      * Setter of <code>double</code> value of this {@link Unit}.
-     *
+     * 
      * @param doubleValue
      *            value of <code>double</code> to set.
      */
@@ -90,7 +89,7 @@ public abstract class Unit {
 
     /**
      * Getter for unit <code>value</code>.
-     *
+     * 
      * @return {@link Unit} <code>value</code>.
      */
     public final double getValue() {
@@ -99,7 +98,7 @@ public abstract class Unit {
 
     /**
      * Setter for unit <code>value</code>.
-     *
+     * 
      * @param value
      *            {@link Unit} <code>value</code>.
      */
@@ -109,7 +108,7 @@ public abstract class Unit {
 
     /**
      * Method used for conversion of this class into {@link String}.
-     *
+     * 
      * @return {@link String} representation of class.
      */
     @Override
@@ -119,7 +118,7 @@ public abstract class Unit {
 
     /**
      * Getter for <code>unitType</code>.
-     *
+     * 
      * @return <code>unitType</code> value.
      */
     private UnitType getUnitType() {
@@ -128,11 +127,38 @@ public abstract class Unit {
 
     /**
      * Setter for <code>unitType</code>.
-     *
+     * 
      * @param unitType
      *            <code>unitType</code> value.
      */
     protected final void setUnitType(final UnitType unitType) {
         this.unitType = unitType;
+    }
+
+    /**
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(Unit unit) {
+        double delta = getValue() - unit.getValue();
+        if (delta < 0) {
+            return -1;
+        }
+        if (delta > 0) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (compareTo((Unit) obj) == 0) {
+            return true;
+        }
+        return false;
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.MenuBarResources;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.unit.UnitType;
+import cz.cvut.fel.schematicEditor.unit.UnitTypeTest;
 
 /**
  * This class implements {@link ActionListener} for <code>gridMenuItem</code> in {@link MenuBar}.
@@ -37,7 +37,7 @@ public final class GridMenuItemListener implements ActionListener {
                                                Structures.getScenePanel().getGridSize());
         try {
             if (s != null) {
-                Structures.getScenePanel().setGridSize(UnitType.parseUnit(s));
+                Structures.getScenePanel().setGridSize(UnitTypeTest.parseUnit(s));
                 Structures.getScenePanel().repaint();
             }
         } catch (NumberFormatException nfe) {
