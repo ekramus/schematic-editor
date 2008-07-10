@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.unit.UnitTypeTest;
+import cz.cvut.fel.schematicEditor.unit.UnitType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
@@ -52,7 +52,7 @@ public class LineWidthComboBoxActionListener extends PropertiesToolBarListener i
     public final void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Unit width = UnitTypeTest.parseUnit((String) getLineWidthComboBox().getSelectedItem());
+        Unit width = UnitType.parseUnit((String) getLineWidthComboBox().getSelectedItem());
         // enable width change only for positive width value
         if (width.getValue() > 0) {
             ep.setContourLineWidth(width);
