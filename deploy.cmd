@@ -22,6 +22,7 @@ copy Launchers\target\Launchers-1.0-SNAPSHOT.jar %JAR%
 copy Support\target\Support-1.0-SNAPSHOT.jar %JAR%
 copy Units\target\Units-1.0-SNAPSHOT.jar %JAR%
 copy VectorEditorEngine\target\VectorEditorEngine-1.0-SNAPSHOT.jar %JAR%
+copy Manipulations\target\VectorEditorEngine-1.0-SNAPSHOT.jar %JAR%
 
 copy Launchers\log4j.xml %DEPLOY%
 copy Launchers\properties.xml %DEPLOY%

@@ -21,6 +21,7 @@ cp "Launchers/target/Launchers-1.0-SNAPSHOT.jar" "$JAR"
 cp "Support/target/Support-1.0-SNAPSHOT.jar" "$JAR"
 cp "Units/target/Units-1.0-SNAPSHOT.jar" "$JAR"
 cp "VectorEditorEngine/target/VectorEditorEngine-1.0-SNAPSHOT.jar" "$JAR"
+cp "Manipulations/target/VectorEditorEngine-1.0-SNAPSHOT.jar" "$JAR"
 
 cp "Launchers/log4j.xml" "$DEPLOY"
 cp "Launchers/properties.xml" "$DEPLOY"
