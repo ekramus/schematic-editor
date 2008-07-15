@@ -12,5 +12,6 @@
 		<module>Units</module>
 		<module>Elements</module>
 		<module>Support</module>
+		<module>Manipulations</module>
 	</modules>
 </project>

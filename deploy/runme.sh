@@ -7,6 +7,7 @@ JAR_PATH=$JAR_PATH:jar/Launchers-1.0-SNAPSHOT.jar
 JAR_PATH=$JAR_PATH:jar/Support-1.0-SNAPSHOT.jar
 JAR_PATH=$JAR_PATH:jar/Units-1.0-SNAPSHOT.jar
 JAR_PATH=$JAR_PATH:jar/VectorEditorEngine-1.0-SNAPSHOT.jar
+JAR_PATH=$JAR_PATH:jar/Manipulations-1.0-SNAPSHOT.jar
 
 STANDALONE=cz.cvut.fel.schematicEditor.launcher.Standalone
 
