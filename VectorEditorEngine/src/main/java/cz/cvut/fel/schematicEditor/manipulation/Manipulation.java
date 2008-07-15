@@ -1,9 +1,5 @@
-/**
- * 
- */
 package cz.cvut.fel.schematicEditor.manipulation;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.Element;
