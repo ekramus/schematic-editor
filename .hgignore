@@ -19,4 +19,5 @@ syntax: glob
 *.log*
 *.jar
 target
+bin
 deploy/*.xml
