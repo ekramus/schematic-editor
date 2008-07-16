@@ -24,8 +24,8 @@ public class ManipulationQueue {
      * Default constructor. It is for initialization purposes.
      */
     public ManipulationQueue() {
-        setWaitingManipulations(null);
-        setProcessedManipulations(null);
+        setWaitingManipulations(new LinkedList<Manipulation>());
+        setProcessedManipulations(new LinkedList<Manipulation>());
     }
 
     /**
@@ -49,7 +49,7 @@ public class ManipulationQueue {
         }
 
         // add manipulation to top of processed manipulations
-        getProcessedManipulations().add(manipulation);
+        getProcessedManipulations().offer(manipulation);
         return true;
     }
 
@@ -74,7 +74,7 @@ public class ManipulationQueue {
         }
 
         // add manipulation to top of waiting manipulations
-        getWaitingManipulations().add(manipulation);
+        getWaitingManipulations().offer(manipulation);
         return true;
     }
 
@@ -129,5 +129,24 @@ public class ManipulationQueue {
      */
     private void setProcessedManipulations(LinkedList<Manipulation> processedManipulations) {
         this.processedManipulations = processedManipulations;
+    }
+
+    /**
+     * Adds {@link Manipulation} at the end of {@link ManipulationQueue}.
+     * 
+     * @param manipulation
+     */
+    public void offerManipulation(Manipulation manipulation) {
+        getWaitingManipulations().offer(manipulation);
+    }
+
+    /**
+     * Replaces last {@link Manipulation} with given.
+     * 
+     * @param manipulation
+     */
+    public void replaceLastManipulation(Manipulation manipulation) {
+        getWaitingManipulations().poll();
+        getWaitingManipulations().offer(manipulation);
     }
 }

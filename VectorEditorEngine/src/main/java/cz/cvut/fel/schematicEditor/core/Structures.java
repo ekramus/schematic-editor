@@ -43,7 +43,7 @@ public class Structures {
      */
     private static StatusBar         statusBar         = null;
     /**
-     * Reference to <code>ManipulationQeue</codE> instance.
+     * Reference to <code>ManipulationQeue</code> instance.
      */
     private static ManipulationQueue manipulationQueue = null;
 
@@ -88,6 +88,18 @@ public class Structures {
             sceneProperties = new SceneProperties();
         }
         return sceneProperties;
+    }
+
+    /**
+     * Getter for {@link ManipulationQeue}.
+     * 
+     * @return the manipulationQueue
+     */
+    public static ManipulationQueue getManipulationQueue() {
+        if (manipulationQueue == null) {
+            manipulationQueue = new ManipulationQueue();
+        }
+        return manipulationQueue;
     }
 
     /**
