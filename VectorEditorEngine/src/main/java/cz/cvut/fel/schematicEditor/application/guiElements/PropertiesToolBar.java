@@ -27,8 +27,8 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.propertiesT
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.propertiesToolBar.LineWidthComboBoxActionListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.PropertiesToolBarResources;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.core.coreStructures.ElementProperties;
-import cz.cvut.fel.schematicEditor.core.coreStructures.ElementStyle;
+import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
+import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 
 /**
  * This class implements properties tool bar.

@@ -2,6 +2,9 @@ package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.util.LinkedList;
 
+import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
+
 /**
  * This class encapsulates manipulations, which are to be executed or already were executed.
  * 
@@ -29,8 +32,8 @@ public class ManipulationQueue {
      * Executes top manipulation stored in <code>waitingManipulations</code> queue and moves it into
      * <code>processedManipulations</code> queue.
      * 
-     * @return status of executed {@link Manipulation}. <code>false</code> in case of execution
-     *         problems, else <code>true</code>.
+     * @return status of executed {@link Manipulation}. <code>false</code> in case of execution problems, else
+     *         <code>true</code>.
      */
     public boolean execute() {
         Manipulation manipulation = getWaitingManipulations().poll();
@@ -38,9 +41,11 @@ public class ManipulationQueue {
         // try to execute manipulation
         try {
             manipulation.execute();
-        } catch (NullPointerException npe) {
+        } catch (NullPointerException e) {
             // manipulation was null
             return false;
+        } catch (ManipulationExecutionException e) {
+            // TODO: handle exception
         }
 
         // add manipulation to top of processed manipulations
@@ -49,11 +54,11 @@ public class ManipulationQueue {
     }
 
     /**
-     * Unexecutes (undoes) top manipulation stored in <code>processedManipulations</code> queue and
-     * moves it on top of <code>waitingManipulations</code> queue.
+     * Unexecutes (undoes) top manipulation stored in <code>processedManipulations</code> queue and moves it on top of
+     * <code>waitingManipulations</code> queue.
      * 
-     * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution
-     *         problems, else <code>true</code>.
+     * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution problems, else
+     *         <code>true</code>.
      */
     public boolean unexecute() {
         Manipulation manipulation = getProcessedManipulations().poll();
@@ -61,9 +66,11 @@ public class ManipulationQueue {
         // try to unexecute manipulation
         try {
             manipulation.unexecute();
-        } catch (NullPointerException npe) {
+        } catch (NullPointerException e) {
             // manipulation was null
             return false;
+        } catch (ManipulationExecutionException e) {
+            // TODO: handle exception
         }
 
         // add manipulation to top of waiting manipulations
@@ -72,11 +79,11 @@ public class ManipulationQueue {
     }
 
     /**
-     * Reexecutes (redoes) top manipulation stored in <code>processedManipulations</code> queue. No
-     * transfers between queues are done.
+     * Reexecutes (redoes) top manipulation stored in <code>processedManipulations</code> queue. No transfers between
+     * queues are done.
      * 
-     * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution
-     *         problems, else <code>true</code>.
+     * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution problems, else
+     *         <code>true</code>.
      */
     public boolean reexecute() {
         Manipulation manipulation = getProcessedManipulations().peek();
@@ -87,6 +94,8 @@ public class ManipulationQueue {
         } catch (NullPointerException npe) {
             // manipulation was null
             return false;
+        } catch (ManipulationExecutionException e) {
+            // TODO: handle exception
         }
 
         return true;

@@ -10,14 +10,14 @@ import javax.swing.JToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.DeleteButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.DrawShapeButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.SelectButtonListener;
-import cz.cvut.fel.schematicEditor.element.shape.Arc;
-import cz.cvut.fel.schematicEditor.element.shape.ArcSegment;
-import cz.cvut.fel.schematicEditor.element.shape.BezierCurve;
-import cz.cvut.fel.schematicEditor.element.shape.Ellipse;
-import cz.cvut.fel.schematicEditor.element.shape.Line;
-import cz.cvut.fel.schematicEditor.element.shape.Polygon;
-import cz.cvut.fel.schematicEditor.element.shape.Polyline;
-import cz.cvut.fel.schematicEditor.element.shape.Rectangle;
+import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
+import cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment;
+import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
+import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
+import cz.cvut.fel.schematicEditor.element.element.shape.Line;
+import cz.cvut.fel.schematicEditor.element.element.shape.Polygon;
+import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
+import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 
 /**
  * This class implements drawing tool bar. It is used for drawing tool selection.

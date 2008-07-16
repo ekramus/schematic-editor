@@ -18,22 +18,22 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.
 import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.Element;
-import cz.cvut.fel.schematicEditor.element.shape.Line;
-import cz.cvut.fel.schematicEditor.element.shape.Shape;
+import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.shape.Line;
+import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.Delete;
-import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.types.Transformation;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -137,6 +137,8 @@ public class ScenePanel extends JPanel {
 
     /**
      * This is the default constructor
+     * 
+     * @throws UnknownManipulationException
      */
     private ScenePanel() {
         super();
@@ -567,7 +569,12 @@ public class ScenePanel extends JPanel {
         // initialize scheme properties
         this.schemeAntialiased = true;
         this.schemeDebugged = false;
-        Structures.setManipulation(new Create(new Line()));
+        try {
+            Structures.setManipulation(ManipulationFactory.create(ManipulationType.CREATE, new Line()));
+        } catch (UnknownManipulationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         // initialize images
         this.grid = null;

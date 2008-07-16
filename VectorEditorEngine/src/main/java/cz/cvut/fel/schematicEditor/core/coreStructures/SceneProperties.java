@@ -3,6 +3,8 @@
  */
 package cz.cvut.fel.schematicEditor.core.coreStructures;
 
+import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
+
 /**
  * @author uk
  */

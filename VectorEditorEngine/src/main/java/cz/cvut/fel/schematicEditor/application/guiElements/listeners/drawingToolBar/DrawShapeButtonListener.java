@@ -5,12 +5,15 @@ import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.element.shape.Shape;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
 
 /**
- * This class implements listener for every shape drawing button. It is implemented by instantiating
- * a new class of {@link Shape}.
+ * This class implements listener for every shape drawing button. It is implemented by instantiating a new class of
+ * {@link Shape}.
  * 
  * @author Urban Kravjansky
  */
@@ -22,8 +25,7 @@ public class DrawShapeButtonListener implements ActionListener {
     private Shape shape = null;
 
     /**
-     * {@link DrawShapeButtonListener} constructor. It uses {@link Shape} instance to instantiate
-     * new {@link Shape}.
+     * {@link DrawShapeButtonListener} constructor. It uses {@link Shape} instance to instantiate new {@link Shape}.
      * 
      * @param shape
      *            instance used for new {@link Shape} instantiation.
@@ -33,8 +35,7 @@ public class DrawShapeButtonListener implements ActionListener {
     }
 
     /**
-     * Method invoked as result to an action. It initializes properties inside {@link Structures}
-     * class.
+     * Method invoked as result to an action. It initializes properties inside {@link Structures} class.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * 
@@ -43,13 +44,15 @@ public class DrawShapeButtonListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            Structures.setManipulation(new Create(getShape().newInstance()));
+            Structures.setManipulation(ManipulationFactory.create(ManipulationType.CREATE, getShape().newInstance()));
             Structures.getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
             PropertiesToolBar.refresh();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (UnknownManipulationException e) {
             e.printStackTrace();
         }
     }

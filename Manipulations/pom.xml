@@ -44,7 +44,13 @@
 		</dependency>
         <dependency>
             <groupId>cz.cvut.fel.schematicEditor</groupId>
-            <artifactId>VectorEditorEngine</artifactId>
+            <artifactId>Elements</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cz.cvut.fel.schematicEditor</groupId>
+            <artifactId>GraphNodes</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

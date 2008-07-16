@@ -9,12 +9,13 @@ import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.Delete;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.
@@ -49,19 +50,17 @@ public class ScenePanelKeyListener implements KeyListener {
                     if (create.getElementModificator() == ElementModificator.NO_MODIFICATION) {
                         create.setElementModificator(ElementModificator.SYMMETRIC_ELEMENT);
                         // TODO externalize string
-                        Structures.getStatusBar().setSizeLockingLabel(
-                                                                      "to disable size locking, press CTRL");
+                        Structures.getStatusBar().setSizeLockingLabel("to disable size locking, press CTRL");
                     } else {
                         create.setElementModificator(ElementModificator.NO_MODIFICATION);
                         // TODO externalize string
-                        Structures.getStatusBar().setSizeLockingLabel(
-                                                                      "to enable size locking, press CTRL");
+                        Structures.getStatusBar().setSizeLockingLabel("to enable size locking, press CTRL");
                     }
                 }
-            } else if ((e.getKeyCode() == KeyEvent.VK_DELETE)
-                       || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
+            } else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
                 if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
-                    if (Structures.getScenePanel().getSchemeSG().getTopNode().deleteSelected()) {
+                    GroupNode selected = Structures.getManipulation().getManipulatedGroup();
+                    if (Structures.getScenePanel().getSchemeSG().getTopNode().delete(selected)) {
                         Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE);
                         delete.setActive(true);
                         Structures.setManipulation(delete);

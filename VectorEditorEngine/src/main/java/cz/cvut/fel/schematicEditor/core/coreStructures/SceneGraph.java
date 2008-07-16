@@ -1,9 +1,9 @@
 package cz.cvut.fel.schematicEditor.core.coreStructures;
 
-import cz.cvut.fel.schematicEditor.element.shape.Ellipse;
-import cz.cvut.fel.schematicEditor.element.shape.Line;
-import cz.cvut.fel.schematicEditor.element.shape.Rectangle;
-import cz.cvut.fel.schematicEditor.element.shape.Text;
+import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
+import cz.cvut.fel.schematicEditor.element.element.shape.Line;
+import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.types.SceneGraphIterator;
-import cz.cvut.fel.schematicEditor.types.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
