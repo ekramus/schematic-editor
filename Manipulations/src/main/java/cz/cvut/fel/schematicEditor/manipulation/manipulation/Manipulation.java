@@ -96,7 +96,7 @@ public abstract class Manipulation {
         return this.manipulatedElement;
     }
 
-    public void setManipulationCoordinates(Vector<Unit> x, Vector<Unit> y) {
+    protected void setManipulationCoordinates(Vector<Unit> x, Vector<Unit> y) {
         this.x = x;
         this.y = y;
     }
@@ -118,14 +118,14 @@ public abstract class Manipulation {
     /**
      * @return the x
      */
-    public Vector<Unit> getX() {
+    protected Vector<Unit> getX() {
         return this.x;
     }
 
     /**
      * @return the y
      */
-    public Vector<Unit> getY() {
+    protected Vector<Unit> getY() {
         return this.y;
     }
 

@@ -71,7 +71,7 @@ public class Select extends Manipulation {
         // duplicate parameters
         s.setActive(isActive());
         s.setManipulatedGroup(getManipulatedGroup());
-        s.setManipulationCoordinates(getX(), getY());
+        // s.setManipulationCoordinates(getX(), getY());
 
         return s;
     }

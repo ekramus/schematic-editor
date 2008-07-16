@@ -1,7 +1,12 @@
 package cz.cvut.fel.schematicEditor.manipulation.manipulation;
 
+import java.awt.geom.Point2D;
+
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 
 public class Move extends Manipulation {
     protected Move() {
@@ -45,21 +50,34 @@ public class Move extends Manipulation {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
     public void execute() throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
-        
+        // compute delta
+        int i = getX().size() - 2;
+        Point2D delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().get(i).doubleValue(), getY()
+                .lastElement().doubleValue() - getY().get(i).doubleValue());
+
+        // create transformation node using delta
+        TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(), delta.getY()));
+        // replace last transformation
+        GroupNode gn = getManipulatedGroup();
+        gn.removeLastTransformation();
+        gn.add(tn);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
     public void unexecute() throws ManipulationExecutionException {
         // TODO Auto-generated method stub
-        
+
     }
 }

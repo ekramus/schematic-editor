@@ -64,17 +64,8 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
                 move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-                // compute delta
-                int i = move.getX().size() - 2;
-                Point2D delta = new Point2D.Double(move.getX().lastElement().doubleValue() - move.getX().get(i)
-                        .doubleValue(), move.getY().lastElement().doubleValue() - move.getY().get(i).doubleValue());
-
-                // create transformation node using delta
-                TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(), delta.getY()));
-                // replace last transformation
-                GroupNode gn = move.getManipulatedGroup();
-                gn.removeLastTransformation();
-                gn.add(tn);
+                Structures.getManipulationQueue().replaceLastManipulation(move);
+                Structures.getManipulationQueue().execute();
 
                 // just repaint (it takes care of element in progress)
                 Structures.getScenePanel().processActualManipulationStep();

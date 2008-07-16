@@ -57,6 +57,14 @@ public class ScenePanelKeyListener implements KeyListener {
                         Structures.getStatusBar().setSizeLockingLabel("to enable size locking, press CTRL");
                     }
                 }
+            } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
+                logger.trace("UNexecuting...");
+                Structures.getManipulationQueue().unexecute();
+                Structures.getScenePanel().processFinalManipulationStep();
+            } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
+                logger.trace("REexecuting...");
+                Structures.getManipulationQueue().reexecute();
+                Structures.getScenePanel().processFinalManipulationStep();
             } else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
                 if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = Structures.getManipulation().getManipulatedGroup();

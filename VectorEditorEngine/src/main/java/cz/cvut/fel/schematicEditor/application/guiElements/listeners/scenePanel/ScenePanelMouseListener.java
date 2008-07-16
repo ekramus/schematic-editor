@@ -246,15 +246,8 @@ public class ScenePanelMouseListener implements MouseListener {
             // replace last manipulation coordinates for delta
             edit.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-            // compute delta
-            Point2D delta = new Point2D.Double(edit.getX().lastElement().doubleValue() - edit.getX().firstElement()
-                    .doubleValue(), edit.getY().lastElement().doubleValue() - edit.getY().firstElement().doubleValue());
-
             // get manipulated group
             GroupNode gn = edit.getManipulatedGroup();
-
-            // change edited point using delta
-            gn.stopEditing(new UnitPoint(delta));
 
             // enable manipulated group
             gn.setDisabled(false);
@@ -263,6 +256,10 @@ public class ScenePanelMouseListener implements MouseListener {
             Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
             select.setManipulatedGroup(gn);
             Structures.setManipulation(select);
+
+            // add and execute manipulation
+            Structures.getManipulationQueue().offerManipulation(edit);
+            Structures.getManipulationQueue().execute();
 
             Structures.getScenePanel().processFinalManipulationStep();
         }
@@ -299,27 +296,19 @@ public class ScenePanelMouseListener implements MouseListener {
 
             move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-            // compute delta
-            int i = move.getX().size() - 2;
-            Point2D delta = new Point2D.Double(move.getX().lastElement().doubleValue() - move.getX().get(i)
-                    .doubleValue(), move.getY().lastElement().doubleValue() - move.getY().get(i).doubleValue());
-
-            // create transformation node using delta
-            TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(), delta.getY()));
-            // replace last transformation
             GroupNode gn = move.getManipulatedGroup();
-            gn.removeLastTransformation();
-            gn.add(tn);
 
             // enable manipulated group
             gn.setDisabled(false);
-
-            logger.trace("MOVE transformation: " + tn.getTransformation());
 
             // create select manipulation, so manipulation can proceed as select
             Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
             select.setManipulatedGroup(gn);
             Structures.setManipulation(select);
+
+            // add and execute manipulation
+            Structures.getManipulationQueue().offerManipulation(move);
+            Structures.getManipulationQueue().execute();
 
             Structures.getScenePanel().processFinalManipulationStep();
         }
