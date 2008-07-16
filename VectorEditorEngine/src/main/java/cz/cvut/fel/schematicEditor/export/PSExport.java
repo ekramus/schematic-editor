@@ -18,10 +18,17 @@ import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
-import cz.cvut.fel.schematicEditor.types.Transformation;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.element.ElementType;
-import cz.cvut.fel.schematicEditor.element.shape.*;
+import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
+import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
+import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
+import cz.cvut.fel.schematicEditor.element.element.shape.Line;
+import cz.cvut.fel.schematicEditor.element.element.shape.Polygon;
+import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
+import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 
 public class PSExport implements Export {
 

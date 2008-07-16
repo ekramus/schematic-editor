@@ -18,18 +18,18 @@
 		</plugins>
 	</build>
 	<reporting>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-        </plugin>
-      </plugins>
-    </reporting>
-    <parent>
-        <groupId>cz.cvut.fel.schematicEditor</groupId>
-        <artifactId>SchematicEditor</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+  <parent>
+    <groupId>cz.cvut.fel.schematicEditor</groupId>
+    <artifactId>SchematicEditor</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -52,19 +52,23 @@
 			<version>1.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
-        <dependency>
-            <groupId>cz.cvut.fel.schematicEditor</groupId>
-            <artifactId>Elements</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-<!--
-        <dependency>
-            <groupId>cz.cvut.fel.schematicEditor</groupId>
-            <artifactId>Manipulations</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
--->
+    <dependency>
+      <groupId>cz.cvut.fel.schematicEditor</groupId>
+      <artifactId>Elements</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>cz.cvut.fel.schematicEditor</groupId>
+      <artifactId>Manipulations</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>cz.cvut.fel.schematicEditor</groupId>
+      <artifactId>GraphNodes</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
 	</dependencies>
 </project>

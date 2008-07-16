@@ -11,6 +11,7 @@
 		<module>VectorEditorEngine</module>
 		<module>Units</module>
 		<module>Elements</module>
+		<module>GraphNodes</module>
 		<module>Support</module>
 		<module>Manipulations</module>
 	</modules>

@@ -22,7 +22,6 @@ import java.awt.geom.AffineTransform; // import java.awt.geom.Rectangle2D.Double
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.core.coreStructures.ElementStyle;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -33,13 +32,14 @@ import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.element.ElementType;
-import cz.cvut.fel.schematicEditor.element.shape.Arc;
-import cz.cvut.fel.schematicEditor.element.shape.BezierCurve;
-import cz.cvut.fel.schematicEditor.element.shape.Ellipse;
-import cz.cvut.fel.schematicEditor.element.shape.Line;
-import cz.cvut.fel.schematicEditor.element.shape.Polyline;
-import cz.cvut.fel.schematicEditor.element.shape.Rectangle;
-import cz.cvut.fel.schematicEditor.element.shape.Text;
+import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
+import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
+import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
+import cz.cvut.fel.schematicEditor.element.element.shape.Line;
+import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
+import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
+import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 
 /**
  * This class encapsulates export of elements on display.

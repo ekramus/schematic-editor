@@ -1,11 +1,10 @@
 package cz.cvut.fel.schematicEditor.types;
 
-import cz.cvut.fel.schematicEditor.graphNode.Node;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
 
 
 /**

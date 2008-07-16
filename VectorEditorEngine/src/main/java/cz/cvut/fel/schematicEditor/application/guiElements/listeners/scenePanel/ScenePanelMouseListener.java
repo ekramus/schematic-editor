@@ -18,19 +18,19 @@ import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Support;
-import cz.cvut.fel.schematicEditor.element.Element;
+import cz.cvut.fel.schematicEditor.support.Transformation;
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.Delete;
-import cz.cvut.fel.schematicEditor.manipulation.Edit;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.Move;
-import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.types.Transformation;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Edit;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Move;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**

@@ -7,10 +7,10 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 
 /**
  * This class implements listener for {@link Select} manipulation button.
