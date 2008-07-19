@@ -207,9 +207,8 @@ public class ScenePanel extends JPanel {
             case DELETE:
                 processFinalDeleteStep();
                 break;
-            case SELECT:
-                processFinalSelectStep();
             default:
+                processFinalSelectStep();
                 break;
         }
 

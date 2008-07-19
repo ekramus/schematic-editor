@@ -58,7 +58,7 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public ScenePanelMouseListener() {
         super();
-        logger = Logger.getLogger(Gui.class.getName());
+        logger = Logger.getLogger(this.getClass().getName());
     }
 
     /**
@@ -284,33 +284,6 @@ public class ScenePanelMouseListener implements MouseListener {
             Structures.getScenePanel().schemeInvalidate(gn.getBounds());
         } else {
             Structures.setManipulation(ManipulationFactory.create(ManipulationType.SELECT));
-        }
-    }
-
-    private void moveManipulationEnd(MouseEvent e, Double r2d) throws UnknownManipulationException {
-        Move move = (Move) Structures.getManipulation();
-        Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
-
-        if (move.isActive()) {
-            logger.debug("object MOVED");
-
-            move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-            GroupNode gn = move.getManipulatedGroup();
-
-            // enable manipulated group
-            gn.setDisabled(false);
-
-            // create select manipulation, so manipulation can proceed as select
-            Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
-            select.setManipulatedGroup(gn);
-            Structures.setManipulation(select);
-
-            // add and execute manipulation
-            Structures.getManipulationQueue().offerManipulation(move);
-            Structures.getManipulationQueue().execute();
-
-            Structures.getScenePanel().processFinalManipulationStep();
         }
     }
 

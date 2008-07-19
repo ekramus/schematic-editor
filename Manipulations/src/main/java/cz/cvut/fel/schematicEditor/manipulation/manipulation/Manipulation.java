@@ -1,11 +1,16 @@
 package cz.cvut.fel.schematicEditor.manipulation.manipulation;
 
+import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
+import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
@@ -168,4 +173,33 @@ public abstract class Manipulation {
     private void setManipulatedElement(Element manipulatedElement) {
         this.manipulatedElement = manipulatedElement;
     }
+
+    /**
+     * Initializes all necessary structures at the beginning of manipulation correctly.
+     * 
+     * @param e
+     *            {@link MouseEvent}, that invoked this method.
+     * @param r2d
+     *            Rectangle, which contains mouse pointer.
+     * @param manipulationQueue
+     *            used for {@link Manipulation} history and execution.
+     * @param s
+     *            Snap to grid property.
+     */
+    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, Snap s);
+
+    /**
+     * Finishes everything at the end of manipulation correctly.
+     * 
+     * @param e
+     *            {@link MouseEvent}, that invoked this method.
+     * @param r2d
+     *            Rectangle, which contains mouse pointer.
+     * @param manipulationQueue
+     *            used for {@link Manipulation} history and execution.
+     * @param s
+     *            Snap to grid property.
+     */
+    public abstract void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            Snap s);
 }

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
 
 /**
  * This class encapsulates manipulations, which are to be executed or already were executed.
@@ -98,6 +99,8 @@ public class ManipulationQueue {
             // TODO: handle exception
         }
 
+        // duplicate manipulation and add it on top of processed ones
+        getProcessedManipulations().offer(ManipulationFactory.duplicate(manipulation));
         return true;
     }
 
