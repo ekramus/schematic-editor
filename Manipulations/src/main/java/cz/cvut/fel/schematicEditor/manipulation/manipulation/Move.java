@@ -5,15 +5,16 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
+import javax.swing.RepaintManager;
+
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 
@@ -105,7 +106,8 @@ public class Move extends Manipulation {
      *      ManipulationQueue, Snap)
      */
     @Override
-    public void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue, Snap s) {
+    public void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue, Snap s)
+            throws UnknownManipulationException {
         if (isActive()) {
             logger.debug("object MOVED");
 
@@ -120,15 +122,17 @@ public class Move extends Manipulation {
             Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
             select.setManipulatedGroup(gn);
 
-            // TODO remove, it should be completely replaced by ManipulationQueue.
-            Structures.setManipulation(select);
+            // remove head manipulation in waiting manipulations queue and add actual
+            manipulationQueue.reoffer(select);
 
             // add and execute manipulation
-            manipulationQueue.offerManipulation(this);
+            manipulationQueue.offer(this);
             manipulationQueue.execute();
 
-            // TODO remove, it should be somewhere else
-            Structures.getScenePanel().processFinalManipulationStep();
+            // processing final manipulation step
+            logger.trace("processing final SELECT step");
+
+            // schemeInvalidate(gn.getBounds());
         }
     }
 

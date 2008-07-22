@@ -23,6 +23,7 @@ import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
@@ -129,6 +130,9 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public void mouseReleased(MouseEvent e) {
         try {
+            Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+            ManipulationQueue mq = Structures.getManipulationQueue();
+
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
 
             // get pointer rectangle
@@ -147,7 +151,7 @@ public class ScenePanelMouseListener implements MouseListener {
             } else if (mt == ManipulationType.SELECT) {
                 selectManipulationEnd(r2d);
             } else if (mt == ManipulationType.MOVE) {
-                moveManipulationEnd(e, r2d);
+                mq.peek().manipulationEnd(e, r2d, mq, s);
             } else if (mt == ManipulationType.DELETE) {
                 deleteManipulationEnd(r2d);
             } else {
@@ -158,6 +162,7 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
+    @Deprecated
     private void createManipulationEnd(MouseEvent e) throws UnknownManipulationException {
         Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
         logger.trace(s);
@@ -199,6 +204,7 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
+    @Deprecated
     private void createManipulationStart(MouseEvent e) throws UnknownManipulationException {
         logger.debug("manipulation is instance of Create");
 
@@ -220,6 +226,7 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
+    @Deprecated
     private void deleteManipulationEnd(Rectangle2D.Double r2d) throws UnknownManipulationException {
         Delete delete = (Delete) Structures.getManipulation();
 
@@ -230,12 +237,14 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
+    @Deprecated
     private void deleteManipulationStart(Rectangle2D.Double r2d) throws UnknownManipulationException {
         // this method is not really necessary, but it can be used in the future
         Delete delete = (Delete) Structures.getManipulation();
         delete.setActive(true);
     }
 
+    @Deprecated
     private void editManipulationEnd(MouseEvent e, Rectangle2D.Double r2d) throws UnknownManipulationException {
         Edit edit = (Edit) Structures.getManipulation();
         Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
@@ -258,13 +267,14 @@ public class ScenePanelMouseListener implements MouseListener {
             Structures.setManipulation(select);
 
             // add and execute manipulation
-            Structures.getManipulationQueue().offerManipulation(edit);
+            Structures.getManipulationQueue().offer(edit);
             Structures.getManipulationQueue().execute();
 
             Structures.getScenePanel().processFinalManipulationStep();
         }
     }
 
+    @Deprecated
     private void editManipulationStart(MouseEvent e, Rectangle2D.Double r2d) throws UnknownManipulationException {
         Edit edit = (Edit) Structures.getManipulation();
         Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
@@ -287,6 +297,7 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
+    @Deprecated
     private void moveManipulationStart(MouseEvent e, Double r2d) throws UnknownManipulationException {
         Move move = (Move) Structures.getManipulation();
         Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
@@ -318,6 +329,7 @@ public class ScenePanelMouseListener implements MouseListener {
      * @param r2d
      *            pointer rectangle.
      */
+    @Deprecated
     private void selectManipulationEnd(final Rectangle2D.Double r2d) throws UnknownManipulationException {
         Select select = (Select) Structures.getManipulation();
 
@@ -365,6 +377,7 @@ public class ScenePanelMouseListener implements MouseListener {
      * @param e
      * @param r2d
      */
+    @Deprecated
     private void selectManipulationStart(final MouseEvent e, final Rectangle2D.Double r2d)
             throws UnknownManipulationException {
         Select select = (Select) Structures.getManipulation();

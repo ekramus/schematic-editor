@@ -14,5 +14,6 @@
 		<module>GraphNodes</module>
 		<module>Support</module>
 		<module>Manipulations</module>
+		<module>Gui</module>
 	</modules>
 </project>

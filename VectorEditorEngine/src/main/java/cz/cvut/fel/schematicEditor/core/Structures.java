@@ -15,13 +15,9 @@ import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory
 /**
  * This class represents the application core structures.
  * 
- * @author urban.kravjansky
+ * @author Urban Kravjansky
  */
 public class Structures {
-    /**
-     * Reference to <code>SceneJPanel</code> instance.
-     */
-    private static ScenePanel        scenePanel        = null;
     /**
      * Reference to <code>SceneProperties</code> instance.
      */
@@ -30,18 +26,6 @@ public class Structures {
      * Application wide properties.
      */
     private static Properties        properties        = null;
-    /**
-     * Reference to <code>Gui</code> instance.
-     */
-    private static Gui               gui               = null;
-    /**
-     * Current manipulation object.
-     */
-    private static Manipulation      manipulation      = null;
-    /**
-     * Status bar object.
-     */
-    private static StatusBar         statusBar         = null;
     /**
      * Reference to <code>ManipulationQeue</code> instance.
      */
@@ -67,18 +51,6 @@ public class Structures {
     }
 
     /**
-     * Getter for scenePanel
-     * 
-     * @return Singleton instance of scenePanel.
-     */
-    public static ScenePanel getScenePanel() {
-        if (scenePanel == null) {
-            scenePanel = ScenePanel.getInstance();
-        }
-        return scenePanel;
-    }
-
-    /**
      * Getter for {@link SceneProperties}.
      * 
      * @return the sceneProperties
@@ -100,48 +72,5 @@ public class Structures {
             manipulationQueue = new ManipulationQueue();
         }
         return manipulationQueue;
-    }
-
-    /**
-     * Getter for {@link Gui}.
-     * 
-     * @return the gui
-     */
-    public static Gui getGui() {
-        if (gui == null) {
-            gui = new Gui();
-        }
-        return gui;
-    }
-
-    /**
-     * Getter for {@link Manipulation}.
-     * 
-     * @return the manipulation
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    public static Manipulation getManipulation() throws UnknownManipulationException {
-        if (manipulation == null) {
-            manipulation = ManipulationFactory.create(ManipulationType.SELECT);
-        }
-        return manipulation;
-    }
-
-    /**
-     * Getter for {@link GeneralManipulation}.
-     * 
-     * @param manipulation
-     *            the manipulation to set
-     */
-    public static void setManipulation(Manipulation manipulation) {
-        Structures.manipulation = manipulation;
-    }
-
-    public static StatusBar getStatusBar() {
-        if (statusBar == null) {
-            statusBar = statusBar.getInstance();
-        }
-        return statusBar;
     }
 }

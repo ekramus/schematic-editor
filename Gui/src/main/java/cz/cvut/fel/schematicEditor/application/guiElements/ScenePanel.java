@@ -15,9 +15,6 @@ import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelKeyListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseMotionListener;
-import cz.cvut.fel.schematicEditor.core.Constants;
-import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.shape.Line;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
@@ -196,6 +193,7 @@ public class ScenePanel extends JPanel {
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
      */
+    @Deprecated
     public void processFinalManipulationStep() throws UnknownManipulationException {
         Manipulation m = Structures.getManipulation();
         ManipulationType mt = m.getManipulationType();
@@ -223,6 +221,7 @@ public class ScenePanel extends JPanel {
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
      */
+    @Deprecated
     private void processFinalCreateStep() throws UnknownManipulationException {
         Element child = null;
         ShapeNode sn;
@@ -256,6 +255,7 @@ public class ScenePanel extends JPanel {
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
      */
+    @Deprecated
     private void processFinalDeleteStep() throws UnknownManipulationException {
         logger.debug("processing final DELETE step");
 
@@ -582,6 +582,7 @@ public class ScenePanel extends JPanel {
         this.schemeSG.manualCreateSceneGraph2();
     }
 
+    @Deprecated
     public void processActualManipulationStep() throws UnknownManipulationException {
         ManipulationType mt = Structures.getManipulation().getManipulationType();
 
@@ -603,6 +604,7 @@ public class ScenePanel extends JPanel {
     /**
      * This method repaints correctly scene after change of point coordinates in {@link Create} manipulation.
      */
+    @Deprecated
     private void processActualCreateStep() {
         logger.debug("pocessing actual manipulation step");
 
@@ -612,6 +614,7 @@ public class ScenePanel extends JPanel {
     /**
      * This method repaints correctly scene after change of point coordinates.
      */
+    @Deprecated
     private void processActualSelectStep() {
         logger.debug("pocessing actual manipulation step");
 
@@ -641,6 +644,7 @@ public class ScenePanel extends JPanel {
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
      */
+    @Deprecated
     private void processFinalSelectStep() throws UnknownManipulationException {
         logger.trace("processing final SELECT step");
 
