@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
-import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 
 /**
  * This class implements {@link ActionListener} for <code>debugCheckBoxMenuItem</code> in
@@ -32,8 +32,8 @@ public class DebugCheckBoxMenuItemListener implements ActionListener {
      *            it is not used nor needed.
      */
     public final void actionPerformed(final ActionEvent ae) {
-        Structures.getScenePanel().setSchemeDebugged(
+        ScenePanel.getInstance().setSchemeDebugged(
                                                      ((JCheckBoxMenuItem) ae.getSource()).isSelected());
-        Structures.getScenePanel().repaint();
+        ScenePanel.getInstance().repaint();
     }
 }

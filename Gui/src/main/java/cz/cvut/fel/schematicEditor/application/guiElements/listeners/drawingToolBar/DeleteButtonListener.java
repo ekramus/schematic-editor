@@ -42,7 +42,7 @@ public final class DeleteButtonListener implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         try {
-            Structures.setManipulation(ManipulationFactory.create(ManipulationType.DELETE));
+            Structures.getManipulationQueue().offer(ManipulationFactory.create(ManipulationType.DELETE));
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
         }

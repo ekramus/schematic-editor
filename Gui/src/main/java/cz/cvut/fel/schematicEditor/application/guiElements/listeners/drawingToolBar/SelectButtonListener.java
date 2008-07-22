@@ -42,7 +42,7 @@ public final class SelectButtonListener implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         try {
-            Structures.setManipulation(ManipulationFactory.create(ManipulationType.SELECT));
+            Structures.getManipulationQueue().offer(ManipulationFactory.create(ManipulationType.SELECT));
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
         }
