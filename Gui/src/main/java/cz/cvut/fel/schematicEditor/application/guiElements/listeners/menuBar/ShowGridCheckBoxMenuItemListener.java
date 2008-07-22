@@ -6,11 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
-import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 
 /**
- * This class implements {@link ActionListener} for <code>showGridCheckBoxMenuItem</code> in
- * {@link MenuBar}.
+ * This class implements {@link ActionListener} for <code>showGridCheckBoxMenuItem</code> in {@link MenuBar}.
  * 
  * @author Urban Kravjansky
  */
@@ -33,7 +32,7 @@ public final class ShowGridCheckBoxMenuItemListener implements ActionListener {
      *            {@link ActionEvent} parameter. This parameter is used to obtain source object.
      */
     public void actionPerformed(ActionEvent e) {
-        Structures.getScenePanel().setGridVisible(((JCheckBoxMenuItem) e.getSource()).isSelected());
-        Structures.getScenePanel().repaint();
+        ScenePanel.getInstance().setGridVisible(((JCheckBoxMenuItem) e.getSource()).isSelected());
+        ScenePanel.getInstance().repaint();
     }
 }

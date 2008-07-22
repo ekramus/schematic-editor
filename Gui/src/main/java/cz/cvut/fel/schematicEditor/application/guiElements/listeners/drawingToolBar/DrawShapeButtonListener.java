@@ -8,7 +8,6 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
 
 /**
@@ -44,7 +43,7 @@ public class DrawShapeButtonListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            Structures.setManipulation(ManipulationFactory.create(ManipulationType.CREATE, getShape().newInstance()));
+            Structures.getManipulationQueue().offer(ManipulationFactory.create(ManipulationType.CREATE, getShape().newInstance()));
             Structures.getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
             PropertiesToolBar.refresh();

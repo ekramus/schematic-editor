@@ -8,6 +8,7 @@ import javax.swing.JFileChooser;
 
 import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.export.PSExport;
 
@@ -44,11 +45,12 @@ public final class ExportToPsMenuItemListener implements ActionListener {
         // fileChooser.addChoosableFileFilter(new
         // ExportFileFilter(ExportFileFilter.POSTSCRIPT,ExportFileFilter.POSTDESC));
 
-        int retValue = fileChooser.showSaveDialog(Structures.getScenePanel());
+        int retValue = fileChooser.showSaveDialog(ScenePanel.getInstance());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            new PSExport().export(Structures.getScenePanel().getSchemeSG(), file);
+            // TODO enable PSExport
+            // new PSExport().export(ScenePanel.getInstance().getSchemeSG(), file);
 
             // Check for error
             // System.out.println("Failde Export");

@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.MenuBarResources;
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 
 /**
@@ -33,12 +33,12 @@ public final class GridMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(ActionEvent e) {
-        String s = JOptionPane.showInputDialog(MenuBarResources.GRID_MENU_ITEM_DIALOG.getText(), Structures
-                .getScenePanel().getGridSize());
+        String s = JOptionPane.showInputDialog(MenuBarResources.GRID_MENU_ITEM_DIALOG.getText(), ScenePanel
+                .getInstance().getGridSize());
         try {
             if (s != null) {
-                Structures.getScenePanel().setGridSize(UnitType.parseUnit(s));
-                Structures.getScenePanel().repaint();
+                ScenePanel.getInstance().setGridSize(UnitType.parseUnit(s));
+                ScenePanel.getInstance().repaint();
             }
         } catch (NumberFormatException nfe) {
             System.err.println(nfe.getLocalizedMessage());

@@ -14,6 +14,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 
@@ -44,8 +45,9 @@ public class ScenePanelKeyListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         try {
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-                if (Structures.getManipulation().getManipulationType() == ManipulationType.CREATE) {
-                    Create create = (Create) Structures.getManipulation();
+                Manipulation manipulation = Structures.getManipulationQueue().peek();
+                if (manipulation.getManipulationType() == ManipulationType.CREATE) {
+                    Create create = (Create) manipulation;
                     logger.debug("manipulation is instance of Create");
                     if (create.getElementModificator() == ElementModificator.NO_MODIFICATION) {
                         create.setElementModificator(ElementModificator.SYMMETRIC_ELEMENT);
