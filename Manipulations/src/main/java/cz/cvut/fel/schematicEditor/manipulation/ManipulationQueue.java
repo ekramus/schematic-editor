@@ -138,8 +138,9 @@ public class ManipulationQueue {
      * Adds {@link Manipulation} at the end of {@link ManipulationQueue}.
      * 
      * @param manipulation
+     *            {@link Manipulation} instance to offer.
      */
-    public void offerManipulation(Manipulation manipulation) {
+    public void offer(Manipulation manipulation) {
         getWaitingManipulations().offer(manipulation);
     }
 
@@ -150,6 +151,26 @@ public class ManipulationQueue {
      */
     public void replaceLastManipulation(Manipulation manipulation) {
         getWaitingManipulations().poll();
+        getWaitingManipulations().offer(manipulation);
+    }
+
+    /**
+     * Peeks {@link Manipulation} from the top of waiting manipulations list.
+     * 
+     * @return Top {@link Manipulation} on waiting manipulations list.
+     */
+    public Manipulation peek() {
+        return getWaitingManipulations().peek();
+    }
+
+    /**
+     * Removes and offers {@link Manipulation} to the top of queue.
+     * 
+     * @param manipulation
+     *            {@link Manipulation} instance to offer instead of removed one.
+     */
+    public void reoffer(Manipulation manipulation) {
+        getWaitingManipulations().remove();
         getWaitingManipulations().offer(manipulation);
     }
 }

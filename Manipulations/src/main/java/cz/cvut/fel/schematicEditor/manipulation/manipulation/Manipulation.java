@@ -10,6 +10,7 @@ import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
@@ -185,8 +186,11 @@ public abstract class Manipulation {
      *            used for {@link Manipulation} history and execution.
      * @param s
      *            Snap to grid property.
+     * @throws UnknownManipulationException
+     *             In case of unknown {@link Manipulation}.
      */
-    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, Snap s);
+    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, Snap s)
+            throws UnknownManipulationException;
 
     /**
      * Finishes everything at the end of manipulation correctly.
@@ -199,7 +203,9 @@ public abstract class Manipulation {
      *            used for {@link Manipulation} history and execution.
      * @param s
      *            Snap to grid property.
+     * @throws UnknownManipulationException
+     *             In case of unknown {@link Manipulation}.
      */
     public abstract void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            Snap s);
+            Snap s) throws UnknownManipulationException;
 }

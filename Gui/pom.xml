@@ -2,9 +2,9 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cz.cvut.fel.schematicEditor</groupId>
-	<artifactId>Manipulations</artifactId>
+	<artifactId>Gui</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>Schematic editor - Manipulations module</name>
+	<name>Schematic editor - Gui module</name>
 	<packaging>jar</packaging>
 	<build>
 		<plugins>
@@ -37,6 +37,16 @@
 			<version>1.2.14</version>
 		</dependency>
 		<dependency>
+			<groupId>jgoodies</groupId>
+			<artifactId>looks</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jgoodies</groupId>
+			<artifactId>forms</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
 			<groupId>cz.cvut.fel.schematicEditor</groupId>
 			<artifactId>Units</artifactId>
 			<version>1.0-SNAPSHOT</version>
@@ -45,6 +55,12 @@
 		<dependency>
 			<groupId>cz.cvut.fel.schematicEditor</groupId>
 			<artifactId>Elements</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>cz.cvut.fel.schematicEditor</groupId>
+			<artifactId>Manipulations</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
