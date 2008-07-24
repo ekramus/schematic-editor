@@ -81,7 +81,7 @@ public class ScenePanelMouseListener implements MouseListener {
     public void mouseEntered(MouseEvent e) {
         logger.debug("mouse entered");
         // request focus for ScenePanel
-        Structures.getScenePanel().requestFocusInWindow();
+        ScenePanel.getInstance().requestFocusInWindow();
     }
 
     /**
@@ -108,7 +108,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                     Constants.POINT_SIZE);
 
             ManipulationType mt;
-            mt = Structures.getManipulation().getManipulationType();
+            mt = Structures.getManipulationQueue().peek().getManipulationType();
             if (mt == ManipulationType.CREATE) {
                 createManipulationStart(e);
             } else if (mt == ManipulationType.SELECT) {
@@ -130,7 +130,7 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public void mouseReleased(MouseEvent e) {
         try {
-            Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+            Snap s = new Snap(ScenePanel.getInstance().getGridSize(), Structures.getScenePanel().isSnapToGrid());
             ManipulationQueue mq = Structures.getManipulationQueue();
 
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));

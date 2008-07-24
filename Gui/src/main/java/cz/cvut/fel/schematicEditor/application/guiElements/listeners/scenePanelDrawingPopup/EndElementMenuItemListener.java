@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -40,9 +41,9 @@ public class EndElementMenuItemListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            Create create = (Create) Structures.getManipulation();
+            Create create = (Create) Structures.getManipulationQueue().peek();
             create.setFinished(true);
-            Structures.getScenePanel().processFinalManipulationStep();
+            ScenePanel.getInstance().processFinalManipulationStep();
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
         }

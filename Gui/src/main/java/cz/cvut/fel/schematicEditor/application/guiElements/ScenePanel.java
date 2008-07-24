@@ -15,6 +15,9 @@ import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelKeyListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseMotionListener;
+import cz.cvut.fel.schematicEditor.core.Constants;
+import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.shape.Line;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
@@ -195,7 +198,7 @@ public class ScenePanel extends JPanel {
      */
     @Deprecated
     public void processFinalManipulationStep() throws UnknownManipulationException {
-        Manipulation m = Structures.getManipulation();
+        Manipulation m = Structures.getManipulationQueue().peek();
         ManipulationType mt = m.getManipulationType();
 
         switch (mt) {
@@ -211,7 +214,7 @@ public class ScenePanel extends JPanel {
         }
 
         // create new manipulation of the same type as previous
-        Structures.setManipulation(ManipulationFactory.duplicate(m));
+        Structures.getManipulationQueue().offer(ManipulationFactory.duplicate(m));
     }
 
     /**
@@ -230,8 +233,10 @@ public class ScenePanel extends JPanel {
 
         logger.debug("processing final manipulation step");
 
-        child = Structures.getManipulation().getManipulatedElement();
-        Structures.getManipulation().setActive(false);
+        Manipulation m = Structures.getManipulationQueue().peek();
+
+        child = m.getManipulatedElement();
+        m.setActive(false);
 
         sn = new ShapeNode((Shape) child);
         pn = new ParameterNode();
@@ -260,7 +265,7 @@ public class ScenePanel extends JPanel {
         logger.debug("processing final DELETE step");
 
         // this is really not necessary, it is here only for possible future uses
-        Delete delete = (Delete) Structures.getManipulation();
+        Delete delete = (Delete) Structures.getManipulationQueue().peek();
 
         schemeInvalidate(null);
     }
@@ -363,7 +368,7 @@ public class ScenePanel extends JPanel {
         // prepare element
         SceneGraph sg = new SceneGraph();
         // this.manipulation.setManipulationCoordinates(getManipXCoord(), getManipYCoord());
-        Shape s = (Shape) Structures.getManipulation().getManipulatedElement();
+        Shape s = (Shape) Structures.getManipulationQueue().peek().getManipulatedElement();
 
         // create SceneGraph
         ParameterNode p = new ParameterNode();
@@ -393,7 +398,7 @@ public class ScenePanel extends JPanel {
         SceneGraph sg = new SceneGraph();
 
         // get manipulated group
-        Manipulation manipulation = Structures.getManipulation();
+        Manipulation manipulation = Structures.getManipulationQueue().peek();
         GroupNode g = manipulation.getManipulatedGroup();
         sg.setTopNode(g);
 
@@ -415,8 +420,9 @@ public class ScenePanel extends JPanel {
         // create new selection frame
         BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        GroupNode gn = Structures.getManipulation().getManipulatedGroup();
-        Transformation t = Structures.getManipulation().getManipulatedGroup().getTransformation();
+        Manipulation m = Structures.getManipulationQueue().peek();
+        GroupNode gn = m.getManipulatedGroup();
+        Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) selectionFrame.getGraphics();
         Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
@@ -439,8 +445,9 @@ public class ScenePanel extends JPanel {
         // create new edit frame
         BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        GroupNode gn = Structures.getManipulation().getManipulatedGroup();
-        Transformation t = Structures.getManipulation().getManipulatedGroup().getTransformation();
+        Manipulation m = Structures.getManipulationQueue().peek();
+        GroupNode gn = m.getManipulatedGroup();
+        Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) editFrame.getGraphics();
         Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
@@ -489,18 +496,19 @@ public class ScenePanel extends JPanel {
         logger.debug("draw scheme");
         g2d.drawImage(this.scheme, 0, 0, null);
 
+        Manipulation m = Structures.getManipulationQueue().peek();
+
         // draw work element or group, if some is being manipulated.
-        if (Structures.getManipulation().isActive() && (Structures.getManipulation().isManipulatingElements() || Structures
-                .getManipulation().isManipulatingGroups())) {
+        if (m.isActive() && (m.isManipulatingElements() || m.isManipulatingGroups())) {
             logger.debug("manipulated element/group redrawn");
             BufferedImage manipulatedElement = null;
             // manipulation manipulates with group
-            if (Structures.getManipulation().isManipulatingGroups()) {
+            if (m.isManipulatingGroups()) {
                 logger.trace("calling drawManipulatedGroup");
                 manipulatedElement = drawManipulatedGroup();
             }
             // manipulation manipulates with single element
-            else if (Structures.getManipulation().isManipulatingElements()) {
+            else if (m.isManipulatingElements()) {
                 logger.trace("calling drawManipulatedElement");
                 manipulatedElement = drawManipulatedElement();
             }
@@ -512,15 +520,15 @@ public class ScenePanel extends JPanel {
         }
 
         // highlight manipulated group
-        if (Structures.getManipulation().isActive()) {
+        if (m.isActive()) {
             // draw frame around selected group
-            if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
+            if (m.getManipulationType() == ManipulationType.SELECT) {
                 logger.trace("selected element frame drawing");
                 BufferedImage selectionFrame = drawSelectionFrame();
                 g2d.drawImage(selectionFrame, 0, 0, null);
             }
             // draw frame around selected group
-            else if (Structures.getManipulation().getManipulationType() == ManipulationType.EDIT) {
+            else if (m.getManipulationType() == ManipulationType.EDIT) {
                 logger.trace("create element frame drawing");
                 BufferedImage selectionFrame = drawEditFrame();
                 g2d.drawImage(selectionFrame, 0, 0, null);
@@ -569,7 +577,7 @@ public class ScenePanel extends JPanel {
         this.schemeAntialiased = true;
         this.schemeDebugged = false;
         try {
-            Structures.setManipulation(ManipulationFactory.create(ManipulationType.CREATE, new Line()));
+            Structures.getManipulationQueue().offer(ManipulationFactory.create(ManipulationType.CREATE, new Line()));
         } catch (UnknownManipulationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -584,7 +592,7 @@ public class ScenePanel extends JPanel {
 
     @Deprecated
     public void processActualManipulationStep() throws UnknownManipulationException {
-        ManipulationType mt = Structures.getManipulation().getManipulationType();
+        ManipulationType mt = Structures.getManipulationQueue().peek().getManipulationType();
 
         switch (mt) {
             case CREATE:
@@ -648,7 +656,7 @@ public class ScenePanel extends JPanel {
     private void processFinalSelectStep() throws UnknownManipulationException {
         logger.trace("processing final SELECT step");
 
-        Select select = (Select) Structures.getManipulation();
+        Select select = (Select) Structures.getManipulationQueue().peek();
         select.setActive(true);
 
         GroupNode gn = select.getManipulatedGroup();

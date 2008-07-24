@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.application.StatusBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -17,6 +18,7 @@ import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Move;
 
 /**
@@ -45,30 +47,32 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      */
     public void mouseDragged(MouseEvent e) {
         try {
-            Structures.getStatusBar().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-            Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
-            logger.trace(s);
+            StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
+            Snap.setGridSize(ScenePanel.getInstance().getGridSize());
+            Snap.setSnappy(ScenePanel.getInstance().isSnapToGrid());
+
+            Manipulation m = Structures.getManipulationQueue().peek();
+            ManipulationType mt = m.getManipulationType();
 
             // manipulation is create
-            ManipulationType mt = Structures.getManipulation().getManipulationType();
             if (mt == ManipulationType.CREATE) {
-                Create create = (Create) Structures.getManipulation();
-                create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                Create create = (Create) m;
+                create.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
                 // just repaint (it takes care of element in progress)
-                Structures.getScenePanel().processActualManipulationStep();
+                ScenePanel.getInstance().processActualManipulationStep();
             }
             // manipulation is MOVE
             else if (mt == ManipulationType.MOVE) {
-                Move move = (Move) Structures.getManipulation();
+                Move move = (Move) m;
 
-                move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                move.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
                 Structures.getManipulationQueue().replaceLastManipulation(move);
                 Structures.getManipulationQueue().execute();
 
                 // just repaint (it takes care of element in progress)
-                Structures.getScenePanel().processActualManipulationStep();
+                ScenePanel.getInstance().processActualManipulationStep();
             }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
@@ -82,19 +86,23 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      */
     public void mouseMoved(MouseEvent e) {
         try {
-            Structures.getStatusBar().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-            Snap s = new Snap(Structures.getScenePanel().getGridSize(), Structures.getScenePanel().isSnapToGrid());
+            StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
+            
+            Snap.setGridSize(ScenePanel.getInstance().getGridSize());
+            Snap.setSnappy(ScenePanel.getInstance().isSnapToGrid());
+
+            Manipulation m = Structures.getManipulationQueue().peek();
 
             // manipulation is active
-            if (Structures.getManipulation().isActive()) {
+            if (m.isActive()) {
                 // manipulation is create
-                if (Structures.getManipulation().getManipulationType() == ManipulationType.CREATE) {
-                    Create create = (Create) Structures.getManipulation();
+                if (m.getManipulationType() == ManipulationType.CREATE) {
+                    Create create = (Create) m;
                     // manipulation is not in stage one (not the first part of shape is drawn)
                     if (create.getStage() != Create.STAGE_ONE) {
-                        create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                        create.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
-                        Structures.getScenePanel().processActualManipulationStep();
+                        ScenePanel.getInstance().processActualManipulationStep();
                     }
                 }
             }

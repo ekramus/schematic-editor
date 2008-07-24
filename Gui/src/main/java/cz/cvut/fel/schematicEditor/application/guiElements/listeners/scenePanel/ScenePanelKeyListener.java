@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.application.StatusBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
@@ -52,29 +53,30 @@ public class ScenePanelKeyListener implements KeyListener {
                     if (create.getElementModificator() == ElementModificator.NO_MODIFICATION) {
                         create.setElementModificator(ElementModificator.SYMMETRIC_ELEMENT);
                         // TODO externalize string
-                        Structures.getStatusBar().setSizeLockingLabel("to disable size locking, press CTRL");
+                        StatusBar.getInstance().setSizeLockingLabel("to disable size locking, press CTRL");
                     } else {
                         create.setElementModificator(ElementModificator.NO_MODIFICATION);
                         // TODO externalize string
-                        Structures.getStatusBar().setSizeLockingLabel("to enable size locking, press CTRL");
+                        StatusBar.getInstance().setSizeLockingLabel("to enable size locking, press CTRL");
                     }
                 }
             } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
                 logger.trace("UNexecuting...");
                 Structures.getManipulationQueue().unexecute();
-                Structures.getScenePanel().processFinalManipulationStep();
+                ScenePanel.getInstance().processFinalManipulationStep();
             } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
                 logger.trace("REexecuting...");
                 Structures.getManipulationQueue().reexecute();
-                Structures.getScenePanel().processFinalManipulationStep();
+                ScenePanel.getInstance().processFinalManipulationStep();
             } else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
-                if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
-                    GroupNode selected = Structures.getManipulation().getManipulatedGroup();
-                    if (Structures.getScenePanel().getSchemeSG().getTopNode().delete(selected)) {
+                Manipulation manipulation = Structures.getManipulationQueue().peek();
+                if (manipulation.getManipulationType() == ManipulationType.SELECT) {
+                    GroupNode selected = manipulation.getManipulatedGroup();
+                    if (ScenePanel.getInstance().getSchemeSG().getTopNode().delete(selected)) {
                         Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE);
                         delete.setActive(true);
-                        Structures.setManipulation(delete);
-                        Structures.getScenePanel().processFinalManipulationStep();
+                        Structures.getManipulationQueue().offer(delete);
+                        ScenePanel.getInstance().processFinalManipulationStep();
                     }
                 }
             }

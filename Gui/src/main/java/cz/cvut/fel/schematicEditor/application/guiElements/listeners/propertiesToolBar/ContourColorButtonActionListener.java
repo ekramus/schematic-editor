@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -59,7 +60,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
     public void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(Structures.getScenePanel(), CONTOUR_COLOR_TITLE,
+        Color c = JColorChooser.showDialog(ScenePanel.getInstance(), CONTOUR_COLOR_TITLE,
                                            ep.getContourColor());
         if (c != null) {
             ep.setContourColor(c);
