@@ -1,25 +1,27 @@
 package cz.cvut.fel.schematicEditor.application.guiElements.listeners.propertiesToolBar;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 
 /**
  * This abstract class implements listener model for {@link PropertiesToolBar} other listeners.
- *
+ * 
  * @author Urban Kravjansky
  */
 public abstract class PropertiesToolBarListener {
 
     /**
-     * Selects active element {@link ElementProperties} instance. If there is no active element,
-     * this method returns global scene {@link ElementProperties}.
-     *
-     * @return active element {@link ElementProperties} instance in case there is active element,
-     *         otherwise global scene {@link ElementProperties}.
+     * Selects active element {@link ElementProperties} instance. If there is no active element, this method returns
+     * global scene {@link ElementProperties}.
+     * 
+     * @return active element {@link ElementProperties} instance in case there is active element, otherwise global scene
+     *         {@link ElementProperties}.
      */
     protected final ElementProperties getElementProperties() {
         ElementProperties ep;
@@ -33,9 +35,9 @@ public abstract class PropertiesToolBarListener {
     }
 
     /**
-     * Update active element {@link ElementProperties} instance, if necessary. Update is executed
-     * only in case of {@link Select} manipulation.
-     *
+     * Update active element {@link ElementProperties} instance, if necessary. Update is executed only in case of
+     * {@link Select} manipulation.
+     * 
      * @param elementProperties
      *            properties to update.
      */
@@ -44,14 +46,14 @@ public abstract class PropertiesToolBarListener {
         // refresh all elements on properties toolbar
         PropertiesToolBar.refresh();
 
-        if (Structures.getManipulation().getManipulationType() == ManipulationType.SELECT) {
-            Select select = (Select) Structures.getManipulation();
-            if (select.getManipulatedGroup() != null) {
-                select.getManipulatedGroup().getChildrenParameterNode().setProperties(
-                                                                                      elementProperties);
+        Manipulation m = Structures.getManipulationQueue().peek();
 
-                Structures.getScenePanel().schemeInvalidate(
-                                                            select.getManipulatedGroup().getBounds());
+        if (m.getManipulationType() == ManipulationType.SELECT) {
+            Select select = (Select) m;
+            if (select.getManipulatedGroup() != null) {
+                select.getManipulatedGroup().getChildrenParameterNode().setProperties(elementProperties);
+
+                ScenePanel.getInstance().schemeInvalidate(select.getManipulatedGroup().getBounds());
             }
         }
     }
