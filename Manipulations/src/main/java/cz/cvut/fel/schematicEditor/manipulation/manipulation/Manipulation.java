@@ -136,7 +136,8 @@ public abstract class Manipulation {
     }
 
     /**
-     * Manipulation active state. If is manipulation active, it means, it is being currently processed.
+     * Manipulation active state. If is manipulation active, it means, it is being currently
+     * processed.
      * 
      * @return active state of current manipulation.
      */
@@ -189,7 +190,7 @@ public abstract class Manipulation {
      * @throws UnknownManipulationException
      *             In case of unknown {@link Manipulation}.
      */
-    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, Snap s)
+    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d)
             throws UnknownManipulationException;
 
     /**
@@ -206,6 +207,6 @@ public abstract class Manipulation {
      * @throws UnknownManipulationException
      *             In case of unknown {@link Manipulation}.
      */
-    public abstract void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            Snap s) throws UnknownManipulationException;
+    public abstract void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue) throws UnknownManipulationException;
 }

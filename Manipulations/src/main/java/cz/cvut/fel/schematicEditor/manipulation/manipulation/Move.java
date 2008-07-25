@@ -47,7 +47,6 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
      */
     @Override
@@ -58,7 +57,6 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
@@ -69,18 +67,19 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
     public void execute() throws ManipulationExecutionException {
         // compute delta
         int i = getX().size() - 2;
-        Point2D delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().get(i).doubleValue(), getY()
-                .lastElement().doubleValue() - getY().get(i).doubleValue());
+        Point2D delta = new Point2D.Double(getX().lastElement().doubleValue()
+                                           - getX().get(i).doubleValue(),
+                getY().lastElement().doubleValue() - getY().get(i).doubleValue());
 
         // create transformation node using delta
-        TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(), delta.getY()));
+        TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(),
+                                                                               delta.getY()));
         // replace last transformation
         GroupNode gn = getManipulatedGroup();
         // TODO modify transformations, so they use temporary data, not real
@@ -90,7 +89,6 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
@@ -102,16 +100,16 @@ public class Move extends Manipulation {
     /**
      * Specific <code>manipulationEnd</code> method for {@link Move} manipulation.
      * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationEnd(MouseEvent, Double,
-     *      ManipulationQueue, Snap)
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationEnd(MouseEvent,
+     *      Double, ManipulationQueue, Snap)
      */
     @Override
-    public void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue, Snap s)
-            throws UnknownManipulationException {
+    public void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue) throws UnknownManipulationException {
         if (isActive()) {
             logger.debug("object MOVED");
 
-            replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
             GroupNode gn = getManipulatedGroup();
 
@@ -138,12 +136,13 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationStart(java.awt.event.MouseEvent,
-     *      java.awt.geom.Rectangle2D.Double, cz.cvut.fel.schematicEditor.support.Snap)
+     * @see
+     * cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationStart(java
+     * .awt.event.MouseEvent, java.awt.geom.Rectangle2D.Double,
+     * cz.cvut.fel.schematicEditor.support.Snap)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, Snap s) {
+    public void manipulationStart(MouseEvent e, Double r2d) {
         // TODO Auto-generated method stub
 
     }

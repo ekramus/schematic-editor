@@ -2,9 +2,6 @@ package cz.cvut.fel.schematicEditor.core;
 
 import java.util.Properties;
 
-import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.application.StatusBar;
-import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;

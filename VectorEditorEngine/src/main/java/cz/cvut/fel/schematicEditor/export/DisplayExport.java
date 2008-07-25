@@ -21,7 +21,6 @@ import java.awt.geom.AffineTransform; // import java.awt.geom.Rectangle2D.Double
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -72,7 +71,7 @@ public class DisplayExport implements Export {
      * This is constructor.
      */
     private DisplayExport() {
-        logger = Logger.getLogger(Gui.class.getName());
+        logger = Logger.getLogger(this.getClass().getName());
 
         this.zoomFactor = 1;
         this.antialiased = true;
@@ -110,8 +109,8 @@ public class DisplayExport implements Export {
 
     private void drawNode(ElementNode en, ParameterNode pn, TransformationNode tn, BufferedImage img) {
         UnitRectangle bounds = en.getBounds(pn.getWidth());
-        BufferedImage nodeImg = new BufferedImage((int) bounds.getWidth(), (int) bounds.getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
+        BufferedImage nodeImg = new BufferedImage((int) bounds.getWidth(),
+                (int) bounds.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D nodeG2D = (Graphics2D) nodeImg.getGraphics();
 
         if (debuged) {
@@ -127,18 +126,21 @@ public class DisplayExport implements Export {
         nodeG2D.translate(-bounds.getX(), -bounds.getY());
 
         if (antialiased) {
-            nodeG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            nodeG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                                     RenderingHints.VALUE_ANTIALIAS_ON);
             logger.debug("AA ON");
         } else {
-            nodeG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+            nodeG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                                     RenderingHints.VALUE_ANTIALIAS_OFF);
             logger.debug("AA OFF");
         }
 
         switch (en.getElementType()) {
             case ElementType.T_LINE:
                 Line l = (Line) en.getElement();
-                Line2D.Double l2d = new Line2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue(), l
-                        .getX().get(1).doubleValue(), l.getY().get(1).doubleValue());
+                Line2D.Double l2d = new Line2D.Double(l.getX().get(0).doubleValue(),
+                        l.getY().get(0).doubleValue(), l.getX().get(1).doubleValue(),
+                        l.getY().get(1).doubleValue());
 
                 drawShape(nodeG2D, l2d, pn.getColor(), pn.getLineStyle(), null, pn.getFillStyle());
 
@@ -146,34 +148,40 @@ public class DisplayExport implements Export {
 
             case ElementType.T_RECTANGLE:
                 Rectangle rectangle = (Rectangle) en.getElement();
-                Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(), rectangle
-                        .getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
+                Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(),
+                        rectangle.getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
 
-                drawShape(nodeG2D, rectangle2d, pn.getColor(), pn.getLineStyle(), pn.getFill(), pn.getFillStyle());
+                drawShape(nodeG2D, rectangle2d, pn.getColor(), pn.getLineStyle(), pn.getFill(),
+                          pn.getFillStyle());
                 break;
 
             case ElementType.T_ELLIPSE:
                 Ellipse ellipse = (Ellipse) en.getElement();
-                Ellipse2D.Double ell = new Ellipse2D.Double(ellipse.getTopLeftX(), ellipse.getTopLeftY(), ellipse
-                        .getWidth(), ellipse.getHeight());
+                Ellipse2D.Double ell = new Ellipse2D.Double(ellipse.getTopLeftX(),
+                        ellipse.getTopLeftY(), ellipse.getWidth(), ellipse.getHeight());
 
-                drawShape(nodeG2D, ell, pn.getColor(), pn.getLineStyle(), pn.getFill(), pn.getFillStyle());
+                drawShape(nodeG2D, ell, pn.getColor(), pn.getLineStyle(), pn.getFill(),
+                          pn.getFillStyle());
                 break;
 
             case ElementType.T_ARC:
                 Arc arc = (Arc) en.getElement();
-                Arc2D.Double arc2d = new Arc2D.Double(arc.getTopLeftX(), arc.getTopLeftY(), arc.getWidth(), arc
-                        .getHeight(), arc.getStartAngle(), arc.getArcAngle(), Arc2D.PIE);
+                Arc2D.Double arc2d = new Arc2D.Double(arc.getTopLeftX(), arc.getTopLeftY(),
+                        arc.getWidth(), arc.getHeight(), arc.getStartAngle(), arc.getArcAngle(),
+                        Arc2D.PIE);
 
-                drawShape(nodeG2D, arc2d, pn.getColor(), pn.getLineStyle(), pn.getFill(), pn.getFillStyle());
+                drawShape(nodeG2D, arc2d, pn.getColor(), pn.getLineStyle(), pn.getFill(),
+                          pn.getFillStyle());
                 break;
 
             case ElementType.T_ARC_SEGMENT:
                 Arc arcS = (Arc) en.getElement();
-                Arc2D.Double arcS2d = new Arc2D.Double(arcS.getTopLeftX(), arcS.getTopLeftY(), arcS.getWidth(), arcS
-                        .getHeight(), arcS.getStartAngle(), arcS.getArcAngle(), Arc2D.OPEN);
+                Arc2D.Double arcS2d = new Arc2D.Double(arcS.getTopLeftX(), arcS.getTopLeftY(),
+                        arcS.getWidth(), arcS.getHeight(), arcS.getStartAngle(),
+                        arcS.getArcAngle(), Arc2D.OPEN);
 
-                drawShape(nodeG2D, arcS2d, pn.getColor(), pn.getLineStyle(), pn.getFill(), pn.getFillStyle());
+                drawShape(nodeG2D, arcS2d, pn.getColor(), pn.getLineStyle(), pn.getFill(),
+                          pn.getFillStyle());
                 break;
 
             case ElementType.T_TRIANGLE:
@@ -187,7 +195,8 @@ public class DisplayExport implements Export {
                 for (int i = 0; i < xPg.size(); i++) {
                     p.addPoint(xPg.get(i).intValue(), yPg.get(i).intValue());
                 }
-                drawShape(nodeG2D, p, pn.getColor(), pn.getLineStyle(), pn.getFill(), pn.getFillStyle());
+                drawShape(nodeG2D, p, pn.getColor(), pn.getLineStyle(), pn.getFill(),
+                          pn.getFillStyle());
                 break;
 
             case ElementType.T_POLYLINE:
@@ -197,20 +206,24 @@ public class DisplayExport implements Export {
                 Vector<Unit> yPo = poly.getY();
 
                 for (int i = 0; i < xPo.size() - 1; i++) {
-                    Line2D.Double line2d = new Line2D.Double(xPo.get(i).doubleValue(), yPo.get(i).doubleValue(), xPo
-                            .get(i + 1).doubleValue(), yPo.get(i + 1).doubleValue());
-                    drawShape(nodeG2D, line2d, pn.getColor(), pn.getLineStyle(), null, pn.getFillStyle());
+                    Line2D.Double line2d = new Line2D.Double(xPo.get(i).doubleValue(),
+                            yPo.get(i).doubleValue(), xPo.get(i + 1).doubleValue(),
+                            yPo.get(i + 1).doubleValue());
+                    drawShape(nodeG2D, line2d, pn.getColor(), pn.getLineStyle(), null,
+                              pn.getFillStyle());
                 }
                 break;
 
             case ElementType.T_BEZIER:
                 BezierCurve bC = (BezierCurve) en.getElement();
 
-                CubicCurve2D.Double quadCurve = new CubicCurve2D.Double(bC.getStart().getX(), bC.getStart().getY(), bC
-                        .getControl1().getX(), bC.getControl1().getY(), bC.getControl2().getX(), bC.getControl2()
-                        .getY(), bC.getEnd().getX(), bC.getEnd().getY());
+                CubicCurve2D.Double quadCurve = new CubicCurve2D.Double(bC.getStart().getX(),
+                        bC.getStart().getY(), bC.getControl1().getX(), bC.getControl1().getY(),
+                        bC.getControl2().getX(), bC.getControl2().getY(), bC.getEnd().getX(),
+                        bC.getEnd().getY());
 
-                drawShape(nodeG2D, quadCurve, pn.getColor(), pn.getLineStyle(), pn.getFill(), pn.getFillStyle());
+                drawShape(nodeG2D, quadCurve, pn.getColor(), pn.getLineStyle(), pn.getFill(),
+                          pn.getFillStyle());
 
                 break;
 
@@ -224,9 +237,11 @@ public class DisplayExport implements Export {
                 TextLayout layout = new TextLayout(text.getText(), font, frc);
 
                 Rectangle2D rec = layout.getBounds();
-                bounds = new UnitRectangle(rec.getX() + text.getX().get(0).doubleValue(), rec.getY() + text.getY()
-                        .get(0).doubleValue(), rec.getWidth(), rec.getHeight());
-                nodeImg = new BufferedImage((int) rec.getWidth(), (int) rec.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                bounds = new UnitRectangle(rec.getX() + text.getX().get(0).doubleValue(),
+                        rec.getY() + text.getY().get(0).doubleValue(), rec.getWidth(),
+                        rec.getHeight());
+                nodeImg = new BufferedImage((int) rec.getWidth(), (int) rec.getHeight(),
+                        BufferedImage.TYPE_INT_ARGB);
 
                 nodeG2D = (Graphics2D) nodeImg.getGraphics();
                 nodeG2D.translate(-bounds.getX(), -bounds.getY());
@@ -235,7 +250,8 @@ public class DisplayExport implements Export {
                     nodeG2D.setColor(pn.getColor());
                 }
 
-                layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
+                layout.draw(nodeG2D, text.getX().get(0).floatValue(),
+                            text.getY().get(0).floatValue());
                 break;
 
             default:
@@ -253,8 +269,8 @@ public class DisplayExport implements Export {
 
     }
 
-    private void drawShape(Graphics2D g, Shape s, Color strokeColor, ElementStyle strokeStyle, Color fillColor,
-            ElementStyle fillStyle) {
+    private void drawShape(Graphics2D g, Shape s, Color strokeColor, ElementStyle strokeStyle,
+            Color fillColor, ElementStyle fillStyle) {
 
         if (fillStyle != ElementStyle.NONE) {
             g.setColor(fillColor);
