@@ -1,5 +1,7 @@
 package cz.cvut.fel.schematicEditor.support;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
@@ -11,24 +13,52 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
  */
 public class Snap {
     /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
+    /**
      * Static {@link Snap} singleton instance.
      */
-    private static Snap snap     = new Snap();
+    private static Snap   snap     = null;
     /**
      * Grid spacing size.
      */
-    private Unit        gridSize = null;
+    private Unit          gridSize = null;
     /**
      * Snap status.
      */
-    private boolean     snappy   = false;
+    private boolean       snappy   = false;
 
     /**
      * Singleton constructor used for {@link Snap} initialization.
      */
     private Snap() {
+        logger = Logger.getLogger(this.getClass().getName());
+
         setGridSize(new Pixel(10));
         setSnappy(false);
+    }
+
+    /**
+     * Returns singleton instance of snap.
+     * 
+     * @return Instance of snap.
+     */
+    public static Snap getInstance() {
+        if (snap == null) {
+            snap = new Snap();
+        }
+        return snap;
+    }
+
+    /**
+     * Singleton override of clone method.
+     * 
+     * @see java.lang.Object#clone()
+     */
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
     }
 
     /**
@@ -38,15 +68,15 @@ public class Snap {
      *            coordinate to snap.
      * @return Snapped coordinate value.
      */
-    public static Pixel getSnap(double coordinate) {
+    public Pixel getSnap(double coordinate) {
         Pixel result;
 
         if (!isSnappy()) {
             return new Pixel(coordinate);
         }
         result = new Pixel(
-                getGridSize().doubleValue() * (int) ((coordinate + getGridSize().doubleValue() / 2) / getGridSize()
-                        .doubleValue()));
+                getGridSize().doubleValue()
+                        * (int) ((coordinate + getGridSize().doubleValue() / 2) / getGridSize().doubleValue()));
 
         return result;
     }
@@ -56,8 +86,8 @@ public class Snap {
      * 
      * @return the gridSize
      */
-    public static Unit getGridSize() {
-        return snap.gridSize;
+    public Unit getGridSize() {
+        return this.gridSize;
     }
 
     /**
@@ -66,8 +96,9 @@ public class Snap {
      * @param gridSize
      *            the gridSize to set
      */
-    public static void setGridSize(Unit gridSize) {
-        snap.gridSize = gridSize;
+    public void setGridSize(Unit gridSize) {
+        logger.trace("Grid size: " + gridSize);
+        this.gridSize = gridSize;
     }
 
     /**
@@ -75,8 +106,8 @@ public class Snap {
      * 
      * @return the isSnap
      */
-    public static boolean isSnappy() {
-        return snap.snappy;
+    public boolean isSnappy() {
+        return this.snappy;
     }
 
     /**
@@ -85,8 +116,9 @@ public class Snap {
      * @param snappy
      *            the snap to set
      */
-    public static void setSnappy(boolean snappy) {
-        snap.snappy = snappy;
+    public void setSnappy(boolean snappy) {
+        logger.trace("Is snappy: " + snappy);
+        this.snappy = snappy;
     }
 
     /**

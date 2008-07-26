@@ -48,8 +48,10 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-            Snap.setGridSize(ScenePanel.getInstance().getGridSize());
-            Snap.setSnappy(ScenePanel.getInstance().isSnapToGrid());
+
+            Snap s = Snap.getInstance();
+            s.setGridSize(ScenePanel.getInstance().getGridSize());
+            s.setSnappy(ScenePanel.getInstance().isSnapToGrid());
 
             Manipulation m = Structures.getManipulationQueue().peek();
             ManipulationType mt = m.getManipulationType();
@@ -57,7 +59,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             // manipulation is create
             if (mt == ManipulationType.CREATE) {
                 Create create = (Create) m;
-                create.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+                create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
                 // just repaint (it takes care of element in progress)
                 ScenePanel.getInstance().processActualManipulationStep();
@@ -66,7 +68,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             else if (mt == ManipulationType.MOVE) {
                 Move move = (Move) m;
 
-                move.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+                move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
                 Structures.getManipulationQueue().replaceLastManipulation(move);
                 Structures.getManipulationQueue().execute();
@@ -87,9 +89,10 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-            
-            Snap.setGridSize(ScenePanel.getInstance().getGridSize());
-            Snap.setSnappy(ScenePanel.getInstance().isSnapToGrid());
+
+            Snap s = Snap.getInstance();
+            s.setGridSize(ScenePanel.getInstance().getGridSize());
+            s.setSnappy(ScenePanel.getInstance().isSnapToGrid());
 
             Manipulation m = Structures.getManipulationQueue().peek();
 
@@ -100,7 +103,8 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                     Create create = (Create) m;
                     // manipulation is not in stage one (not the first part of shape is drawn)
                     if (create.getStage() != Create.STAGE_ONE) {
-                        create.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+                        create.replaceLastManipulationCoordinates(s.getSnap(e.getX()),
+                                                                  s.getSnap(e.getY()));
 
                         ScenePanel.getInstance().processActualManipulationStep();
                     }

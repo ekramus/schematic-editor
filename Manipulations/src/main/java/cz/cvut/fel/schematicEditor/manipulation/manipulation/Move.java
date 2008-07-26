@@ -101,15 +101,18 @@ public class Move extends Manipulation {
      * Specific <code>manipulationEnd</code> method for {@link Move} manipulation.
      * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationEnd(MouseEvent,
-     *      Double, ManipulationQueue, Snap)
+     *      Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
     public void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue) throws UnknownManipulationException {
+            ManipulationQueue manipulationQueue, GroupNode groupNode, boolean isMouseClicked)
+            throws UnknownManipulationException {
         if (isActive()) {
             logger.debug("object MOVED");
 
-            replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+            Snap s = Snap.getInstance();
+
+            replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
             GroupNode gn = getManipulatedGroup();
 
@@ -134,16 +137,33 @@ public class Move extends Manipulation {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationStart(java
-     * .awt.event.MouseEvent, java.awt.geom.Rectangle2D.Double,
-     * cz.cvut.fel.schematicEditor.support.Snap)
+    /**
+     * Specific <code>manipulationStart</code> method for {@link Move} manipulation.
+     * 
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationStart(MouseEvent,
+     *      Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d) {
-        // TODO Auto-generated method stub
+    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq,
+            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
+        Snap s = Snap.getInstance();
 
+        // check, whether move is possible or not
+        if (isActive() && getManipulatedGroup() == groupNode.findHit(r2d)) {
+            // add identity transformation, so it can be later changed
+            groupNode.add(new TransformationNode(Transformation.getIdentity()));
+
+            // add two copies of same coordinates to be able to replace last one
+            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
+            // set manipulated group disabled
+            groupNode.setDisabled(true);
+            // ScenePanel.getInstance().schemeInvalidate(gn.getBounds());
+        }
+        // move is not possible - fall back to Select manipulation
+        else {
+            mq.offer(ManipulationFactory.create(ManipulationType.SELECT));
+        }
     }
 }

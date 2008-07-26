@@ -33,6 +33,7 @@ public final class SnapToGridCheckBoxMenuItemListener implements ActionListener 
      *            {@link ActionEvent} parameter. This parameter is used to obtain source object.
      */
     public void actionPerformed(ActionEvent e) {
-        Snap.setSnappy(((JCheckBoxMenuItem) e.getSource()).isSelected());
+        Snap s = Snap.getInstance();
+        s.setSnappy(((JCheckBoxMenuItem) e.getSource()).isSelected());
     }
 }

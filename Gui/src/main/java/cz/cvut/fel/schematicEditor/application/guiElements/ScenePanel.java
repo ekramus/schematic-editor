@@ -39,8 +39,8 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class encapsulates scene JPanel. All main listeners are implemented here. This class is applications main
- * drawing interface.
+ * This class encapsulates scene JPanel. All main listeners are implemented here. This class is
+ * applications main drawing interface.
  * 
  * @author Urban Kravjansky
  */
@@ -143,7 +143,7 @@ public class ScenePanel extends JPanel {
     private ScenePanel() {
         super();
 
-        logger = Logger.getLogger(Gui.class.getName());
+        logger = Logger.getLogger(this.getClass().getName());
 
         init();
     }
@@ -218,8 +218,8 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method processes final step for {@link Create} manipulation. It is responsible for {@link Element}
-     * finalization, {@link ScenePanel} redraw, etc.
+     * This method processes final step for {@link Create} manipulation. It is responsible for
+     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
      * 
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
@@ -254,8 +254,8 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method processes final step for {@link Delete} manipulation. It is responsible for {@link Element}
-     * finalization, {@link ScenePanel} redraw, etc.
+     * This method processes final step for {@link Delete} manipulation. It is responsible for
+     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
      * 
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
@@ -337,12 +337,14 @@ public class ScenePanel extends JPanel {
 
         // draw first rectangle
         gridG2D.setColor(new Color(210, 220, 255));
-        Rectangle2D r = new Rectangle2D.Double(0, 0, this.gridSize.doubleValue(), this.gridSize.doubleValue());
+        Rectangle2D r = new Rectangle2D.Double(0, 0, this.gridSize.doubleValue(),
+                this.gridSize.doubleValue());
         gridG2D.draw(r);
 
         // copy rectangle in row
         for (double d = this.gridSize.doubleValue(); d <= grid.getWidth(); d += this.gridSize.doubleValue()) {
-            gridG2D.copyArea(0, 0, this.gridSize.intValue() + 1, this.gridSize.intValue() + 1, (int) d, 0);
+            gridG2D.copyArea(0, 0, this.gridSize.intValue() + 1, this.gridSize.intValue() + 1,
+                             (int) d, 0);
         }
 
         // copy row of rectangles
@@ -363,7 +365,8 @@ public class ScenePanel extends JPanel {
      */
     private BufferedImage drawManipulatedElement() throws UnknownManipulationException {
         // create new manipulated elelement
-        BufferedImage manipulatedElement = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage manipulatedElement = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
         // prepare element
         SceneGraph sg = new SceneGraph();
@@ -392,7 +395,8 @@ public class ScenePanel extends JPanel {
      */
     private BufferedImage drawManipulatedGroup() throws UnknownManipulationException {
         // create new manipulated element
-        BufferedImage manipulatedGroup = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage manipulatedGroup = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
         // create SceneGraph
         SceneGraph sg = new SceneGraph();
@@ -418,15 +422,16 @@ public class ScenePanel extends JPanel {
      */
     private BufferedImage drawSelectionFrame() throws UnknownManipulationException {
         // create new selection frame
-        BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
         Manipulation m = Structures.getManipulationQueue().peek();
         GroupNode gn = m.getManipulatedGroup();
         Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) selectionFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
-                .getWidth(), gn.getBounds().getHeight());
+        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
+                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
         rect = t.shift(rect);
         g2d.setColor(Color.GRAY);
         g2d.draw(rect);
@@ -443,15 +448,16 @@ public class ScenePanel extends JPanel {
      */
     private BufferedImage drawEditFrame() throws UnknownManipulationException {
         // create new edit frame
-        BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
         Manipulation m = Structures.getManipulationQueue().peek();
         GroupNode gn = m.getManipulatedGroup();
         Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) editFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
-                .getWidth(), gn.getBounds().getHeight());
+        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
+                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
         rect = t.shift(rect);
         g2d.setColor(Color.ORANGE);
         g2d.draw(rect);
@@ -545,7 +551,8 @@ public class ScenePanel extends JPanel {
         logger.debug("full scheme redraw");
 
         // create new scheme
-        BufferedImage scheme = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage scheme = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
         // initialize DisplayExport
         DisplayExport de = DisplayExport.getExport();
@@ -563,9 +570,11 @@ public class ScenePanel extends JPanel {
      * This method initializes this.
      */
     private void init() {
-        this.setPreferredSize(new Dimension(Integer.parseInt(Structures.getProperties()
-                .getProperty("sceneXDim", Constants.DEFAULT_SCENE_XDIM)), Integer.parseInt(Structures.getProperties()
-                .getProperty("sceneYDim", "1024"))));
+        this.setPreferredSize(new Dimension(
+                Integer.parseInt(Structures.getProperties().getProperty(
+                                                                        "sceneXDim",
+                                                                        Constants.DEFAULT_SCENE_XDIM)),
+                Integer.parseInt(Structures.getProperties().getProperty("sceneYDim", "1024"))));
         this.setBackground(Color.WHITE);
 
         // initialize grid properties
@@ -577,7 +586,10 @@ public class ScenePanel extends JPanel {
         this.schemeAntialiased = true;
         this.schemeDebugged = false;
         try {
-            Structures.getManipulationQueue().offer(ManipulationFactory.create(ManipulationType.CREATE, new Line()));
+            Structures.getManipulationQueue().offer(
+                                                    ManipulationFactory.create(
+                                                                               ManipulationType.CREATE,
+                                                                               new Line()));
         } catch (UnknownManipulationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -610,7 +622,8 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method repaints correctly scene after change of point coordinates in {@link Create} manipulation.
+     * This method repaints correctly scene after change of point coordinates in {@link Create}
+     * manipulation.
      */
     @Deprecated
     private void processActualCreateStep() {
@@ -646,8 +659,8 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method processes final step for {@link Select} manipulation. It is responsible for {@link Element}
-     * finalization, {@link ScenePanel} redraw, etc.
+     * This method processes final step for {@link Select} manipulation. It is responsible for
+     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
      * 
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
