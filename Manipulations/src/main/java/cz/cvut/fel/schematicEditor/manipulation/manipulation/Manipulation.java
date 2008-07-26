@@ -185,12 +185,15 @@ public abstract class Manipulation {
      *            Rectangle, which contains mouse pointer.
      * @param manipulationQueue
      *            used for {@link Manipulation} history and execution.
-     * @param s
-     *            Snap to grid property.
+     * @param gn
+     *            TopNode of SchemeSG.
+     * @param isMouseClicked
+     *            Indicates, whether mouse was clicked or not.
      * @throws UnknownManipulationException
      *             In case of unknown {@link Manipulation}.
      */
-    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d)
+    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
             throws UnknownManipulationException;
 
     /**
@@ -202,11 +205,14 @@ public abstract class Manipulation {
      *            Rectangle, which contains mouse pointer.
      * @param manipulationQueue
      *            used for {@link Manipulation} history and execution.
-     * @param s
-     *            Snap to grid property.
+     * @param gn
+     *            TopNode of SchemeSG.
+     * @param isMouseClicked
+     *            Indicates, whether mouse was clicked or not.
      * @throws UnknownManipulationException
      *             In case of unknown {@link Manipulation}.
      */
     public abstract void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue) throws UnknownManipulationException;
+            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
+            throws UnknownManipulationException;
 }
