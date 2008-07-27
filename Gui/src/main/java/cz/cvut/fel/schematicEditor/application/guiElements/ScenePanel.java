@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelKeyListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseMotionListener;
@@ -26,6 +25,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
@@ -35,8 +35,6 @@ import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -293,46 +291,50 @@ public class ScenePanel extends JPanel {
             this.scheme = drawScheme();
         }
         // draw scheme if visible
-        logger.debug("draw scheme");
+        logger.trace("draw scheme");
         g2d.drawImage(this.scheme, 0, 0, null);
 
-        Manipulation m = Structures.getManipulationQueue().peek();
+        try {
 
-        // draw work element or group, if some is being manipulated.
-        if (m.isActive() && (m.isManipulatingElements() || m.isManipulatingGroups())) {
-            logger.debug("manipulated element/group redrawn");
-            BufferedImage manipulatedElement = null;
-            // manipulation manipulates with group
-            if (m.isManipulatingGroups()) {
-                logger.trace("calling drawManipulatedGroup");
-                manipulatedElement = drawManipulatedGroup();
-            }
-            // manipulation manipulates with single element
-            else if (m.isManipulatingElements()) {
-                logger.trace("calling drawManipulatedElement");
-                manipulatedElement = drawManipulatedElement();
-            }
-            // strange behavior, nevertheless, log it
-            else {
-                logger.trace("no manipulated group, no manipulated element");
-            }
-            g2d.drawImage(manipulatedElement, 0, 0, null);
-        }
+            Manipulation m = Structures.getManipulationQueue().peek();
 
-        // highlight manipulated group
-        if (m.isActive()) {
-            // draw frame around selected group
-            if (m.getManipulationType() == ManipulationType.SELECT) {
-                logger.trace("selected element frame drawing");
-                BufferedImage selectionFrame = drawSelectionFrame();
-                g2d.drawImage(selectionFrame, 0, 0, null);
+            // draw work element or group, if some is being manipulated.
+            if (m.isActive() && (m.isManipulatingElements() || m.isManipulatingGroups())) {
+                BufferedImage manipulatedElement = null;
+                // manipulation manipulates with group
+                if (m.isManipulatingGroups()) {
+                    logger.trace("calling drawManipulatedGroup");
+                    manipulatedElement = drawManipulatedGroup();
+                }
+                // manipulation manipulates with single element
+                else if (m.isManipulatingElements()) {
+                    logger.trace("calling drawManipulatedElement");
+                    manipulatedElement = drawManipulatedElement();
+                }
+                // strange behavior, nevertheless, log it
+                else {
+                    logger.trace("no manipulated group, no manipulated element");
+                }
+                g2d.drawImage(manipulatedElement, 0, 0, null);
             }
-            // draw frame around selected group
-            else if (m.getManipulationType() == ManipulationType.EDIT) {
-                logger.trace("create element frame drawing");
-                BufferedImage selectionFrame = drawEditFrame();
-                g2d.drawImage(selectionFrame, 0, 0, null);
+
+            // highlight manipulated group
+            if (m.isActive()) {
+                // draw frame around selected group
+                if (m.getManipulationType() == ManipulationType.SELECT) {
+                    logger.trace("selected element frame drawing");
+                    BufferedImage selectionFrame = drawSelectionFrame();
+                    g2d.drawImage(selectionFrame, 0, 0, null);
+                }
+                // draw frame around selected group
+                else if (m.getManipulationType() == ManipulationType.EDIT) {
+                    logger.trace("create element frame drawing");
+                    BufferedImage selectionFrame = drawEditFrame();
+                    g2d.drawImage(selectionFrame, 0, 0, null);
+                }
             }
+        } catch (NullPointerException npe) {
+            logger.trace("No manipultion in manipulation queue");
         }
     }
 
@@ -405,17 +407,17 @@ public class ScenePanel extends JPanel {
         this.setBackground(Color.WHITE);
 
         // initialize grid properties
-        this.gridVisible = true;
-        this.gridValid = false;
+        setGridVisible(true);
+        setGridValid(false);
 
         // initialize scheme properties
-        this.schemeAntialiased = true;
-        this.schemeDebugged = false;
+        setSchemeAntialiased(true);
+        setSchemeDebugged(false);
+
+        // add manipulation into ManipulationQueue
         try {
-            Structures.getManipulationQueue().offer(
-                                                    ManipulationFactory.create(
-                                                                               ManipulationType.CREATE,
-                                                                               new Line()));
+            ManipulationQueue mq = Structures.getManipulationQueue();
+            mq.offer(ManipulationFactory.create(ManipulationType.CREATE, new Line()));
         } catch (UnknownManipulationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -513,42 +515,6 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method processes final step for {@link Create} manipulation. It is responsible for
-     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
-     * 
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    @Deprecated
-    private void processFinalCreateStep() throws UnknownManipulationException {
-        Element child = null;
-        ShapeNode sn;
-        GroupNode gn;
-        ParameterNode pn;
-
-        logger.debug("processing final manipulation step");
-
-        Manipulation m = Structures.getManipulationQueue().peek();
-
-        child = m.getManipulatedElement();
-        m.setActive(false);
-
-        sn = new ShapeNode((Shape) child);
-        pn = new ParameterNode();
-
-        pn.setProperties(Structures.getSceneProperties().getSceneElementProperties());
-
-        logger.debug("Nodes created");
-
-        gn = new GroupNode();
-        gn.add(pn);
-        gn.add(sn);
-
-        this.schemeSG.getTopNode().add(gn);
-        schemeInvalidate(child.getBounds());
-    }
-
-    /**
      * This method processes final step for {@link Delete} manipulation. It is responsible for
      * {@link Element} finalization, {@link ScenePanel} redraw, etc.
      * 
@@ -578,7 +544,6 @@ public class ScenePanel extends JPanel {
 
         switch (mt) {
             case CREATE:
-                processFinalCreateStep();
                 break;
             case DELETE:
                 processFinalDeleteStep();

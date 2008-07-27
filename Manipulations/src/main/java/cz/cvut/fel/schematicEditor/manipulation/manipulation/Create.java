@@ -1,11 +1,16 @@
 package cz.cvut.fel.schematicEditor.manipulation.manipulation;
 
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D.Double;
+import java.awt.geom.Rectangle2D;
+
+import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
@@ -20,6 +25,11 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
  * @author Urban Kravjansky
  */
 public class Create extends Manipulation {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
+
     /**
      * Stage of {@link Manipulation}. It indicates, what will be the next manipulation operation.
      * 
@@ -48,6 +58,9 @@ public class Create extends Manipulation {
      * Number of points left for given shape.
      */
     private int     pointsLeft;
+    /**
+     * Indicates, whether {@link Create} manipulation is finished or not.
+     */
     private boolean finished;
 
     /**
@@ -55,16 +68,19 @@ public class Create extends Manipulation {
      */
     protected Create(Element manipulatedElement) {
         super(manipulatedElement);
+
+        logger = Logger.getLogger(this.getClass().getName());
+
         setFinished(false);
         setStage(Stage.STAGE_ONE);
         setPointsLeft(manipulatedElement.getNumberOfCoordinates());
         setElementModificator(ElementModificator.NO_MODIFICATION);
+        // TODO add info text into status bar
         // Structures.getStatusBar().setSizeLockingLabel("to enable size locking, press CTRL");
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#addManipulationCoordinates(java.lang.Double,
-     *      java.lang.Double)
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
      */
     @Override
     public void addManipulationCoordinates(Unit x, Unit y) {
@@ -121,9 +137,8 @@ public class Create extends Manipulation {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
     public boolean isManipulatingGroups() {
@@ -162,32 +177,28 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation)
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#duplicate()
      */
     @Override
-    protected Manipulation duplitate() {
+    protected Manipulation duplicate() {
         Create c = new Create(getManipulatedElement().newInstance());
         return c;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
     public void execute() throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
-
+        logger.trace(this + " executed");
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
     public void unexecute() throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
-
+        logger.trace(this + " unexecuted");
     }
 
     /**
@@ -195,8 +206,10 @@ public class Create extends Manipulation {
      *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
+    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue, GroupNode groupNode, boolean isMouseClicked)
+            throws UnknownManipulationException {
+        logger.trace(this + " manipulation END");
 
         Snap s = Snap.getInstance();
 
@@ -235,8 +248,33 @@ public class Create extends Manipulation {
 
         // finalize, if possible
         if (isFinished()) {
-            // ScenePanel.getInstance().processFinalManipulationStep();
+            Element child = null;
+            GroupNode gn;
+            ShapeNode sn;
+            ParameterNode pn;
+
+            logger.debug("processing final manipulation step");
+
+            Manipulation m = manipulationQueue.peek();
+
+            child = m.getManipulatedElement();
+            m.setActive(false);
+
+            sn = new ShapeNode((Shape) child);
+            pn = new ParameterNode();
+
+            // pn.setProperties(Structures.getSceneProperties().getSceneElementProperties());
+
+            logger.debug("Nodes created");
+
+            gn = new GroupNode();
+            gn.add(pn);
+            gn.add(sn);
+
+            groupNode.add(gn);
         }
+
+        return isFinished();
     }
 
     /**
@@ -244,11 +282,12 @@ public class Create extends Manipulation {
      *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
-        Snap s = Snap.getInstance();
+    public void manipulationStart(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
+            throws UnknownManipulationException {
+        logger.trace(this + " manipulation START");
 
-        // logger.debug("manipulation is instance of Create");
+        Snap s = Snap.getInstance();
 
         // Create create = (Create) Structures.getManipulationQueue().peek();
         setActive(true);

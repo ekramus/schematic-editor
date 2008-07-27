@@ -62,14 +62,11 @@ public class Select extends Manipulation {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor
-     * .manipulation.Manipulation)
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#duplicate()
      */
     @Override
-    protected Manipulation duplitate() {
+    protected Manipulation duplicate() {
         Select s = new Select();
 
         // duplicate parameters
