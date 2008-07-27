@@ -35,7 +35,7 @@ public class Snap {
     private Snap() {
         logger = Logger.getLogger(this.getClass().getName());
 
-        setGridSize(new Pixel(10));
+        setGridSize(new Pixel(25));
         setSnappy(false);
     }
 

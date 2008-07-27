@@ -54,7 +54,7 @@ public class Text extends Shape {
     public Text() {
         // TODO Auto-generated constructor stub
     }
-    
+
     public void setText(String textValue) {
         this.textValue = textValue;
     }
@@ -89,7 +89,6 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -100,7 +99,6 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -116,12 +114,21 @@ public class Text extends Shape {
         return 2;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
     public Element newInstance() {
         Text t = new Text();
         return t;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "TEXT";
     }
 }

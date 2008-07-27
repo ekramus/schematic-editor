@@ -33,8 +33,8 @@ public class ManipulationQueue {
      * Executes top manipulation stored in <code>waitingManipulations</code> queue and moves it into
      * <code>processedManipulations</code> queue.
      * 
-     * @return status of executed {@link Manipulation}. <code>false</code> in case of execution problems, else
-     *         <code>true</code>.
+     * @return status of executed {@link Manipulation}. <code>false</code> in case of execution
+     *         problems, else <code>true</code>.
      */
     public boolean execute() {
         Manipulation manipulation = getWaitingManipulations().poll();
@@ -55,11 +55,11 @@ public class ManipulationQueue {
     }
 
     /**
-     * Unexecutes (undoes) top manipulation stored in <code>processedManipulations</code> queue and moves it on top of
-     * <code>waitingManipulations</code> queue.
+     * Unexecutes (undoes) top manipulation stored in <code>processedManipulations</code> queue and
+     * moves it on top of <code>waitingManipulations</code> queue.
      * 
-     * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution problems, else
-     *         <code>true</code>.
+     * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution
+     *         problems, else <code>true</code>.
      */
     public boolean unexecute() {
         Manipulation manipulation = getProcessedManipulations().poll();
@@ -80,11 +80,11 @@ public class ManipulationQueue {
     }
 
     /**
-     * Reexecutes (redoes) top manipulation stored in <code>processedManipulations</code> queue. No transfers between
-     * queues are done.
+     * Reexecutes (redoes) top manipulation stored in <code>processedManipulations</code> queue. No
+     * transfers between queues are done.
      * 
-     * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution problems, else
-     *         <code>true</code>.
+     * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution
+     *         problems, else <code>true</code>.
      */
     public boolean reexecute() {
         Manipulation manipulation = getProcessedManipulations().peek();
@@ -172,5 +172,14 @@ public class ManipulationQueue {
     public void reoffer(Manipulation manipulation) {
         getWaitingManipulations().remove();
         getWaitingManipulations().offer(manipulation);
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "waiting: [" + getWaitingManipulations() + "] processed: ["
+               + getProcessedManipulations() + "]";
     }
 }

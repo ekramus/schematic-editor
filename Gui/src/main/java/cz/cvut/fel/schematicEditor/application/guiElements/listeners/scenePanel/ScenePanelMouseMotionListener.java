@@ -50,8 +50,6 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
             Snap s = Snap.getInstance();
-            s.setGridSize(ScenePanel.getInstance().getGridSize());
-            s.setSnappy(ScenePanel.getInstance().isSnapToGrid());
 
             Manipulation m = Structures.getManipulationQueue().peek();
             ManipulationType mt = m.getManipulationType();
@@ -87,31 +85,29 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
      */
     public void mouseMoved(MouseEvent e) {
-        try {
-            StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
+        // try {
+        StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Snap s = Snap.getInstance();
-            s.setGridSize(ScenePanel.getInstance().getGridSize());
-            s.setSnappy(ScenePanel.getInstance().isSnapToGrid());
+        Snap s = Snap.getInstance();
 
-            Manipulation m = Structures.getManipulationQueue().peek();
+        Manipulation m = Structures.getManipulationQueue().peek();
 
-            // manipulation is active
-            if (m.isActive()) {
-                // manipulation is create
-                if (m.getManipulationType() == ManipulationType.CREATE) {
-                    Create create = (Create) m;
-                    // manipulation is not in stage one (not the first part of shape is drawn)
-                    if (create.getStage() != Create.STAGE_ONE) {
-                        create.replaceLastManipulationCoordinates(s.getSnap(e.getX()),
-                                                                  s.getSnap(e.getY()));
-
-                        ScenePanel.getInstance().processActualManipulationStep();
-                    }
-                }
+        // manipulation is active
+        if (m.isActive()) {
+            // manipulation is create
+            if (m.getManipulationType() == ManipulationType.CREATE) {
+                Create create = (Create) m;
+                // manipulation is not in stage one (not the first part of shape is drawn)
+                // if (create.getStage() != Create.STAGE_ONE) {
+                // create.replaceLastManipulationCoordinates(s.getSnap(e.getX()),
+                // s.getSnap(e.getY()));
+                //
+                // ScenePanel.getInstance().processActualManipulationStep();
+                // }
             }
-        } catch (UnknownManipulationException ume) {
-            logger.error(ume.getMessage());
         }
+        // } catch (UnknownManipulationException ume) {
+        // logger.error(ume.getMessage());
+        // }
     }
 }

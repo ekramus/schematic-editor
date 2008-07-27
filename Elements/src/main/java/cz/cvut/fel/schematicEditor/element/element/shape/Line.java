@@ -44,14 +44,11 @@ public class Line extends Polyline {
      */
     @Override
     public String toString() {
-        UnitPoint a = new UnitPoint(this.x.get(0), this.y.get(0));
-        UnitPoint b = new UnitPoint(this.x.get(1), this.y.get(1));
-        return "LINE(" + a + b + ")";
+        return "LINE";
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#getElementType()
      */
     @Override
@@ -66,8 +63,9 @@ public class Line extends Polyline {
     public int getNumberOfCoordinates() {
         return 2;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override

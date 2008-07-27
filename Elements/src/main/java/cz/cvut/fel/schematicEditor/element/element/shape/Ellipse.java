@@ -36,7 +36,6 @@ public class Ellipse extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -108,12 +107,21 @@ public class Ellipse extends Shape {
         return 2;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
     public Element newInstance() {
         Ellipse e = new Ellipse();
         return e;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "ELLIPSE";
     }
 }

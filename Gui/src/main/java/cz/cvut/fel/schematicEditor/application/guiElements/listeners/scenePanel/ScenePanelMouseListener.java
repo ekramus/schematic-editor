@@ -125,9 +125,6 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public void mouseReleased(MouseEvent e) {
         try {
-            Snap s = Snap.getInstance();
-            s.setGridSize(ScenePanel.getInstance().getGridSize());
-            s.setSnappy(ScenePanel.getInstance().isSnapToGrid());
             ManipulationQueue mq = Structures.getManipulationQueue();
 
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
@@ -146,33 +143,6 @@ public class ScenePanelMouseListener implements MouseListener {
 
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
-        }
-    }
-
-    @Deprecated
-    private void editManipulationStart(MouseEvent e, Rectangle2D.Double r2d)
-            throws UnknownManipulationException {
-        Edit edit = (Edit) Structures.getManipulationQueue().peek();
-        Snap s = Snap.getInstance();
-        s.setGridSize(ScenePanel.getInstance().getGridSize());
-        s.setSnappy(ScenePanel.getInstance().isSnapToGrid());
-
-        logger.debug("creating EDIT manipulation");
-
-        if (edit.isActive()) {
-            GroupNode gn = edit.getManipulatedGroup();
-
-            // add actual coordinates, to be able to calculate delta later
-            edit.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-            // add two copies of same coordinates to be able to replace last one
-            edit.addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-            // set manipulated group disabled
-            gn.setDisabled(true);
-            ScenePanel.getInstance().schemeInvalidate(gn.getBounds());
-        } else {
-            Structures.getManipulationQueue().offer(
-                                                    ManipulationFactory.create(ManipulationType.SELECT));
         }
     }
 

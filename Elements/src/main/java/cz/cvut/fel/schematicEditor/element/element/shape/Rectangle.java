@@ -43,7 +43,7 @@ public class Rectangle extends Polygon {
      */
     @Override
     public String toString() {
-        return "RECT(" + this.x + ":" + this.y + ")";
+        return "RECT";
     }
 
     /**
@@ -102,8 +102,8 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.element.shape.Polygon#isHit(java.awt.geom.Rectangle2D.Double)
+     * @see
+     * cz.cvut.fel.schematicEditor.element.shape.Polygon#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
     public boolean isHit(Double rectangle) {
@@ -118,7 +118,6 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#getElementType()
      */
     @Override
@@ -133,8 +132,9 @@ public class Rectangle extends Polygon {
     public int getNumberOfCoordinates() {
         return 2;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override

@@ -20,29 +20,35 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
  * @author Urban Kravjansky
  */
 public class Create extends Manipulation {
-    // TODO rewrite as enum
     /**
-     * First stage of element create.
+     * Stage of {@link Manipulation}. It indicates, what will be the next manipulation operation.
+     * 
+     * @author Urban Kravjansky
      */
-    public static final int STAGE_ONE   = 1;
-    /**
-     * Second stage of element create.
-     */
-    public static final int STAGE_TWO   = 2;
-    /**
-     * Third stage of element create.
-     */
-    public static final int STAGE_THREE = 3;
+    private enum Stage {
+        /**
+         * First stage of element create.
+         */
+        STAGE_ONE,
+        /**
+         * Second stage of element create.
+         */
+        STAGE_TWO,
+        /**
+         * Third stage of element create.
+         */
+        STAGE_THREE
+    }
 
     /**
      * Stage of current manipulation.
      */
-    private int             stage;
+    private Stage   stage;
     /**
      * Number of points left for given shape.
      */
-    private int             pointsLeft;
-    private boolean         finished;
+    private int     pointsLeft;
+    private boolean finished;
 
     /**
      * @param manipulatedElement
@@ -50,7 +56,7 @@ public class Create extends Manipulation {
     protected Create(Element manipulatedElement) {
         super(manipulatedElement);
         setFinished(false);
-        setStage(STAGE_ONE);
+        setStage(Stage.STAGE_ONE);
         setPointsLeft(manipulatedElement.getNumberOfCoordinates());
         setElementModificator(ElementModificator.NO_MODIFICATION);
         // Structures.getStatusBar().setSizeLockingLabel("to enable size locking, press CTRL");
@@ -71,7 +77,7 @@ public class Create extends Manipulation {
     /**
      * @return the stage
      */
-    public int getStage() {
+    public Stage getStage() {
         return this.stage;
     }
 
@@ -79,7 +85,7 @@ public class Create extends Manipulation {
      * @param stage
      *            the stage to set
      */
-    public void setStage(int stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
@@ -209,7 +215,7 @@ public class Create extends Manipulation {
                 }
                 // add temporary element, which can be replaced in mouseMoved
                 else {
-                    setStage(Create.STAGE_TWO);
+                    setStage(Stage.STAGE_TWO);
                     addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 }
                 break;
@@ -221,7 +227,7 @@ public class Create extends Manipulation {
                     // JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup();
                     // popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
                 } else {
-                    setStage(Create.STAGE_TWO);
+                    setStage(Stage.STAGE_TWO);
                     addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 }
                 break;
@@ -251,7 +257,7 @@ public class Create extends Manipulation {
         // Snap.setSnappy(ScenePanel.getInstance().isSnapToGrid());
 
         // mouse press is used only for first stage
-        if (getStage() == Create.STAGE_ONE) {
+        if (getStage() == Stage.STAGE_ONE) {
             // add two pairs of coordinates (each element needs two)
             addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
             addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
@@ -260,5 +266,13 @@ public class Create extends Manipulation {
         else {
             // nothing to do
         }
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Create(" + getManipulatedElement() + ")";
     }
 }

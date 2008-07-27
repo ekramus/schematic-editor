@@ -113,4 +113,12 @@ public class Polyline extends Shape {
         Polyline p = new Polyline();
         return p;
     }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "POLYLINE";
+    }
 }
