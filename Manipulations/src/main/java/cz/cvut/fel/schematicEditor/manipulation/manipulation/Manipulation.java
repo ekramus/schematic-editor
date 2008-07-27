@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.manipulation.manipulation;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.element.Element;
@@ -11,14 +10,22 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
+ * This is parental class for all manipulations. It implements basic methods necessary for every
+ * manipulation.
+ * 
  * @author Urban Kravjansky
  */
 public abstract class Manipulation {
+    /**
+     * Contains {@link GroupNode} manipulated by {@link Manipulation}.
+     */
     private GroupNode    manipulatedGroup;
+    /**
+     * Contains {@link Element} manipulated by {@link Manipulation}.
+     */
     private Element      manipulatedElement;
     /**
      * This field represents x coordinates of manipulated element.
@@ -28,24 +35,45 @@ public abstract class Manipulation {
      * This field represents y coordinates of manipulated element.
      */
     private Vector<Unit> y;
-
+    /**
+     * Indicates, whether manipulation is active or not.
+     */
     private boolean      active;
 
     /**
-     * Creates new instance of {@link GeneralManipulation} by duplicating its values.
+     * Default constructor. It is private because of {@link Manipulation}s are created using
+     * {@link ManipulationFactory}.
      */
-    protected abstract Manipulation duplitate();
+    protected Manipulation() {
+        setManipulatedElement(null);
 
-    public abstract boolean isManipulatingElements();
+        finalizeInit();
+    }
 
     /**
-     * This method returns manipulation type of used manipulation.
+     * Constructor with {@link Element} parameter. It is private because of {@link Manipulation}s
+     * are created using {@link ManipulationFactory}.
      * 
-     * @return Type of {@link Manipulation}.
+     * @param manipulatedElement
+     *            {@link Element} to be manipulated.
      */
-    public abstract ManipulationType getManipulationType();
+    public Manipulation(Element manipulatedElement) {
+        setManipulatedElement(manipulatedElement);
 
-    public abstract boolean isManipulatingGroups();
+        finalizeInit();
+    }
+
+    public void addManipulationCoordinates(Unit x, Unit y) {
+        this.x.add(x);
+        this.y.add(y);
+    }
+
+    /**
+     * Creates new instance of {@link Manipulation} by duplicating its values.
+     * 
+     * @return Duplicated instance of {@link Manipulation}.
+     */
+    protected abstract Manipulation duplicate();
 
     /**
      * Executes manipulation.
@@ -56,15 +84,7 @@ public abstract class Manipulation {
     public abstract void execute() throws ManipulationExecutionException;
 
     /**
-     * Unexecutes (undoes) manipulation.
-     * 
-     * @throws ManipulationExecutionException
-     *             in case of some error while removing manipulation.
-     */
-    public abstract void unexecute() throws ManipulationExecutionException;
-
-    /**
-     * Finalizes initialization.
+     * Finalizes {@link Manipulation} initialization.
      */
     private void finalizeInit() {
         setActive(false);
@@ -76,24 +96,8 @@ public abstract class Manipulation {
     }
 
     /**
+     * Getter for <code>manipulatedElement</code>.
      * 
-     */
-    protected Manipulation() {
-        setManipulatedElement(null);
-
-        finalizeInit();
-    }
-
-    /**
-     * 
-     */
-    public Manipulation(Element manipulatedElement) {
-        setManipulatedElement(manipulatedElement);
-
-        finalizeInit();
-    }
-
-    /**
      * @return the manipulatedElement
      */
     public Element getManipulatedElement() {
@@ -102,24 +106,19 @@ public abstract class Manipulation {
         return this.manipulatedElement;
     }
 
-    protected void setManipulationCoordinates(Vector<Unit> x, Vector<Unit> y) {
-        this.x = x;
-        this.y = y;
+    /**
+     * @return the manipulatedGroup
+     */
+    public GroupNode getManipulatedGroup() {
+        return this.manipulatedGroup;
     }
 
-    public void addManipulationCoordinates(Unit x, Unit y) {
-        this.x.add(x);
-        this.y.add(y);
-    }
-
-    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
-        try {
-            this.x.set(this.x.size() - 1, x);
-            this.y.set(this.y.size() - 1, y);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            addManipulationCoordinates(x, y);
-        }
-    }
+    /**
+     * This method returns manipulation type of used manipulation.
+     * 
+     * @return Type of {@link Manipulation}.
+     */
+    public abstract ManipulationType getManipulationType();
 
     /**
      * @return the x
@@ -146,35 +145,41 @@ public abstract class Manipulation {
     }
 
     /**
-     * @param active
-     *            the active to set
+     * Indicates, whether {@link Manipulation} manipulates elements.
+     * 
+     * @return <code>true</code>, if {@link Manipulation} manipulates elements, <code>false</code>
+     *         else.
      */
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    public abstract boolean isManipulatingElements();
 
     /**
-     * @return the manipulatedGroup
+     * Indicates, whether {@link Manipulation} manipulates groups of elements.
+     * 
+     * @return <code>true</code>, if {@link Manipulation} manipulates groups of elements,
+     *         <code>false</code> else.
      */
-    public GroupNode getManipulatedGroup() {
-        return this.manipulatedGroup;
-    }
+    public abstract boolean isManipulatingGroups();
 
     /**
-     * @param manipulatedGroup
-     *            the manipulatedGroup to set
+     * Finishes everything at the end of manipulation correctly.
+     * 
+     * @param e
+     *            {@link MouseEvent}, that invoked this method.
+     * @param r2d
+     *            Rectangle, which contains mouse pointer.
+     * @param manipulationQueue
+     *            used for {@link Manipulation} history and execution.
+     * @param gn
+     *            TopNode of SchemeSG.
+     * @param isMouseClicked
+     *            Indicates, whether mouse was clicked or not.
+     * @return <code>true</code>, if manipulation ended, <code>false</code> else.
+     * @throws UnknownManipulationException
+     *             In case of unknown {@link Manipulation}.
      */
-    public void setManipulatedGroup(GroupNode manipulatedGroup) {
-        this.manipulatedGroup = manipulatedGroup;
-    }
-
-    /**
-     * @param manipulatedElement
-     *            the manipulatedElement to set
-     */
-    private void setManipulatedElement(Element manipulatedElement) {
-        this.manipulatedElement = manipulatedElement;
-    }
+    public abstract boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
+            throws UnknownManipulationException;
 
     /**
      * Initializes all necessary structures at the beginning of manipulation correctly.
@@ -196,23 +201,49 @@ public abstract class Manipulation {
             ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
             throws UnknownManipulationException;
 
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        try {
+            this.x.set(this.x.size() - 1, x);
+            this.y.set(this.y.size() - 1, y);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            addManipulationCoordinates(x, y);
+        }
+    }
+
     /**
-     * Finishes everything at the end of manipulation correctly.
-     * 
-     * @param e
-     *            {@link MouseEvent}, that invoked this method.
-     * @param r2d
-     *            Rectangle, which contains mouse pointer.
-     * @param manipulationQueue
-     *            used for {@link Manipulation} history and execution.
-     * @param gn
-     *            TopNode of SchemeSG.
-     * @param isMouseClicked
-     *            Indicates, whether mouse was clicked or not.
-     * @throws UnknownManipulationException
-     *             In case of unknown {@link Manipulation}.
+     * @param active
+     *            the active to set
      */
-    public abstract void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
-            throws UnknownManipulationException;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
+     * @param manipulatedElement
+     *            the manipulatedElement to set
+     */
+    private void setManipulatedElement(Element manipulatedElement) {
+        this.manipulatedElement = manipulatedElement;
+    }
+
+    /**
+     * @param manipulatedGroup
+     *            the manipulatedGroup to set
+     */
+    public void setManipulatedGroup(GroupNode manipulatedGroup) {
+        this.manipulatedGroup = manipulatedGroup;
+    }
+
+    protected void setManipulationCoordinates(Vector<Unit> x, Vector<Unit> y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Unexecutes (undoes) manipulation.
+     * 
+     * @throws ManipulationExecutionException
+     *             in case of some error while removing manipulation.
+     */
+    public abstract void unexecute() throws ManipulationExecutionException;
 }

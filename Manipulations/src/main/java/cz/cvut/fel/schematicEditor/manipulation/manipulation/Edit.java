@@ -53,7 +53,7 @@ public class Edit extends Manipulation {
     }
 
     @Override
-    protected Manipulation duplitate() {
+    protected Manipulation duplicate() {
         Edit e = new Edit();
         return e;
     }

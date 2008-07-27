@@ -40,7 +40,7 @@ public class Move extends Manipulation {
     }
 
     @Override
-    protected Manipulation duplitate() {
+    protected Manipulation duplicate() {
         Move m = new Move();
         return m;
     }

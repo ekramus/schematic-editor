@@ -11,7 +11,8 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  */
 public class ManipulationFactory {
     /**
-     * Default constructor, for future implementation purposes only. It is private to force static use only.
+     * Default constructor, for future implementation purposes only. It is private to force static
+     * use only.
      */
     private ManipulationFactory() {
         // nothing to do
@@ -52,7 +53,8 @@ public class ManipulationFactory {
      * @throws UnknownManipulationException
      *             In case of unknown manipulation type.
      */
-    public static Manipulation create(ManipulationType type, Object data) throws UnknownManipulationException {
+    public static Manipulation create(ManipulationType type, Object data)
+            throws UnknownManipulationException {
         switch (type) {
             case CREATE:
                 return new Create((Element) data);
@@ -62,6 +64,6 @@ public class ManipulationFactory {
     }
 
     public static Manipulation duplicate(Manipulation manipulation) {
-        return manipulation.duplitate();
+        return manipulation.duplicate();
     }
 }

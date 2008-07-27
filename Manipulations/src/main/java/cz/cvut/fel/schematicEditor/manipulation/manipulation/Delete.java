@@ -55,7 +55,7 @@ public class Delete extends Manipulation {
      * .manipulation.Manipulation)
      */
     @Override
-    protected Manipulation duplitate() {
+    protected Manipulation duplicate() {
         Delete d = new Delete();
         return d;
     }
