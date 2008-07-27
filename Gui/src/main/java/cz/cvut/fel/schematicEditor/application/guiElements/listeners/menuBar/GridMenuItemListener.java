@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.MenuBarResources;
+import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 
 /**
@@ -25,19 +26,21 @@ public final class GridMenuItemListener implements ActionListener {
     }
 
     /**
-     * Method invoked as result to an action. It shows {@link JOptionPane} instance to set grid size value.
+     * Method invoked as result to an action. It shows {@link JOptionPane} instance to set grid size
+     * value.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param e
-     *            {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
-     *            needed.
+     *            {@link ActionEvent} parameter. This parameter is only for implementing purposes,
+     *            it is not used nor needed.
      */
     public void actionPerformed(ActionEvent e) {
-        String s = JOptionPane.showInputDialog(MenuBarResources.GRID_MENU_ITEM_DIALOG.getText(), ScenePanel
-                .getInstance().getGridSize());
+        String s = JOptionPane.showInputDialog(MenuBarResources.GRID_MENU_ITEM_DIALOG.getText(),
+                                               Snap.getInstance().getGridSize());
         try {
             if (s != null) {
-                ScenePanel.getInstance().setGridSize(UnitType.parseUnit(s));
+                Snap.getInstance().setGridSize(UnitType.parseUnit(s));
+                ScenePanel.getInstance().setGridValid(false);
                 ScenePanel.getInstance().repaint();
             }
         } catch (NumberFormatException nfe) {

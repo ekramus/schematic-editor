@@ -36,8 +36,8 @@ public class Polygon extends Polyline {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#isHit(java.awt.geom.Rectangle2D.Double)
+     * @see
+     * cz.cvut.fel.schematicEditor.element.shape.Polyline#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
     public boolean isHit(Rectangle2D.Double rectangle) {
@@ -58,12 +58,19 @@ public class Polygon extends Polyline {
 
     /*
      * (non-Javadoc)
-     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override
     public Element newInstance() {
         Polygon p = new Polygon();
         return p;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.element.shape.Polyline#toString()
+     */
+    @Override
+    public String toString() {
+        return "POLYGON";
     }
 }

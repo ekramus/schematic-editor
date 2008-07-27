@@ -14,7 +14,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * This class implements arc shape. It is represented by two data vectors.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class Arc extends Ellipse {
@@ -24,8 +24,7 @@ public class Arc extends Ellipse {
     private static Logger logger;
 
     /**
-     * Default constructor for {@link Arc}. It contains <code>logger</code> instance
-     * initialization.
+     * Default constructor for {@link Arc}. It contains <code>logger</code> instance initialization.
      */
     public Arc() {
         super();
@@ -37,7 +36,7 @@ public class Arc extends Ellipse {
      * Constructor with parameters. First element contains start point, second contains width and
      * height, third arc start point and fourth is arc end point. Arc is drawn in counterclockwise
      * direction.
-     *
+     * 
      * @param x
      * @param y
      */
@@ -50,7 +49,7 @@ public class Arc extends Ellipse {
     /**
      * This method returns value of angle, where arc starts. If no angle is set, it returns default
      * value, which is set to 0 degrees.
-     *
+     * 
      * @return Value of arc start angle.
      */
     public double getStartAngle() {
@@ -80,7 +79,7 @@ public class Arc extends Ellipse {
     /**
      * This method returns value of angle of arc. If no angle is set, it returns default value,
      * which is set to 360 degrees.
-     *
+     * 
      * @return Value of arc angle.
      */
     public double getArcAngle() {
@@ -126,7 +125,6 @@ public class Arc extends Ellipse {
 
     /*
      * (non-Javadoc)
-     *
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -141,7 +139,6 @@ public class Arc extends Ellipse {
 
     /*
      * (non-Javadoc)
-     *
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -160,12 +157,19 @@ public class Arc extends Ellipse {
 
     /*
      * (non-Javadoc)
-     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Ellipse#newInstance()
      */
     @Override
     public Element newInstance() {
         Arc a = new Arc();
         return a;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.element.shape.Ellipse#toString()
+     */
+    @Override
+    public String toString() {
+        return "ARC";
     }
 }

@@ -13,7 +13,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * This class implements arc segment shape. It is represented by two data vectors.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class ArcSegment extends Arc {
@@ -36,7 +36,7 @@ public class ArcSegment extends Arc {
      * Constructor with parameters. First element contains start point, second contains width and
      * height, third arc start point and fourth is arc end point. Arc is drawn in counterclockwise
      * direction.
-     *
+     * 
      * @param x
      * @param y
      */
@@ -62,13 +62,22 @@ public class ArcSegment extends Arc {
         // TODO Auto-generated method stub
         return 4;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see cz.cvut.fel.schematicEditor.element.shape.Ellipse#newInstance()
      */
     @Override
     public Element newInstance() {
         ArcSegment as = new ArcSegment();
         return as;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.element.shape.Ellipse#toString()
+     */
+    @Override
+    public String toString() {
+        return "ARC_SEGMENT";
     }
 }

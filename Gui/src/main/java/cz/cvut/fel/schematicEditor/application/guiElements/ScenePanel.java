@@ -33,6 +33,7 @@ import cz.cvut.fel.schematicEditor.manipulation.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
+import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -88,29 +89,24 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This field represents snap to grid status.
-     */
-    private boolean       snapToGrid;
-    /**
      * This field represents grid.
      */
     private BufferedImage grid;
     /**
-     * This field represents grid interval.
-     */
-    private Unit          gridSize;
-    /**
      * This field represents grid validity.
      */
     private boolean       gridValid;
+
     /**
      * This field indicates visibility of grid.
      */
     private boolean       gridVisible;
+
     /**
      * This field represents scheme.
      */
     private BufferedImage scheme;
+
     /**
      * This field indicates whether scheme is antialiased or not.
      */
@@ -123,12 +119,10 @@ public class ScenePanel extends JPanel {
      * Graph of whole scene.
      */
     private SceneGraph    schemeSG;
-
     /**
      * This field represents validity of scheme.
      */
     private boolean       schemeValid;
-
     /**
      * This field represents invalid rectangle of scheme.
      */
@@ -149,180 +143,29 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * @return the gridSize
-     */
-    public Unit getGridSize() {
-        return this.gridSize;
-    }
-
-    /**
-     * @return the schemeSG
-     */
-    public SceneGraph getSchemeSG() {
-        return this.schemeSG;
-    }
-
-    /**
-     * @return the gridVisible
-     */
-    public boolean isGridVisible() {
-        return this.gridVisible;
-    }
-
-    /**
-     * @return the schemeAntialiased
-     */
-    public boolean isSchemeAntialiased() {
-        return this.schemeAntialiased;
-    }
-
-    /**
-     * @return the schemeDebugged
-     */
-    public boolean isSchemeDebugged() {
-        return this.schemeDebugged;
-    }
-
-    /**
-     * @return the snapToGrid
-     */
-    public boolean isSnapToGrid() {
-        return this.snapToGrid;
-    }
-
-    /**
-     * Method used for correct finalization method selection.
+     * Draws edit frame onto {@link BufferedImage}.
      * 
+     * @return {@link BufferedImage} with edit frame.
      * @throws UnknownManipulationException
      *             In case of unknown manipulation.
      */
-    @Deprecated
-    public void processFinalManipulationStep() throws UnknownManipulationException {
-        Manipulation m = Structures.getManipulationQueue().peek();
-        ManipulationType mt = m.getManipulationType();
-
-        switch (mt) {
-            case CREATE:
-                processFinalCreateStep();
-                break;
-            case DELETE:
-                processFinalDeleteStep();
-                break;
-            default:
-                processFinalSelectStep();
-                break;
-        }
-
-        // create new manipulation of the same type as previous
-        Structures.getManipulationQueue().offer(ManipulationFactory.duplicate(m));
-    }
-
-    /**
-     * This method processes final step for {@link Create} manipulation. It is responsible for
-     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
-     * 
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    @Deprecated
-    private void processFinalCreateStep() throws UnknownManipulationException {
-        Element child = null;
-        ShapeNode sn;
-        GroupNode gn;
-        ParameterNode pn;
-
-        logger.debug("processing final manipulation step");
+    private BufferedImage drawEditFrame() throws UnknownManipulationException {
+        // create new edit frame
+        BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
         Manipulation m = Structures.getManipulationQueue().peek();
+        GroupNode gn = m.getManipulatedGroup();
+        Transformation t = m.getManipulatedGroup().getTransformation();
 
-        child = m.getManipulatedElement();
-        m.setActive(false);
+        Graphics2D g2d = (Graphics2D) editFrame.getGraphics();
+        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
+                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
+        rect = t.shift(rect);
+        g2d.setColor(Color.ORANGE);
+        g2d.draw(rect);
 
-        sn = new ShapeNode((Shape) child);
-        pn = new ParameterNode();
-
-        pn.setProperties(Structures.getSceneProperties().getSceneElementProperties());
-
-        logger.debug("Nodes created");
-
-        gn = new GroupNode();
-        gn.add(pn);
-        gn.add(sn);
-
-        this.schemeSG.getTopNode().add(gn);
-        schemeInvalidate(child.getBounds());
-    }
-
-    /**
-     * This method processes final step for {@link Delete} manipulation. It is responsible for
-     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
-     * 
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    @Deprecated
-    private void processFinalDeleteStep() throws UnknownManipulationException {
-        logger.debug("processing final DELETE step");
-
-        // this is really not necessary, it is here only for possible future uses
-        Delete delete = (Delete) Structures.getManipulationQueue().peek();
-
-        schemeInvalidate(null);
-    }
-
-    /**
-     * This method invalidates <code>scheme</code>.
-     * 
-     * @param bounds
-     *            bounds of invalid region.
-     */
-    public void schemeInvalidate(UnitRectangle bounds) {
-        this.schemeValid = false;
-        this.schemeInvalidRect = bounds;
-        this.repaint();
-    }
-
-    /**
-     * @param gridSize
-     *            the gridSize to set
-     */
-    public void setGridSize(Unit gridSize) {
-        this.gridSize = gridSize;
-        this.gridValid = false;
-    }
-
-    /**
-     * @param gridVisible
-     *            the gridVisible to set
-     */
-    public void setGridVisible(boolean gridVisible) {
-        this.gridVisible = gridVisible;
-    }
-
-    /**
-     * @param schemeAntialiased
-     *            the schemeAntialiased to set
-     */
-    public void setSchemeAntialiased(boolean schemeAntialiased) {
-        this.schemeValid = false;
-        this.schemeAntialiased = schemeAntialiased;
-    }
-
-    /**
-     * @param schemeDebugged
-     *            the schemeAntialiased to set
-     */
-    public void setSchemeDebugged(boolean schemeDebugged) {
-        this.schemeValid = false;
-        this.schemeDebugged = schemeDebugged;
-    }
-
-    /**
-     * @param snapToGrid
-     *            the snapToGrid to set
-     */
-    public void setSnapToGrid(boolean snapToGrid) {
-        this.snapToGrid = snapToGrid;
+        return editFrame;
     }
 
     /**
@@ -331,25 +174,28 @@ public class ScenePanel extends JPanel {
      * @return <code>BufferedImage</code> with grid.
      */
     private BufferedImage drawGrid() {
+        // get Snap instance
+        Snap s = Snap.getInstance();
+
         // create new grid
         BufferedImage grid = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D gridG2D = (Graphics2D) grid.getGraphics();
 
         // draw first rectangle
         gridG2D.setColor(new Color(210, 220, 255));
-        Rectangle2D r = new Rectangle2D.Double(0, 0, this.gridSize.doubleValue(),
-                this.gridSize.doubleValue());
+        Rectangle2D r = new Rectangle2D.Double(0, 0, s.getGridSize().doubleValue(),
+                s.getGridSize().doubleValue());
         gridG2D.draw(r);
 
         // copy rectangle in row
-        for (double d = this.gridSize.doubleValue(); d <= grid.getWidth(); d += this.gridSize.doubleValue()) {
-            gridG2D.copyArea(0, 0, this.gridSize.intValue() + 1, this.gridSize.intValue() + 1,
+        for (double d = s.getGridSize().doubleValue(); d <= grid.getWidth(); d += s.getGridSize().doubleValue()) {
+            gridG2D.copyArea(0, 0, s.getGridSize().intValue() + 1, s.getGridSize().intValue() + 1,
                              (int) d, 0);
         }
 
         // copy row of rectangles
-        for (double d = 0; d <= grid.getHeight(); d += this.gridSize.doubleValue()) {
-            gridG2D.copyArea(0, 0, grid.getWidth(), this.gridSize.intValue() + 1, 0, (int) d);
+        for (double d = 0; d <= grid.getHeight(); d += s.getGridSize().doubleValue()) {
+            gridG2D.copyArea(0, 0, grid.getWidth(), s.getGridSize().intValue() + 1, 0, (int) d);
         }
 
         // return result
@@ -414,58 +260,6 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method draws selection frame onto {@link BufferedImage}.
-     * 
-     * @return {@link BufferedImage} with selection frame.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    private BufferedImage drawSelectionFrame() throws UnknownManipulationException {
-        // create new selection frame
-        BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
-
-        Manipulation m = Structures.getManipulationQueue().peek();
-        GroupNode gn = m.getManipulatedGroup();
-        Transformation t = m.getManipulatedGroup().getTransformation();
-
-        Graphics2D g2d = (Graphics2D) selectionFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
-                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
-        rect = t.shift(rect);
-        g2d.setColor(Color.GRAY);
-        g2d.draw(rect);
-
-        return selectionFrame;
-    }
-
-    /**
-     * Draws edit frame onto {@link BufferedImage}.
-     * 
-     * @return {@link BufferedImage} with edit frame.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    private BufferedImage drawEditFrame() throws UnknownManipulationException {
-        // create new edit frame
-        BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
-
-        Manipulation m = Structures.getManipulationQueue().peek();
-        GroupNode gn = m.getManipulatedGroup();
-        Transformation t = m.getManipulatedGroup().getTransformation();
-
-        Graphics2D g2d = (Graphics2D) editFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
-                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
-        rect = t.shift(rect);
-        g2d.setColor(Color.ORANGE);
-        g2d.draw(rect);
-
-        return editFrame;
-    }
-
-    /**
      * This method draws scene and it's specific features.
      * 
      * @param g
@@ -477,9 +271,9 @@ public class ScenePanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // if grid is not valid and is visible, recreate it.
-        if (this.gridVisible && !this.gridValid) {
+        if (this.gridVisible && !isGridValid()) {
             // restore validity
-            this.gridValid = true;
+            setGridValid(true);
 
             // re-draw grid
             this.grid = drawGrid();
@@ -567,6 +361,39 @@ public class ScenePanel extends JPanel {
     }
 
     /**
+     * This method draws selection frame onto {@link BufferedImage}.
+     * 
+     * @return {@link BufferedImage} with selection frame.
+     * @throws UnknownManipulationException
+     *             In case of unknown manipulation.
+     */
+    private BufferedImage drawSelectionFrame() throws UnknownManipulationException {
+        // create new selection frame
+        BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
+
+        Manipulation m = Structures.getManipulationQueue().peek();
+        GroupNode gn = m.getManipulatedGroup();
+        Transformation t = m.getManipulatedGroup().getTransformation();
+
+        Graphics2D g2d = (Graphics2D) selectionFrame.getGraphics();
+        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
+                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
+        rect = t.shift(rect);
+        g2d.setColor(Color.GRAY);
+        g2d.draw(rect);
+
+        return selectionFrame;
+    }
+
+    /**
+     * @return the schemeSG
+     */
+    public SceneGraph getSchemeSG() {
+        return this.schemeSG;
+    }
+
+    /**
      * This method initializes this.
      */
     private void init() {
@@ -579,7 +406,6 @@ public class ScenePanel extends JPanel {
 
         // initialize grid properties
         this.gridVisible = true;
-        this.gridSize = new Pixel(25);
         this.gridValid = false;
 
         // initialize scheme properties
@@ -602,6 +428,61 @@ public class ScenePanel extends JPanel {
         this.schemeSG.manualCreateSceneGraph2();
     }
 
+    /**
+     * @return the gridValid
+     */
+    private boolean isGridValid() {
+        return this.gridValid;
+    }
+
+    /**
+     * @return the gridVisible
+     */
+    public boolean isGridVisible() {
+        return this.gridVisible;
+    }
+
+    /**
+     * @return the schemeAntialiased
+     */
+    public boolean isSchemeAntialiased() {
+        return this.schemeAntialiased;
+    }
+
+    /**
+     * @return the schemeDebugged
+     */
+    public boolean isSchemeDebugged() {
+        return this.schemeDebugged;
+    }
+
+    /**
+     * This method paints {@link ScenePanel}.
+     * 
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        try {
+            drawScene(g);
+        } catch (UnknownManipulationException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    /**
+     * This method repaints correctly scene after change of point coordinates in {@link Create}
+     * manipulation.
+     */
+    @Deprecated
+    private void processActualCreateStep() {
+        logger.debug("pocessing actual manipulation step");
+
+        this.repaint();
+    }
+
     @Deprecated
     public void processActualManipulationStep() throws UnknownManipulationException {
         ManipulationType mt = Structures.getManipulationQueue().peek().getManipulationType();
@@ -622,17 +503,6 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method repaints correctly scene after change of point coordinates in {@link Create}
-     * manipulation.
-     */
-    @Deprecated
-    private void processActualCreateStep() {
-        logger.debug("pocessing actual manipulation step");
-
-        this.repaint();
-    }
-
-    /**
      * This method repaints correctly scene after change of point coordinates.
      */
     @Deprecated
@@ -643,19 +513,83 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method paints {@link ScenePanel}.
+     * This method processes final step for {@link Create} manipulation. It is responsible for
+     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
      * 
-     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     * @throws UnknownManipulationException
+     *             In case of unknown manipulation.
      */
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    @Deprecated
+    private void processFinalCreateStep() throws UnknownManipulationException {
+        Element child = null;
+        ShapeNode sn;
+        GroupNode gn;
+        ParameterNode pn;
 
-        try {
-            drawScene(g);
-        } catch (UnknownManipulationException e) {
-            logger.error(e.getMessage());
+        logger.debug("processing final manipulation step");
+
+        Manipulation m = Structures.getManipulationQueue().peek();
+
+        child = m.getManipulatedElement();
+        m.setActive(false);
+
+        sn = new ShapeNode((Shape) child);
+        pn = new ParameterNode();
+
+        pn.setProperties(Structures.getSceneProperties().getSceneElementProperties());
+
+        logger.debug("Nodes created");
+
+        gn = new GroupNode();
+        gn.add(pn);
+        gn.add(sn);
+
+        this.schemeSG.getTopNode().add(gn);
+        schemeInvalidate(child.getBounds());
+    }
+
+    /**
+     * This method processes final step for {@link Delete} manipulation. It is responsible for
+     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
+     * 
+     * @throws UnknownManipulationException
+     *             In case of unknown manipulation.
+     */
+    @Deprecated
+    private void processFinalDeleteStep() throws UnknownManipulationException {
+        logger.debug("processing final DELETE step");
+
+        // this is really not necessary, it is here only for possible future uses
+        Delete delete = (Delete) Structures.getManipulationQueue().peek();
+
+        schemeInvalidate(null);
+    }
+
+    /**
+     * Method used for correct finalization method selection.
+     * 
+     * @throws UnknownManipulationException
+     *             In case of unknown manipulation.
+     */
+    @Deprecated
+    public void processFinalManipulationStep() throws UnknownManipulationException {
+        Manipulation m = Structures.getManipulationQueue().peek();
+        ManipulationType mt = m.getManipulationType();
+
+        switch (mt) {
+            case CREATE:
+                processFinalCreateStep();
+                break;
+            case DELETE:
+                processFinalDeleteStep();
+                break;
+            default:
+                processFinalSelectStep();
+                break;
         }
+
+        // create new manipulation of the same type as previous
+        Structures.getManipulationQueue().offer(ManipulationFactory.duplicate(m));
     }
 
     /**
@@ -675,5 +609,51 @@ public class ScenePanel extends JPanel {
         GroupNode gn = select.getManipulatedGroup();
 
         schemeInvalidate(gn.getBounds());
+    }
+
+    /**
+     * This method invalidates <code>scheme</code>.
+     * 
+     * @param bounds
+     *            bounds of invalid region.
+     */
+    public void schemeInvalidate(UnitRectangle bounds) {
+        this.schemeValid = false;
+        this.schemeInvalidRect = bounds;
+        this.repaint();
+    }
+
+    /**
+     * @param gridValid
+     *            the gridValid to set
+     */
+    public void setGridValid(boolean gridValid) {
+        this.gridValid = gridValid;
+    }
+
+    /**
+     * @param gridVisible
+     *            the gridVisible to set
+     */
+    public void setGridVisible(boolean gridVisible) {
+        this.gridVisible = gridVisible;
+    }
+
+    /**
+     * @param schemeAntialiased
+     *            the schemeAntialiased to set
+     */
+    public void setSchemeAntialiased(boolean schemeAntialiased) {
+        this.schemeValid = false;
+        this.schemeAntialiased = schemeAntialiased;
+    }
+
+    /**
+     * @param schemeDebugged
+     *            the schemeAntialiased to set
+     */
+    public void setSchemeDebugged(boolean schemeDebugged) {
+        this.schemeValid = false;
+        this.schemeDebugged = schemeDebugged;
     }
 }
