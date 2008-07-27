@@ -88,6 +88,8 @@ public class Create extends Manipulation {
         if (getPointsLeft() != Element.INFINITE_COORDINATES) {
             setPointsLeft(getPointsLeft() - 1);
         }
+
+        logger.trace("added manipulation coordinates, points left: " + getPointsLeft());
     }
 
     /**
@@ -220,26 +222,15 @@ public class Create extends Manipulation {
                 setFinished(true);
                 break;
             case Element.INFINITE_COORDINATES:
-                // if button3 pressed, show popup menu
-                // TODO add popup menu somehow
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    // JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup();
-                    // popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
-                }
-                // add temporary element, which can be replaced in mouseMoved
-                else {
+                // add temporary coordinates, which can be replaced in mouseMoved
+                if (e.getButton() != MouseEvent.BUTTON3) {
                     setStage(Stage.STAGE_TWO);
                     addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 }
                 break;
-            // add temporary element, which can be replaced in mouseMoved
+            // add temporary coordinates, which can be replaced in mouseMoved
             default:
-                // if button3 pressed, show popup menu
-                // TODO add popup menu somehow
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    // JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup();
-                    // popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
-                } else {
+                if (e.getButton() != MouseEvent.BUTTON3) {
                     setStage(Stage.STAGE_TWO);
                     addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 }

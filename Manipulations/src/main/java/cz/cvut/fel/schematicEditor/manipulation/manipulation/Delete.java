@@ -85,7 +85,7 @@ public class Delete extends Manipulation {
      *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
             GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
             if (groupNode.deleteHit(r2d)) {
@@ -93,6 +93,7 @@ public class Delete extends Manipulation {
                 // ScenePanel.getInstance().processFinalManipulationStep();
             }
         }
+        return true;
     }
 
     /**

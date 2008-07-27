@@ -5,14 +5,20 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JPopupMenu;
+
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.support.Support;
 
@@ -142,16 +148,35 @@ public class ScenePanelMouseListener implements MouseListener {
             Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(),
                     e.getY()), Constants.POINT_SIZE);
 
+            // mouse was clicked
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
-            }
 
-            GroupNode gn = ScenePanel.getInstance().getSchemeSG().getTopNode();
-
-            if (mq.peek().manipulationEnd(e, r2d, mq, gn, isMouseClicked())) {
-                mq.execute();
+                // if it was mouse middle button && Create manipulation
+                if ((e.getButton() == MouseEvent.BUTTON3)
+                    && (mq.peek().getManipulationType() == ManipulationType.CREATE)) {
+                    Create create = (Create) mq.peek();
+                    // if number of points left is equal to infinite
+                    if (create.getPointsLeft() != Element.ZERO_COORDINATES) {
+                        JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup();
+                        popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                    }
+                }
             }
-            ScenePanel.getInstance().schemeInvalidate(null);
+            // mouse button was just released after drag
+            else {
+                GroupNode gn = ScenePanel.getInstance().getSchemeSG().getTopNode();
+
+                // manipulation is finished
+                if (mq.peek().manipulationEnd(e, r2d, mq, gn, isMouseClicked())) {
+                    mq.execute();
+                    ScenePanel.getInstance().schemeInvalidate(null);
+                }
+                // manipulation is not finished yet
+                else {
+                    logger.trace("Waiting for manipulation end");
+                }
+            }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
         }

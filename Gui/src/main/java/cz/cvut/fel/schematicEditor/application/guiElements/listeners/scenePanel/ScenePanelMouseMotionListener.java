@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Point2D;
 
 import org.apache.log4j.Logger;
 
@@ -12,11 +11,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Support;
-import cz.cvut.fel.schematicEditor.support.Transformation;
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.manipulation.Move;
@@ -60,7 +55,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                 create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
                 // just repaint (it takes care of element in progress)
-                ScenePanel.getInstance().processActualManipulationStep();
+                ScenePanel.getInstance().repaint();
             }
             // manipulation is MOVE
             else if (mt == ManipulationType.MOVE) {
@@ -72,10 +67,10 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                 Structures.getManipulationQueue().execute();
 
                 // just repaint (it takes care of element in progress)
-                ScenePanel.getInstance().processActualManipulationStep();
+                ScenePanel.getInstance().repaint();
             }
-        } catch (UnknownManipulationException ume) {
-            logger.error(ume.getMessage());
+        } catch (NullPointerException npe) {
+            logger.trace("No manipulation in manipulation queue");
         }
     }
 
@@ -97,17 +92,13 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                 // manipulation is create
                 if (m.getManipulationType() == ManipulationType.CREATE) {
                     Create create = (Create) m;
-                    // manipulation is not in stage one (not the first part of shape is drawn)
-                    // if (create.getStage() != Create.STAGE_ONE) {
-                    // create.replaceLastManipulationCoordinates(s.getSnap(e.getX()),
-                    // s.getSnap(e.getY()));
-                    //
-                    // ScenePanel.getInstance().processActualManipulationStep();
-                    // }
+                    create.replaceLastManipulationCoordinates(s.getSnap(e.getX()),
+                                                              s.getSnap(e.getY()));
+
+                    // repaint scene
+                    ScenePanel.getInstance().repaint();
                 }
             }
-            // } catch (UnknownManipulationException ume) {
-            // logger.error(ume.getMessage());
         } catch (NullPointerException npe) {
             logger.trace("No manipulation in manipulation queue");
         }
