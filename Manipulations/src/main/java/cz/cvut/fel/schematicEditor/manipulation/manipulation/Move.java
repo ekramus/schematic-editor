@@ -104,7 +104,7 @@ public class Move extends Manipulation {
      *      Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
+    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
             ManipulationQueue manipulationQueue, GroupNode groupNode, boolean isMouseClicked)
             throws UnknownManipulationException {
         if (isActive()) {
@@ -135,6 +135,7 @@ public class Move extends Manipulation {
 
             // schemeInvalidate(gn.getBounds());
         }
+        return true;
     }
 
     /**

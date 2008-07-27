@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
@@ -20,25 +22,29 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
  */
 public abstract class Manipulation {
     /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
+    /**
      * Contains {@link GroupNode} manipulated by {@link Manipulation}.
      */
-    private GroupNode    manipulatedGroup;
+    private GroupNode     manipulatedGroup;
     /**
      * Contains {@link Element} manipulated by {@link Manipulation}.
      */
-    private Element      manipulatedElement;
+    private Element       manipulatedElement;
     /**
      * This field represents x coordinates of manipulated element.
      */
-    private Vector<Unit> x;
+    private Vector<Unit>  x;
     /**
      * This field represents y coordinates of manipulated element.
      */
-    private Vector<Unit> y;
+    private Vector<Unit>  y;
     /**
      * Indicates, whether manipulation is active or not.
      */
-    private boolean      active;
+    private boolean       active;
 
     /**
      * Default constructor. It is private because of {@link Manipulation}s are created using
@@ -66,6 +72,8 @@ public abstract class Manipulation {
     public void addManipulationCoordinates(Unit x, Unit y) {
         this.x.add(x);
         this.y.add(y);
+
+        logger.trace("added manipulation coordinates");
     }
 
     /**
@@ -87,6 +95,8 @@ public abstract class Manipulation {
      * Finalizes {@link Manipulation} initialization.
      */
     private void finalizeInit() {
+        logger = Logger.getLogger(this.getClass().getName());
+
         setActive(false);
 
         this.x = new Vector<Unit>();
@@ -208,6 +218,8 @@ public abstract class Manipulation {
         } catch (ArrayIndexOutOfBoundsException e) {
             addManipulationCoordinates(x, y);
         }
+
+        logger.trace("replacing last manipulation coordinates");
     }
 
     /**

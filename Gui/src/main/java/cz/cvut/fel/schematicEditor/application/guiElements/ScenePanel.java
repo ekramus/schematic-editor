@@ -485,35 +485,6 @@ public class ScenePanel extends JPanel {
         this.repaint();
     }
 
-    @Deprecated
-    public void processActualManipulationStep() throws UnknownManipulationException {
-        ManipulationType mt = Structures.getManipulationQueue().peek().getManipulationType();
-
-        switch (mt) {
-            case CREATE:
-                processActualCreateStep();
-                break;
-            case MOVE:
-            case SELECT:
-                processActualSelectStep();
-                break;
-            case EDIT:
-                break;
-            case DELETE:
-                break;
-        }
-    }
-
-    /**
-     * This method repaints correctly scene after change of point coordinates.
-     */
-    @Deprecated
-    private void processActualSelectStep() {
-        logger.debug("pocessing actual manipulation step");
-
-        this.repaint();
-    }
-
     /**
      * This method processes final step for {@link Delete} manipulation. It is responsible for
      * {@link Element} finalization, {@link ScenePanel} redraw, etc.

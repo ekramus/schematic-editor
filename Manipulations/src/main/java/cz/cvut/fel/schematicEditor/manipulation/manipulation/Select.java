@@ -102,7 +102,7 @@ public class Select extends Manipulation {
      *      Rectangle2D.Double, ManipulationQueue, boolean)
      */
     @Override
-    public void manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
             GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         Select select = (Select) manipulationQueue.peek();
 
@@ -144,7 +144,7 @@ public class Select extends Manipulation {
                 // PropertiesToolBar.refresh();
             }
         }
-
+        return true;
     }
 
     /**
