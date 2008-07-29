@@ -120,13 +120,12 @@ public class ScenePanelMouseListener implements MouseListener {
             setMousePressedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
 
             // get pointer rectangle
-            Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(),
-                    e.getY()), Constants.POINT_SIZE);
+            Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
+                                                                    Constants.POINT_SIZE);
 
             Manipulation m = Structures.getManipulationQueue().peek();
-            m.manipulationStart(e, r2d, Structures.getManipulationQueue(),
-                                ScenePanel.getInstance().getSchemeSG().getTopNode(),
-                                isMouseClicked());
+            m.manipulationStart(e, r2d, Structures.getManipulationQueue(), ScenePanel.getInstance().getSchemeSG()
+                    .getTopNode(), isMouseClicked());
 
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
@@ -145,21 +144,21 @@ public class ScenePanelMouseListener implements MouseListener {
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
 
             // get pointer rectangle
-            Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(),
-                    e.getY()), Constants.POINT_SIZE);
+            Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
+                                                                    Constants.POINT_SIZE);
 
             // mouse was clicked
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
 
                 // if it was mouse middle button && Create manipulation
-                if ((e.getButton() == MouseEvent.BUTTON3)
-                    && (mq.peek().getManipulationType() == ManipulationType.CREATE)) {
+                if ((e.getButton() == MouseEvent.BUTTON3) && (mq.peek().getManipulationType() == ManipulationType.CREATE)) {
                     Create create = (Create) mq.peek();
                     // if number of points left is equal to infinite
-                    if (create.getPointsLeft() != Element.ZERO_COORDINATES) {
-                        JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup();
+                    if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
+                        JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
                         popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                        logger.trace("Show right-click popup");
                     }
                 }
             }

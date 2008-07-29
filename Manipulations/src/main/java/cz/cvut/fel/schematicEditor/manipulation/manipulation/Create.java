@@ -19,8 +19,8 @@ import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
- * This class represents create {@link Manipulation}. It is created, when user presses any button
- * for new shape creation.
+ * This class represents create {@link Manipulation}. It is created, when user presses any button for new shape
+ * creation.
  * 
  * @author Urban Kravjansky
  */
@@ -85,7 +85,7 @@ public class Create extends Manipulation {
     @Override
     public void addManipulationCoordinates(Unit x, Unit y) {
         super.addManipulationCoordinates(x, y);
-        if (getPointsLeft() != Element.INFINITE_COORDINATES) {
+        if (getPointsLeft() > Element.ZERO_COORDINATES) {
             setPointsLeft(getPointsLeft() - 1);
         }
 
@@ -208,9 +208,8 @@ public class Create extends Manipulation {
      *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode groupNode, boolean isMouseClicked)
-            throws UnknownManipulationException {
+    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
 
         Snap s = Snap.getInstance();
@@ -273,9 +272,8 @@ public class Create extends Manipulation {
      *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
-            throws UnknownManipulationException {
+    public void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation START");
 
         Snap s = Snap.getInstance();
