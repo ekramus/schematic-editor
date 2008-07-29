@@ -3,6 +3,9 @@
  */
 package cz.cvut.fel.schematicEditor.application.guiElements;
 
+import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -24,25 +27,24 @@ public class ScenePanelDrawingPopup extends JPopupMenu {
         // nothing to do
     }
 
-    public static final JPopupMenu getScenePanelDrawingPopup() {
+    public static final JPopupMenu getScenePanelDrawingPopup(MouseEvent e, Rectangle2D.Double r2d) {
         if (scenePanelDrawingPopup == null) {
             scenePanelDrawingPopup = new ScenePanelDrawingPopup();
-            // scenePanelDrawingPopup.add(scenePanelDrawingPopup.getAddPointMenuItem());
-            scenePanelDrawingPopup.add(scenePanelDrawingPopup.getEndElementMenuItem());
         }
+        scenePanelDrawingPopup.add(scenePanelDrawingPopup.getEndElementMenuItem(e, r2d));
         return scenePanelDrawingPopup;
     }
 
     /**
      * @return
      */
-    private JMenuItem getEndElementMenuItem() {
-        if (endElementMenuItem == null) {
-            endElementMenuItem = new JMenuItem();
-            endElementMenuItem.setText(END_ELEMENT_TEXT);
-            endElementMenuItem.addActionListener(new EndElementMenuItemListener());
+    private JMenuItem getEndElementMenuItem(MouseEvent e, Rectangle2D.Double r2d) {
+        if (this.endElementMenuItem == null) {
+            this.endElementMenuItem = new JMenuItem();
+            this.endElementMenuItem.setText(END_ELEMENT_TEXT);
         }
-        return endElementMenuItem;
+        this.endElementMenuItem.addActionListener(new EndElementMenuItemListener(e, r2d));
+        return this.endElementMenuItem;
     }
 
     /**
