@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.manipulation.manipulation;
+package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
@@ -11,8 +11,6 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -32,7 +30,7 @@ public class Move extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Select#getManipulationType()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Select#getManipulationType()
      */
     @Override
     public ManipulationType getManipulationType() {
@@ -47,6 +45,7 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
      */
     @Override
@@ -57,6 +56,7 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
@@ -67,19 +67,18 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
-    public void execute() throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         // compute delta
         int i = getX().size() - 2;
-        Point2D delta = new Point2D.Double(getX().lastElement().doubleValue()
-                                           - getX().get(i).doubleValue(),
-                getY().lastElement().doubleValue() - getY().get(i).doubleValue());
+        Point2D delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().get(i).doubleValue(), getY()
+                .lastElement().doubleValue() - getY().get(i).doubleValue());
 
         // create transformation node using delta
-        TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(),
-                                                                               delta.getY()));
+        TransformationNode tn = new TransformationNode(Transformation.getShift(delta.getX(), delta.getY()));
         // replace last transformation
         GroupNode gn = getManipulatedGroup();
         // TODO modify transformations, so they use temporary data, not real
@@ -89,10 +88,11 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
-    public void unexecute() throws ManipulationExecutionException {
+    protected void unexecute() throws ManipulationExecutionException {
         // TODO Auto-generated method stub
 
     }
@@ -100,13 +100,12 @@ public class Move extends Manipulation {
     /**
      * Specific <code>manipulationEnd</code> method for {@link Move} manipulation.
      * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationEnd(MouseEvent,
-     *      Double, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationEnd(MouseEvent, Double, ManipulationQueue,
+     *      GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode groupNode, boolean isMouseClicked)
-            throws UnknownManipulationException {
+    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.debug("object MOVED");
 
@@ -141,12 +140,12 @@ public class Move extends Manipulation {
     /**
      * Specific <code>manipulationStart</code> method for {@link Move} manipulation.
      * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      Double, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Double,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq,
-            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
+    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq, GroupNode groupNode,
+            boolean isMouseClicked) throws UnknownManipulationException {
         Snap s = Snap.getInstance();
 
         // check, whether move is possible or not

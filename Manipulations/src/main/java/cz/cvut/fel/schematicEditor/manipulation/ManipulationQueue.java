@@ -3,8 +3,6 @@ package cz.cvut.fel.schematicEditor.manipulation;
 import java.util.LinkedList;
 
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
 
 /**
  * This class encapsulates manipulations, which are to be executed or already were executed.

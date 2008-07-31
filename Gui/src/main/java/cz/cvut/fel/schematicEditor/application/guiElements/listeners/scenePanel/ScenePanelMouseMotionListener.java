@@ -11,10 +11,10 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Support;
+import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Move;
+import cz.cvut.fel.schematicEditor.manipulation.Move;
 
 /**
  * This class impelements {@link MouseMotionListener} for {@link ScenePanel}.
