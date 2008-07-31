@@ -194,23 +194,18 @@ public class Create extends Manipulation {
 
         Snap s = Snap.getInstance();
 
-        // Create create = (Create) Structures.getManipulationQueue().peek();
         // check, what to do
         switch (getPointsLeft()) {
             case Element.ZERO_COORDINATES:
                 setFinished(true);
                 break;
             case Element.INFINITE_COORDINATES:
-                // add temporary coordinates, which can be replaced in mouseMoved
-                if (e.getButton() != MouseEvent.BUTTON3) {
-                    addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-                }
+                // add next coordinate
+                addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 break;
-            // add temporary coordinates, which can be replaced in mouseMoved
             default:
-                if (e.getButton() != MouseEvent.BUTTON3) {
-                    addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-                }
+                // add next coordinate
+                addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 break;
         }
 

@@ -44,30 +44,16 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Snap s = Snap.getInstance();
-
             Manipulation m = Structures.getManipulationQueue().peek();
             ManipulationType mt = m.getManipulationType();
 
             // manipulation is create
             if (mt == ManipulationType.CREATE) {
-                Create create = (Create) m;
-                create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-                // just repaint (it takes care of element in progress)
-                ScenePanel.getInstance().repaint();
+                createMouseMoved(m, e);
             }
             // manipulation is MOVE
             else if (mt == ManipulationType.MOVE) {
-                Move move = (Move) m;
-
-                move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-                Structures.getManipulationQueue().replaceLastManipulation(move);
-                Structures.getManipulationQueue().execute();
-
-                // just repaint (it takes care of element in progress)
-                ScenePanel.getInstance().repaint();
+                moveMouseMoved(m, e);
             }
         } catch (NullPointerException npe) {
             logger.trace("No manipulation in manipulation queue");
@@ -83,24 +69,41 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Snap s = Snap.getInstance();
-
             Manipulation m = Structures.getManipulationQueue().peek();
 
             // manipulation is active
             if (m.isActive()) {
                 // manipulation is create
                 if (m.getManipulationType() == ManipulationType.CREATE) {
-                    Create create = (Create) m;
-                    create.replaceLastManipulationCoordinates(s.getSnap(e.getX()),
-                                                              s.getSnap(e.getY()));
-
-                    // repaint scene
-                    ScenePanel.getInstance().repaint();
+                    createMouseMoved(m, e);
                 }
             }
         } catch (NullPointerException npe) {
             logger.trace("No manipulation in manipulation queue");
         }
+    }
+
+    private void createMouseMoved(Manipulation m, MouseEvent e) {
+        Snap s = Snap.getInstance();
+
+        Create create = (Create) m;
+        create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
+        // repaint scene
+        ScenePanel.getInstance().repaint();
+    }
+
+    private void moveMouseMoved(Manipulation m, MouseEvent e) {
+        Snap s = Snap.getInstance();
+
+        Move move = (Move) m;
+
+        move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
+        Structures.getManipulationQueue().replaceLastManipulation(move);
+        Structures.getManipulationQueue().execute();
+
+        // just repaint (it takes care of element in progress)
+        ScenePanel.getInstance().repaint();
     }
 }
