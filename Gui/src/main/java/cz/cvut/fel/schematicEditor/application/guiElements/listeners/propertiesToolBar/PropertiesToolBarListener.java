@@ -4,10 +4,10 @@ import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 
 /**
  * This abstract class implements listener model for {@link PropertiesToolBar} other listeners.

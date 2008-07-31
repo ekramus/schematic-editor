@@ -15,11 +15,11 @@ import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.support.Support;
 
 /**
@@ -147,37 +147,50 @@ public class ScenePanelMouseListener implements MouseListener {
             Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
                                                                     Constants.POINT_SIZE);
 
+            GroupNode topNode = ScenePanel.getInstance().getSchemeSG().getTopNode();
+
             // mouse was clicked
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
 
-                // if it was mouse middle button && Create manipulation
-                if ((e.getButton() == MouseEvent.BUTTON3) && (mq.peek().getManipulationType() == ManipulationType.CREATE)) {
-                    Create create = (Create) mq.peek();
-                    // if number of points left is equal to infinite
-                    if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
-                        JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                        popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
-                        logger.trace("Show right-click popup");
+                // it is Create manipulation
+                Manipulation manipulation = mq.peek();
+                if (manipulation.getManipulationType() == ManipulationType.CREATE) {
+                    Create create = (Create) manipulation;
+                    // right mouse button is clicked
+                    if (e.getButton() == MouseEvent.BUTTON3) {
+                        // element has infinite coordinates
+                        if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
+                            JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                            popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                            logger.trace("Show right-click popup");
+                        }
+                    }
+                    // left mouse button is clicked
+                    else if (e.getButton() == MouseEvent.BUTTON1) {
+                        tryFinishManipulation(e, r2d, mq, topNode, false);
                     }
                 }
             }
             // mouse button was just released after drag
             else {
-                GroupNode gn = ScenePanel.getInstance().getSchemeSG().getTopNode();
-
-                // manipulation is finished
-                if (mq.peek().manipulationEnd(e, r2d, mq, gn, isMouseClicked())) {
-                    mq.execute();
-                    ScenePanel.getInstance().schemeInvalidate(null);
-                }
-                // manipulation is not finished yet
-                else {
-                    logger.trace("Waiting for manipulation end");
-                }
+                tryFinishManipulation(e, r2d, mq, topNode, false);
             }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
+        }
+    }
+
+    private void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
+        // try to finish manipulation
+        if (manipulationQueue.peek().manipulationEnd(e, r2d, manipulationQueue, topNode, isMouseClicked())) {
+            manipulationQueue.execute();
+            ScenePanel.getInstance().schemeInvalidate(null);
+        }
+        // manipulation is not finished yet
+        else {
+            logger.trace("Waiting for manipulation end");
         }
     }
 

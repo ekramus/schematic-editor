@@ -13,8 +13,9 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
 import cz.cvut.fel.schematicEditor.support.Support;
 
 /**
@@ -50,16 +51,20 @@ public class EndElementMenuItemListener implements ActionListener {
      * Method is invoked as result to an action. It invokes final manipulation step.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * @param ae
-     *            {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
+     * @param ae {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
             Create create = (Create) Structures.getManipulationQueue().peek();
             create.setFinished(true);
-            create.manipulationEnd(getE(), getR2d(), Structures.getManipulationQueue(), ScenePanel.getInstance()
-                    .getSchemeSG().getTopNode(), false);
+            if (create.manipulationEnd(getE(), getR2d(), Structures.getManipulationQueue(), ScenePanel.getInstance()
+                    .getSchemeSG().getTopNode(), false)) {
+                Structures.getManipulationQueue().execute();
+                ScenePanel.getInstance().schemeInvalidate(null);
+            } else {
+                logger.error("Error executing manipulation " + create);
+            }
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
         }
@@ -73,8 +78,7 @@ public class EndElementMenuItemListener implements ActionListener {
     }
 
     /**
-     * @param r2d
-     *            the r2d to set
+     * @param r2d the r2d to set
      */
     private void setR2d(Rectangle2D.Double r2d) {
         this.r2d = r2d;
@@ -88,8 +92,7 @@ public class EndElementMenuItemListener implements ActionListener {
     }
 
     /**
-     * @param e
-     *            the e to set
+     * @param e the e to set
      */
     private void setE(MouseEvent e) {
         this.e = e;

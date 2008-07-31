@@ -3,11 +3,11 @@ package cz.cvut.fel.schematicEditor.core;
 import java.util.Properties;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
 
 /**
  * This class represents the application core structures.

@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.manipulation.manipulation;
+package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -8,15 +8,12 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
- * This is parental class for all manipulations. It implements basic methods necessary for every
- * manipulation.
+ * This is parental class for all manipulations. It implements basic methods necessary for every manipulation.
  * 
  * @author Urban Kravjansky
  */
@@ -47,8 +44,8 @@ public abstract class Manipulation {
     private boolean       active;
 
     /**
-     * Default constructor. It is private because of {@link Manipulation}s are created using
-     * {@link ManipulationFactory}.
+     * Default constructor. It is private because of {@link Manipulation}s are created using {@link ManipulationFactory}
+     * .
      */
     protected Manipulation() {
         setManipulatedElement(null);
@@ -57,11 +54,10 @@ public abstract class Manipulation {
     }
 
     /**
-     * Constructor with {@link Element} parameter. It is private because of {@link Manipulation}s
-     * are created using {@link ManipulationFactory}.
+     * Constructor with {@link Element} parameter. It is private because of {@link Manipulation}s are created using
+     * {@link ManipulationFactory}.
      * 
-     * @param manipulatedElement
-     *            {@link Element} to be manipulated.
+     * @param manipulatedElement {@link Element} to be manipulated.
      */
     public Manipulation(Element manipulatedElement) {
         setManipulatedElement(manipulatedElement);
@@ -86,10 +82,9 @@ public abstract class Manipulation {
     /**
      * Executes manipulation.
      * 
-     * @throws ManipulationExecutionException
-     *             in case of some error while executing manipulation.
+     * @throws ManipulationExecutionException in case of some error while executing manipulation.
      */
-    public abstract void execute() throws ManipulationExecutionException;
+    protected abstract void execute() throws ManipulationExecutionException;
 
     /**
      * Finalizes {@link Manipulation} initialization.
@@ -145,8 +140,7 @@ public abstract class Manipulation {
     }
 
     /**
-     * Manipulation active state. If is manipulation active, it means, it is being currently
-     * processed.
+     * Manipulation active state. If is manipulation active, it means, it is being currently processed.
      * 
      * @return active state of current manipulation.
      */
@@ -157,59 +151,43 @@ public abstract class Manipulation {
     /**
      * Indicates, whether {@link Manipulation} manipulates elements.
      * 
-     * @return <code>true</code>, if {@link Manipulation} manipulates elements, <code>false</code>
-     *         else.
+     * @return <code>true</code>, if {@link Manipulation} manipulates elements, <code>false</code> else.
      */
     public abstract boolean isManipulatingElements();
 
     /**
      * Indicates, whether {@link Manipulation} manipulates groups of elements.
      * 
-     * @return <code>true</code>, if {@link Manipulation} manipulates groups of elements,
-     *         <code>false</code> else.
+     * @return <code>true</code>, if {@link Manipulation} manipulates groups of elements, <code>false</code> else.
      */
     public abstract boolean isManipulatingGroups();
 
     /**
      * Finishes everything at the end of manipulation correctly.
      * 
-     * @param e
-     *            {@link MouseEvent}, that invoked this method.
-     * @param r2d
-     *            Rectangle, which contains mouse pointer.
-     * @param manipulationQueue
-     *            used for {@link Manipulation} history and execution.
-     * @param gn
-     *            TopNode of SchemeSG.
-     * @param isMouseClicked
-     *            Indicates, whether mouse was clicked or not.
+     * @param e {@link MouseEvent}, that invoked this method.
+     * @param r2d Rectangle, which contains mouse pointer.
+     * @param manipulationQueue used for {@link Manipulation} history and execution.
+     * @param gn TopNode of SchemeSG.
+     * @param isMouseClicked Indicates, whether mouse was clicked or not.
      * @return <code>true</code>, if manipulation ended, <code>false</code> else.
-     * @throws UnknownManipulationException
-     *             In case of unknown {@link Manipulation}.
+     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
-    public abstract boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
-            throws UnknownManipulationException;
+    public abstract boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException;
 
     /**
      * Initializes all necessary structures at the beginning of manipulation correctly.
      * 
-     * @param e
-     *            {@link MouseEvent}, that invoked this method.
-     * @param r2d
-     *            Rectangle, which contains mouse pointer.
-     * @param manipulationQueue
-     *            used for {@link Manipulation} history and execution.
-     * @param gn
-     *            TopNode of SchemeSG.
-     * @param isMouseClicked
-     *            Indicates, whether mouse was clicked or not.
-     * @throws UnknownManipulationException
-     *             In case of unknown {@link Manipulation}.
+     * @param e {@link MouseEvent}, that invoked this method.
+     * @param r2d Rectangle, which contains mouse pointer.
+     * @param manipulationQueue used for {@link Manipulation} history and execution.
+     * @param gn TopNode of SchemeSG.
+     * @param isMouseClicked Indicates, whether mouse was clicked or not.
+     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
-    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
-            throws UnknownManipulationException;
+    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException;
 
     public void replaceLastManipulationCoordinates(Unit x, Unit y) {
         try {
@@ -223,24 +201,21 @@ public abstract class Manipulation {
     }
 
     /**
-     * @param active
-     *            the active to set
+     * @param active the active to set
      */
     public void setActive(boolean active) {
         this.active = active;
     }
 
     /**
-     * @param manipulatedElement
-     *            the manipulatedElement to set
+     * @param manipulatedElement the manipulatedElement to set
      */
     private void setManipulatedElement(Element manipulatedElement) {
         this.manipulatedElement = manipulatedElement;
     }
 
     /**
-     * @param manipulatedGroup
-     *            the manipulatedGroup to set
+     * @param manipulatedGroup the manipulatedGroup to set
      */
     public void setManipulatedGroup(GroupNode manipulatedGroup) {
         this.manipulatedGroup = manipulatedGroup;
@@ -254,8 +229,7 @@ public abstract class Manipulation {
     /**
      * Unexecutes (undoes) manipulation.
      * 
-     * @throws ManipulationExecutionException
-     *             in case of some error while removing manipulation.
+     * @throws ManipulationExecutionException in case of some error while removing manipulation.
      */
-    public abstract void unexecute() throws ManipulationExecutionException;
+    protected abstract void unexecute() throws ManipulationExecutionException;
 }

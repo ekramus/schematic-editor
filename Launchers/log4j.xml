@@ -23,7 +23,7 @@
 	</appender>
 
 	<root>
-		<priority value="TRACE" />
+		<priority value="DEBUG" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="log" />
 	</root>

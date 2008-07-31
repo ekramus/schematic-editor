@@ -11,13 +11,13 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.manipulation.Create;
+import cz.cvut.fel.schematicEditor.manipulation.Delete;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Delete;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.ManipulationFactory;
-import cz.cvut.fel.schematicEditor.manipulation.manipulation.Select;
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.

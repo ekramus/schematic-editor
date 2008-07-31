@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.manipulation.manipulation;
+package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
@@ -6,8 +6,6 @@ import java.awt.geom.Rectangle2D.Double;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -27,7 +25,7 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#getManipulationType()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#getManipulationType()
      */
     @Override
     public ManipulationType getManipulationType() {
@@ -35,7 +33,7 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#isManipulatingElements()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
      */
     @Override
     public boolean isManipulatingElements() {
@@ -44,7 +42,7 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#isManipulatingGroups()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
     public boolean isManipulatingGroups() {
@@ -60,13 +58,13 @@ public class Edit extends Manipulation {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
-    public void execute() throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         // compute delta
-        Point2D delta = new Point2D.Double(getX().lastElement().doubleValue()
-                                           - getX().firstElement().doubleValue(),
+        Point2D delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().firstElement().doubleValue(),
                 getY().lastElement().doubleValue() - getY().firstElement().doubleValue());
 
         // change edited point using delta
@@ -75,21 +73,22 @@ public class Edit extends Manipulation {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
-    public void unexecute() throws ManipulationExecutionException {
+    protected void unexecute() throws ManipulationExecutionException {
         // TODO Auto-generated method stub
 
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationEnd(MouseEvent,
-     *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationEnd(MouseEvent, Rectangle2D.Double,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode grouNode, boolean isMouseClicked) throws UnknownManipulationException {
+    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode grouNode,
+            boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             Snap s = Snap.getInstance();
 
@@ -119,12 +118,12 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D.Double,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
+    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode groupNode,
+            boolean isMouseClicked) throws UnknownManipulationException {
         GroupNode gn = groupNode.findHit(r2d);
         Snap s = Snap.getInstance();
 

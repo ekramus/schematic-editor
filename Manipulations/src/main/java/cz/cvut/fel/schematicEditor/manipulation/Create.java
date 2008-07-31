@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.manipulation.manipulation;
+package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -11,8 +11,6 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -22,6 +20,29 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
  * This class represents create {@link Manipulation}. It is created, when user presses any button for new shape
  * creation.
  * 
+ * Lifecycle of <code>active</code> and <code>finished</code> fields is presented in this table:
+ * <table>
+ * <th>
+ * variable</th>
+ * <th>initialization</th>
+ * <th>creation</th>
+ * <th>presentation</th>
+ * <tbody>
+ * <tr>
+ * <td><em>active</em></td>
+ * <td><code>false</code></td>
+ * <td><code>true</code></td>
+ * <td><code>false</code></td>
+ * </tr>
+ * <tr>
+ * <td><em>finished</em></td>
+ * <td><code>false</code></td>
+ * <td><code>false</code></td>
+ * <td><code>true</code></td>
+ * </tr>
+ * </tbody>
+ * </table>
+ * 
  * @author Urban Kravjansky
  */
 public class Create extends Manipulation {
@@ -29,42 +50,20 @@ public class Create extends Manipulation {
      * {@link Logger} instance for logging purposes.
      */
     private static Logger logger;
-
-    /**
-     * Stage of {@link Manipulation}. It indicates, what will be the next manipulation operation.
-     * 
-     * @author Urban Kravjansky
-     */
-    private enum Stage {
-        /**
-         * First stage of element create.
-         */
-        STAGE_ONE,
-        /**
-         * Second stage of element create.
-         */
-        STAGE_TWO,
-        /**
-         * Third stage of element create.
-         */
-        STAGE_THREE
-    }
-
-    /**
-     * Stage of current manipulation.
-     */
-    private Stage   stage;
     /**
      * Number of points left for given shape.
      */
-    private int     pointsLeft;
+    private int           pointsLeft;
     /**
      * Indicates, whether {@link Create} manipulation is finished or not.
      */
-    private boolean finished;
+    private boolean       finished;
 
     /**
-     * @param manipulatedElement
+     * Constructor used for {@link Create} initialization. It is protected so it {@link Manipulation} has to be created
+     * using {@link ManipulationFactory}.
+     * 
+     * @param manipulatedElement {@link Element}, which will be created using this {@link Create} manipulation.
      */
     protected Create(Element manipulatedElement) {
         super(manipulatedElement);
@@ -72,7 +71,6 @@ public class Create extends Manipulation {
         logger = Logger.getLogger(this.getClass().getName());
 
         setFinished(false);
-        setStage(Stage.STAGE_ONE);
         setPointsLeft(manipulatedElement.getNumberOfCoordinates());
         setElementModificator(ElementModificator.NO_MODIFICATION);
         // TODO add info text into status bar
@@ -80,7 +78,7 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
      */
     @Override
     public void addManipulationCoordinates(Unit x, Unit y) {
@@ -93,21 +91,6 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @return the stage
-     */
-    public Stage getStage() {
-        return this.stage;
-    }
-
-    /**
-     * @param stage
-     *            the stage to set
-     */
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    /**
      * @return the pointsLeft
      */
     public int getPointsLeft() {
@@ -115,15 +98,14 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @param pointsLeft
-     *            the pointsLeft to set
+     * @param pointsLeft the pointsLeft to set
      */
     public void setPointsLeft(int pointsLeft) {
         this.pointsLeft = pointsLeft;
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#getManipulationType()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#getManipulationType()
      */
     @Override
     public ManipulationType getManipulationType() {
@@ -140,7 +122,7 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#isManipulatingGroups()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
     public boolean isManipulatingGroups() {
@@ -156,8 +138,7 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @param elementModificator
-     *            the elementModificator to set
+     * @param elementModificator the elementModificator to set
      */
     public void setElementModificator(ElementModificator elementModificator) {
         getManipulatedElement().setElementModificator(elementModificator);
@@ -171,15 +152,14 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @param finished
-     *            the finished to set
+     * @param finished the finished to set
      */
     public final void setFinished(boolean finished) {
         this.finished = finished;
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#duplicate()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
      */
     @Override
     protected Manipulation duplicate() {
@@ -188,15 +168,15 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
      */
     @Override
-    public void execute() throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         logger.trace(this + " executed");
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
     public void unexecute() throws ManipulationExecutionException {
@@ -204,8 +184,8 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationEnd(MouseEvent,
-     *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationEnd(MouseEvent, Rectangle2D.Double,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
     public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
@@ -223,14 +203,12 @@ public class Create extends Manipulation {
             case Element.INFINITE_COORDINATES:
                 // add temporary coordinates, which can be replaced in mouseMoved
                 if (e.getButton() != MouseEvent.BUTTON3) {
-                    setStage(Stage.STAGE_TWO);
                     addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 }
                 break;
             // add temporary coordinates, which can be replaced in mouseMoved
             default:
                 if (e.getButton() != MouseEvent.BUTTON3) {
-                    setStage(Stage.STAGE_TWO);
                     addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
                 }
                 break;
@@ -268,8 +246,8 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      Rectangle2D.Double, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D.Double,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
     public void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
@@ -281,19 +259,9 @@ public class Create extends Manipulation {
         // Create create = (Create) Structures.getManipulationQueue().peek();
         setActive(true);
 
-        // Snap.setGridSize(ScenePanel.getInstance().getGridSize());
-        // Snap.setSnappy(ScenePanel.getInstance().isSnapToGrid());
-
-        // mouse press is used only for first stage
-        if (getStage() == Stage.STAGE_ONE) {
-            // add two pairs of coordinates (each element needs two)
-            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-        }
-        // mouse press is for at least second time
-        else {
-            // nothing to do
-        }
+        // add two pairs of coordinates (each element needs two)
+        addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+        addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
     }
 
     /**
