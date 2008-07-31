@@ -3,18 +3,17 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
+import javax.xml.bind.Marshaller.Listener;
 
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
-import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Support;
 
@@ -38,7 +37,10 @@ public class EndElementMenuItemListener implements ActionListener {
     private MouseEvent         e;
 
     /**
-     * Default constructor.
+     * Default MenuItem listener constructor.
+     * 
+     * @param e {@link MouseEvent}, which preceded this {@link Listener} construction.
+     * @param r2d Pointer square, where {@link MouseEvent} occured.
      */
     public EndElementMenuItemListener(MouseEvent e, Rectangle2D.Double r2d) {
         super();

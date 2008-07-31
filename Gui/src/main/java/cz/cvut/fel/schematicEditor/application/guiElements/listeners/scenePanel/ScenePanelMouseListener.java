@@ -124,8 +124,10 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                     Constants.POINT_SIZE);
 
             Manipulation m = Structures.getManipulationQueue().peek();
-            m.manipulationStart(e, r2d, Structures.getManipulationQueue(), ScenePanel.getInstance().getSchemeSG()
-                    .getTopNode(), isMouseClicked());
+            if (!m.isActive()) {
+                m.manipulationStart(e, r2d, Structures.getManipulationQueue(), ScenePanel.getInstance().getSchemeSG()
+                        .getTopNode(), isMouseClicked());
+            }
 
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
