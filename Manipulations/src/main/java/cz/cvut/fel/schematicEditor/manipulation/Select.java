@@ -3,23 +3,29 @@ package cz.cvut.fel.schematicEditor.manipulation;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D.Double;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.support.Snap;
 
 /**
  * @author Urban Kravjansky
  */
 public class Select extends Manipulation {
-    private GroupNode manipulatedGroup;
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger logger;
+    private GroupNode     manipulatedGroup;
 
     /**
      *
      */
     protected Select() {
         super(null);
+        logger = Logger.getLogger(this.getClass().getName());
         setManipulatedGroup(null);
     }
 
@@ -111,10 +117,10 @@ public class Select extends Manipulation {
         if (isMouseClicked) {
             // some group is hit
             if (groupNode.isHit(r2d)) {
-                // logger.debug("object SELECTED");
+                logger.trace("object SELECTED");
 
                 // create new select object
-                manipulationQueue.offer(ManipulationFactory.create(ManipulationType.SELECT));
+                // manipulationQueue.offer(ManipulationFactory.create(ManipulationType.SELECT));
                 select = (Select) manipulationQueue.peek();
                 // activate selection
                 select.setActive(true);
@@ -156,12 +162,8 @@ public class Select extends Manipulation {
     public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode groupNode,
             boolean isMouseClick) throws UnknownManipulationException {
 
-        // manipulation is not active
-        if (!isActive()) {
-            // nothing to do
-        }
         // select is active AND GroupNode is already selected
-        else if (groupNode.findHit(r2d) == getManipulatedGroup()) {
+        if (groupNode.findHit(r2d) == getManipulatedGroup()) {
             // select is in edit active zone
             if (getManipulatedGroup().startEditing(r2d)) {
                 // create Edit manipulation
