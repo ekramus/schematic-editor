@@ -13,6 +13,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
@@ -82,7 +83,6 @@ public class ScenePanelMouseListener implements MouseListener {
      * 
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
-    @SuppressWarnings("unused")
     public void mouseClicked(MouseEvent e) {
         // nothing to do
     }
@@ -92,7 +92,6 @@ public class ScenePanelMouseListener implements MouseListener {
      * 
      * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
      */
-    @SuppressWarnings("unused")
     public void mouseEntered(MouseEvent e) {
         logger.trace("mouse entered");
 
@@ -105,7 +104,6 @@ public class ScenePanelMouseListener implements MouseListener {
      * 
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
-    @SuppressWarnings("unused")
     public void mouseExited(MouseEvent e) {
         logger.trace("mouse left");
     }
@@ -155,23 +153,31 @@ public class ScenePanelMouseListener implements MouseListener {
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
 
-                // it is Create manipulation
                 Manipulation manipulation = mq.peek();
-                if (manipulation.getManipulationType() == ManipulationType.CREATE) {
-                    Create create = (Create) manipulation;
-                    // right mouse button is clicked
-                    if (e.getButton() == MouseEvent.BUTTON3) {
-                        // element has infinite coordinates
-                        if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
-                            JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                            popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
-                            logger.trace("Show right-click popup");
+                ManipulationType mt = manipulation.getManipulationType();
+
+                switch (mt) {
+                    case CREATE:
+                        Create create = (Create) manipulation;
+                        // right mouse button is clicked
+                        if (e.getButton() == MouseEvent.BUTTON3) {
+                            // element has infinite coordinates
+                            if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
+                                JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                                popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                                logger.trace("Show right-click popup");
+                            }
                         }
-                    }
-                    // left mouse button is clicked
-                    else if (e.getButton() == MouseEvent.BUTTON1) {
-                        tryFinishManipulation(e, r2d, mq, topNode, false);
-                    }
+                        // left mouse button is clicked
+                        else if (e.getButton() == MouseEvent.BUTTON1) {
+                            tryFinishManipulation(e, r2d, mq, topNode, true);
+                        }
+                        break;
+                    case SELECT:
+                        tryFinishManipulation(e, r2d, mq, topNode, true);
+                        break;
+                    default:
+                        break;
                 }
             }
             // mouse button was just released after drag
@@ -183,6 +189,16 @@ public class ScenePanelMouseListener implements MouseListener {
         }
     }
 
+    /**
+     * Tries to finish currently active manipulation.
+     * 
+     * @param e {@link MouseEvent} with coordinates.
+     * @param r2d Pointer rectangle.
+     * @param manipulationQueue Instance of {@link ManipulationQueue} containing all {@link Manipulation} instances.
+     * @param topNode Top node of {@link SceneGraph}.
+     * @param isMouseClicked Indicates, whether mouse clicked or just released.
+     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
+     */
     private void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation

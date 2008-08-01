@@ -17,7 +17,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Move;
 
 /**
- * This class impelements {@link MouseMotionListener} for {@link ScenePanel}.
+ * This class implements {@link MouseMotionListener} for {@link ScenePanel}.
  * 
  * @author Urban Kravjansky
  */
@@ -83,24 +83,33 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         }
     }
 
+    /**
+     * MouseMoved part specific for {@link Create} manipulation.
+     * 
+     * @param m {@link Manipulation} to be modified.
+     * @param e {@link MouseEvent} containing coordinates to be added.
+     */
     private void createMouseMoved(Manipulation m, MouseEvent e) {
         Snap s = Snap.getInstance();
 
-        Create create = (Create) m;
-        create.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+        m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
         // repaint scene
         ScenePanel.getInstance().repaint();
     }
 
+    /**
+     * MouseMoved part specific for {@link Move} manipulation.
+     * 
+     * @param m {@link Manipulation} to be modified.
+     * @param e {@link MouseEvent} containing coordinates to be added.
+     */
     private void moveMouseMoved(Manipulation m, MouseEvent e) {
         Snap s = Snap.getInstance();
 
-        Move move = (Move) m;
+        m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-        move.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-        Structures.getManipulationQueue().replaceLastManipulation(move);
+        Structures.getManipulationQueue().replaceLastManipulation(m);
         Structures.getManipulationQueue().execute();
 
         // just repaint (it takes care of element in progress)
