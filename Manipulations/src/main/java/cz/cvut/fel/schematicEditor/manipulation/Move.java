@@ -122,13 +122,6 @@ public class Move extends Manipulation {
             Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
             select.setManipulatedGroup(gn);
 
-            // remove head manipulation in waiting manipulations queue and add actual
-            manipulationQueue.reoffer(select);
-
-            // add and execute manipulation
-            manipulationQueue.offer(this);
-            manipulationQueue.execute();
-
             // processing final manipulation step
             logger.trace("processing final SELECT step");
 
@@ -163,7 +156,7 @@ public class Move extends Manipulation {
         }
         // move is not possible - fall back to Select manipulation
         else {
-            mq.offer(ManipulationFactory.create(ManipulationType.SELECT));
+            // mq.add(ManipulationFactory.create(ManipulationType.SELECT));
         }
     }
 }

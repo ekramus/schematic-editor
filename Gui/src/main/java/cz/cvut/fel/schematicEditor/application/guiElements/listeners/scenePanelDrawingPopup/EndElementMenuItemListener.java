@@ -58,11 +58,11 @@ public class EndElementMenuItemListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            Create create = (Create) Structures.getManipulationQueue().peek();
+            Create create = (Create) Structures.getActiveManipulation();
             create.setFinished(true);
             if (create.manipulationEnd(getE(), getR2d(), Structures.getManipulationQueue(), ScenePanel.getInstance()
                     .getSchemeSG().getTopNode(), false)) {
-                Structures.getManipulationQueue().execute();
+                Structures.getManipulationQueue().execute(create);
                 ScenePanel.getInstance().schemeInvalidate(null);
             } else {
                 logger.error("Error executing manipulation " + create);

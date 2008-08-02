@@ -17,4 +17,13 @@ public class PartNode extends ElementNode {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        PartNode result = new PartNode(getElement());
+
+        return result;
+    }
 }

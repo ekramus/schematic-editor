@@ -17,4 +17,13 @@ public class WireNode extends ElementNode {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        WireNode result = new WireNode(getElement());
+
+        return result;
+    }
 }

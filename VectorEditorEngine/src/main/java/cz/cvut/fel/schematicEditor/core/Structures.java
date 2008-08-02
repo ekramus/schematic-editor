@@ -4,10 +4,7 @@ import java.util.Properties;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class represents the application core structures.
@@ -18,15 +15,19 @@ public class Structures {
     /**
      * Reference to <code>SceneProperties</code> instance.
      */
-    private static SceneProperties   sceneProperties   = null;
+    private static SceneProperties   sceneProperties    = null;
     /**
      * Application wide properties.
      */
-    private static Properties        properties        = null;
+    private static Properties        properties         = null;
     /**
-     * Reference to <code>ManipulationQeue</code> instance.
+     * Reference to <code>ManipulationQueue</code> instance.
      */
-    private static ManipulationQueue manipulationQueue = null;
+    private static ManipulationQueue manipulationQueue  = null;
+    /**
+     * Reference to active {@link Manipulation} instance.
+     */
+    private static Manipulation      activeManipulation = null;
 
     /**
      * Getter for properties.
@@ -38,10 +39,27 @@ public class Structures {
     }
 
     /**
+     * Getter for <code>activeManipulation</code> instance.
+     * 
+     * @return Instance of <code>activeManipulation</code>.
+     */
+    public static Manipulation getActiveManipulation() {
+        return Structures.activeManipulation;
+    }
+
+    /**
+     * Setter for <code>activeManipulation</code> instance.
+     * 
+     * @param activeManipulation instance of <code>activeManipulation</code>.
+     */
+    public static void setActiveManipulation(Manipulation activeManipulation) {
+        Structures.activeManipulation = activeManipulation;
+    }
+
+    /**
      * Setter for properties
      * 
-     * @param properties
-     *            properties to save.
+     * @param properties properties to save.
      */
     public static void setProperties(Properties properties) {
         Structures.properties = properties;
@@ -60,7 +78,7 @@ public class Structures {
     }
 
     /**
-     * Getter for {@link ManipulationQeue}.
+     * Getter for {@link ManipulationQueue}.
      * 
      * @return the manipulationQueue
      */

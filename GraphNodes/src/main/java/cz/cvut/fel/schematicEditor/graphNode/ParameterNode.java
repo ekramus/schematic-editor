@@ -48,16 +48,14 @@ public class ParameterNode extends Node {
     }
 
     /**
-     * @param color
-     *            the color to set
+     * @param color the color to set
      */
     public void setColor(Color color) {
         this.color = color;
     }
 
     /**
-     * @param fill
-     *            the color of fill to set
+     * @param fill the color of fill to set
      */
     public void setFill(Color fill) {
         this.fill = fill;
@@ -71,8 +69,7 @@ public class ParameterNode extends Node {
     }
 
     /**
-     * @param width
-     *            the width to set
+     * @param width the width to set
      */
     public void setWidth(Unit width) {
         this.width = width;
@@ -88,8 +85,7 @@ public class ParameterNode extends Node {
     /**
      * This method combines parametres from this node with given ones.
      * 
-     * @param p
-     *            parametres to combine.
+     * @param p parametres to combine.
      * @return Combined parametres.
      */
     public ParameterNode combine(ParameterNode p) {
@@ -109,17 +105,14 @@ public class ParameterNode extends Node {
     /**
      * Set properties of {@link ParameterNode} usint {@link ElementProperties}.
      * 
-     * @param elementProperties
-     *            instance of properties.
+     * @param elementProperties instance of properties.
      */
     public final void setProperties(ElementProperties elementProperties) {
         Color c = elementProperties.getContourColor();
-        Color color = new Color(c.getRed(), c.getGreen(), c.getBlue(), elementProperties
-                .getContourColorAlpha());
+        Color color = new Color(c.getRed(), c.getGreen(), c.getBlue(), elementProperties.getContourColorAlpha());
 
         c = elementProperties.getFillColor();
-        Color fill = new Color(c.getRed(), c.getGreen(), c.getBlue(), elementProperties
-                .getFillColorAlpha());
+        Color fill = new Color(c.getRed(), c.getGreen(), c.getBlue(), elementProperties.getFillColorAlpha());
 
         setLineStyle(elementProperties.getContourStyle());
         setColor(color);
@@ -131,8 +124,7 @@ public class ParameterNode extends Node {
     /**
      * This method returns {@link ElementProperties} instance.
      * 
-     * @return {@link ElementProperties} instance representing properties of this
-     *         {@link ParameterNode}.
+     * @return {@link ElementProperties} instance representing properties of this {@link ParameterNode}.
      */
     public final ElementProperties getProperties() {
         ElementProperties result = new ElementProperties();
@@ -170,5 +162,17 @@ public class ParameterNode extends Node {
 
     public void setLineStyle(ElementStyle lineStyle) {
         this.lineStyle = lineStyle;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        ParameterNode result = new ParameterNode();
+
+        result.setProperties(getProperties());
+
+        return result;
     }
 }

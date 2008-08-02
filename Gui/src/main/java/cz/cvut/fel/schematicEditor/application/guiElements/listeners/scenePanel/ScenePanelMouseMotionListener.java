@@ -44,7 +44,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Manipulation m = Structures.getManipulationQueue().peek();
+            Manipulation m = Structures.getActiveManipulation();
             ManipulationType mt = m.getManipulationType();
 
             // manipulation is create
@@ -69,7 +69,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Manipulation m = Structures.getManipulationQueue().peek();
+            Manipulation m = Structures.getActiveManipulation();
 
             // manipulation is active
             if (m.isActive()) {
@@ -108,9 +108,6 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         Snap s = Snap.getInstance();
 
         m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-        Structures.getManipulationQueue().replaceLastManipulation(m);
-        Structures.getManipulationQueue().execute();
 
         // just repaint (it takes care of element in progress)
         ScenePanel.getInstance().repaint();

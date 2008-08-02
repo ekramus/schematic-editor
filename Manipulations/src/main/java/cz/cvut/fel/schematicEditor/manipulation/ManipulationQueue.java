@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.util.LinkedList;
 
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 
 /**
@@ -11,165 +12,122 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionE
  */
 public class ManipulationQueue {
     /**
-     * Queue of manipulations waiting for processing.
+     * Queue of {@link Manipulation}s.
      */
-    private LinkedList<Manipulation> waitingManipulations;
+    private LinkedList<Manipulation> manipulationQueue;
     /**
-     * Queue of processed manipulations.
+     * Index of active {@link Manipulation} stored in {@link ManipulationQueue}.
      */
-    private LinkedList<Manipulation> processedManipulations;
+    private int                      activeManipulationIndex;
 
     /**
      * Default constructor. It is for initialization purposes.
      */
     public ManipulationQueue() {
-        setWaitingManipulations(new LinkedList<Manipulation>());
-        setProcessedManipulations(new LinkedList<Manipulation>());
+        setManipulationQueue(new LinkedList<Manipulation>());
+        setActiveManipulationIndex(0);
     }
 
     /**
-     * Executes top manipulation stored in <code>waitingManipulations</code> queue and moves it into
-     * <code>processedManipulations</code> queue.
+     * Executes given active manipulation.
      * 
-     * @return status of executed {@link Manipulation}. <code>false</code> in case of execution
-     *         problems, else <code>true</code>.
+     * @param activeManipulation {@link Manipulation} to be executed.
+     * 
+     * @return status of executed {@link Manipulation}. <code>false</code> in case of execution problems, else
+     *         <code>true</code>.
      */
-    public boolean execute() {
-        Manipulation manipulation = getWaitingManipulations().poll();
-
-        // try to execute manipulation
+    public boolean execute(Manipulation activeManipulation) {
+        // try to add and execute manipulation
         try {
-            manipulation.execute();
-        } catch (NullPointerException e) {
-            // manipulation was null
+            // move index of active manipulation to the next one
+            setActiveManipulationIndex(getActiveManipulationIndex() + 1);
+
+            // there are manipulations, which are to be abandoned
+            if (getManipulationQueue().size() > getActiveManipulationIndex()) {
+                setManipulationQueue(new LinkedList<Manipulation>(getManipulationQueue()
+                        .subList(0, getActiveManipulationIndex() - 1)));
+            }
+
+            // add manipulation at the end of manipulation queue
+            getManipulationQueue().add(activeManipulation);
+
+            // execute manipulation
+            activeManipulation.execute();
+        }
+        // manipulation was null
+        catch (NullPointerException e) {
             return false;
-        } catch (ManipulationExecutionException e) {
-            // TODO: handle exception
+        }
+        // exception during execution
+        catch (ManipulationExecutionException e) {
+            return false;
         }
 
-        // add manipulation to top of processed manipulations
-        getProcessedManipulations().offer(manipulation);
         return true;
-    }
-
-    /**
-     * Unexecutes (undoes) top manipulation stored in <code>processedManipulations</code> queue and
-     * moves it on top of <code>waitingManipulations</code> queue.
-     * 
-     * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution
-     *         problems, else <code>true</code>.
-     */
-    public boolean unexecute() {
-        Manipulation manipulation = getProcessedManipulations().poll();
-
-        // try to unexecute manipulation
-        try {
-            manipulation.unexecute();
-        } catch (NullPointerException e) {
-            // manipulation was null
-            return false;
-        } catch (ManipulationExecutionException e) {
-            // TODO: handle exception
-        }
-
-        // add manipulation to top of waiting manipulations
-        getWaitingManipulations().offer(manipulation);
-        return true;
-    }
-
-    /**
-     * Reexecutes (redoes) top manipulation stored in <code>processedManipulations</code> queue. No
-     * transfers between queues are done.
-     * 
-     * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution
-     *         problems, else <code>true</code>.
-     */
-    public boolean reexecute() {
-        Manipulation manipulation = getProcessedManipulations().peek();
-
-        // try to reexecute manipulation
-        try {
-            manipulation.execute();
-        } catch (NullPointerException npe) {
-            // manipulation was null
-            return false;
-        } catch (ManipulationExecutionException e) {
-            // TODO: handle exception
-        }
-
-        // duplicate manipulation and add it on top of processed ones
-        getProcessedManipulations().offer(ManipulationFactory.duplicate(manipulation));
-        return true;
-    }
-
-    /**
-     * @return the waitingManipulations
-     */
-    private LinkedList<Manipulation> getWaitingManipulations() {
-        return this.waitingManipulations;
-    }
-
-    /**
-     * @param waitingManipulations
-     *            the waitingManipulations to set
-     */
-    private void setWaitingManipulations(LinkedList<Manipulation> waitingManipulations) {
-        this.waitingManipulations = waitingManipulations;
-    }
-
-    /**
-     * @return the processedManipulations
-     */
-    private LinkedList<Manipulation> getProcessedManipulations() {
-        return this.processedManipulations;
-    }
-
-    /**
-     * @param processedManipulations
-     *            the processedManipulations to set
-     */
-    private void setProcessedManipulations(LinkedList<Manipulation> processedManipulations) {
-        this.processedManipulations = processedManipulations;
     }
 
     /**
      * Adds {@link Manipulation} at the end of {@link ManipulationQueue}.
      * 
-     * @param manipulation
-     *            {@link Manipulation} instance to offer.
+     * @param manipulation {@link Manipulation} instance to add.
      */
-    public void offer(Manipulation manipulation) {
-        getWaitingManipulations().offer(manipulation);
+    @Deprecated
+    private void add(Manipulation manipulation) {
+        // move index of active manipulation to the next one
+        setActiveManipulationIndex(getActiveManipulationIndex() + 1);
+
+        // there are manipulations, which are to be abandoned
+        if (getManipulationQueue().size() > getActiveManipulationIndex()) {
+            setManipulationQueue(new LinkedList<Manipulation>(getManipulationQueue()
+                    .subList(0, getActiveManipulationIndex() - 1)));
+        }
+
+        // add manipulation at the end of manipulation queue
+        getManipulationQueue().add(manipulation);
     }
 
     /**
-     * Replaces last {@link Manipulation} with given.
-     * 
-     * @param manipulation
-     */
-    public void replaceLastManipulation(Manipulation manipulation) {
-        getWaitingManipulations().poll();
-        getWaitingManipulations().offer(manipulation);
-    }
-
-    /**
-     * Peeks {@link Manipulation} from the top of waiting manipulations list.
+     * Gets {@link Manipulation} on active index position from the manipulation list.
      * 
      * @return Top {@link Manipulation} on waiting manipulations list.
      */
-    public Manipulation peek() {
-        return getWaitingManipulations().peek();
+    @Deprecated
+    private Manipulation get() {
+        return getManipulationQueue().get(getActiveManipulationIndex());
     }
 
     /**
-     * Removes and offers {@link Manipulation} to the top of queue.
+     * Reexecutes (redoes) manipulation on active manipulation index position.
      * 
-     * @param manipulation
-     *            {@link Manipulation} instance to offer instead of removed one.
+     * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution problems, else
+     *         <code>true</code>.
      */
-    public void reoffer(Manipulation manipulation) {
-        getWaitingManipulations().remove();
-        getWaitingManipulations().offer(manipulation);
+    public boolean reexecute() {
+        // move index of active manipulation to the next one
+        setActiveManipulationIndex(getActiveManipulationIndex() + 1);
+
+        // if there is no manipulation to execute, add last one
+        if (getManipulationQueue().size() < getActiveManipulationIndex()) {
+            getManipulationQueue().add(getManipulationQueue().getLast());
+        }
+
+        // retrieve manipulation
+        Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex());
+
+        // try to reexecute manipulation
+        try {
+            manipulation.execute();
+        }
+        // manipulation was null
+        catch (NullPointerException npe) {
+            return false;
+        }
+        // exception during execution
+        catch (ManipulationExecutionException e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -177,7 +135,78 @@ public class ManipulationQueue {
      */
     @Override
     public String toString() {
-        return "waiting: [" + getWaitingManipulations() + "] processed: ["
-               + getProcessedManipulations() + "]";
+        String buf = "";
+
+        for (int i = 0; i < getManipulationQueue().size(); i++) {
+            if (i == getActiveManipulationIndex()) {
+                buf += "<" + getManipulationQueue().get(i) + "> ";
+            } else {
+                buf += "[" + getManipulationQueue().get(i) + "] ";
+            }
+        }
+
+        return buf;
+    }
+
+    /**
+     * Unexecutes (undoes) manipualtion on position of active manipulation index.
+     * 
+     * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution problems, else
+     *         <code>true</code>.
+     */
+    public boolean unexecute() {
+        Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex());
+
+        // try to unexecute manipulation
+        try {
+            manipulation.unexecute();
+
+            // move index of active manipulation to the previous one
+            setActiveManipulationIndex(getActiveManipulationIndex() - 1);
+        }
+        // manipulation was null
+        catch (NullPointerException e) {
+            return false;
+        }
+        // exception occurred during unexecution
+        catch (ManipulationExecutionException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Getter for <code>activeManipulationIndex</code> field.
+     * 
+     * @return The index of active {@link Manipulation}.
+     */
+    private int getActiveManipulationIndex() {
+        return this.activeManipulationIndex;
+    }
+
+    /**
+     * Getter for <code>manipulationQueue</code>.
+     * 
+     * @return the <code>manipulationQueue</code> instance.
+     */
+    private LinkedList<Manipulation> getManipulationQueue() {
+        return this.manipulationQueue;
+    }
+
+    /**
+     * Setter for <code>activeManipulationIndex</code> field.
+     * 
+     * @param activeManipulationIndex Index of active {@link Manipulation}.
+     */
+    private void setActiveManipulationIndex(int activeManipulationIndex) {
+        this.activeManipulationIndex = activeManipulationIndex;
+    }
+
+    /**
+     * @param manipulationQueue the <code>manipulationQueue</code> to set
+     */
+    private void setManipulationQueue(LinkedList<Manipulation> manipulationQueue) {
+        this.manipulationQueue = manipulationQueue;
     }
 }

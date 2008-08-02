@@ -90,7 +90,7 @@ public class Select extends Manipulation {
     @Override
     protected void execute() throws ManipulationExecutionException {
         // TODO Auto-generated method stub
-
+        logger.trace(this + " executed");
     }
 
     /*
@@ -111,8 +111,6 @@ public class Select extends Manipulation {
     @Override
     public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode groupNode,
             boolean isMouseClicked) throws UnknownManipulationException {
-        Select select = (Select) manipulationQueue.peek();
-
         // mouse clicked and hit something
         if (isMouseClicked) {
             // some group is hit
@@ -121,12 +119,12 @@ public class Select extends Manipulation {
 
                 // create new select object
                 // manipulationQueue.offer(ManipulationFactory.create(ManipulationType.SELECT));
-                select = (Select) manipulationQueue.peek();
+                // select = (Select) manipulationQueue.peek();
                 // activate selection
-                select.setActive(true);
+                setActive(true);
                 // set selected group
                 GroupNode gn = groupNode.findHit(r2d);
-                select.setManipulatedGroup(gn);
+                setManipulatedGroup(gn);
 
                 // ScenePanel.getInstance().schemeInvalidate(select.getManipulatedGroup().getBounds()
                 // );
@@ -139,16 +137,7 @@ public class Select extends Manipulation {
             }
             // no group is hit
             else {
-                // logger.debug("nothing SELECTED");
-
-                // create new select object
-                manipulationQueue.offer(ManipulationFactory.create(ManipulationType.SELECT));
-                select = (Select) manipulationQueue.peek();
-
-                // ScenePanel.getInstance().schemeInvalidate(null);
-                // TODO ensure properties refresh
-                // Structures.getSceneProperties().setSelectedElementProperties(null);
-                // PropertiesToolBar.refresh();
+                // nothing to do
             }
         }
         return true;
@@ -171,9 +160,6 @@ public class Select extends Manipulation {
                 edit.setManipulatedGroup(getManipulatedGroup());
                 edit.setActive(true);
 
-                // set active manipulation edit
-                manipulationQueue.offer(edit);
-
                 // continue with edit manipulation start
                 edit.manipulationStart(e, r2d, manipulationQueue, groupNode, isMouseClick);
             }
@@ -189,9 +175,6 @@ public class Select extends Manipulation {
                 Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE);
                 move.setManipulatedGroup(getManipulatedGroup());
                 move.setActive(true);
-
-                // set active manipulation move
-                manipulationQueue.offer(move);
 
                 // continue with move manipulation start
                 move.manipulationStart(e, r2d, manipulationQueue, groupNode, isMouseClick);

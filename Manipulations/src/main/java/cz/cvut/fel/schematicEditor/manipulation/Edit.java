@@ -106,13 +106,6 @@ public class Edit extends Manipulation {
             // create select manipulation, so manipulation can proceed as select
             Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
             select.setManipulatedGroup(gn);
-            manipulationQueue.offer(select);
-
-            // add and execute manipulation
-            // Structures.getManipulationQueue().offer(edit);
-            // Structures.getManipulationQueue().execute();
-            //
-            // ScenePanel.getInstance().processFinalManipulationStep();
         }
         return true;
     }
@@ -142,7 +135,7 @@ public class Edit extends Manipulation {
         }
         // move is not possible - fall back to Select manipulation
         else {
-            manipulationQueue.offer(ManipulationFactory.create(ManipulationType.SELECT));
+            // manipulationQueue.add(ManipulationFactory.create(ManipulationType.SELECT));
         }
     }
 }

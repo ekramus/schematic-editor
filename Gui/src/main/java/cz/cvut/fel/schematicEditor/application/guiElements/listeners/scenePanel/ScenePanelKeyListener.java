@@ -46,7 +46,7 @@ public class ScenePanelKeyListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         try {
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-                Manipulation manipulation = Structures.getManipulationQueue().peek();
+                Manipulation manipulation = Structures.getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.CREATE) {
                     Create create = (Create) manipulation;
                     logger.debug("manipulation is instance of Create");
@@ -63,20 +63,20 @@ public class ScenePanelKeyListener implements KeyListener {
             } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
                 logger.trace("UNexecuting...");
                 Structures.getManipulationQueue().unexecute();
-                ScenePanel.getInstance().processFinalManipulationStep();
+                // ScenePanel.getInstance().processFinalManipulationStep();
             } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
                 logger.trace("REexecuting...");
                 Structures.getManipulationQueue().reexecute();
-                ScenePanel.getInstance().processFinalManipulationStep();
+                // ScenePanel.getInstance().processFinalManipulationStep();
             } else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
-                Manipulation manipulation = Structures.getManipulationQueue().peek();
+                Manipulation manipulation = Structures.getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = manipulation.getManipulatedGroup();
                     if (ScenePanel.getInstance().getSchemeSG().getTopNode().delete(selected)) {
                         Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE);
                         delete.setActive(true);
-                        Structures.getManipulationQueue().offer(delete);
-                        ScenePanel.getInstance().processFinalManipulationStep();
+                        Structures.getActiveManipulation();
+                        // ScenePanel.getInstance().processFinalManipulationStep();
                     }
                 }
             }

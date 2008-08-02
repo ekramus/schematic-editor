@@ -8,14 +8,14 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
- * This class implements listener for every shape drawing button. It is implemented by instantiating
- * a new class of {@link Shape}.
+ * This class implements listener for every shape drawing button. It is implemented by instantiating a new class of
+ * {@link Shape}.
  * 
  * @author Urban Kravjansky
  */
@@ -30,11 +30,9 @@ public class DrawShapeButtonListener implements ActionListener {
     private static Logger logger;
 
     /**
-     * {@link DrawShapeButtonListener} constructor. It uses {@link Shape} instance to instantiate
-     * new {@link Shape}.
+     * {@link DrawShapeButtonListener} constructor. It uses {@link Shape} instance to instantiate new {@link Shape}.
      * 
-     * @param shape
-     *            instance used for new {@link Shape} instantiation.
+     * @param shape instance used for new {@link Shape} instantiation.
      */
     public DrawShapeButtonListener(final Shape shape) {
         logger = Logger.getLogger(this.getClass().getName());
@@ -43,18 +41,19 @@ public class DrawShapeButtonListener implements ActionListener {
     }
 
     /**
-     * Method invoked as result to an action. It initializes properties inside {@link Structures}
-     * class.
+     * Method invoked as result to an action. It initializes properties inside {@link Structures} class.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * @param ae
-     *            {@link ActionEvent} parameter.
+     * @param ae {@link ActionEvent} parameter.
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            ManipulationQueue mq = Structures.getManipulationQueue();
-            mq.offer(ManipulationFactory.create(ManipulationType.CREATE, getShape().newInstance()));
-            logger.trace(mq);
+            // set active manipulation
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, getShape().newInstance());
+            Structures.setActiveManipulation(m);
+            logger.trace(Structures.getActiveManipulation());
+
+            // set selected element properties to null
             Structures.getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
             PropertiesToolBar.refresh();
@@ -70,8 +69,7 @@ public class DrawShapeButtonListener implements ActionListener {
     /**
      * Setter for shape field.
      * 
-     * @param shape
-     *            the shape to set
+     * @param shape the shape to set
      */
     private void setShape(final Shape shape) {
         this.shape = shape;
