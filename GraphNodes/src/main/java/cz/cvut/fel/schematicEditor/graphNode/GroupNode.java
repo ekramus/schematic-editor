@@ -30,7 +30,7 @@ public class GroupNode extends Node {
     /**
      * This field represents list of all children element nodes.
      */
-    private Vector<ElementNode>            childrenElementList;
+    private LinkedList<ElementNode>        childrenElementList;
     /**
      * This field represents list of all transformation nodes
      */
@@ -49,7 +49,7 @@ public class GroupNode extends Node {
         logger = Logger.getLogger(this.getClass().getName());
 
         childrenGroupList = new LinkedList<GroupNode>();
-        childrenElementList = new Vector<ElementNode>();
+        childrenElementList = new LinkedList<ElementNode>();
         childrenTransformationList = new LinkedList<TransformationNode>();
         chidrenParameterNode = null;
     }
@@ -57,8 +57,7 @@ public class GroupNode extends Node {
     /**
      * This method adds child node into this node.
      * 
-     * @param child
-     *            child node to add.
+     * @param child child node to add.
      */
     public void add(Node child) {
         if (child instanceof GroupNode) {
@@ -190,7 +189,7 @@ public class GroupNode extends Node {
      * 
      * @return childrenElementList;
      */
-    public Vector<ElementNode> getChildrenElementList() {
+    public LinkedList<ElementNode> getChildrenElementList() {
         return this.childrenElementList;
     }
 
@@ -222,13 +221,10 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Getter for <code>NodeArray</code> with corrected <code>TransformationNode</code> and
-     * <code>ParameterNode</code>.
+     * Getter for <code>NodeArray</code> with corrected <code>TransformationNode</code> and <code>ParameterNode</code>.
      * 
-     * @param tn
-     *            transformation node.
-     * @param pn
-     *            parameter node.
+     * @param tn transformation node.
+     * @param pn parameter node.
      * @return <code>ArrayList</code> of nodes.
      */
     public ArrayList<Node> getNodeArray(TransformationNode tn, ParameterNode pn) {
@@ -295,7 +291,7 @@ public class GroupNode extends Node {
 
     public UnitRectangle getBounds() {
         // get bounds of first element, so there are some defined
-        UnitRectangle bounds = getChildrenElementList().firstElement().getBounds(getChildrenParameterNode().getWidth());
+        UnitRectangle bounds = getChildrenElementList().getFirst().getBounds(getChildrenParameterNode().getWidth());
 
         UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
@@ -324,8 +320,7 @@ public class GroupNode extends Node {
     /**
      * Detects, whether given rectangle is in edit zone. If it is, it means, edit should be invoked.
      * 
-     * @param r2d
-     *            rectangle around pointer.
+     * @param r2d rectangle around pointer.
      * @return <code>true</code> if given rectangle contains any edit point from group, else <code>false</code>.
      */
     public boolean startEditing(Rectangle2D.Double r2d) {
@@ -354,8 +349,7 @@ public class GroupNode extends Node {
     /**
      * Detects, whether given rectangle is in rotate zone. If it is, it means, rotate should be invoked.
      * 
-     * @param r2d
-     *            rectangle around pointer.
+     * @param r2d rectangle around pointer.
      * @return <code>true</code> if given rectangle is in rotate point of whole group, else <code>false</code>.
      */
     public boolean isRotateZone(Rectangle2D.Double r2d) {
@@ -400,5 +394,71 @@ public class GroupNode extends Node {
                 }
             }
         }
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        GroupNode result = new GroupNode();
+
+        ParameterNode chPN = (ParameterNode) getChildrenParameterNode().duplicate();
+        result.setChidrenParameterNode(chPN);
+
+        LinkedList<ElementNode> chEL = new LinkedList<ElementNode>();
+        for (ElementNode elementNode : getChildrenElementList()) {
+            chEL.add((ElementNode) elementNode.duplicate());
+        }
+        result.setChildrenElementList(chEL);
+
+        LinkedList<GroupNode> chGL = new LinkedList<GroupNode>();
+        for (GroupNode groupNode : getChildrenGroupList()) {
+            chGL.add((GroupNode) groupNode.duplicate());
+        }
+        result.setChildrenGroupList(chGL);
+
+        LinkedList<TransformationNode> chTL = new LinkedList<TransformationNode>();
+        for (TransformationNode transformationNode : getChildrenTransformationList()) {
+            chTL.add((TransformationNode) transformationNode.duplicate());
+        }
+        result.setChildrenTransformationList(chTL);
+
+        return result;
+    }
+
+    /**
+     * @param chidrenParameterNode the chidrenParameterNode to set
+     */
+    private void setChidrenParameterNode(ParameterNode chidrenParameterNode) {
+        this.chidrenParameterNode = chidrenParameterNode;
+    }
+
+    /**
+     * @param childrenElementList the childrenElementList to set
+     */
+    private void setChildrenElementList(LinkedList<ElementNode> childrenElementList) {
+        this.childrenElementList = childrenElementList;
+    }
+
+    /**
+     * @param childrenGroupList the childrenGroupList to set
+     */
+    private void setChildrenGroupList(LinkedList<GroupNode> childrenGroupList) {
+        this.childrenGroupList = childrenGroupList;
+    }
+
+    /**
+     * @param childrenTransformationList the childrenTransformationList to set
+     */
+    private void setChildrenTransformationList(LinkedList<TransformationNode> childrenTransformationList) {
+        this.childrenTransformationList = childrenTransformationList;
+    }
+
+    /**
+     * @return the childrenTransformationList
+     */
+    private LinkedList<TransformationNode> getChildrenTransformationList() {
+        return this.childrenTransformationList;
     }
 }

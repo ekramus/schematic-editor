@@ -38,15 +38,14 @@ public abstract class PropertiesToolBarListener {
      * Update active element {@link ElementProperties} instance, if necessary. Update is executed only in case of
      * {@link Select} manipulation.
      * 
-     * @param elementProperties
-     *            properties to update.
+     * @param elementProperties properties to update.
      */
     protected final void updateProperties(final ElementProperties elementProperties)
             throws UnknownManipulationException {
         // refresh all elements on properties toolbar
         PropertiesToolBar.refresh();
 
-        Manipulation m = Structures.getManipulationQueue().peek();
+        Manipulation m = Structures.getActiveManipulation();
 
         if (m.getManipulationType() == ManipulationType.SELECT) {
             Select select = (Select) m;

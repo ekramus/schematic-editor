@@ -47,8 +47,7 @@ public class ElementNode extends Node {
     /**
      * This is constructor.
      * 
-     * @param element
-     *            <code>Element</code> to create <code>ElementNode</code> with.
+     * @param element <code>Element</code> to create <code>ElementNode</code> with.
      */
     public ElementNode(Element element) {
         super();
@@ -58,10 +57,8 @@ public class ElementNode extends Node {
     /**
      * This is constructor.
      * 
-     * @param element
-     *            <code>Element</code> to create <code>ElementNode</code> with.
-     * @param id
-     *            this <code>ElementNode</code> identifier.
+     * @param element <code>Element</code> to create <code>ElementNode</code> with.
+     * @param id this <code>ElementNode</code> identifier.
      */
     public ElementNode(Element element, String id) {
         super(id);
@@ -112,8 +109,7 @@ public class ElementNode extends Node {
     /**
      * Getter for element bounds.
      * 
-     * @param boundModifier
-     *            modifier which affects boundary size of element.
+     * @param boundModifier modifier which affects boundary size of element.
      * @return Bounds of element.
      */
     public UnitRectangle getBounds(Unit boundModifier) {
@@ -166,8 +162,7 @@ public class ElementNode extends Node {
     }
 
     /**
-     * @param edited
-     *            the editing to set
+     * @param edited the editing to set
      */
     private void setEdited(boolean edited) {
         this.edited = edited;
@@ -183,4 +178,13 @@ public class ElementNode extends Node {
         }
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        ElementNode result = new ElementNode(getElement());
+
+        return result;
+    }
 }

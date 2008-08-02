@@ -2,7 +2,7 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 /**
  * This class implements Node and all generic methods.
- *
+ * 
  * @author uk
  */
 public abstract class Node {
@@ -29,9 +29,8 @@ public abstract class Node {
 
     /**
      * This is constructor.
-     *
-     * @param id
-     *            identifier of node.
+     * 
+     * @param id identifier of node.
      */
     public Node(String id) {
         this.id = id;
@@ -40,12 +39,10 @@ public abstract class Node {
 
     /**
      * This method duplicates
-     *
+     * 
      * @return Copy of node with it's children.
      */
-    public Node duplicate() {
-        return null;
-    }
+    public abstract Node duplicate();
 
     /**
      * @see java.lang.Object#toString()
@@ -57,17 +54,15 @@ public abstract class Node {
 
     /**
      * Setter for parent variable.
-     *
-     * @param parent
-     *            the parent to set
+     * 
+     * @param parent the parent to set
      */
     public void setParent(GroupNode parent) {
         this.parent = parent;
     }
 
     /**
-     * @param disabled
-     *            the disabled to set
+     * @param disabled the disabled to set
      */
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
@@ -82,7 +77,7 @@ public abstract class Node {
 
     /**
      * Getter for parent node.
-     *
+     * 
      * @return the parent
      */
     public GroupNode getParent() {

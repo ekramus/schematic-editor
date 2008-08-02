@@ -218,10 +218,8 @@ public class Create extends Manipulation {
 
             logger.debug("processing final manipulation step");
 
-            Manipulation m = manipulationQueue.peek();
-
-            child = m.getManipulatedElement();
-            m.setActive(false);
+            child = getManipulatedElement();
+            setActive(false);
 
             sn = new ShapeNode((Shape) child);
             pn = new ParameterNode();

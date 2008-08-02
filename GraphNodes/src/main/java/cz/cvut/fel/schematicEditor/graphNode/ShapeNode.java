@@ -11,8 +11,7 @@ public class ShapeNode extends ElementNode {
     /**
      * This is constructor.
      * 
-     * @param shape
-     *            <code>Shape</code> stored in this <code>ShapeNode</code>.
+     * @param shape <code>Shape</code> stored in this <code>ShapeNode</code>.
      */
     public ShapeNode(Shape shape) {
         super(shape);
@@ -21,13 +20,20 @@ public class ShapeNode extends ElementNode {
     /**
      * This is constructor.
      * 
-     * @param shape
-     *            <code>Shape</code> stored in this <code>ShapeNode</code>.
-     * @param id
-     *            identifier of this <code>ShapeNode</code>.
+     * @param shape <code>Shape</code> stored in this <code>ShapeNode</code>.
+     * @param id identifier of this <code>ShapeNode</code>.
      */
     public ShapeNode(Shape shape, String id) {
         super(shape, id);
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        ShapeNode result = new ShapeNode((Shape) getElement());
+
+        return result;
+    }
 }

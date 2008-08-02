@@ -121,7 +121,7 @@ public class ScenePanelMouseListener implements MouseListener {
             Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
                                                                     Constants.POINT_SIZE);
 
-            Manipulation m = Structures.getManipulationQueue().peek();
+            Manipulation m = Structures.getActiveManipulation();
             if (!m.isActive()) {
                 m.manipulationStart(e, r2d, Structures.getManipulationQueue(), ScenePanel.getInstance().getSchemeSG()
                         .getTopNode(), isMouseClicked());
@@ -153,7 +153,7 @@ public class ScenePanelMouseListener implements MouseListener {
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
 
-                Manipulation manipulation = mq.peek();
+                Manipulation manipulation = Structures.getActiveManipulation();
                 ManipulationType mt = manipulation.getManipulationType();
 
                 switch (mt) {
@@ -202,8 +202,8 @@ public class ScenePanelMouseListener implements MouseListener {
     private void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation
-        if (manipulationQueue.peek().manipulationEnd(e, r2d, manipulationQueue, topNode, isMouseClicked())) {
-            manipulationQueue.execute();
+        if (Structures.getActiveManipulation().manipulationEnd(e, r2d, manipulationQueue, topNode, isMouseClicked())) {
+            manipulationQueue.execute(Structures.getActiveManipulation());
             ScenePanel.getInstance().schemeInvalidate(null);
         }
         // manipulation is not finished yet

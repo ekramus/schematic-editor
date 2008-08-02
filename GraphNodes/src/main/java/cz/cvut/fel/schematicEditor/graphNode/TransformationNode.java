@@ -16,8 +16,7 @@ public class TransformationNode extends Node {
     /**
      * This is constructor.
      * 
-     * @param t
-     *            transformation node.
+     * @param t transformation node.
      */
     public TransformationNode(Transformation t) {
         this.transformation = t;
@@ -35,8 +34,7 @@ public class TransformationNode extends Node {
     /**
      * Setter for transformation.
      * 
-     * @param transformation
-     *            the transformation to set
+     * @param transformation the transformation to set
      */
     public void setTransformation(Transformation transformation) {
         this.transformation = transformation;
@@ -48,5 +46,15 @@ public class TransformationNode extends Node {
     @Override
     public String toString() {
         return id + " [TransformationNode]";
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        TransformationNode result = new TransformationNode(getTransformation());
+
+        return result;
     }
 }

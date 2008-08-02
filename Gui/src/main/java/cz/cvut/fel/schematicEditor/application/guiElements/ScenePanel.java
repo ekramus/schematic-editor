@@ -38,8 +38,8 @@ import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class encapsulates scene JPanel. All main listeners are implemented here. This class is
- * applications main drawing interface.
+ * This class encapsulates scene JPanel. All main listeners are implemented here. This class is applications main
+ * drawing interface.
  * 
  * @author Urban Kravjansky
  */
@@ -79,8 +79,7 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * @param sceneJPanel
-     *            the sceneJPanel to set
+     * @param sceneJPanel the sceneJPanel to set
      */
     private static final void setSceneJPanel(ScenePanel sceneJPanel) {
         ScenePanel.sceneJPanel = sceneJPanel;
@@ -129,8 +128,6 @@ public class ScenePanel extends JPanel {
 
     /**
      * This is the default constructor
-     * 
-     * @throws UnknownManipulationException
      */
     private ScenePanel() {
         super();
@@ -144,21 +141,19 @@ public class ScenePanel extends JPanel {
      * Draws edit frame onto {@link BufferedImage}.
      * 
      * @return {@link BufferedImage} with edit frame.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
+     * @throws UnknownManipulationException In case of unknown manipulation.
      */
     private BufferedImage drawEditFrame() throws UnknownManipulationException {
         // create new edit frame
-        BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
+        BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        Manipulation m = Structures.getManipulationQueue().peek();
+        Manipulation m = Structures.getActiveManipulation();
         GroupNode gn = m.getManipulatedGroup();
         Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) editFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
-                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
+        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
+                .getWidth(), gn.getBounds().getHeight());
         rect = t.shift(rect);
         g2d.setColor(Color.ORANGE);
         g2d.draw(rect);
@@ -181,14 +176,12 @@ public class ScenePanel extends JPanel {
 
         // draw first rectangle
         gridG2D.setColor(new Color(210, 220, 255));
-        Rectangle2D r = new Rectangle2D.Double(0, 0, s.getGridSize().doubleValue(),
-                s.getGridSize().doubleValue());
+        Rectangle2D r = new Rectangle2D.Double(0, 0, s.getGridSize().doubleValue(), s.getGridSize().doubleValue());
         gridG2D.draw(r);
 
         // copy rectangle in row
         for (double d = s.getGridSize().doubleValue(); d <= grid.getWidth(); d += s.getGridSize().doubleValue()) {
-            gridG2D.copyArea(0, 0, s.getGridSize().intValue() + 1, s.getGridSize().intValue() + 1,
-                             (int) d, 0);
+            gridG2D.copyArea(0, 0, s.getGridSize().intValue() + 1, s.getGridSize().intValue() + 1, (int) d, 0);
         }
 
         // copy row of rectangles
@@ -201,29 +194,21 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method draws actual manipulated element onto <code>BufferedImage</code>.
+     * Draws actual manipulated element onto <code>BufferedImage</code>.
      * 
      * @return <code>BufferedImage</code> with actual manipulated element.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
+     * @throws UnknownManipulationException In case of unknown manipulation.
      */
     private BufferedImage drawManipulatedElement() throws UnknownManipulationException {
-        // create new manipulated elelement
-        BufferedImage manipulatedElement = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
+        // create new manipulated element
+        BufferedImage manipulatedElement = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         // prepare element
         SceneGraph sg = new SceneGraph();
         // this.manipulation.setManipulationCoordinates(getManipXCoord(), getManipYCoord());
-        Shape s = (Shape) Structures.getManipulationQueue().peek().getManipulatedElement();
+        GroupNode gn = Structures.getActiveManipulation().getManipulatedGroup();
 
-        // create SceneGraph
-        ParameterNode p = new ParameterNode();
-        ElementNode e = new ElementNode(s);
-        GroupNode g = new GroupNode();
-        g.add(e);
-        g.add(p);
-        sg.setTopNode(g);
+        sg.setTopNode(gn);
 
         // try to draw elements using DisplayExport
         DisplayExport de = DisplayExport.getExport();
@@ -234,19 +219,17 @@ public class ScenePanel extends JPanel {
 
     /**
      * @return
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
+     * @throws UnknownManipulationException In case of unknown manipulation.
      */
     private BufferedImage drawManipulatedGroup() throws UnknownManipulationException {
         // create new manipulated element
-        BufferedImage manipulatedGroup = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
+        BufferedImage manipulatedGroup = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         // create SceneGraph
         SceneGraph sg = new SceneGraph();
 
         // get manipulated group
-        Manipulation manipulation = Structures.getManipulationQueue().peek();
+        Manipulation manipulation = Structures.getActiveManipulation();
         GroupNode g = manipulation.getManipulatedGroup();
         sg.setTopNode(g);
 
@@ -260,10 +243,8 @@ public class ScenePanel extends JPanel {
     /**
      * This method draws scene and it's specific features.
      * 
-     * @param g
-     *            <code>Graphics</code> to draw on.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
+     * @param g <code>Graphics</code> to draw on.
+     * @throws UnknownManipulationException In case of unknown manipulation.
      */
     private void drawScene(Graphics g) throws UnknownManipulationException {
         Graphics2D g2d = (Graphics2D) g;
@@ -296,7 +277,9 @@ public class ScenePanel extends JPanel {
 
         try {
 
-            Manipulation m = Structures.getManipulationQueue().peek();
+            // TODO correct behavior: in case of manipulation progress, it should use active manipulation,
+            // TODO else, it should use last processed manipulation
+            Manipulation m = Structures.getActiveManipulation();
 
             // draw work element or group, if some is being manipulated.
             if (m.isActive() && (m.isManipulatingElements() || m.isManipulatingGroups())) {
@@ -347,8 +330,7 @@ public class ScenePanel extends JPanel {
         logger.debug("full scheme redraw");
 
         // create new scheme
-        BufferedImage scheme = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
+        BufferedImage scheme = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         // initialize DisplayExport
         DisplayExport de = DisplayExport.getExport();
@@ -366,21 +348,19 @@ public class ScenePanel extends JPanel {
      * This method draws selection frame onto {@link BufferedImage}.
      * 
      * @return {@link BufferedImage} with selection frame.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
+     * @throws UnknownManipulationException In case of unknown manipulation.
      */
     private BufferedImage drawSelectionFrame() throws UnknownManipulationException {
         // create new selection frame
-        BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
+        BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        Manipulation m = Structures.getManipulationQueue().peek();
+        Manipulation m = Structures.getActiveManipulation();
         GroupNode gn = m.getManipulatedGroup();
         Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) selectionFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(),
-                gn.getBounds().getY(), gn.getBounds().getWidth(), gn.getBounds().getHeight());
+        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX(), gn.getBounds().getY(), gn.getBounds()
+                .getWidth(), gn.getBounds().getHeight());
         rect = t.shift(rect);
         g2d.setColor(Color.GRAY);
         g2d.draw(rect);
@@ -399,11 +379,9 @@ public class ScenePanel extends JPanel {
      * This method initializes this.
      */
     private void init() {
-        this.setPreferredSize(new Dimension(
-                Integer.parseInt(Structures.getProperties().getProperty(
-                                                                        "sceneXDim",
-                                                                        Constants.DEFAULT_SCENE_XDIM)),
-                Integer.parseInt(Structures.getProperties().getProperty("sceneYDim", "1024"))));
+        this.setPreferredSize(new Dimension(Integer.parseInt(Structures.getProperties()
+                .getProperty("sceneXDim", Constants.DEFAULT_SCENE_XDIM)), Integer.parseInt(Structures.getProperties()
+                .getProperty("sceneYDim", "1024"))));
         this.setBackground(Color.WHITE);
 
         // initialize grid properties
@@ -413,15 +391,6 @@ public class ScenePanel extends JPanel {
         // initialize scheme properties
         setSchemeAntialiased(true);
         setSchemeDebugged(false);
-
-        // add manipulation into ManipulationQueue
-        try {
-            ManipulationQueue mq = Structures.getManipulationQueue();
-            mq.offer(ManipulationFactory.create(ManipulationType.CREATE, new Line()));
-        } catch (UnknownManipulationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
         // initialize images
         this.grid = null;
@@ -475,83 +444,9 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method repaints correctly scene after change of point coordinates in {@link Create}
-     * manipulation.
-     */
-    @Deprecated
-    private void processActualCreateStep() {
-        logger.debug("pocessing actual manipulation step");
-
-        this.repaint();
-    }
-
-    /**
-     * This method processes final step for {@link Delete} manipulation. It is responsible for
-     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
-     * 
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    @Deprecated
-    private void processFinalDeleteStep() throws UnknownManipulationException {
-        logger.debug("processing final DELETE step");
-
-        // this is really not necessary, it is here only for possible future uses
-        Delete delete = (Delete) Structures.getManipulationQueue().peek();
-
-        schemeInvalidate(null);
-    }
-
-    /**
-     * Method used for correct finalization method selection.
-     * 
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    @Deprecated
-    public void processFinalManipulationStep() throws UnknownManipulationException {
-        Manipulation m = Structures.getManipulationQueue().peek();
-        ManipulationType mt = m.getManipulationType();
-
-        switch (mt) {
-            case CREATE:
-                break;
-            case DELETE:
-                processFinalDeleteStep();
-                break;
-            default:
-                processFinalSelectStep();
-                break;
-        }
-
-        // create new manipulation of the same type as previous
-        Structures.getManipulationQueue().offer(ManipulationFactory.duplicate(m));
-    }
-
-    /**
-     * This method processes final step for {@link Select} manipulation. It is responsible for
-     * {@link Element} finalization, {@link ScenePanel} redraw, etc.
-     * 
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation.
-     */
-    @Deprecated
-    private void processFinalSelectStep() throws UnknownManipulationException {
-        logger.trace("processing final SELECT step");
-
-        Select select = (Select) Structures.getManipulationQueue().peek();
-        select.setActive(true);
-
-        GroupNode gn = select.getManipulatedGroup();
-
-        schemeInvalidate(gn.getBounds());
-    }
-
-    /**
      * This method invalidates <code>scheme</code>.
      * 
-     * @param bounds
-     *            bounds of invalid region.
+     * @param bounds bounds of invalid region.
      */
     public void schemeInvalidate(UnitRectangle bounds) {
         this.schemeValid = false;
@@ -560,24 +455,21 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * @param gridValid
-     *            the gridValid to set
+     * @param gridValid the gridValid to set
      */
     public void setGridValid(boolean gridValid) {
         this.gridValid = gridValid;
     }
 
     /**
-     * @param gridVisible
-     *            the gridVisible to set
+     * @param gridVisible the gridVisible to set
      */
     public void setGridVisible(boolean gridVisible) {
         this.gridVisible = gridVisible;
     }
 
     /**
-     * @param schemeAntialiased
-     *            the schemeAntialiased to set
+     * @param schemeAntialiased the schemeAntialiased to set
      */
     public void setSchemeAntialiased(boolean schemeAntialiased) {
         this.schemeValid = false;
@@ -585,8 +477,7 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * @param schemeDebugged
-     *            the schemeAntialiased to set
+     * @param schemeDebugged the schemeAntialiased to set
      */
     public void setSchemeDebugged(boolean schemeDebugged) {
         this.schemeValid = false;
