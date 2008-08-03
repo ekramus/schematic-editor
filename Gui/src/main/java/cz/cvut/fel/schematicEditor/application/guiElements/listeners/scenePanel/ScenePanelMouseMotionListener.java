@@ -79,7 +79,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                 }
             }
         } catch (NullPointerException npe) {
-            logger.trace("No manipulation in manipulation queue");
+            logger.trace("No active manipulation");
         }
     }
 
@@ -94,8 +94,8 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
         m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-        // repaint scene
-        ScenePanel.getInstance().schemeInvalidate(null);
+        // repaint scene, it is much faster than full scene invalidate
+        ScenePanel.getInstance().repaint();
     }
 
     /**
@@ -109,7 +109,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
         m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-        // just repaint (it takes care of element in progress)
-        ScenePanel.getInstance().schemeInvalidate(null);
+        // repaint scene, it is much faster than full scene invalidate
+        ScenePanel.getInstance().repaint();
     }
 }
