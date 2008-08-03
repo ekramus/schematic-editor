@@ -119,9 +119,6 @@ public class Select extends Manipulation {
             if (groupNode.isHit(r2d)) {
                 logger.trace("object SELECTED");
 
-                // create new select object
-                // manipulationQueue.offer(ManipulationFactory.create(ManipulationType.SELECT));
-                // select = (Select) manipulationQueue.peek();
                 // activate selection
                 setActive(true);
                 // set selected group
