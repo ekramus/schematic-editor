@@ -27,10 +27,6 @@ public abstract class Manipulation {
      */
     private GroupNode     manipulatedGroup;
     /**
-     * Contains {@link Element} manipulated by {@link Manipulation}.
-     */
-    private Element       manipulatedElement;
-    /**
      * This field represents x coordinates of manipulated element.
      */
     private Vector<Unit>  x;
@@ -48,19 +44,19 @@ public abstract class Manipulation {
      * .
      */
     protected Manipulation() {
-        setManipulatedElement(null);
+        setManipulatedGroup(null);
 
         finalizeInit();
     }
 
     /**
-     * Constructor with {@link Element} parameter. It is private because of {@link Manipulation}s are created using
+     * Constructor with {@link GroupNode} parameter. It is protected because of {@link Manipulation}s are created using
      * {@link ManipulationFactory}.
      * 
-     * @param manipulatedElement {@link Element} to be manipulated.
+     * @param manipulatedGroup
      */
-    public Manipulation(Element manipulatedElement) {
-        setManipulatedElement(manipulatedElement);
+    protected Manipulation(GroupNode manipulatedGroup) {
+        setManipulatedGroup(manipulatedGroup);
 
         finalizeInit();
     }
@@ -96,19 +92,6 @@ public abstract class Manipulation {
 
         this.x = new Vector<Unit>();
         this.y = new Vector<Unit>();
-
-        setManipulatedGroup(null);
-    }
-
-    /**
-     * Getter for <code>manipulatedElement</code>.
-     * 
-     * @return the manipulatedElement
-     */
-    public Element getManipulatedElement() {
-        this.manipulatedElement.setX(getX());
-        this.manipulatedElement.setY(getY());
-        return this.manipulatedElement;
     }
 
     /**
@@ -153,6 +136,7 @@ public abstract class Manipulation {
      * 
      * @return <code>true</code>, if {@link Manipulation} manipulates elements, <code>false</code> else.
      */
+    @Deprecated
     public abstract boolean isManipulatingElements();
 
     /**
@@ -160,6 +144,7 @@ public abstract class Manipulation {
      * 
      * @return <code>true</code>, if {@link Manipulation} manipulates groups of elements, <code>false</code> else.
      */
+    @Deprecated
     public abstract boolean isManipulatingGroups();
 
     /**
@@ -205,13 +190,6 @@ public abstract class Manipulation {
      */
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    /**
-     * @param manipulatedElement the manipulatedElement to set
-     */
-    private void setManipulatedElement(Element manipulatedElement) {
-        this.manipulatedElement = manipulatedElement;
     }
 
     /**

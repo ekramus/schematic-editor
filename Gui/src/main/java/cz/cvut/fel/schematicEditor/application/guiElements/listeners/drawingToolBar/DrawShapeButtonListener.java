@@ -8,6 +8,9 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
@@ -48,8 +51,15 @@ public class DrawShapeButtonListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            // set active manipulation
-            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, getShape().newInstance());
+            // create group node for create manipulation
+            GroupNode gn = new GroupNode();
+            ParameterNode pn = new ParameterNode();
+            ShapeNode sn = new ShapeNode((Shape) getShape().newInstance());
+            gn.add(pn);
+            gn.add(sn);
+
+            // create active manipulation
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, gn);
             Structures.setActiveManipulation(m);
             logger.trace(Structures.getActiveManipulation());
 

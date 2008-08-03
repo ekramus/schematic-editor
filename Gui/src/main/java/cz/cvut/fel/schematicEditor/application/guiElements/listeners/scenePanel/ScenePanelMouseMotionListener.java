@@ -95,7 +95,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
         // repaint scene
-        ScenePanel.getInstance().repaint();
+        ScenePanel.getInstance().schemeInvalidate(null);
     }
 
     /**
@@ -110,6 +110,6 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
         // just repaint (it takes care of element in progress)
-        ScenePanel.getInstance().repaint();
+        ScenePanel.getInstance().schemeInvalidate(null);
     }
 }

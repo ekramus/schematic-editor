@@ -194,30 +194,6 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * Draws actual manipulated element onto <code>BufferedImage</code>.
-     * 
-     * @return <code>BufferedImage</code> with actual manipulated element.
-     * @throws UnknownManipulationException In case of unknown manipulation.
-     */
-    private BufferedImage drawManipulatedElement() throws UnknownManipulationException {
-        // create new manipulated element
-        BufferedImage manipulatedElement = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-        // prepare element
-        SceneGraph sg = new SceneGraph();
-        // this.manipulation.setManipulationCoordinates(getManipXCoord(), getManipYCoord());
-        GroupNode gn = Structures.getActiveManipulation().getManipulatedGroup();
-
-        sg.setTopNode(gn);
-
-        // try to draw elements using DisplayExport
-        DisplayExport de = DisplayExport.getExport();
-        de.export(sg, manipulatedElement);
-
-        return manipulatedElement;
-    }
-
-    /**
      * @return
      * @throws UnknownManipulationException In case of unknown manipulation.
      */
@@ -282,39 +258,24 @@ public class ScenePanel extends JPanel {
             Manipulation m = Structures.getActiveManipulation();
 
             // draw work element or group, if some is being manipulated.
-            if (m.isActive() && (m.isManipulatingElements() || m.isManipulatingGroups())) {
+            if (m.isActive()) {
                 BufferedImage manipulatedElement = null;
-                // manipulation manipulates with group
-                if (m.isManipulatingGroups()) {
-                    logger.trace("calling drawManipulatedGroup");
-                    manipulatedElement = drawManipulatedGroup();
-                }
-                // manipulation manipulates with single element
-                else if (m.isManipulatingElements()) {
-                    logger.trace("calling drawManipulatedElement");
-                    manipulatedElement = drawManipulatedElement();
-                }
-                // strange behavior, nevertheless, log it
-                else {
-                    logger.trace("no manipulated group, no manipulated element");
-                }
+                logger.trace("calling drawManipulatedGroup");
+                manipulatedElement = drawManipulatedGroup();
                 g2d.drawImage(manipulatedElement, 0, 0, null);
             }
 
-            // highlight manipulated group
-            if (m.isActive()) {
-                // draw frame around selected group
-                if (m.getManipulationType() == ManipulationType.SELECT) {
-                    logger.trace("selected element frame drawing");
-                    BufferedImage selectionFrame = drawSelectionFrame();
-                    g2d.drawImage(selectionFrame, 0, 0, null);
-                }
-                // draw frame around selected group
-                else if (m.getManipulationType() == ManipulationType.EDIT) {
-                    logger.trace("create element frame drawing");
-                    BufferedImage selectionFrame = drawEditFrame();
-                    g2d.drawImage(selectionFrame, 0, 0, null);
-                }
+            // draw frame around selected group
+            if (m.getManipulationType() == ManipulationType.SELECT) {
+                logger.trace("selected element frame drawing");
+                BufferedImage selectionFrame = drawSelectionFrame();
+                g2d.drawImage(selectionFrame, 0, 0, null);
+            }
+            // draw frame around edited group
+            else if (m.getManipulationType() == ManipulationType.EDIT) {
+                logger.trace("create element frame drawing");
+                BufferedImage selectionFrame = drawEditFrame();
+                g2d.drawImage(selectionFrame, 0, 0, null);
             }
         } catch (NullPointerException npe) {
             logger.trace("No manipultion in manipulation queue");

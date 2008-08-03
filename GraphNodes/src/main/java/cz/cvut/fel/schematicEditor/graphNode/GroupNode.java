@@ -8,8 +8,11 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.element.ElementModificator;
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.support.Transformation;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -460,5 +463,49 @@ public class GroupNode extends Node {
      */
     private LinkedList<TransformationNode> getChildrenTransformationList() {
         return this.childrenTransformationList;
+    }
+
+    /**
+     * Calculates number of coordinates used for construction of {@link GroupNode}.
+     * 
+     * @return
+     */
+    public int getNumberOfCoordinates() {
+        int result = 0;
+
+        for (ElementNode elementNode : getChildrenElementList()) {
+            result += elementNode.getElement().getNumberOfCoordinates();
+        }
+
+        return result;
+    }
+
+    /**
+     * Getter for {@link GroupNode} elements {@link ElementModificator}.
+     * 
+     * @return
+     */
+    public ElementModificator getElementModificator() {
+        ElementModificator result = ElementModificator.SYMMETRIC_ELEMENT;
+
+        for (ElementNode elementNode : getChildrenElementList()) {
+            result = result.or(elementNode.getElement().getElementModificator());
+        }
+
+        return result;
+    }
+
+    public void setElementModificator(ElementModificator elementModificator) {
+        for (ElementNode elementNode : getChildrenElementList()) {
+            elementNode.getElement().setElementModificator(elementModificator);
+        }
+    }
+
+    public void setXY(Vector<Unit> x, Vector<Unit> y) {
+        // TODO this implementation changes only coordinates for first element. Change it!
+        Element element = getChildrenElementList().getFirst().getElement();
+
+        element.setX(x);
+        element.setY(y);
     }
 }

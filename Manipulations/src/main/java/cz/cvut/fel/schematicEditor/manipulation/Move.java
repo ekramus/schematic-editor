@@ -49,6 +49,7 @@ public class Move extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
      */
     @Override
+    @Deprecated
     public boolean isManipulatingElements() {
         // TODO Auto-generated method stub
         return false;
@@ -60,6 +61,7 @@ public class Move extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Override
+    @Deprecated
     public boolean isManipulatingGroups() {
         // TODO Auto-generated method stub
         return true;

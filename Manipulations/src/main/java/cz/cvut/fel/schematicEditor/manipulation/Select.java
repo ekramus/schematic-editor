@@ -52,6 +52,7 @@ public class Select extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
      */
     @Override
+    @Deprecated
     public boolean isManipulatingElements() {
         return false;
     }
@@ -61,6 +62,7 @@ public class Select extends Manipulation {
      * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
+    @Deprecated
     @Override
     public boolean isManipulatingGroups() {
         // TODO Auto-generated method stub

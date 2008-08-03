@@ -65,13 +65,13 @@ public class Create extends Manipulation {
      * 
      * @param manipulatedElement {@link Element}, which will be created using this {@link Create} manipulation.
      */
-    protected Create(Element manipulatedElement) {
-        super(manipulatedElement);
+    protected Create(GroupNode manipulatedGroup) {
+        super(manipulatedGroup);
 
         logger = Logger.getLogger(this.getClass().getName());
 
         setFinished(false);
-        setPointsLeft(manipulatedElement.getNumberOfCoordinates());
+        setPointsLeft(getManipulatedGroup().getNumberOfCoordinates());
         setElementModificator(ElementModificator.NO_MODIFICATION);
         // TODO add info text into status bar
         // Structures.getStatusBar().setSizeLockingLabel("to enable size locking, press CTRL");
@@ -87,7 +87,22 @@ public class Create extends Manipulation {
             setPointsLeft(getPointsLeft() - 1);
         }
 
+        // update manipulated group coordinates
+        getManipulatedGroup().setXY(getX(), getY());
+
         logger.trace("added manipulation coordinates, points left: " + getPointsLeft());
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
+     */
+    @Override
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        super.replaceLastManipulationCoordinates(x, y);
+
+        // update manipulated group coordinates
+        getManipulatedGroup().setXY(getX(), getY());
     }
 
     /**
@@ -116,6 +131,7 @@ public class Create extends Manipulation {
      * @return
      */
     @Override
+    @Deprecated
     public boolean isManipulatingElements() {
         // TODO Auto-generated method stub
         return true;
@@ -127,21 +143,21 @@ public class Create extends Manipulation {
     @Override
     public boolean isManipulatingGroups() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     /**
      * @return the elementModificator
      */
     public ElementModificator getElementModificator() {
-        return getManipulatedElement().getElementModificator();
+        return getManipulatedGroup().getElementModificator();
     }
 
     /**
      * @param elementModificator the elementModificator to set
      */
     public void setElementModificator(ElementModificator elementModificator) {
-        getManipulatedElement().setElementModificator(elementModificator);
+        getManipulatedGroup().setElementModificator(elementModificator);
     }
 
     /**
@@ -163,7 +179,7 @@ public class Create extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Create c = new Create(getManipulatedElement().newInstance());
+        Create c = new Create((GroupNode) getManipulatedGroup().duplicate());
         return c;
     }
 
@@ -211,26 +227,11 @@ public class Create extends Manipulation {
 
         // finalize, if possible
         if (isFinished()) {
-            Element child = null;
-            GroupNode gn;
-            ShapeNode sn;
-            ParameterNode pn;
+            GroupNode gn = getManipulatedGroup();
 
             logger.debug("processing final manipulation step");
 
-            child = getManipulatedElement();
             setActive(false);
-
-            sn = new ShapeNode((Shape) child);
-            pn = new ParameterNode();
-
-            // pn.setProperties(Structures.getSceneProperties().getSceneElementProperties());
-
-            logger.debug("Nodes created");
-
-            gn = new GroupNode();
-            gn.add(pn);
-            gn.add(sn);
 
             groupNode.add(gn);
         }
@@ -262,6 +263,6 @@ public class Create extends Manipulation {
      */
     @Override
     public String toString() {
-        return "Create(" + getManipulatedElement() + ")";
+        return "Create(" + getManipulatedGroup() + ")";
     }
 }
