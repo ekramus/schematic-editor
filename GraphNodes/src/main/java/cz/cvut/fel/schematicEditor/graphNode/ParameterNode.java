@@ -44,7 +44,7 @@ public class ParameterNode extends Node {
     public ParameterNode() {
         this.setColor(Color.BLACK);
         this.setWidth(new Pixel(1));
-        this.setFill(null);
+        this.setFill(Color.WHITE);
     }
 
     /**

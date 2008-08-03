@@ -427,6 +427,8 @@ public class GroupNode extends Node {
         }
         result.setChildrenTransformationList(chTL);
 
+        logger.trace(result);
+
         return result;
     }
 
@@ -505,7 +507,7 @@ public class GroupNode extends Node {
         // TODO this implementation changes only coordinates for first element. Change it!
         Element element = getChildrenElementList().getFirst().getElement();
 
-        element.setX(x);
-        element.setY(y);
+        element.setX(new Vector<Unit>(x));
+        element.setY(new Vector<Unit>(y));
     }
 }

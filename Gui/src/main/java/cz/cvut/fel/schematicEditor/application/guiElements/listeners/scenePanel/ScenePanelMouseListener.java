@@ -18,6 +18,7 @@ import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -203,8 +204,14 @@ public class ScenePanelMouseListener implements MouseListener {
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation
         if (Structures.getActiveManipulation().manipulationEnd(e, r2d, manipulationQueue, topNode, isMouseClicked())) {
+            // execute manipulation
             manipulationQueue.execute(Structures.getActiveManipulation());
+
+            // redraw scheme
             ScenePanel.getInstance().schemeInvalidate(null);
+
+            // create new manipulation based on previous
+            Structures.setActiveManipulation(ManipulationFactory.duplicate(Structures.getActiveManipulation()));
         }
         // manipulation is not finished yet
         else {

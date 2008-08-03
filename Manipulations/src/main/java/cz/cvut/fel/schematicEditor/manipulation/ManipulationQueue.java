@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.util.LinkedList;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 
@@ -11,6 +13,10 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionE
  * @author Urban Kravjansky
  */
 public class ManipulationQueue {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger            logger;
     /**
      * Queue of {@link Manipulation}s.
      */
@@ -24,6 +30,8 @@ public class ManipulationQueue {
      * Default constructor. It is for initialization purposes.
      */
     public ManipulationQueue() {
+        logger = Logger.getLogger(this.getClass().getName());
+
         setManipulationQueue(new LinkedList<Manipulation>());
         setActiveManipulationIndex(0);
     }
@@ -53,6 +61,8 @@ public class ManipulationQueue {
 
             // execute manipulation
             activeManipulation.execute();
+
+            logger.trace("Manipulation executed: " + this);
         }
         // manipulation was null
         catch (NullPointerException e) {
@@ -64,36 +74,6 @@ public class ManipulationQueue {
         }
 
         return true;
-    }
-
-    /**
-     * Adds {@link Manipulation} at the end of {@link ManipulationQueue}.
-     * 
-     * @param manipulation {@link Manipulation} instance to add.
-     */
-    @Deprecated
-    private void add(Manipulation manipulation) {
-        // move index of active manipulation to the next one
-        setActiveManipulationIndex(getActiveManipulationIndex() + 1);
-
-        // there are manipulations, which are to be abandoned
-        if (getManipulationQueue().size() > getActiveManipulationIndex()) {
-            setManipulationQueue(new LinkedList<Manipulation>(getManipulationQueue()
-                    .subList(0, getActiveManipulationIndex() - 1)));
-        }
-
-        // add manipulation at the end of manipulation queue
-        getManipulationQueue().add(manipulation);
-    }
-
-    /**
-     * Gets {@link Manipulation} on active index position from the manipulation list.
-     * 
-     * @return Top {@link Manipulation} on waiting manipulations list.
-     */
-    @Deprecated
-    private Manipulation get() {
-        return getManipulationQueue().get(getActiveManipulationIndex());
     }
 
     /**
