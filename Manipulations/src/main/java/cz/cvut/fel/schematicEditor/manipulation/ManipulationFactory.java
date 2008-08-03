@@ -1,6 +1,6 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
-import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
@@ -10,8 +10,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  */
 public class ManipulationFactory {
     /**
-     * Default constructor, for future implementation purposes only. It is private to force static
-     * use only.
+     * Default constructor, for future implementation purposes only. It is private to force static use only.
      */
     private ManipulationFactory() {
         // nothing to do
@@ -20,11 +19,9 @@ public class ManipulationFactory {
     /**
      * Creates {@link Manipulation} according to given {@link ManipulationType}.
      * 
-     * @param type
-     *            type of manipulation.
+     * @param type type of manipulation.
      * @return {@link Manipulation} of correct {@link ManipulationType}.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation type.
+     * @throws UnknownManipulationException In case of unknown manipulation type.
      */
     public static Manipulation create(ManipulationType type) throws UnknownManipulationException {
         switch (type) {
@@ -44,19 +41,15 @@ public class ManipulationFactory {
     /**
      * Creates {@link Manipulation}, which needs additional data.
      * 
-     * @param type
-     *            type of manipulation.
-     * @param data
-     *            additional requested data.
+     * @param type type of manipulation.
+     * @param data additional requested data.
      * @return {@link Manipulation} of correct {@link ManipulationType}.
-     * @throws UnknownManipulationException
-     *             In case of unknown manipulation type.
+     * @throws UnknownManipulationException In case of unknown manipulation type.
      */
-    public static Manipulation create(ManipulationType type, Object data)
-            throws UnknownManipulationException {
+    public static Manipulation create(ManipulationType type, Object data) throws UnknownManipulationException {
         switch (type) {
             case CREATE:
-                return new Create((Element) data);
+                return new Create((GroupNode) data);
             default:
                 throw new UnknownManipulationException(type);
         }
