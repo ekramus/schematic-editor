@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -61,39 +60,15 @@ public abstract class Manipulation {
         finalizeInit();
     }
 
+    /**
+     * @param x
+     * @param y
+     */
     public void addManipulationCoordinates(Unit x, Unit y) {
         this.x.add(x);
         this.y.add(y);
 
         logger.trace("added manipulation coordinates");
-    }
-
-    /**
-     * Creates new instance of {@link Manipulation} by duplicating its values.
-     * 
-     * @return Duplicated instance of {@link Manipulation}.
-     */
-    protected abstract Manipulation duplicate();
-
-    /**
-     * Executes manipulation.
-     * 
-     * @param topNode top {@link GroupNode} of SceneGraph.
-     * 
-     * @throws ManipulationExecutionException in case of some error while executing manipulation.
-     */
-    protected abstract void execute(GroupNode topNode) throws ManipulationExecutionException;
-
-    /**
-     * Finalizes {@link Manipulation} initialization.
-     */
-    private void finalizeInit() {
-        logger = Logger.getLogger(this.getClass().getName());
-
-        setActive(false);
-
-        this.x = new Vector<Unit>();
-        this.y = new Vector<Unit>();
     }
 
     /**
@@ -109,20 +84,6 @@ public abstract class Manipulation {
      * @return Type of {@link Manipulation}.
      */
     public abstract ManipulationType getManipulationType();
-
-    /**
-     * @return the x
-     */
-    protected Vector<Unit> getX() {
-        return this.x;
-    }
-
-    /**
-     * @return the y
-     */
-    protected Vector<Unit> getY() {
-        return this.y;
-    }
 
     /**
      * Manipulation active state. If is manipulation active, it means, it is being currently processed.
@@ -201,6 +162,48 @@ public abstract class Manipulation {
         this.manipulatedGroup = manipulatedGroup;
     }
 
+    /**
+     * Finalizes {@link Manipulation} initialization.
+     */
+    private void finalizeInit() {
+        logger = Logger.getLogger(this.getClass().getName());
+
+        setActive(false);
+
+        this.x = new Vector<Unit>();
+        this.y = new Vector<Unit>();
+    }
+
+    /**
+     * Creates new instance of {@link Manipulation} by duplicating its values.
+     * 
+     * @return Duplicated instance of {@link Manipulation}.
+     */
+    protected abstract Manipulation duplicate();
+
+    /**
+     * Executes manipulation.
+     * 
+     * @param topNode top {@link GroupNode} of SceneGraph.
+     * 
+     * @throws ManipulationExecutionException in case of some error while executing manipulation.
+     */
+    protected abstract void execute(GroupNode topNode) throws ManipulationExecutionException;
+
+    /**
+     * @return the x
+     */
+    protected Vector<Unit> getX() {
+        return this.x;
+    }
+
+    /**
+     * @return the y
+     */
+    protected Vector<Unit> getY() {
+        return this.y;
+    }
+
     protected void setManipulationCoordinates(Vector<Unit> x, Vector<Unit> y) {
         this.x = x;
         this.y = y;
@@ -211,5 +214,5 @@ public abstract class Manipulation {
      * 
      * @throws ManipulationExecutionException in case of some error while removing manipulation.
      */
-    protected abstract void unexecute() throws ManipulationExecutionException;
+    protected abstract void unexecute(GroupNode topNode) throws ManipulationExecutionException;
 }

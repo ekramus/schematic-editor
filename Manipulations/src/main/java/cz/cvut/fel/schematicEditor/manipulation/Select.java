@@ -59,7 +59,7 @@ public class Select extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Deprecated
@@ -86,24 +86,25 @@ public class Select extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
     protected void execute(GroupNode topNode) throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
+        // activate selection
+        setActive(true);
+
         logger.trace(this + " executed");
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute() throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
-
+    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+        setActive(false);
     }
 
     /**
@@ -117,22 +118,12 @@ public class Select extends Manipulation {
         if (isMouseClicked) {
             // some group is hit
             if (groupNode.isHit(r2d)) {
-                logger.trace("object SELECTED");
+                logger.trace("object for SELECTION hitb");
 
-                // activate selection
-                setActive(true);
                 // set selected group
                 GroupNode gn = groupNode.findHit(r2d);
+
                 setManipulatedGroup(gn);
-
-                // ScenePanel.getInstance().schemeInvalidate(select.getManipulatedGroup().getBounds()
-                // );
-
-                // get parameter node and set properties panel according to it
-                ParameterNode pn = gn.getChildrenParameterNode();
-                // TODO ensure properties refresh
-                // Structures.getSceneProperties().setSelectedElementProperties(pn.getProperties());
-                // PropertiesToolBar.refresh();
             }
             // no group is hit
             else {

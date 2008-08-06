@@ -63,7 +63,7 @@ public class ManipulationQueue {
             // execute manipulation
             activeManipulation.execute(topNode);
 
-            logger.trace("Manipulation executed: " + this);
+            logger.trace("Manipulation executed:\n" + this);
         }
         // manipulation was null
         catch (NullPointerException e) {
@@ -122,9 +122,9 @@ public class ManipulationQueue {
 
         for (int i = 0; i < getManipulationQueue().size(); i++) {
             if (i == getActiveManipulationIndex()) {
-                buf += "<" + getManipulationQueue().get(i) + "> ";
+                buf += "<" + getManipulationQueue().get(i) + ">\n";
             } else {
-                buf += "[" + getManipulationQueue().get(i) + "] ";
+                buf += "[" + getManipulationQueue().get(i) + "]\n";
             }
         }
 
@@ -137,12 +137,12 @@ public class ManipulationQueue {
      * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution problems, else
      *         <code>true</code>.
      */
-    public boolean unexecute() {
+    public boolean unexecute(GroupNode topNode) {
         Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex());
 
         // try to unexecute manipulation
         try {
-            manipulation.unexecute();
+            manipulation.unexecute(topNode);
 
             // move index of active manipulation to the previous one
             setActiveManipulationIndex(getActiveManipulationIndex() - 1);

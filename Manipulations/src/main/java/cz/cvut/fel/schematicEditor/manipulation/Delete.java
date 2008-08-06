@@ -11,6 +11,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  * @author Urban Kravjansky
  */
 public class Delete extends Manipulation {
+    private GroupNode deleteNode;
 
     /**
      * @param manipulatedElement
@@ -66,19 +67,15 @@ public class Delete extends Manipulation {
      */
     @Override
     protected void execute(GroupNode topNode) throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
-
+        topNode.delete(getDeleteNode());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute(GroupNode)
      */
     @Override
-    protected void unexecute() throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
-
+    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+        topNode.add(getDeleteNode());
     }
 
     /**
@@ -86,13 +83,10 @@ public class Delete extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode groupNode,
+    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode topNode,
             boolean isMouseClicked) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
-            if (groupNode.deleteHit(r2d)) {
-                // TODO process final manipulation step
-                // ScenePanel.getInstance().processFinalManipulationStep();
-            }
+            setDeleteNode(topNode.findHit(r2d));
         }
         return true;
     }
@@ -105,5 +99,19 @@ public class Delete extends Manipulation {
     public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode gn,
             boolean isMouseClicked) throws UnknownManipulationException {
         setActive(true);
+    }
+
+    /**
+     * @param deleteNode the deleteNode to set
+     */
+    private void setDeleteNode(GroupNode deleteNode) {
+        this.deleteNode = deleteNode;
+    }
+
+    /**
+     * @return the deleteNode
+     */
+    private GroupNode getDeleteNode() {
+        return deleteNode;
     }
 }

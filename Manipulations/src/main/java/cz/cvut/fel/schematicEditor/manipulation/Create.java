@@ -203,7 +203,7 @@ public class Create extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    public void unexecute() throws ManipulationExecutionException {
+    public void unexecute(GroupNode topNode) throws ManipulationExecutionException {
         logger.trace(this + " unexecuted");
     }
 
