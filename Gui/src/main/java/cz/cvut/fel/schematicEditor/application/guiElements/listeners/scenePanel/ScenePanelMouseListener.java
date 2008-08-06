@@ -171,11 +171,11 @@ public class ScenePanelMouseListener implements MouseListener {
                         }
                         // left mouse button is clicked
                         else if (e.getButton() == MouseEvent.BUTTON1) {
-                            tryFinishManipulation(e, r2d, mq, topNode, true);
+                            ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
                         }
                         break;
                     case SELECT:
-                        tryFinishManipulation(e, r2d, mq, topNode, true);
+                        ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
                         break;
                     default:
                         break;
@@ -183,39 +183,10 @@ public class ScenePanelMouseListener implements MouseListener {
             }
             // mouse button was just released after drag
             else {
-                tryFinishManipulation(e, r2d, mq, topNode, false);
+                ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, false);
             }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
-        }
-    }
-
-    /**
-     * Tries to finish currently active manipulation.
-     * 
-     * @param e {@link MouseEvent} with coordinates.
-     * @param r2d Pointer rectangle.
-     * @param manipulationQueue Instance of {@link ManipulationQueue} containing all {@link Manipulation} instances.
-     * @param topNode Top node of {@link SceneGraph}.
-     * @param isMouseClicked Indicates, whether mouse clicked or just released.
-     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
-     */
-    private void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
-        // try to finish manipulation
-        if (Structures.getActiveManipulation().manipulationEnd(e, r2d, manipulationQueue, topNode, isMouseClicked())) {
-            // execute manipulation
-            manipulationQueue.execute(Structures.getActiveManipulation());
-
-            // redraw scheme
-            ScenePanel.getInstance().schemeInvalidate(null);
-
-            // create new manipulation based on previous
-            Structures.setActiveManipulation(ManipulationFactory.duplicate(Structures.getActiveManipulation()));
-        }
-        // manipulation is not finished yet
-        else {
-            logger.trace("Waiting for manipulation end");
         }
     }
 
