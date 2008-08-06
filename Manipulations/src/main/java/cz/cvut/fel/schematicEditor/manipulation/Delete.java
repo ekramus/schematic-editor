@@ -28,26 +28,6 @@ public class Delete extends Manipulation {
         return ManipulationType.DELETE;
     }
 
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
-     */
-    @Override
-    public boolean isManipulatingElements() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
-     */
-    @Override
-    public boolean isManipulatingGroups() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
     /*
      * (non-Javadoc)
      * 

@@ -129,25 +129,6 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @return
-     */
-    @Override
-    @Deprecated
-    public boolean isManipulatingElements() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
-     */
-    @Override
-    public boolean isManipulatingGroups() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    /**
      * @return the elementModificator
      */
     public ElementModificator getElementModificator() {
