@@ -461,7 +461,7 @@ public class ScenePanel extends JPanel {
         if (Structures.getActiveManipulation().manipulationEnd(e, r2d, manipulationQueue, getSchemeSG().getTopNode(),
                                                                isMouseClicked)) {
             // execute manipulation
-            manipulationQueue.execute(Structures.getActiveManipulation());
+            manipulationQueue.execute(Structures.getActiveManipulation(), getSchemeSG().getTopNode());
 
             // redraw scheme
             ScenePanel.getInstance().schemeInvalidate(null);

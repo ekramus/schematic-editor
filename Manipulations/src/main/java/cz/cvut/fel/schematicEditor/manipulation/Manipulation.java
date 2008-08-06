@@ -78,9 +78,11 @@ public abstract class Manipulation {
     /**
      * Executes manipulation.
      * 
+     * @param topNode top {@link GroupNode} of SceneGraph.
+     * 
      * @throws ManipulationExecutionException in case of some error while executing manipulation.
      */
-    protected abstract void execute() throws ManipulationExecutionException;
+    protected abstract void execute(GroupNode topNode) throws ManipulationExecutionException;
 
     /**
      * Finalizes {@link Manipulation} initialization.

@@ -90,7 +90,7 @@ public class Select extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute() throws ManipulationExecutionException {
+    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
         // TODO Auto-generated method stub
         logger.trace(this + " executed");
     }

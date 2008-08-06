@@ -62,10 +62,10 @@ public class Delete extends Manipulation {
     /*
      * (non-Javadoc)
      * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute(GroupNode)
      */
     @Override
-    protected void execute() throws ManipulationExecutionException {
+    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
         // TODO Auto-generated method stub
 
     }

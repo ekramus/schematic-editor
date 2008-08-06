@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -187,7 +188,14 @@ public class Create extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute() throws ManipulationExecutionException {
+    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
+        GroupNode gn = getManipulatedGroup();
+
+        logger.debug("processing final manipulation step");
+
+        setActive(false);
+
+        topNode.add(gn);
         logger.trace(this + " executed");
     }
 
@@ -205,7 +213,7 @@ public class Create extends Manipulation {
      */
     @Override
     public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
+            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
 
         Snap s = Snap.getInstance();
@@ -227,13 +235,13 @@ public class Create extends Manipulation {
 
         // finalize, if possible
         if (isFinished()) {
-            GroupNode gn = getManipulatedGroup();
-
-            logger.debug("processing final manipulation step");
-
-            setActive(false);
-
-            groupNode.add(gn);
+            // GroupNode gn = getManipulatedGroup();
+            //
+            // logger.debug("processing final manipulation step");
+            //
+            // setActive(false);
+            //
+            // topNode.add(gn);
         }
 
         return isFinished();

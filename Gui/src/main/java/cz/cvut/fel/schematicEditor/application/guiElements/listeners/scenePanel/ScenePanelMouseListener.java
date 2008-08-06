@@ -14,6 +14,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopu
 import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
@@ -164,6 +165,10 @@ public class ScenePanelMouseListener implements MouseListener {
                         if (e.getButton() == MouseEvent.BUTTON3) {
                             // element has infinite coordinates
                             if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
+                                JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                                popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                                logger.trace("Show right-click popup");
+                            } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
                                 JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
                                 popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
                                 logger.trace("Show right-click popup");
