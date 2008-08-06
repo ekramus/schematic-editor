@@ -77,7 +77,7 @@ public class Edit extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute() throws ManipulationExecutionException {
+    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
         // TODO Auto-generated method stub
 
     }

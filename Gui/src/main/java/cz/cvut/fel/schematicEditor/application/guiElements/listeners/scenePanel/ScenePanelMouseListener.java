@@ -182,6 +182,8 @@ public class ScenePanelMouseListener implements MouseListener {
                     case SELECT:
                         ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
                         break;
+                    case DELETE:
+                        ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
                     default:
                         break;
                 }

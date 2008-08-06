@@ -62,7 +62,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 }
             } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
                 logger.trace("UNexecuting...");
-                Structures.getManipulationQueue().unexecute();
+                Structures.getManipulationQueue().unexecute(ScenePanel.getInstance().getSchemeSG().getTopNode());
                 // ScenePanel.getInstance().processFinalManipulationStep();
             } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
                 logger.trace("REexecuting...");
