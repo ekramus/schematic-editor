@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.ElementFactory;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -70,10 +71,9 @@ public class ElementNode extends Node {
      * 
      * @param element
      */
-
-    // by strakz1 2007 07 25
     private void initialize(Element element) {
-        this.element = element;
+        // TODO complete rewrite
+        this.element = element.newInstance();
         if (element instanceof Rectangle) {
             this.elementType = ElementType.T_RECTANGLE;
         } else if (element instanceof Triangle) {
