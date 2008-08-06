@@ -106,7 +106,7 @@ public class Move extends Manipulation {
      *      GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.debug("object MOVED");
@@ -129,7 +129,7 @@ public class Move extends Manipulation {
 
             // schemeInvalidate(gn.getBounds());
         }
-        return true;
+        return this;
     }
 
     /**
@@ -139,7 +139,7 @@ public class Move extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq, GroupNode groupNode,
+    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq, GroupNode groupNode,
             boolean isMouseClicked) throws UnknownManipulationException {
         Snap s = Snap.getInstance();
 
@@ -160,5 +160,6 @@ public class Move extends Manipulation {
         else {
             // mq.add(ManipulationFactory.create(ManipulationType.SELECT));
         }
+        return this;
     }
 }

@@ -125,8 +125,10 @@ public class ScenePanelMouseListener implements MouseListener {
 
             Manipulation m = Structures.getActiveManipulation();
             if (!m.isActive()) {
-                m.manipulationStart(e, r2d, Structures.getManipulationQueue(), ScenePanel.getInstance().getSchemeSG()
-                        .getTopNode(), isMouseClicked());
+                // start manipulation and set result as active manipulation
+                Structures.setActiveManipulation(m.manipulationStart(e, r2d, Structures.getManipulationQueue(),
+                                                                     ScenePanel.getInstance().getSchemeSG()
+                                                                             .getTopNode(), isMouseClicked()));
             }
 
         } catch (UnknownManipulationException ume) {
@@ -180,10 +182,11 @@ public class ScenePanelMouseListener implements MouseListener {
                         }
                         break;
                     case SELECT:
+                    case DELETE:
+                    case EDIT:
+                    case MOVE:
                         ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
                         break;
-                    case DELETE:
-                        ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
                     default:
                         break;
                 }

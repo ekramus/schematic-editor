@@ -87,8 +87,8 @@ public class Edit extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode grouNode,
-            boolean isMouseClicked) throws UnknownManipulationException {
+    public Manipulation manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode grouNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             Snap s = Snap.getInstance();
 
@@ -107,7 +107,7 @@ public class Edit extends Manipulation {
             Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
             select.setManipulatedGroup(gn);
         }
-        return true;
+        return this;
     }
 
     /**
@@ -115,8 +115,8 @@ public class Edit extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode groupNode,
-            boolean isMouseClicked) throws UnknownManipulationException {
+    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         GroupNode gn = groupNode.findHit(r2d);
         Snap s = Snap.getInstance();
 
@@ -137,5 +137,7 @@ public class Edit extends Manipulation {
         else {
             // manipulationQueue.add(ManipulationFactory.create(ManipulationType.SELECT));
         }
+
+        return this;
     }
 }

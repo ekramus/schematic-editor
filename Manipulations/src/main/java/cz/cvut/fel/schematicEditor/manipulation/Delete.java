@@ -83,12 +83,12 @@ public class Delete extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode topNode,
-            boolean isMouseClicked) throws UnknownManipulationException {
+    public Manipulation manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
             setDeleteNode(topNode.findHit(r2d));
         }
-        return true;
+        return this;
     }
 
     /**
@@ -96,9 +96,11 @@ public class Delete extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode gn,
+    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode gn,
             boolean isMouseClicked) throws UnknownManipulationException {
         setActive(true);
+
+        return this;
     }
 
     /**

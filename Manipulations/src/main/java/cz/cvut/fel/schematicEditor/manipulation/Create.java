@@ -212,7 +212,7 @@ public class Create extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
 
@@ -244,7 +244,7 @@ public class Create extends Manipulation {
             // topNode.add(gn);
         }
 
-        return isFinished();
+        return isFinished() ? this : null;
     }
 
     /**
@@ -252,7 +252,7 @@ public class Create extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation START");
 
@@ -264,6 +264,8 @@ public class Create extends Manipulation {
         // add two pairs of coordinates (each element needs two)
         addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
         addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
+        return this;
     }
 
     /**
