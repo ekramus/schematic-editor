@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -443,5 +444,34 @@ public class ScenePanel extends JPanel {
     public void setSchemeDebugged(boolean schemeDebugged) {
         this.schemeValid = false;
         this.schemeDebugged = schemeDebugged;
+    }
+
+    /**
+     * Tries to finish currently active manipulation.
+     * 
+     * @param e {@link MouseEvent} with coordinates.
+     * @param r2d Pointer rectangle.
+     * @param manipulationQueue Instance of {@link ManipulationQueue} containing all {@link Manipulation} instances.
+     * @param isMouseClicked Indicates, whether mouse clicked or just released.
+     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
+     */
+    public void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            boolean isMouseClicked) throws UnknownManipulationException {
+        // try to finish manipulation
+        if (Structures.getActiveManipulation().manipulationEnd(e, r2d, manipulationQueue, getSchemeSG().getTopNode(),
+                                                               isMouseClicked)) {
+            // execute manipulation
+            manipulationQueue.execute(Structures.getActiveManipulation());
+
+            // redraw scheme
+            ScenePanel.getInstance().schemeInvalidate(null);
+
+            // create new manipulation based on previous
+            Structures.setActiveManipulation(ManipulationFactory.duplicate(Structures.getActiveManipulation()));
+        }
+        // manipulation is not finished yet
+        else {
+            logger.trace("Waiting for manipulation end");
+        }
     }
 }

@@ -60,13 +60,7 @@ public class EndElementMenuItemListener implements ActionListener {
         try {
             Create create = (Create) Structures.getActiveManipulation();
             create.setFinished(true);
-            if (create.manipulationEnd(getE(), getR2d(), Structures.getManipulationQueue(), ScenePanel.getInstance()
-                    .getSchemeSG().getTopNode(), false)) {
-                Structures.getManipulationQueue().execute(create);
-                ScenePanel.getInstance().schemeInvalidate(null);
-            } else {
-                logger.error("Error executing manipulation " + create);
-            }
+            ScenePanel.getInstance().tryFinishManipulation(getE(), getR2d(), Structures.getManipulationQueue(), false);
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
         }
