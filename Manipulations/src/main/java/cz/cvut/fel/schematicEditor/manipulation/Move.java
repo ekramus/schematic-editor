@@ -39,38 +39,15 @@ public class Move extends Manipulation {
 
     @Override
     protected Manipulation duplicate() {
-        Move m = new Move();
-        return m;
+        // Move cannot be duplicated, move is always dynamic. Instead, select is created.
+        Select s = new Select();
+        s.setManipulatedGroup(getManipulatedGroup());
+
+        return s;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
-     */
-    @Override
-    @Deprecated
-    public boolean isManipulatingElements() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
-     */
-    @Override
-    @Deprecated
-    public boolean isManipulatingGroups() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
+    /**
+     * @see Manipulation#execute(GroupNode)
      */
     @Override
     protected void execute(GroupNode topNode) throws ManipulationExecutionException {
@@ -120,14 +97,8 @@ public class Move extends Manipulation {
             // enable manipulated group
             gn.setDisabled(false);
 
-            // create select manipulation, so manipulation can proceed as select
-            Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
-            select.setManipulatedGroup(gn);
-
             // processing final manipulation step
             logger.trace("processing final SELECT step");
-
-            // schemeInvalidate(gn.getBounds());
         }
         return this;
     }

@@ -49,27 +49,6 @@ public class Select extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
-     */
-    @Override
-    @Deprecated
-    public boolean isManipulatingElements() {
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
-     */
-    @Deprecated
-    @Override
-    public boolean isManipulatingGroups() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
      */
     @Override

@@ -32,24 +32,6 @@ public class Edit extends Manipulation {
         return ManipulationType.EDIT;
     }
 
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingElements()
-     */
-    @Override
-    public boolean isManipulatingElements() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
-     */
-    @Override
-    public boolean isManipulatingGroups() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
     @Override
     protected Manipulation duplicate() {
         Edit e = new Edit();

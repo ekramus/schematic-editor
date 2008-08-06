@@ -95,22 +95,6 @@ public abstract class Manipulation {
     }
 
     /**
-     * Indicates, whether {@link Manipulation} manipulates elements.
-     * 
-     * @return <code>true</code>, if {@link Manipulation} manipulates elements, <code>false</code> else.
-     */
-    @Deprecated
-    public abstract boolean isManipulatingElements();
-
-    /**
-     * Indicates, whether {@link Manipulation} manipulates groups of elements.
-     * 
-     * @return <code>true</code>, if {@link Manipulation} manipulates groups of elements, <code>false</code> else.
-     */
-    @Deprecated
-    public abstract boolean isManipulatingGroups();
-
-    /**
      * Finishes everything at the end of manipulation correctly.
      * 
      * @param e {@link MouseEvent}, that invoked this method.
