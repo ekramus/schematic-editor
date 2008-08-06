@@ -510,4 +510,9 @@ public class GroupNode extends Node {
         element.setX(new Vector<Unit>(x));
         element.setY(new Vector<Unit>(y));
     }
+
+    public int getElementType() {
+        // TODO this implementation gets only element type for first element. Change it!
+        return getChildrenElementList().getFirst().getElement().getElementType();
+    }
 }

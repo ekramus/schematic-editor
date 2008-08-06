@@ -40,11 +40,12 @@ public class ManipulationQueue {
      * Executes given active manipulation.
      * 
      * @param activeManipulation {@link Manipulation} to be executed.
+     * @param topNode Top {@link GroupNode} of SceneGraph.
      * 
      * @return status of executed {@link Manipulation}. <code>false</code> in case of execution problems, else
      *         <code>true</code>.
      */
-    public boolean execute(Manipulation activeManipulation) {
+    public boolean execute(Manipulation activeManipulation, GroupNode topNode) {
         // try to add and execute manipulation
         try {
             // move index of active manipulation to the next one
@@ -60,7 +61,7 @@ public class ManipulationQueue {
             getManipulationQueue().add(activeManipulation);
 
             // execute manipulation
-            activeManipulation.execute();
+            activeManipulation.execute(topNode);
 
             logger.trace("Manipulation executed: " + this);
         }
@@ -79,10 +80,12 @@ public class ManipulationQueue {
     /**
      * Reexecutes (redoes) manipulation on active manipulation index position.
      * 
+     * @param topNode Top {@link GroupNode} of SceneGraph.
+     * 
      * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution problems, else
      *         <code>true</code>.
      */
-    public boolean reexecute() {
+    public boolean reexecute(GroupNode topNode) {
         // move index of active manipulation to the next one
         setActiveManipulationIndex(getActiveManipulationIndex() + 1);
 
@@ -96,7 +99,7 @@ public class ManipulationQueue {
 
         // try to reexecute manipulation
         try {
-            manipulation.execute();
+            manipulation.execute(topNode);
         }
         // manipulation was null
         catch (NullPointerException npe) {

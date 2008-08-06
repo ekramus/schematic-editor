@@ -73,7 +73,7 @@ public class Move extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute() throws ManipulationExecutionException {
+    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
         // compute delta
         int i = getX().size() - 2;
         Point2D delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().get(i).doubleValue(), getY()

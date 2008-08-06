@@ -62,7 +62,7 @@ public class Edit extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute() throws ManipulationExecutionException {
+    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
         // compute delta
         Point2D delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().firstElement().doubleValue(),
                 getY().lastElement().doubleValue() - getY().firstElement().doubleValue());
