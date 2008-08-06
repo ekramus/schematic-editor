@@ -458,8 +458,9 @@ public class ScenePanel extends JPanel {
     public void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation
-        if (Structures.getActiveManipulation().manipulationEnd(e, r2d, manipulationQueue, getSchemeSG().getTopNode(),
-                                                               isMouseClicked)) {
+        Manipulation m = Structures.getActiveManipulation().manipulationEnd(e, r2d, manipulationQueue,
+                                                                            getSchemeSG().getTopNode(), isMouseClicked);
+        if (m != null) {
             // execute manipulation
             manipulationQueue.execute(Structures.getActiveManipulation(), getSchemeSG().getTopNode());
 

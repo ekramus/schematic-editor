@@ -118,11 +118,12 @@ public abstract class Manipulation {
      * @param manipulationQueue used for {@link Manipulation} history and execution.
      * @param gn TopNode of SchemeSG.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
-     * @return <code>true</code>, if manipulation ended, <code>false</code> else.
+     * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
-    public abstract boolean manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException;
+    public abstract Manipulation manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
+            throws UnknownManipulationException;
 
     /**
      * Initializes all necessary structures at the beginning of manipulation correctly.
@@ -134,8 +135,9 @@ public abstract class Manipulation {
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
-    public abstract void manipulationStart(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException;
+    public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D.Double r2d,
+            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
+            throws UnknownManipulationException;
 
     public void replaceLastManipulationCoordinates(Unit x, Unit y) {
         try {

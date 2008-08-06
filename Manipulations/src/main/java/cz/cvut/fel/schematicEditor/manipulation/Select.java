@@ -59,7 +59,7 @@ public class Select extends Manipulation {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#isManipulatingGroups()
      */
     @Deprecated
@@ -77,16 +77,15 @@ public class Select extends Manipulation {
         Select s = new Select();
 
         // duplicate parameters
-        s.setActive(isActive());
+        // s.setActive(isActive());
         s.setManipulatedGroup(getManipulatedGroup());
-        // s.setManipulationCoordinates(getX(), getY());
 
         return s;
     }
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute()
      */
     @Override
@@ -99,7 +98,7 @@ public class Select extends Manipulation {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
@@ -112,8 +111,8 @@ public class Select extends Manipulation {
      *      ManipulationQueue, boolean)
      */
     @Override
-    public boolean manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode groupNode,
-            boolean isMouseClicked) throws UnknownManipulationException {
+    public Manipulation manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         // mouse clicked and hit something
         if (isMouseClicked) {
             // some group is hit
@@ -130,7 +129,7 @@ public class Select extends Manipulation {
                 // nothing to do
             }
         }
-        return true;
+        return this;
     }
 
     /**
@@ -138,8 +137,9 @@ public class Select extends Manipulation {
      *      ManipulationQueue, boolean)
      */
     @Override
-    public void manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode groupNode,
-            boolean isMouseClick) throws UnknownManipulationException {
+    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+            GroupNode groupNode, boolean isMouseClick) throws UnknownManipulationException {
+        Manipulation result = this;
 
         // select is active AND GroupNode is already selected
         if (groupNode.findHit(r2d) == getManipulatedGroup()) {
@@ -152,10 +152,13 @@ public class Select extends Manipulation {
 
                 // continue with edit manipulation start
                 edit.manipulationStart(e, r2d, manipulationQueue, groupNode, isMouseClick);
+
+                result = edit;
             }
             // select is in rotate active zone
             else if (getManipulatedGroup().isRotateZone(r2d)) {
                 // TODO implement rotate active zone
+                result = null;
             }
             // select can be used for move
             else {
@@ -167,8 +170,9 @@ public class Select extends Manipulation {
                 move.setActive(true);
 
                 // continue with move manipulation start
-                move.manipulationStart(e, r2d, manipulationQueue, groupNode, isMouseClick);
+                result = move.manipulationStart(e, r2d, manipulationQueue, groupNode, isMouseClick);
             }
         }
+        return result;
     }
 }
