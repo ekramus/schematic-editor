@@ -59,11 +59,11 @@ public class Delete extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationEnd(MouseEvent, Rectangle2D.Double,
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D.Double,
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStop(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
             setDeleteNode(topNode.findHit(r2d));

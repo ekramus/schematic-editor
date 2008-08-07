@@ -105,7 +105,7 @@ public abstract class Manipulation {
      * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
-    public abstract Manipulation manipulationEnd(MouseEvent e, Rectangle2D.Double r2d,
+    public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D.Double r2d,
             ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
             throws UnknownManipulationException;
 

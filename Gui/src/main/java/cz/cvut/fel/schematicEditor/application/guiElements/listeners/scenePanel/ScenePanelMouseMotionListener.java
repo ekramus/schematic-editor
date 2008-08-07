@@ -47,13 +47,14 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             Manipulation m = Structures.getActiveManipulation();
             ManipulationType mt = m.getManipulationType();
 
-            // manipulation is create
-            if (mt == ManipulationType.CREATE) {
-                createMouseMoved(m, e);
-            }
-            // manipulation is MOVE
-            else if (mt == ManipulationType.MOVE) {
-                moveMouseMoved(m, e);
+            // manipulation is active
+            if (m.isActive()) {
+                Snap s = Snap.getInstance();
+
+                m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
+                // repaint scene, it is much faster than full scene invalidate
+                ScenePanel.getInstance().repaint();
             }
         } catch (NullPointerException npe) {
             logger.trace("No manipulation in manipulation queue");
@@ -73,50 +74,15 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
             // manipulation is active
             if (m.isActive()) {
-                // manipulation is create
-                switch (m.getManipulationType()) {
-                    case CREATE:
-                        createMouseMoved(m, e);
-                        break;
-                    case MOVE:
-                        moveMouseMoved(m, e);
-                        break;
-                    default:
-                        break;
-                }
+                Snap s = Snap.getInstance();
+
+                m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+
+                // repaint scene, it is much faster than full scene invalidate
+                ScenePanel.getInstance().repaint();
             }
         } catch (NullPointerException npe) {
             logger.trace("No active manipulation");
         }
-    }
-
-    /**
-     * MouseMoved part specific for {@link Create} manipulation.
-     * 
-     * @param m {@link Manipulation} to be modified.
-     * @param e {@link MouseEvent} containing coordinates to be added.
-     */
-    private void createMouseMoved(Manipulation m, MouseEvent e) {
-        Snap s = Snap.getInstance();
-
-        m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-        // repaint scene, it is much faster than full scene invalidate
-        ScenePanel.getInstance().repaint();
-    }
-
-    /**
-     * MouseMoved part specific for {@link Move} manipulation.
-     * 
-     * @param m {@link Manipulation} to be modified.
-     * @param e {@link MouseEvent} containing coordinates to be added.
-     */
-    private void moveMouseMoved(Manipulation m, MouseEvent e) {
-        Snap s = Snap.getInstance();
-
-        m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-        // repaint scene, it is much faster than full scene invalidate
-        ScenePanel.getInstance().repaint();
     }
 }

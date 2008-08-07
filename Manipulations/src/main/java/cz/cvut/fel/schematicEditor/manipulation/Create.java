@@ -189,11 +189,11 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationEnd(MouseEvent, Rectangle2D.Double,
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D.Double,
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationEnd(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStop(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
 

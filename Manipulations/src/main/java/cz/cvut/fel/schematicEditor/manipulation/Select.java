@@ -90,7 +90,7 @@ public class Select extends Manipulation {
      *      ManipulationQueue, boolean)
      */
     @Override
-    public Manipulation manipulationEnd(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStop(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
             GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         // mouse clicked and hit something
         if (isMouseClicked) {
@@ -123,7 +123,7 @@ public class Select extends Manipulation {
         // select is active AND GroupNode is already selected
         if (groupNode.findHit(r2d) == getManipulatedGroup()) {
             // select is in edit active zone
-            if (getManipulatedGroup().startEditing(r2d)) {
+            if (getManipulatedGroup().startEdit(r2d)) {
                 // create Edit manipulation
                 Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT);
                 edit.setManipulatedGroup(getManipulatedGroup());

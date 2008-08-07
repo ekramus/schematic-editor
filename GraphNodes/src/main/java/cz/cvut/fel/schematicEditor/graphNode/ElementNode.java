@@ -146,12 +146,12 @@ public class ElementNode extends Node {
         return element.isHit(point);
     }
 
-    protected boolean startEditing(Rectangle2D.Double point) {
+    protected boolean startEdit(Rectangle2D.Double point) {
         if (isDisabled()) {
             return false;
         }
         setEdited(true);
-        return getElement().startEditing(point);
+        return getElement().startEdit(point);
     }
 
     /**
@@ -171,10 +171,19 @@ public class ElementNode extends Node {
     /**
      * 
      */
-    protected void stopEditing(UnitPoint delta) {
+    protected void stopEdit(UnitPoint delta) {
         if (isEdited()) {
-            getElement().stopEditing(delta);
+            getElement().stopEdit(delta);
             setEdited(false);
+        }
+    }
+
+    /**
+     * 
+     */
+    protected void switchEdit(UnitPoint delta) {
+        if (isEdited()) {
+            getElement().switchEdit(delta);
         }
     }
 

@@ -327,7 +327,7 @@ public class GroupNode extends Node {
      * @param r2d rectangle around pointer.
      * @return <code>true</code> if given rectangle contains any edit point from group, else <code>false</code>.
      */
-    public boolean startEditing(Rectangle2D.Double r2d) {
+    public boolean startEdit(Rectangle2D.Double r2d) {
         if (isDisabled()) {
             return false;
         }
@@ -335,14 +335,14 @@ public class GroupNode extends Node {
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.startEditing(getTransformation().shiftInverse(r2d))) {
+            if (child.startEdit(getTransformation().shiftInverse(r2d))) {
                 logger.debug("element edit zone HIT: " + child + " transformation: " + getTransformation());
                 return true;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            if (child.startEditing(r2d)) {
+            if (child.startEdit(r2d)) {
                 return true;
             }
         }
@@ -381,19 +381,41 @@ public class GroupNode extends Node {
     /**
      * @param ep
      */
-    public void stopEditing(UnitPoint delta) {
+    public void stopEdit(UnitPoint delta) {
         if (isEdited()) {
             for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
                 ElementNode child = getChildrenElementList().get(i);
                 if (child.isEdited()) {
-                    child.stopEditing(delta);
+                    child.stopEdit(delta);
                     return;
                 }
             }
             for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
                 GroupNode child = getChildrenGroupList().get(i);
                 if (child.isEdited()) {
-                    child.stopEditing(delta);
+                    child.stopEdit(delta);
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param ep
+     */
+    public void switchEdit(UnitPoint delta) {
+        if (isEdited()) {
+            for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
+                ElementNode child = getChildrenElementList().get(i);
+                if (child.isEdited()) {
+                    child.switchEdit(delta);
+                    return;
+                }
+            }
+            for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
+                GroupNode child = getChildrenGroupList().get(i);
+                if (child.isEdited()) {
+                    child.switchEdit(delta);
                     return;
                 }
             }
