@@ -141,7 +141,7 @@ public class Select extends Manipulation {
             }
             // select can be used for move
             else {
-                // logger.trace("creating MOVE manipulation");
+                logger.trace("creating MOVE manipulation");
 
                 // create Move manipulation
                 Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE);

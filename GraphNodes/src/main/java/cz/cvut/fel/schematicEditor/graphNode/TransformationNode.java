@@ -45,7 +45,7 @@ public class TransformationNode extends Node {
      */
     @Override
     public String toString() {
-        return id + " [TransformationNode]";
+        return id + " [TransformationNode: " + getTransformation() + "]";
     }
 
     /**
