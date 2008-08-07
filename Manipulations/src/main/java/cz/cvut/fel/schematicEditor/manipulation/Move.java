@@ -9,12 +9,14 @@ import javax.swing.RepaintManager;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 public class Move extends Manipulation {
     /**
@@ -92,11 +94,6 @@ public class Move extends Manipulation {
 
             replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-            GroupNode gn = getManipulatedGroup();
-
-            // enable manipulated group
-            gn.setDisabled(false);
-
             // processing final manipulation step
             logger.trace("processing final SELECT step");
         }
@@ -110,27 +107,56 @@ public class Move extends Manipulation {
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq, GroupNode groupNode,
+    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq, GroupNode topNode,
             boolean isMouseClicked) throws UnknownManipulationException {
         Snap s = Snap.getInstance();
 
         // check, whether move is possible or not
-        if (isActive() && getManipulatedGroup() == groupNode.findHit(r2d)) {
+        if (isActive() && getManipulatedGroup() == topNode.findHit(r2d)) {
             // add identity transformation, so it can be later changed
-            groupNode.add(new TransformationNode(Transformation.getIdentity()));
+            getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
             addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
             addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-
-            // set manipulated group disabled
-            groupNode.setDisabled(true);
-            // ScenePanel.getInstance().schemeInvalidate(gn.getBounds());
         }
         // move is not possible - fall back to Select manipulation
         else {
-            // mq.add(ManipulationFactory.create(ManipulationType.SELECT));
+            // nothing to do
         }
         return this;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
+     */
+    @Override
+    public void addManipulationCoordinates(Unit x, Unit y) {
+        super.addManipulationCoordinates(x, y);
+
+        Point2D.Double delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().firstElement()
+                .doubleValue(), getY().lastElement().doubleValue() - getY().firstElement().doubleValue());
+        Transformation t = Transformation.getShift(delta.getX(), delta.getY());
+        TransformationNode tn = new TransformationNode(t);
+
+        getManipulatedGroup().removeLastTransformation();
+        getManipulatedGroup().add(tn);
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
+     */
+    @Override
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        super.replaceLastManipulationCoordinates(x, y);
+
+        Point2D.Double delta = new Point2D.Double(getX().lastElement().doubleValue() - getX().firstElement()
+                .doubleValue(), getY().lastElement().doubleValue() - getY().firstElement().doubleValue());
+        Transformation t = Transformation.getShift(delta.getX(), delta.getY());
+        TransformationNode tn = new TransformationNode(t);
+
+        getManipulatedGroup().removeLastTransformation();
+        getManipulatedGroup().add(tn);
     }
 }

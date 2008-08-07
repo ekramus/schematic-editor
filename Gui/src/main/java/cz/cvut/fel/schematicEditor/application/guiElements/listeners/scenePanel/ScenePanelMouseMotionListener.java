@@ -74,8 +74,15 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             // manipulation is active
             if (m.isActive()) {
                 // manipulation is create
-                if (m.getManipulationType() == ManipulationType.CREATE) {
-                    createMouseMoved(m, e);
+                switch (m.getManipulationType()) {
+                    case CREATE:
+                        createMouseMoved(m, e);
+                        break;
+                    case MOVE:
+                        moveMouseMoved(m, e);
+                        break;
+                    default:
+                        break;
                 }
             }
         } catch (NullPointerException npe) {

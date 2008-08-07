@@ -70,7 +70,8 @@ public class GroupNode extends Node {
             // System.out.println("Adding element node: " + child.toString());
             this.childrenElementList.add((ElementNode) child);
         } else if (child instanceof TransformationNode) {
-            // System.out.println("Adding transformation node: " + child.toString());
+            logger.trace("Adding transformation node: " + child.toString());
+            logger.trace("List of transformation nodes: " + child);
             this.childrenTransformationList.add((TransformationNode) child);
         } else if (child instanceof ParameterNode) {
             // System.out.println("Adding parameter node: " + child.toString());

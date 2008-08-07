@@ -82,9 +82,6 @@ public class Edit extends Manipulation {
             // get manipulated group
             GroupNode gn = getManipulatedGroup();
 
-            // enable manipulated group
-            gn.setDisabled(false);
-
             // create select manipulation, so manipulation can proceed as select
             Select select = (Select) ManipulationFactory.create(ManipulationType.SELECT);
             select.setManipulatedGroup(gn);
@@ -111,13 +108,10 @@ public class Edit extends Manipulation {
             addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
             addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
 
-            // set manipulated group disabled
-            gn.setDisabled(true);
-            // ScenePanel.getInstance().schemeInvalidate(gn.getBounds());
         }
         // move is not possible - fall back to Select manipulation
         else {
-            // manipulationQueue.add(ManipulationFactory.create(ManipulationType.SELECT));
+            // nothing to do
         }
 
         return this;
