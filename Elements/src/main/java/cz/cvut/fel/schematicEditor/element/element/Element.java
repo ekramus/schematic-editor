@@ -29,6 +29,7 @@ public abstract class Element {
      * Index of edited point.
      */
     private int                editedPointIndex     = 0;
+    private UnitPoint          editedPointOriginalValue;
 
     protected Vector<Unit>     x;
     protected Vector<Unit>     y;
@@ -47,10 +48,8 @@ public abstract class Element {
     /**
      * This is the constructor.
      * 
-     * @param x
-     *            Vector of x coordinates.
-     * @param y
-     *            Vecotr of y coordinates.
+     * @param x Vector of x coordinates.
+     * @param y Vecotr of y coordinates.
      */
     public Element(Vector<Unit> x, Vector<Unit> y) {
         this.x = x;
@@ -104,8 +103,7 @@ public abstract class Element {
     /**
      * This method indicates, whether given point hits this element.
      * 
-     * @param point
-     *            hit point to check.
+     * @param point hit point to check.
      * @return Status of hit.
      */
     public abstract boolean isHit(Rectangle2D.Double r2d);
@@ -113,11 +111,13 @@ public abstract class Element {
     /**
      * Indicates, whether given rectangle is in edit zone or not.
      */
-    public boolean startEditing(Rectangle2D.Double r2d) {
+    public boolean startEdit(Rectangle2D.Double r2d) {
         for (int i = 0; i < getX().size(); i++) {
             Point2D.Double p = new Point2D.Double(getX().elementAt(i).doubleValue(), getY().elementAt(i).doubleValue());
             if (r2d.contains(p)) {
                 setEditedPointIndex(i);
+                setEditedPointOriginalValue(new UnitPoint(getX().get(getEditedPointIndex()), getY()
+                        .get(getEditedPointIndex())));
                 return true;
             }
         }
@@ -143,8 +143,7 @@ public abstract class Element {
     }
 
     /**
-     * @param elementModificator
-     *            the elementModificator to set
+     * @param elementModificator the elementModificator to set
      */
     public void setElementModificator(ElementModificator elementModificator) {
         this.elementModificator = elementModificator;
@@ -155,9 +154,9 @@ public abstract class Element {
     /**
      * @param delta
      */
-    public void stopEditing(UnitPoint delta) {
-        double x = getX().get(getEditedPointIndex()).doubleValue();
-        double y = getY().get(getEditedPointIndex()).doubleValue();
+    public void stopEdit(UnitPoint delta) {
+        double x = getEditedPointOriginalValue().getX();
+        double y = getEditedPointOriginalValue().getY();
 
         x += delta.getX();
         y += delta.getY();
@@ -166,6 +165,21 @@ public abstract class Element {
         getY().set(getEditedPointIndex(), new Pixel(y));
 
         setEditedPointIndex(-1);
+        setEditedPointOriginalValue(null);
+    }
+
+    /**
+     * @param delta
+     */
+    public void switchEdit(UnitPoint delta) {
+        double x = getEditedPointOriginalValue().getX();
+        double y = getEditedPointOriginalValue().getY();
+
+        x += delta.getX();
+        y += delta.getY();
+
+        getX().set(getEditedPointIndex(), new Pixel(x));
+        getY().set(getEditedPointIndex(), new Pixel(y));
     }
 
     /**
@@ -176,11 +190,24 @@ public abstract class Element {
     }
 
     /**
-     * @param editedPointIndex
-     *            the editedPointIndex to set
+     * @param editedPointIndex the editedPointIndex to set
      */
     private void setEditedPointIndex(int editedPointIndex) {
         this.editedPointIndex = editedPointIndex;
+    }
+
+    /**
+     * @param editedPointOriginalValue the editedPointOriginalValue to set
+     */
+    private void setEditedPointOriginalValue(UnitPoint editedPointOriginalValue) {
+        this.editedPointOriginalValue = editedPointOriginalValue;
+    }
+
+    /**
+     * @return the editedPointOriginalValue
+     */
+    private UnitPoint getEditedPointOriginalValue() {
+        return editedPointOriginalValue;
     }
 
 }
