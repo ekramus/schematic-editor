@@ -189,11 +189,25 @@ public class Create extends Manipulation {
         logger.trace(this + " executed");
     }
 
+    @Override
+    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+        // if manipulated group was disabled by previous undo
+        if (getManipulatedGroup().isDisabled()) {
+            topNode.undelete(getManipulatedGroup());
+        }
+        // if redo is executed at the end of ManipulationQueue
+        else {
+            execute(topNode);
+        }
+    }
+
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    public void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+        topNode.delete(getManipulatedGroup());
+
         logger.trace(this + " unexecuted");
     }
 

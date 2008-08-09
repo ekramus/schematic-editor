@@ -50,12 +50,17 @@ public class Delete extends Manipulation {
         topNode.delete(getDeleteNode());
     }
 
+    @Override
+    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+        topNode.delete(getDeleteNode());
+    }
+
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute(GroupNode)
      */
     @Override
     protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.add(getDeleteNode());
+        topNode.undelete(getDeleteNode());
     }
 
     /**
