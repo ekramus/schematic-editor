@@ -173,6 +173,10 @@ public class Move extends Manipulation {
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
+        // there is some manipulated group
+        if (getManipulatedGroup() != null) {
+            s.setActive(true);
+        }
 
         return s;
     }
@@ -203,7 +207,6 @@ public class Move extends Manipulation {
      */
     @Override
     protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
-
+        getManipulatedGroup().removeLastTransformation();
     }
 }

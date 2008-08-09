@@ -13,13 +13,11 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -124,7 +122,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                     Constants.POINT_SIZE);
 
             Manipulation m = Structures.getActiveManipulation();
-            if (!m.isActive()) {
+            if (!m.isActive() || m.getManipulationType() == ManipulationType.SELECT) {
                 // start manipulation and set result as active manipulation
                 Structures.setActiveManipulation(m.manipulationStart(e, r2d, Structures.getManipulationQueue(),
                                                                      ScenePanel.getInstance().getSchemeSG()

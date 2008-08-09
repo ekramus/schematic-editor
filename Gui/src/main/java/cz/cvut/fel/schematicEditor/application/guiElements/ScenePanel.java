@@ -255,19 +255,19 @@ public class ScenePanel extends JPanel {
                 logger.trace("calling drawManipulatedGroup");
                 manipulatedElement = drawManipulatedGroup();
                 g2d.drawImage(manipulatedElement, 0, 0, null);
-            }
 
-            // draw frame around selected group
-            if (m.getManipulationType() == ManipulationType.SELECT) {
-                logger.trace("selected element frame drawing");
-                BufferedImage selectionFrame = drawSelectionFrame();
-                g2d.drawImage(selectionFrame, 0, 0, null);
-            }
-            // draw frame around edited group
-            else if (m.getManipulationType() == ManipulationType.EDIT) {
-                logger.trace("create element frame drawing");
-                BufferedImage selectionFrame = drawEditFrame();
-                g2d.drawImage(selectionFrame, 0, 0, null);
+                // draw frame around selected group
+                if (m.getManipulationType() == ManipulationType.SELECT) {
+                    logger.trace("selected element frame drawing");
+                    BufferedImage selectionFrame = drawSelectionFrame();
+                    g2d.drawImage(selectionFrame, 0, 0, null);
+                }
+                // draw frame around edited group
+                else if (m.getManipulationType() == ManipulationType.EDIT) {
+                    logger.trace("create element frame drawing");
+                    BufferedImage selectionFrame = drawEditFrame();
+                    g2d.drawImage(selectionFrame, 0, 0, null);
+                }
             }
         } catch (NullPointerException npe) {
             logger.trace("No manipultion in manipulation queue");

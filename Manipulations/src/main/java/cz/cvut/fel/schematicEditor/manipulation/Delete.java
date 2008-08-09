@@ -52,7 +52,10 @@ public class Delete extends Manipulation {
 
     @Override
     protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.delete(getDeleteNode());
+        // top node is not deleted
+        if (!getDeleteNode().isDisabled()) {
+            topNode.delete(getDeleteNode());
+        }
     }
 
     /**

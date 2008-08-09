@@ -64,8 +64,15 @@ public class ScenePanelKeyListener implements KeyListener {
             // CTRL + Z
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
                 logger.trace("UNexecuting...");
+
+                // unexecute manipulation
                 Structures.getManipulationQueue().unexecute(ScenePanel.getInstance().getSchemeSG().getTopNode());
+
+                // invalidate scheme
                 ScenePanel.getInstance().schemeInvalidate(null);
+
+                // add manipulation before unexecuted manipulation as activeManipulation
+                Structures.setActiveManipulation(Structures.getManipulationQueue().getActiveManipulation());
             }
             // CTRL + Y
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
@@ -77,7 +84,8 @@ public class ScenePanelKeyListener implements KeyListener {
                 // invalidate scheme
                 ScenePanel.getInstance().schemeInvalidate(null);
 
-                // TODO add reexecuted manipulation as activeManipulation
+                // add reexecuted manipulation as activeManipulation
+                Structures.setActiveManipulation(Structures.getManipulationQueue().getActiveManipulation());
             }
             // DEL or BACKSPACE
             else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {

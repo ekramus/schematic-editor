@@ -56,8 +56,12 @@ public class Select extends Manipulation {
         Select s = new Select();
 
         // duplicate parameters
-        // s.setActive(isActive());
         s.setManipulatedGroup(getManipulatedGroup());
+
+        // there is some manipulated group
+        if (getManipulatedGroup() != null) {
+            s.setActive(true);
+        }
 
         return s;
     }

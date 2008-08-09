@@ -120,7 +120,13 @@ public class Edit extends Manipulation {
     protected Manipulation createNext() {
         // create next manipulation after edit.
         Select s = new Select();
+
+        // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
+        // there is some manipulated group
+        if (getManipulatedGroup() != null) {
+            s.setActive(true);
+        }
 
         return s;
     }
@@ -159,8 +165,17 @@ public class Edit extends Manipulation {
      */
     @Override
     protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        // TODO Auto-generated method stub
+        Element e = getManipulatedGroup().getEditedElement();
 
+        if (e != null) {
+            int i = e.getEditedPointIndex();
+            if (i != -1) {
+                Pixel x = new Pixel(e.getX().get(i).doubleValue() - getDelta().getX());
+                Pixel y = new Pixel(e.getY().get(i).doubleValue() - getDelta().getY());
+                e.getX().set(i, x);
+                e.getY().set(i, y);
+            }
+        }
     }
 
     /**
