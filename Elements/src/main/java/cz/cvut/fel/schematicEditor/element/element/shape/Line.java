@@ -25,10 +25,8 @@ public class Line extends Polyline {
     /**
      * This is constructor.
      * 
-     * @param a
-     *            starting point.
-     * @param b
-     *            ending point.
+     * @param a starting point.
+     * @param b ending point.
      */
     public Line(UnitPoint a, UnitPoint b) {
         super();
@@ -49,6 +47,7 @@ public class Line extends Polyline {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#getElementType()
      */
     @Override
@@ -66,11 +65,15 @@ public class Line extends Polyline {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Line l = new Line();
+
+        l.duplicateCoordinates(getX(), getY());
+
         return l;
     }
 }

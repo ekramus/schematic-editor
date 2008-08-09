@@ -23,8 +23,7 @@ public class ArcSegment extends Arc {
     private static Logger logger;
 
     /**
-     * Default constructor for {@link ArcSegment}. It contains <code>logger</code> instance
-     * initialization.
+     * Default constructor for {@link ArcSegment}. It contains <code>logger</code> instance initialization.
      */
     public ArcSegment() {
         super();
@@ -33,9 +32,8 @@ public class ArcSegment extends Arc {
     }
 
     /**
-     * Constructor with parameters. First element contains start point, second contains width and
-     * height, third arc start point and fourth is arc end point. Arc is drawn in counterclockwise
-     * direction.
+     * Constructor with parameters. First element contains start point, second contains width and height, third arc
+     * start point and fourth is arc end point. Arc is drawn in counterclockwise direction.
      * 
      * @param x
      * @param y
@@ -65,11 +63,15 @@ public class ArcSegment extends Arc {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Ellipse#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         ArcSegment as = new ArcSegment();
+
+        as.duplicateCoordinates(getX(), getY());
+
         return as;
     }
 

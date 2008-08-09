@@ -54,7 +54,7 @@ public class DrawShapeButtonListener implements ActionListener {
             // create group node for create manipulation
             GroupNode gn = new GroupNode();
             ParameterNode pn = new ParameterNode();
-            ShapeNode sn = new ShapeNode((Shape) getShape().newInstance());
+            ShapeNode sn = new ShapeNode((Shape) getShape().duplicate());
             gn.add(pn);
             gn.add(sn);
 

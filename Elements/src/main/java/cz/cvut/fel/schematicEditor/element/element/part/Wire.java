@@ -46,7 +46,7 @@ public class Wire extends Element {
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Wire w = new Wire();
         return w;
     }

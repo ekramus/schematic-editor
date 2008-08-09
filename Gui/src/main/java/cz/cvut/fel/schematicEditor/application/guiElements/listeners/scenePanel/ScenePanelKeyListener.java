@@ -60,15 +60,27 @@ public class ScenePanelKeyListener implements KeyListener {
                         StatusBar.getInstance().setSizeLockingLabel("to enable size locking, press CTRL");
                     }
                 }
-            } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
+            }
+            // CTRL + Z
+            else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
                 logger.trace("UNexecuting...");
                 Structures.getManipulationQueue().unexecute(ScenePanel.getInstance().getSchemeSG().getTopNode());
-                // ScenePanel.getInstance().processFinalManipulationStep();
-            } else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
+                ScenePanel.getInstance().schemeInvalidate(null);
+            }
+            // CTRL + Y
+            else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
                 logger.trace("REexecuting...");
+
+                // reexecute manipulation
                 Structures.getManipulationQueue().reexecute(ScenePanel.getInstance().getSchemeSG().getTopNode());
-                // ScenePanel.getInstance().processFinalManipulationStep();
-            } else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
+
+                // invalidate scheme
+                ScenePanel.getInstance().schemeInvalidate(null);
+
+                // TODO add reexecuted manipulation as activeManipulation
+            }
+            // DEL or BACKSPACE
+            else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
                 Manipulation manipulation = Structures.getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = manipulation.getManipulatedGroup();

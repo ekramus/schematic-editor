@@ -33,7 +33,7 @@ public class ManipulationQueue {
         logger = Logger.getLogger(this.getClass().getName());
 
         setManipulationQueue(new LinkedList<Manipulation>());
-        setActiveManipulationIndex(0);
+        setActiveManipulationIndex(-1);
     }
 
     /**
@@ -90,8 +90,8 @@ public class ManipulationQueue {
         setActiveManipulationIndex(getActiveManipulationIndex() + 1);
 
         // if there is no manipulation to execute, add last one
-        if (getManipulationQueue().size() < getActiveManipulationIndex()) {
-            getManipulationQueue().add(getManipulationQueue().getLast());
+        if (getManipulationQueue().size() <= getActiveManipulationIndex()) {
+            getManipulationQueue().add(getManipulationQueue().getLast().duplicate());
         }
 
         // retrieve manipulation

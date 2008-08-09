@@ -73,7 +73,7 @@ public class ElementNode extends Node {
      */
     private void initialize(Element element) {
         // TODO complete rewrite
-        this.element = element.newInstance();
+        this.element = element.duplicate();
         if (element instanceof Rectangle) {
             this.elementType = ElementType.T_RECTANGLE;
         } else if (element instanceof Triangle) {

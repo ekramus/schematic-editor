@@ -175,6 +175,7 @@ public class Create extends Manipulation {
         logger.debug("processing final manipulation step");
 
         setActive(false);
+        setFinished(true);
 
         topNode.add(gn);
         logger.trace(this + " executed");

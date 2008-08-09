@@ -89,6 +89,7 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -99,6 +100,7 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -116,11 +118,15 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Text t = new Text();
+
+        t.duplicateCoordinates(getX(), getY());
+
         return t;
     }
 

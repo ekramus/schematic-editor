@@ -30,12 +30,12 @@ public class Ellipse extends Shape {
      */
     @Override
     public UnitRectangle getBounds() {
-        return new UnitRectangle(getTopLeftX() - 2, getTopLeftY() - 2, getWidth() + 5,
-                getHeight() + 5);
+        return new UnitRectangle(getTopLeftX() - 2, getTopLeftY() - 2, getWidth() + 5, getHeight() + 5);
     }
 
     /*
      * (non-Javadoc)
+     * 
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -109,11 +109,15 @@ public class Ellipse extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Ellipse e = new Ellipse();
+
+        e.duplicateCoordinates(getX(), getY());
+
         return e;
     }
 
