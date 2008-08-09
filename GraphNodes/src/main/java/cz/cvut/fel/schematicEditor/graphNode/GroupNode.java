@@ -148,12 +148,24 @@ public class GroupNode extends Node {
         for (int i = pgn.getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = pgn.getChildrenGroupList().get(i);
             if (child == selectedGroupNode) {
-                pgn.getChildrenGroupList().remove(i);
+                // disable group (it acts as remove, but it stays in Scene Graph)
+                child.setDisabled(true);
+                // pgn.getChildrenGroupList().remove(i);
                 return true;
             }
         }
 
         return false;
+    }
+
+    public boolean undelete(GroupNode selectedGroupNode) {
+        if (isDisabled()) {
+            return false;
+        }
+
+        selectedGroupNode.setDisabled(false);
+
+        return true;
     }
 
     /**
