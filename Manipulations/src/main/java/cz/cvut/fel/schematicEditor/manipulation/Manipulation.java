@@ -161,11 +161,20 @@ public abstract class Manipulation {
     }
 
     /**
-     * Creates new instance of {@link Manipulation} by duplicating its values.
+     * Creates duplicate instance of {@link Manipulation} by duplicating its values.
      * 
      * @return Duplicated instance of {@link Manipulation}.
      */
     protected abstract Manipulation duplicate();
+
+    /**
+     * Creates next {@link Manipulation} by duplicating its values according to create order.
+     * 
+     * @return Creates next instance of {@link Manipulation}.
+     */
+    protected Manipulation createNext() {
+        return duplicate();
+    }
 
     /**
      * Executes manipulation.
@@ -175,6 +184,17 @@ public abstract class Manipulation {
      * @throws ManipulationExecutionException in case of some error while executing manipulation.
      */
     protected abstract void execute(GroupNode topNode) throws ManipulationExecutionException;
+
+    /**
+     * Reexecutes manipulation. Mostly it only executes it, for special purposes it needs to be overwritten.
+     * 
+     * @param topNode top {@link GroupNode} of SceneGraph.
+     * 
+     * @throws ManipulationExecutionException in case of some error while reexecuting manipulation.
+     */
+    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+        execute(topNode);
+    }
 
     /**
      * @return the x

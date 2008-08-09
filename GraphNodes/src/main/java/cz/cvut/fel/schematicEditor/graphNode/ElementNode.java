@@ -146,9 +146,9 @@ public class ElementNode extends Node {
         return element.isHit(point);
     }
 
-    protected boolean startEdit(Rectangle2D.Double point) {
+    protected Element startEdit(Rectangle2D.Double point) {
         if (isDisabled()) {
-            return false;
+            return null;
         }
         setEdited(true);
         return getElement().startEdit(point);

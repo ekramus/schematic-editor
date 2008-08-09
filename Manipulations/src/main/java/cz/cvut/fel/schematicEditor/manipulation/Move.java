@@ -157,8 +157,21 @@ public class Move extends Manipulation {
 
     @Override
     protected Manipulation duplicate() {
-        // Move cannot be duplicated, move is always dynamic. Instead, select is created.
+        Move m = new Move();
+        // m.setManipulatedGroup((GroupNode) getManipulatedGroup().duplicate());
+        m.setManipulatedGroup(getManipulatedGroup());
+        m.setManipulationCoordinates(getX(), getY());
+        m.setDelta(computeDelta());
+
+        return m;
+    }
+
+    @Override
+    protected Manipulation createNext() {
+        // After move select is next manipulation..
         Select s = new Select();
+
+        // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
 
         return s;
@@ -170,6 +183,17 @@ public class Move extends Manipulation {
     @Override
     protected void execute(GroupNode topNode) throws ManipulationExecutionException {
         switchLastTransformation(getDelta());
+    }
+
+    /**
+     * @see Manipulation#reexecute(GroupNode)
+     */
+    @Override
+    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+        Transformation t = Transformation.getShift(getDelta().getX(), getDelta().getY());
+        TransformationNode tn = new TransformationNode(t);
+
+        getManipulatedGroup().add(tn);
     }
 
     /*

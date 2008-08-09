@@ -166,6 +166,14 @@ public class Create extends Manipulation {
     }
 
     /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
+     */
+    @Override
+    protected Manipulation createNext() {
+        return duplicate();
+    }
+
+    /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
      */
     @Override

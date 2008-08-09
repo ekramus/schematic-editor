@@ -42,6 +42,10 @@ public class GroupNode extends Node {
      * This field represents parameters node
      */
     private ParameterNode                  chidrenParameterNode;
+    /**
+     * Contains element, which is edited in this group.
+     */
+    private Element                        editedElement;
 
     /**
      * This is default constructor.
@@ -55,6 +59,7 @@ public class GroupNode extends Node {
         childrenElementList = new LinkedList<ElementNode>();
         childrenTransformationList = new LinkedList<TransformationNode>();
         chidrenParameterNode = null;
+        setEditedElement(null);
     }
 
     /**
@@ -335,7 +340,8 @@ public class GroupNode extends Node {
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.startEdit(getTransformation().shiftInverse(r2d))) {
+            setEditedElement(child.startEdit(getTransformation().shiftInverse(r2d)));
+            if (getEditedElement() != null) {
                 logger.debug("element edit zone HIT: " + child + " transformation: " + getTransformation());
                 return true;
             }
@@ -537,5 +543,19 @@ public class GroupNode extends Node {
     public int getElementType() {
         // TODO this implementation gets only element type for first element. Change it!
         return getChildrenElementList().getFirst().getElement().getElementType();
+    }
+
+    /**
+     * @param editedElement the editedElement to set
+     */
+    private void setEditedElement(Element editedElement) {
+        this.editedElement = editedElement;
+    }
+
+    /**
+     * @return the editedElement
+     */
+    public Element getEditedElement() {
+        return this.editedElement;
     }
 }
