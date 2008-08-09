@@ -194,4 +194,17 @@ public class ManipulationQueue {
     private void setManipulationQueue(LinkedList<Manipulation> manipulationQueue) {
         this.manipulationQueue = manipulationQueue;
     }
+
+    /**
+     * Getter for <code>activeManipulation</code>.
+     * 
+     * @return Actual <code>activeManipulation</code> instance.
+     */
+    public Manipulation getActiveManipulation() {
+        try {
+            return getManipulationQueue().get(getActiveManipulationIndex());
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
 }
