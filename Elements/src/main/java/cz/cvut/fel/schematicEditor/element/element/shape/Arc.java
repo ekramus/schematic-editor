@@ -166,8 +166,11 @@ public class Arc extends Ellipse {
      * @see cz.cvut.fel.schematicEditor.element.shape.Ellipse#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Arc a = new Arc();
+
+        a.duplicateCoordinates(getX(), getY());
+
         return a;
     }
 

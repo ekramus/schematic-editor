@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.element.element;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
@@ -61,8 +60,8 @@ public abstract class Element {
      * @param b
      */
     public Element(UnitPoint a, UnitPoint b) {
-        Vector<Unit> xv = new Vector<Unit>();
-        Vector<Unit> yv = new Vector<Unit>();
+        Vector<Unit> xv = new Vector<Unit>(10);
+        Vector<Unit> yv = new Vector<Unit>(10);
 
         xv.add(a.getUnitX());
         yv.add(a.getUnitY());
@@ -149,7 +148,7 @@ public abstract class Element {
         this.elementModificator = elementModificator;
     }
 
-    public abstract Element newInstance();
+    public abstract Element duplicate();
 
     /**
      * @param delta
@@ -210,4 +209,15 @@ public abstract class Element {
         return editedPointOriginalValue;
     }
 
+    /**
+     * Duplicates coordinates of
+     * 
+     * @param element
+     */
+    protected void duplicateCoordinates(Vector<Unit> x, Vector<Unit> y) {
+        for (int i = 0; i < x.size(); i++) {
+            getX().add(new Pixel(x.get(i).doubleValue()));
+            getY().add(new Pixel(y.get(i).doubleValue()));
+        }
+    }
 }

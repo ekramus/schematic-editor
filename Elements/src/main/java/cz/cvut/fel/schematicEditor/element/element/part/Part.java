@@ -45,7 +45,7 @@ public class Part extends Element {
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Part p = new Part();
         return p;
     }

@@ -24,10 +24,8 @@ public class Rectangle extends Polygon {
     /**
      * This is constructor.
      * 
-     * @param tl
-     *            top left corner.
-     * @param br
-     *            bottom right corner.
+     * @param tl top left corner.
+     * @param br bottom right corner.
      */
     public Rectangle(UnitPoint tl, UnitPoint br) {
         super();
@@ -102,13 +100,12 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
-     * @see
-     * cz.cvut.fel.schematicEditor.element.shape.Polygon#isHit(java.awt.geom.Rectangle2D.Double)
+     * 
+     * @see cz.cvut.fel.schematicEditor.element.shape.Polygon#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
     public boolean isHit(Double rectangle) {
-        Rectangle2D r2d = new Rectangle2D.Double(getTopLeftX(), getTopLeftY(), getWidth(),
-                getHeight());
+        Rectangle2D r2d = new Rectangle2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight());
 
         if (r2d.intersects(rectangle) || r2d.contains(rectangle)) {
             return true;
@@ -118,6 +115,7 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#getElementType()
      */
     @Override
@@ -135,11 +133,15 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Rectangle r = new Rectangle();
+
+        r.duplicateCoordinates(getX(), getY());
+
         return r;
     }
 }

@@ -28,10 +28,8 @@ public class Polyline extends Shape {
     /**
      * This is constructor.
      * 
-     * @param x
-     *            Vector of x coordinates.
-     * @param y
-     *            Vecotr of y coordinates.
+     * @param x Vector of x coordinates.
+     * @param y Vecotr of y coordinates.
      */
     public Polyline(Vector<Unit> x, Vector<Unit> y) {
         super(x, y);
@@ -88,6 +86,7 @@ public class Polyline extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -106,11 +105,15 @@ public class Polyline extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Polyline p = new Polyline();
+
+        p.duplicateCoordinates(getX(), getY());
+
         return p;
     }
 

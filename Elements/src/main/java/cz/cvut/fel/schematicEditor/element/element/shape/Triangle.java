@@ -13,12 +13,9 @@ public class Triangle extends Polygon {
     /**
      * This is constructor.
      * 
-     * @param a
-     *            triangle point.
-     * @param b
-     *            triangle point.
-     * @param c
-     *            triangle point.
+     * @param a triangle point.
+     * @param b triangle point.
+     * @param c triangle point.
      */
     public Triangle(UnitPoint a, UnitPoint b, UnitPoint c) {
         super();
@@ -39,7 +36,7 @@ public class Triangle extends Polygon {
     public Triangle() {
         // TODO Auto-generated constructor stub
     }
-    
+
     /**
      * @see java.lang.Object#toString()
      */
@@ -66,13 +63,18 @@ public class Triangle extends Polygon {
         // TODO Auto-generated method stub
         return 3;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         Triangle t = new Triangle();
+
+        t.duplicateCoordinates(getX(), getY());
+
         return t;
     }
 }

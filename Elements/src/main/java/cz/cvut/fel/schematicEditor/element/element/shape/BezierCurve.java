@@ -46,14 +46,14 @@ public class BezierCurve extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
     public boolean isHit(Rectangle2D.Double r2d) {
         // check, whether is not within limit
-        CubicCurve2D cc2d = new CubicCurve2D.Double(getStart().getX(), getStart().getY(),
-                getControl1().getX(), getControl1().getY(), getControl2().getX(),
-                getControl2().getY(), getEnd().getX(), getEnd().getY());
+        CubicCurve2D cc2d = new CubicCurve2D.Double(getStart().getX(), getStart().getY(), getControl1().getX(),
+                getControl1().getY(), getControl2().getX(), getControl2().getY(), getEnd().getX(), getEnd().getY());
         if (cc2d.intersects(r2d)) {
             return true;
         }
@@ -86,6 +86,7 @@ public class BezierCurve extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -104,11 +105,15 @@ public class BezierCurve extends Shape {
 
     /*
      * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
-    public Element newInstance() {
+    public Element duplicate() {
         BezierCurve bc = new BezierCurve();
+
+        bc.duplicateCoordinates(getX(), getY());
+
         return bc;
     }
 
