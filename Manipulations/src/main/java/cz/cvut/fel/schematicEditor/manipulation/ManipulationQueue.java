@@ -62,8 +62,6 @@ public class ManipulationQueue {
 
             // execute manipulation
             activeManipulation.execute(topNode);
-
-            logger.trace("Manipulation executed:\n" + this);
         }
         // manipulation was null
         catch (NullPointerException e) {
@@ -73,6 +71,8 @@ public class ManipulationQueue {
         catch (ManipulationExecutionException e) {
             return false;
         }
+
+        logger.trace("manipulation queue: " + this);
 
         return true;
     }
@@ -91,7 +91,7 @@ public class ManipulationQueue {
 
         // if there is no manipulation to execute, add last one
         if (getManipulationQueue().size() <= getActiveManipulationIndex()) {
-            getManipulationQueue().add(getManipulationQueue().getLast().duplicate());
+            getManipulationQueue().add(ManipulationFactory.duplicate(getManipulationQueue().getLast()));
         }
 
         // retrieve manipulation
@@ -99,7 +99,7 @@ public class ManipulationQueue {
 
         // try to reexecute manipulation
         try {
-            manipulation.execute(topNode);
+            manipulation.reexecute(topNode);
         }
         // manipulation was null
         catch (NullPointerException npe) {
@@ -109,6 +109,8 @@ public class ManipulationQueue {
         catch (ManipulationExecutionException e) {
             return false;
         }
+
+        logger.trace("manipulation queue: " + this);
 
         return true;
     }

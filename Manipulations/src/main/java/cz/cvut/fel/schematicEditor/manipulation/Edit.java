@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D.Double;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
@@ -13,6 +14,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
@@ -105,7 +107,18 @@ public class Edit extends Manipulation {
 
     @Override
     protected Manipulation duplicate() {
-        // Edit cannot be duplicated, it is always dynamic. Instead, select is created.
+        Edit e = new Edit();
+
+        e.setManipulatedGroup(getManipulatedGroup());
+        e.setManipulationCoordinates(getX(), getY());
+        e.setDelta(computeDelta());
+
+        return e;
+    }
+
+    @Override
+    protected Manipulation createNext() {
+        // create next manipulation after edit.
         Select s = new Select();
         s.setManipulatedGroup(getManipulatedGroup());
 
@@ -119,6 +132,24 @@ public class Edit extends Manipulation {
     protected void execute(GroupNode topNode) throws ManipulationExecutionException {
         // change edited point using delta
         getManipulatedGroup().stopEdit(new UnitPoint(getDelta()));
+    }
+
+    /**
+     * @see Manipulation#execute(GroupNode)
+     */
+    @Override
+    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+        Element e = getManipulatedGroup().getEditedElement();
+
+        if (e != null) {
+            int i = e.getEditedPointIndex();
+            if (i != -1) {
+                Pixel x = new Pixel(e.getX().get(i).doubleValue() + getDelta().getX());
+                Pixel y = new Pixel(e.getY().get(i).doubleValue() + getDelta().getY());
+                e.getX().set(i, x);
+                e.getY().set(i, y);
+            }
+        }
     }
 
     /*

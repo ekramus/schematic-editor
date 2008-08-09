@@ -110,19 +110,19 @@ public abstract class Element {
     /**
      * Indicates, whether given rectangle is in edit zone or not.
      */
-    public boolean startEdit(Rectangle2D.Double r2d) {
+    public Element startEdit(Rectangle2D.Double r2d) {
         for (int i = 0; i < getX().size(); i++) {
             Point2D.Double p = new Point2D.Double(getX().elementAt(i).doubleValue(), getY().elementAt(i).doubleValue());
             if (r2d.contains(p)) {
                 setEditedPointIndex(i);
                 setEditedPointOriginalValue(new UnitPoint(getX().get(getEditedPointIndex()), getY()
                         .get(getEditedPointIndex())));
-                return true;
+                return this;
             }
         }
 
         setEditedPointIndex(-1);
-        return false;
+        return null;
     }
 
     public abstract int getElementType();
@@ -163,8 +163,8 @@ public abstract class Element {
         getX().set(getEditedPointIndex(), new Pixel(x));
         getY().set(getEditedPointIndex(), new Pixel(y));
 
-        setEditedPointIndex(-1);
-        setEditedPointOriginalValue(null);
+        // setEditedPointIndex(-1);
+        // setEditedPointOriginalValue(null);
     }
 
     /**
@@ -184,7 +184,7 @@ public abstract class Element {
     /**
      * @return the editedPointIndex
      */
-    private int getEditedPointIndex() {
+    public int getEditedPointIndex() {
         return this.editedPointIndex;
     }
 

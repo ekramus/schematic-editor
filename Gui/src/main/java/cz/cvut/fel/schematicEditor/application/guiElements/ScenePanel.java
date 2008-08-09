@@ -18,21 +18,12 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.
 import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.element.element.shape.Line;
-import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
-import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
@@ -458,8 +449,8 @@ public class ScenePanel extends JPanel {
     public void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation
-        Manipulation m = Structures.getActiveManipulation().manipulationStop(e, r2d, manipulationQueue,
-                                                                            getSchemeSG().getTopNode(), isMouseClicked);
+        Manipulation m = Structures.getActiveManipulation()
+                .manipulationStop(e, r2d, manipulationQueue, getSchemeSG().getTopNode(), isMouseClicked);
         if (m != null) {
             // execute manipulation
             manipulationQueue.execute(Structures.getActiveManipulation(), getSchemeSG().getTopNode());
@@ -468,7 +459,7 @@ public class ScenePanel extends JPanel {
             ScenePanel.getInstance().schemeInvalidate(null);
 
             // create new manipulation based on previous
-            Structures.setActiveManipulation(ManipulationFactory.duplicate(Structures.getActiveManipulation()));
+            Structures.setActiveManipulation(ManipulationFactory.createNext(Structures.getActiveManipulation()));
         }
         // manipulation is not finished yet
         else {

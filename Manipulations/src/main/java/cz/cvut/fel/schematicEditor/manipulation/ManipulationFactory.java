@@ -55,7 +55,23 @@ public class ManipulationFactory {
         }
     }
 
+    /**
+     * Duplicates given {@link Manipulation}.
+     * 
+     * @param manipulation {@link Manipulation} instance to be duplicated.
+     * @return New duplicated {@link Manipulation}.
+     */
     public static Manipulation duplicate(Manipulation manipulation) {
         return manipulation.duplicate();
+    }
+
+    /**
+     * Creates {@link Manipulation} which should be active after given.
+     * 
+     * @param manipulation {@link Manipulation}, according which new one will be created.
+     * @return New {@link Manipulation} according to creation order.
+     */
+    public static Manipulation createNext(Manipulation manipulation) {
+        return manipulation.createNext();
     }
 }
