@@ -8,12 +8,13 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>Launchers</module>
-		<module>VectorEditorEngine</module>
-		<module>Units</module>
-		<module>Elements</module>
-		<module>GraphNodes</module>
-		<module>Support</module>
-		<module>Manipulations</module>
 		<module>Gui</module>
+		<module>VectorEditorEngine</module>
+		<module>Manipulations</module>
+		<module>GraphNodes</module>
+		<module>Elements</module>
+		<module>Support</module>
+		<module>Properties</module>
+		<module>Units</module>
 	</modules>
 </project>

@@ -25,6 +25,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.properties.AppProperties;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -332,9 +333,9 @@ public class ScenePanel extends JPanel {
      * This method initializes this.
      */
     private void init() {
-        this.setPreferredSize(new Dimension(Integer.parseInt(Structures.getProperties()
-                .getProperty("sceneXDim", Constants.DEFAULT_SCENE_XDIM)), Integer.parseInt(Structures.getProperties()
-                .getProperty("sceneYDim", "1024"))));
+        this.setPreferredSize(new Dimension(Integer.parseInt(AppProperties.getInstance().getProperties()
+                .getProperty("sceneXDim", Constants.DEFAULT_SCENE_XDIM)), Integer.parseInt(AppProperties.getInstance()
+                .getProperties().getProperty("sceneYDim", "1024"))));
         this.setBackground(Color.WHITE);
 
         // initialize grid properties

@@ -7,12 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
-import cz.cvut.fel.schematicEditor.core.Constants;
-import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.properties.AppProperties;
 
 /**
- * This class implements {@link ActionListener} for <code>savePreferencesMenuItem</code> in
- * {@link MenuBar}.
+ * This class implements {@link ActionListener} for <code>savePreferencesMenuItem</code> in {@link MenuBar}.
  * 
  * @author Urban Kravjansky
  */
@@ -31,9 +29,8 @@ public final class SavePreferencesMenuItemListener implements ActionListener {
      * Method invoked as result to an action. It exports global properties.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * @param e
-     *            {@link ActionEvent} parameter. This parameter is only for implementing purposes,
-     *            it is not used nor needed.
+     * @param e {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
+     *            needed.
      */
     public void actionPerformed(ActionEvent e) {
         FileOutputStream fos;
@@ -48,8 +45,8 @@ public final class SavePreferencesMenuItemListener implements ActionListener {
         // p.setProperty("isSchemeDebugged", String.valueOf(false));
 
         try {
-            fos = new FileOutputStream(Constants.GLOBAL_PROPERTIES);
-            Structures.getProperties().storeToXML(fos, String.valueOf(System.currentTimeMillis()));
+            fos = new FileOutputStream(AppProperties.GLOBAL_PROPERTIES);
+            AppProperties.getInstance().getProperties().storeToXML(fos, String.valueOf(System.currentTimeMillis()));
         } catch (FileNotFoundException fnfe) {
             // TODO Auto-generated catch block
             fnfe.printStackTrace();
