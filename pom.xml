@@ -14,7 +14,7 @@
 		<module>GraphNodes</module>
 		<module>Elements</module>
 		<module>Support</module>
-		<module>Properties</module>
+		<module>Configuration</module>
 		<module>Units</module>
 	</modules>
 </project>
