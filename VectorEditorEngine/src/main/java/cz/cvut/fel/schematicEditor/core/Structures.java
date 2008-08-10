@@ -1,7 +1,5 @@
 package cz.cvut.fel.schematicEditor.core;
 
-import java.util.Properties;
-
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
@@ -17,10 +15,6 @@ public class Structures {
      */
     private static SceneProperties   sceneProperties    = null;
     /**
-     * Application wide properties.
-     */
-    private static Properties        properties         = null;
-    /**
      * Reference to <code>ManipulationQueue</code> instance.
      */
     private static ManipulationQueue manipulationQueue  = null;
@@ -28,15 +22,6 @@ public class Structures {
      * Reference to active {@link Manipulation} instance.
      */
     private static Manipulation      activeManipulation = null;
-
-    /**
-     * Getter for properties.
-     * 
-     * @return Properties defined in external file.
-     */
-    public static Properties getProperties() {
-        return properties;
-    }
 
     /**
      * Getter for <code>activeManipulation</code> instance.
@@ -54,15 +39,6 @@ public class Structures {
      */
     public static void setActiveManipulation(Manipulation activeManipulation) {
         Structures.activeManipulation = activeManipulation;
-    }
-
-    /**
-     * Setter for properties
-     * 
-     * @param properties properties to save.
-     */
-    public static void setProperties(Properties properties) {
-        Structures.properties = properties;
     }
 
     /**

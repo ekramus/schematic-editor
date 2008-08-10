@@ -1,11 +1,12 @@
 package cz.cvut.fel.schematicEditor.launcher;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.properties.AppProperties;
 
 /**
- * This method implements stand alone launcher. It is used for stand alone launching of
- * <em>SchematicEditor</em> application.
- *
+ * This method implements stand alone launcher. It is used for stand alone launching of <em>SchematicEditor</em>
+ * application.
+ * 
  * @author Urban Kravjanský
  */
 public class Standalone {
@@ -15,7 +16,7 @@ public class Standalone {
     public static void main(String[] args) {
         Gui gui = new Gui();
 
-        Launcher.loadProperties();
+        AppProperties.getInstance();
         Launcher.setUI();
 
         gui.getJFrame().setVisible(true);
