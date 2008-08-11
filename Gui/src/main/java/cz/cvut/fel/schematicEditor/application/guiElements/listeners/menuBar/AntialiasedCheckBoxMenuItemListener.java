@@ -35,7 +35,6 @@ public class AntialiasedCheckBoxMenuItemListener implements ActionListener {
         GuiConfiguration config = GuiConfiguration.getInstance();
 
         config.setSchemeAntialiased(((JCheckBoxMenuItem) ae.getSource()).isSelected());
-        ScenePanel.getInstance().setSchemeAntialiased(config.isSchemeAntialiased());
         ScenePanel.getInstance().repaint();
     }
 }

@@ -35,12 +35,11 @@ public final class GridMenuItemListener implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
-        String s = JOptionPane.showInputDialog(MenuBarResources.GRID_MENU_ITEM_DIALOG.getText(), Snap.getInstance()
+        String s = JOptionPane.showInputDialog(MenuBarResources.GRID_MENU_ITEM_DIALOG.getText(), configuration
                 .getGridSize());
         try {
             if (s != null) {
                 configuration.setGridSize(UnitType.parseUnit(s));
-                Snap.getInstance().setGridSize(configuration.getGridSize());
                 ScenePanel.getInstance().setGridValid(false);
                 ScenePanel.getInstance().repaint();
             }

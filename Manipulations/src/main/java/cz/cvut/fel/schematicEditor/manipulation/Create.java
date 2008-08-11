@@ -220,8 +220,6 @@ public class Create extends Manipulation {
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
 
-        Snap s = Snap.getInstance();
-
         // check, what to do
         switch (getPointsLeft()) {
             case Element.ZERO_COORDINATES:
@@ -229,11 +227,11 @@ public class Create extends Manipulation {
                 break;
             case Element.INFINITE_COORDINATES:
                 // add next coordinate
-                addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
                 break;
             default:
                 // add next coordinate
-                addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
                 break;
         }
 
@@ -260,14 +258,12 @@ public class Create extends Manipulation {
             GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation START");
 
-        Snap s = Snap.getInstance();
-
         // Create create = (Create) Structures.getManipulationQueue().peek();
         setActive(true);
 
         // add two pairs of coordinates (each element needs two)
-        addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-        addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
         return this;
     }

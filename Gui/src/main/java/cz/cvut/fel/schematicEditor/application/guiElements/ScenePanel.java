@@ -148,8 +148,7 @@ public class ScenePanel extends JPanel {
      * @return <code>BufferedImage</code> with grid.
      */
     private BufferedImage drawGrid() {
-        // get Snap instance
-        Snap s = Snap.getInstance();
+        GuiConfiguration configuration = GuiConfiguration.getInstance();
 
         // create new grid
         BufferedImage grid = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -157,17 +156,20 @@ public class ScenePanel extends JPanel {
 
         // draw first rectangle
         gridG2D.setColor(new Color(210, 220, 255));
-        Rectangle2D r = new Rectangle2D.Double(0, 0, s.getGridSize().doubleValue(), s.getGridSize().doubleValue());
+        Rectangle2D r = new Rectangle2D.Double(0, 0, configuration.getGridSize().doubleValue(), configuration
+                .getGridSize().doubleValue());
         gridG2D.draw(r);
 
         // copy rectangle in row
-        for (double d = s.getGridSize().doubleValue(); d <= grid.getWidth(); d += s.getGridSize().doubleValue()) {
-            gridG2D.copyArea(0, 0, s.getGridSize().intValue() + 1, s.getGridSize().intValue() + 1, (int) d, 0);
+        for (double d = configuration.getGridSize().doubleValue(); d <= grid.getWidth(); d += configuration
+                .getGridSize().doubleValue()) {
+            gridG2D.copyArea(0, 0, configuration.getGridSize().intValue() + 1,
+                             configuration.getGridSize().intValue() + 1, (int) d, 0);
         }
 
         // copy row of rectangles
-        for (double d = 0; d <= grid.getHeight(); d += s.getGridSize().doubleValue()) {
-            gridG2D.copyArea(0, 0, grid.getWidth(), s.getGridSize().intValue() + 1, 0, (int) d);
+        for (double d = 0; d <= grid.getHeight(); d += configuration.getGridSize().doubleValue()) {
+            gridG2D.copyArea(0, 0, grid.getWidth(), configuration.getGridSize().intValue() + 1, 0, (int) d);
         }
 
         // return result
