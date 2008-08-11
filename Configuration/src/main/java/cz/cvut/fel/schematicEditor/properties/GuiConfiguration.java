@@ -7,11 +7,11 @@ package cz.cvut.fel.schematicEditor.properties;
  * @author urban.kravjansky
  * 
  */
-public class GuiProperties extends AppProperties {
+public class GuiConfiguration extends Configuration {
     /**
      * 
      */
-    public GuiProperties() {
+    public GuiConfiguration() {
         // TODO Auto-generated constructor stub
     }
 }
