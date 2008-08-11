@@ -7,6 +7,7 @@ import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
+import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
 
 /**
  * This class implements {@link ActionListener} for <code>antialiasedCheckBoxMenuItem</code> in {@link MenuBar}.
@@ -27,12 +28,14 @@ public class AntialiasedCheckBoxMenuItemListener implements ActionListener {
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * 
-     * @param ae
-     *            {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
+     * @param ae {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.
      */
     public final void actionPerformed(final ActionEvent ae) {
-        ScenePanel.getInstance().setSchemeAntialiased(((JCheckBoxMenuItem) ae.getSource()).isSelected());
+        GuiConfiguration config = GuiConfiguration.getInstance();
+
+        config.setSchemeAntialiased(((JCheckBoxMenuItem) ae.getSource()).isSelected());
+        ScenePanel.getInstance().setSchemeAntialiased(config.isSchemeAntialiased());
         ScenePanel.getInstance().repaint();
     }
 }
