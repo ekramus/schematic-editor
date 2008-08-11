@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.launcher;
 import javax.swing.JApplet;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.properties.AppProperties;
+import cz.cvut.fel.schematicEditor.properties.Configuration;
 
 /**
  * This class implements applet launcher. It is used to launch <em>SchematicEditor</em> as applet.
@@ -18,7 +18,7 @@ public class Applet extends JApplet {
     public void init() {
         Gui gui = new Gui();
 
-        AppProperties.getInstance();
+        Configuration.getInstance();
         Launcher.setUI();
 
         this.setSize(300, 200);

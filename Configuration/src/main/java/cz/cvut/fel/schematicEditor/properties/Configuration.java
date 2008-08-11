@@ -15,7 +15,7 @@ import org.apache.log4j.xml.DOMConfigurator;
  * 
  * @author Urban Kravjansky
  */
-public class AppProperties {
+public class Configuration {
     /**
      * This constant represents global properties file.
      */
@@ -25,18 +25,18 @@ public class AppProperties {
      */
     private Properties           properties;
     /**
-     * {@link AppProperties} singleton instance.
+     * {@link Configuration} singleton instance.
      */
-    private static AppProperties instance;
+    private static Configuration instance;
     /**
      * {@link Logger} instance for logging purposes.
      */
     static Logger                logger;
 
     /**
-     * {@link AppProperties} constructor. It loads global properties file and log4j properties file.
+     * {@link Configuration} constructor. It loads global properties file and log4j properties file.
      */
-    protected AppProperties() {
+    protected Configuration() {
         loadAppProperties();
         loadLog4JProperties();
     }
@@ -67,7 +67,7 @@ public class AppProperties {
      */
     private void loadLog4JProperties() {
         DOMConfigurator.configure("log4j.xml");
-        logger = Logger.getLogger(AppProperties.class.getName());
+        logger = Logger.getLogger(Configuration.class.getName());
         logger.info("Log4J alive.");
     }
 
@@ -86,9 +86,9 @@ public class AppProperties {
     /**
      * @return the appProperties
      */
-    public static AppProperties getInstance() {
+    public static Configuration getInstance() {
         if (instance == null) {
-            instance = new AppProperties();
+            instance = new Configuration();
         }
         return instance;
     }

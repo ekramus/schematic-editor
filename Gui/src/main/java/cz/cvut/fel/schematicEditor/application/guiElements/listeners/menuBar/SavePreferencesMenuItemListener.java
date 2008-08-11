@@ -7,7 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
-import cz.cvut.fel.schematicEditor.properties.AppProperties;
+import cz.cvut.fel.schematicEditor.properties.Configuration;
 
 /**
  * This class implements {@link ActionListener} for <code>savePreferencesMenuItem</code> in {@link MenuBar}.
@@ -45,8 +45,8 @@ public final class SavePreferencesMenuItemListener implements ActionListener {
         // p.setProperty("isSchemeDebugged", String.valueOf(false));
 
         try {
-            fos = new FileOutputStream(AppProperties.GLOBAL_PROPERTIES);
-            AppProperties.getInstance().getProperties().storeToXML(fos, String.valueOf(System.currentTimeMillis()));
+            fos = new FileOutputStream(Configuration.GLOBAL_PROPERTIES);
+            Configuration.getInstance().getProperties().storeToXML(fos, String.valueOf(System.currentTimeMillis()));
         } catch (FileNotFoundException fnfe) {
             // TODO Auto-generated catch block
             fnfe.printStackTrace();
