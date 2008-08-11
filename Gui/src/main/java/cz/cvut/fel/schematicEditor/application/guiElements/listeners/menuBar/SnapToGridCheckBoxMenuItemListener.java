@@ -6,11 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
-import cz.cvut.fel.schematicEditor.support.Snap;
+import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
 
 /**
- * This class implements {@link ActionListener} for <code>snapToGridCheckBoxMenuItem</code> in
- * {@link MenuBar}.
+ * This class implements {@link ActionListener} for <code>snapToGridCheckBoxMenuItem</code> in {@link MenuBar}.
  * 
  * @author Urban Kravjansky
  */
@@ -29,11 +28,11 @@ public final class SnapToGridCheckBoxMenuItemListener implements ActionListener 
      * Method invoked as result to an action. It sets snap to grid parameter.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * @param e
-     *            {@link ActionEvent} parameter. This parameter is used to obtain source object.
+     * @param e {@link ActionEvent} parameter. This parameter is used to obtain source object.
      */
     public void actionPerformed(ActionEvent e) {
-        Snap s = Snap.getInstance();
-        s.setSnappy(((JCheckBoxMenuItem) e.getSource()).isSelected());
+        GuiConfiguration configuration = GuiConfiguration.getInstance();
+
+        configuration.setSnapToGrid(((JCheckBoxMenuItem) e.getSource()).isSelected());
     }
 }

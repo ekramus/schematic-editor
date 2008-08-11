@@ -33,7 +33,6 @@ public class DebugCheckBoxMenuItemListener implements ActionListener {
         GuiConfiguration config = GuiConfiguration.getInstance();
 
         config.setSchemeDebugged(((JCheckBoxMenuItem) ae.getSource()).isSelected());
-        ScenePanel.getInstance().setSchemeDebugged(config.isSchemeDebugged());
         ScenePanel.getInstance().repaint();
     }
 }

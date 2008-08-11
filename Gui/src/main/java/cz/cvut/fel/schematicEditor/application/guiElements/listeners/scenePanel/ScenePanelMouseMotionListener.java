@@ -49,9 +49,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
             // manipulation is active
             if (m.isActive()) {
-                Snap s = Snap.getInstance();
-
-                m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                m.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
                 // repaint scene, it is much faster than full scene invalidate
                 ScenePanel.getInstance().repaint();
@@ -74,9 +72,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
             // manipulation is active
             if (m.isActive()) {
-                Snap s = Snap.getInstance();
-
-                m.replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+                m.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
                 // repaint scene, it is much faster than full scene invalidate
                 ScenePanel.getInstance().repaint();

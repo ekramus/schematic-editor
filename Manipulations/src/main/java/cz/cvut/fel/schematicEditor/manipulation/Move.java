@@ -89,16 +89,14 @@ public class Move extends Manipulation {
     @Override
     public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq, GroupNode topNode,
             boolean isMouseClicked) throws UnknownManipulationException {
-        Snap s = Snap.getInstance();
-
         // check, whether move is possible or not
         if (isActive() && getManipulatedGroup() == topNode.findHit(r2d)) {
             // add identity transformation, so it can be later changed
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
-            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
         }
         // move is not possible - fall back to Select manipulation
         else {
@@ -119,9 +117,7 @@ public class Move extends Manipulation {
         if (isActive()) {
             logger.debug("object MOVED");
 
-            Snap s = Snap.getInstance();
-
-            replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
             // compute delta
             setDelta(computeDelta());

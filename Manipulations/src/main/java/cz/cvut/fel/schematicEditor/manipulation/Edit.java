@@ -52,16 +52,14 @@ public class Edit extends Manipulation {
     @Override
     public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
-        Snap s = Snap.getInstance();
-
         // check, whether move is possible or not
         if (isActive() && getManipulatedGroup() == topNode.findHit(r2d)) {
             // add identity transformation, so it can be later changed
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
-            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
-            addManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
         }
         // edit is not possible - fall back to Select manipulation
         else {
@@ -80,10 +78,8 @@ public class Edit extends Manipulation {
         if (isActive()) {
             logger.trace("object EDITED");
 
-            Snap s = Snap.getInstance();
-
             // replace last manipulation coordinates for delta
-            replaceLastManipulationCoordinates(s.getSnap(e.getX()), s.getSnap(e.getY()));
+            replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
 
             // compute delta
             setDelta(computeDelta());
