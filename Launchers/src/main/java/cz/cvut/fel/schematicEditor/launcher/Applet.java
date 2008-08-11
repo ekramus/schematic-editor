@@ -18,6 +18,7 @@ public class Applet extends JApplet {
     public void init() {
         Gui gui = new Gui();
 
+        Launcher.loadLog4JProperties();
         Configuration.getInstance();
         Launcher.setUI();
 

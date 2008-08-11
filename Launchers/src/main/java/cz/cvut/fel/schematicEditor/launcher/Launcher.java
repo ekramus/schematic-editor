@@ -3,6 +3,7 @@ package cz.cvut.fel.schematicEditor.launcher;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 
 import com.jgoodies.plaf.plastic.PlasticXPLookAndFeel;
 
@@ -28,5 +29,14 @@ public abstract class Launcher {
         } catch (Exception e) {
             logger.debug(e.getMessage());
         }
+    }
+
+    /**
+     * Loads Log4J properties.
+     */
+    static void loadLog4JProperties() {
+        DOMConfigurator.configure("log4j.xml");
+        logger = Logger.getLogger(Launcher.class.getName());
+        logger.info("Log4J alive.");
     }
 }

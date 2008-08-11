@@ -16,6 +16,7 @@ public class Standalone {
     public static void main(String[] args) {
         Gui gui = new Gui();
 
+        Launcher.loadLog4JProperties();
         Configuration.getInstance();
         Launcher.setUI();
 

@@ -1,13 +1,13 @@
 package cz.cvut.fel.schematicEditor.properties;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.InvalidPropertiesFormatException;
-import java.util.Properties;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * This class serves as application properties superclass. It implements methods used by child classes, which have are
@@ -17,45 +17,66 @@ import org.apache.log4j.xml.DOMConfigurator;
  */
 public class Configuration {
     /**
-     * This constant represents global properties file.
+     * File name, where should be this class serialized.
      */
-    public static final String   GLOBAL_PROPERTIES = "properties.xml";
-    /**
-     * Application wide properties.
-     */
-    private Properties           properties;
+    private static final String  FILE     = "config/application.xml";
     /**
      * {@link Configuration} singleton instance.
      */
-    private static Configuration instance;
+    private static Configuration instance = null;
+
     /**
-     * {@link Logger} instance for logging purposes.
+     * @return the appProperties
      */
-    static Logger                logger;
+    public static Configuration getInstance() {
+        if (instance == null) {
+            instance = Configuration.deserialize(FILE);
+            if (instance == null) {
+                instance = new Configuration();
+            }
+        }
+        return instance;
+    }
 
     /**
      * {@link Configuration} constructor. It loads global properties file and log4j properties file.
      */
     protected Configuration() {
-        loadAppProperties();
-        loadLog4JProperties();
+        // nothing to do
     }
 
     /**
-     * Loads general application properties.
+     * Deserializes configuration from given file.
+     * 
+     * @param file Path to file, where is serialized {@link Configuration}.
+     * @return Deserialized {@link Configuration} class.
      */
-    private void loadAppProperties() {
-        FileInputStream fis;
+    public static Configuration deserialize(String file) {
+        XStream xstream = new XStream(new DomDriver());
 
         try {
-            fis = new FileInputStream(GLOBAL_PROPERTIES);
-            getProperties().loadFromXML(fis);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidPropertiesFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            return (Configuration) xstream.fromXML(br);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Serializes given configuration into given file.
+     * 
+     * @param configuration {@link Configuration} file to serialize.
+     * @param file Path to file, where should be {@link Configuration} serialized.
+     */
+    public static void serialize(Configuration configuration, String file) {
+        XStream xstream = new XStream(new DomDriver());
+
+        // xstream.alias("person", Person.class);
+        // xstream.alias("phonenumber", PhoneNumber.class);
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            xstream.toXML(configuration, bw);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -63,33 +84,9 @@ public class Configuration {
     }
 
     /**
-     * Loads Log4J properties.
+     * @return the FILE
      */
-    private void loadLog4JProperties() {
-        DOMConfigurator.configure("log4j.xml");
-        logger = Logger.getLogger(Configuration.class.getName());
-        logger.info("Log4J alive.");
-    }
-
-    /**
-     * Getter for properties.
-     * 
-     * @return Properties defined in external file.
-     */
-    public Properties getProperties() {
-        if (this.properties == null) {
-            this.properties = new Properties();
-        }
-        return this.properties;
-    }
-
-    /**
-     * @return the appProperties
-     */
-    public static Configuration getInstance() {
-        if (instance == null) {
-            instance = new Configuration();
-        }
-        return instance;
+    public static String getFile() {
+        return Configuration.FILE;
     }
 }

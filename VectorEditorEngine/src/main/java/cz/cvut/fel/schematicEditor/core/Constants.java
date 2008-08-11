@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.core;
 /**
  * This class encapsulates constants.
  * 
- * @author urban.kravjansky
+ * @author Urban Kravjansky
  */
 public class Constants {
     /**

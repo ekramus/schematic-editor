@@ -26,6 +26,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.properties.Configuration;
+import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -333,18 +334,18 @@ public class ScenePanel extends JPanel {
      * This method initializes this.
      */
     private void init() {
-        this.setPreferredSize(new Dimension(Integer.parseInt(Configuration.getInstance().getProperties()
-                .getProperty("sceneXDim", Constants.DEFAULT_SCENE_XDIM)), Integer.parseInt(Configuration.getInstance()
-                .getProperties().getProperty("sceneYDim", "1024"))));
-        this.setBackground(Color.WHITE);
+        GuiConfiguration config = GuiConfiguration.getInstance();
+
+        this.setPreferredSize(new Dimension(config.getSceneXDim(), config.getSceneYDim()));
+        this.setBackground(config.getSceneBackgroundColor());
 
         // initialize grid properties
-        setGridVisible(true);
+        setGridVisible(config.isGridVisible());
         setGridValid(false);
 
         // initialize scheme properties
-        setSchemeAntialiased(true);
-        setSchemeDebugged(false);
+        setSchemeAntialiased(config.isSchemeAntialiased());
+        setSchemeDebugged(config.isSchemeDebugged());
 
         // initialize images
         this.grid = null;
