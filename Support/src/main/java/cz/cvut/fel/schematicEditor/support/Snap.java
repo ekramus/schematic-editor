@@ -6,8 +6,8 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
- * This class implements <em>snap to grid</em> feature. It is dependent on <code>gridSize</code> and
- * <code>snap</code> attributes.
+ * This class implements <em>snap to grid</em> feature. It is dependent on <code>gridSize</code> and <code>snap</code>
+ * attributes.
  * 
  * @author Urban Kravjansky
  */
@@ -33,9 +33,11 @@ public class Snap {
      * Singleton constructor used for {@link Snap} initialization.
      */
     private Snap() {
+        GuiConfiguration configuration = GuiConfiguration().getInstance();
+
         logger = Logger.getLogger(this.getClass().getName());
 
-        setGridSize(new Pixel(25));
+        setGridSize(configuration.getGridSize());
         setSnappy(false);
     }
 
@@ -64,8 +66,7 @@ public class Snap {
     /**
      * Get snapped coordinate. In case snap to grid is disabled, coordinate will be unchanged.
      * 
-     * @param coordinate
-     *            coordinate to snap.
+     * @param coordinate coordinate to snap.
      * @return Snapped coordinate value.
      */
     public Pixel getSnap(double coordinate) {
@@ -75,8 +76,8 @@ public class Snap {
             return new Pixel(coordinate);
         }
         result = new Pixel(
-                getGridSize().doubleValue()
-                        * (int) ((coordinate + getGridSize().doubleValue() / 2) / getGridSize().doubleValue()));
+                getGridSize().doubleValue() * (int) ((coordinate + getGridSize().doubleValue() / 2) / getGridSize()
+                        .doubleValue()));
 
         return result;
     }
@@ -93,8 +94,7 @@ public class Snap {
     /**
      * Setter for <code>gridSize</code>.
      * 
-     * @param gridSize
-     *            the gridSize to set
+     * @param gridSize the gridSize to set
      */
     public void setGridSize(Unit gridSize) {
         logger.trace("Grid size: " + gridSize);
@@ -113,8 +113,7 @@ public class Snap {
     /**
      * Setter for <code>snappy</code>.
      * 
-     * @param snappy
-     *            the snap to set
+     * @param snappy the snap to set
      */
     public void setSnappy(boolean snappy) {
         logger.trace("Is snappy: " + snappy);

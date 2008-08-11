@@ -89,23 +89,10 @@ public class ScenePanel extends JPanel {
     private boolean       gridValid;
 
     /**
-     * This field indicates visibility of grid.
-     */
-    private boolean       gridVisible;
-
-    /**
      * This field represents scheme.
      */
     private BufferedImage scheme;
 
-    /**
-     * This field indicates whether scheme is antialiased or not.
-     */
-    private boolean       schemeAntialiased;
-    /**
-     * This field indicates whether scheme is being debugged or not.
-     */
-    private boolean       schemeDebugged;
     /**
      * Graph of whole scene.
      */
@@ -218,9 +205,10 @@ public class ScenePanel extends JPanel {
      */
     private void drawScene(Graphics g) throws UnknownManipulationException {
         Graphics2D g2d = (Graphics2D) g;
+        GuiConfiguration configuration = GuiConfiguration.getInstance();
 
         // if grid is not valid and is visible, recreate it.
-        if (this.gridVisible && !isGridValid()) {
+        if (configuration.isGridVisible() && !isGridValid()) {
             // restore validity
             setGridValid(true);
 
@@ -229,7 +217,7 @@ public class ScenePanel extends JPanel {
         }
 
         // draw grid if visible
-        if (this.gridVisible) {
+        if (configuration.isGridVisible()) {
             g2d.drawImage(this.grid, 0, 0, null);
         }
         // if scheme is not valid, recreate it.
@@ -282,6 +270,8 @@ public class ScenePanel extends JPanel {
      * @return <code>BufferedImage</code> with scheme.
      */
     private BufferedImage drawScheme() {
+        GuiConfiguration configuration = GuiConfiguration.getInstance();
+
         logger.debug("full scheme redraw");
 
         // create new scheme
@@ -289,8 +279,8 @@ public class ScenePanel extends JPanel {
 
         // initialize DisplayExport
         DisplayExport de = DisplayExport.getExport();
-        de.setAntialiased(this.schemeAntialiased);
-        de.setDebugged(this.schemeDebugged);
+        de.setAntialiased(configuration.isSchemeAntialiased());
+        de.setDebugged(configuration.isSchemeDebugged());
         de.export(this.schemeSG, scheme);
 
         // TODO process sceneGraph elements in foreach loop and transform them using DisplayExport.
@@ -336,16 +326,11 @@ public class ScenePanel extends JPanel {
     private void init() {
         GuiConfiguration config = GuiConfiguration.getInstance();
 
-        this.setPreferredSize(new Dimension(config.getSceneXDim(), config.getSceneYDim()));
+        this.setPreferredSize(new Dimension(config.getSceneDim()));
         this.setBackground(config.getSceneBackgroundColor());
 
         // initialize grid properties
-        setGridVisible(config.isGridVisible());
         setGridValid(false);
-
-        // initialize scheme properties
-        setSchemeAntialiased(config.isSchemeAntialiased());
-        setSchemeDebugged(config.isSchemeDebugged());
 
         // initialize images
         this.grid = null;
@@ -359,27 +344,6 @@ public class ScenePanel extends JPanel {
      */
     private boolean isGridValid() {
         return this.gridValid;
-    }
-
-    /**
-     * @return the gridVisible
-     */
-    public boolean isGridVisible() {
-        return this.gridVisible;
-    }
-
-    /**
-     * @return the schemeAntialiased
-     */
-    public boolean isSchemeAntialiased() {
-        return this.schemeAntialiased;
-    }
-
-    /**
-     * @return the schemeDebugged
-     */
-    public boolean isSchemeDebugged() {
-        return this.schemeDebugged;
     }
 
     /**
@@ -414,29 +378,6 @@ public class ScenePanel extends JPanel {
      */
     public void setGridValid(boolean gridValid) {
         this.gridValid = gridValid;
-    }
-
-    /**
-     * @param gridVisible the gridVisible to set
-     */
-    public void setGridVisible(boolean gridVisible) {
-        this.gridVisible = gridVisible;
-    }
-
-    /**
-     * @param schemeAntialiased the schemeAntialiased to set
-     */
-    public void setSchemeAntialiased(boolean schemeAntialiased) {
-        this.schemeValid = false;
-        this.schemeAntialiased = schemeAntialiased;
-    }
-
-    /**
-     * @param schemeDebugged the schemeAntialiased to set
-     */
-    public void setSchemeDebugged(boolean schemeDebugged) {
-        this.schemeValid = false;
-        this.schemeDebugged = schemeDebugged;
     }
 
     /**

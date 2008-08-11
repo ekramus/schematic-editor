@@ -1,14 +1,21 @@
 <cz.cvut.fel.schematicEditor.properties.GuiConfiguration>
-	<sceneXDim>1280</sceneXDim>
-	<sceneYDim>1024</sceneYDim>
-	<gridSize>25.0</gridSize>
-	<schemeAntialiased>false</schemeAntialiased>
-	<sceneBackgroundColor>
-		<red>255</red>
-		<green>255</green>
-		<blue>255</blue>
-		<alpha>255</alpha>
-	</sceneBackgroundColor>
-	<gridVisible>true</gridVisible>
-	<schemeDebugged>false</schemeDebugged>
+  <sceneDim>
+    <width>1280</width>
+    <height>1024</height>
+  </sceneDim>
+  <gridSize class="cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial.Inch">
+    <value>0.1</value>
+    <doubleFactor>72.0</doubleFactor>
+    <unitType>INCH</unitType>
+  </gridSize>
+  <schemeAntialiased>true</schemeAntialiased>
+  <sceneBackgroundColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
+  </sceneBackgroundColor>
+  <gridVisible>true</gridVisible>
+  <schemeDebugged>false</schemeDebugged>
+  <snapToGrid>false</snapToGrid>
 </cz.cvut.fel.schematicEditor.properties.GuiConfiguration>

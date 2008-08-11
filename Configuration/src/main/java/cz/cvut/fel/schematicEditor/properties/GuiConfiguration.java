@@ -1,6 +1,10 @@
 package cz.cvut.fel.schematicEditor.properties;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
  * This class encapsulates GUI properties.
@@ -11,143 +15,17 @@ public class GuiConfiguration extends Configuration {
     /**
      * File name, where should be this class serialized.
      */
-    private static final String     FILE                 = "config/gui.xml";
+    private static final String     FILE     = "config/gui.xml";
     /**
      * {@link GuiConfiguration} singleton instance.
      */
-    private static GuiConfiguration instance             = null;
-    /**
-     * ScenePanel X dimension.
-     */
-    private int                     sceneXDim            = 1280;
-    /**
-     * ScenePanel Y dimension.
-     */
-    private int                     sceneYDim            = 1024;
-    /**
-     * ScenePanel grid size.
-     */
-    private double                  gridSize             = 25;
-    /**
-     * Scheme antialiasing indicator.
-     */
-    private boolean                 schemeAntialiased    = true;
-    /**
-     * Background color of ScenePanel.
-     */
-    private Color                   sceneBackgroundColor = new Color(255, 255, 255);
-    /**
-     * Grid visibility indicator.
-     */
-    private boolean                 gridVisible          = true;
-    /**
-     * Indicates, whether is scheme debugged.
-     */
-    private boolean                 schemeDebugged       = false;
+    private static GuiConfiguration instance = null;
 
     /**
-     * 
+     * @return the FILE
      */
-    public GuiConfiguration() {
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param sceneXDim the sceneXDim to set
-     */
-    public void setSceneXDim(int sceneXDim) {
-        this.sceneXDim = sceneXDim;
-    }
-
-    /**
-     * @return the sceneXDim
-     */
-    public int getSceneXDim() {
-        return this.sceneXDim;
-    }
-
-    /**
-     * @param sceneYDim the sceneYDim to set
-     */
-    public void setSceneYDim(int sceneYDim) {
-        this.sceneYDim = sceneYDim;
-    }
-
-    /**
-     * @return the sceneYDim
-     */
-    public int getSceneYDim() {
-        return this.sceneYDim;
-    }
-
-    /**
-     * @param gridSize the gridSize to set
-     */
-    public void setGridSize(double gridSize) {
-        this.gridSize = gridSize;
-    }
-
-    /**
-     * @return the gridSize
-     */
-    public double getGridSize() {
-        return this.gridSize;
-    }
-
-    /**
-     * @param schemeAntialiased the schemeAntialiased to set
-     */
-    public void setSchemeAntialiased(boolean schemeAntialiased) {
-        this.schemeAntialiased = schemeAntialiased;
-    }
-
-    /**
-     * @return the schemeAntialiased
-     */
-    public boolean isSchemeAntialiased() {
-        return this.schemeAntialiased;
-    }
-
-    /**
-     * @param sceneBackgroundColor the sceneBackgroundColor to set
-     */
-    public void setSceneColor(Color sceneBackgroundColor) {
-        this.sceneBackgroundColor = sceneBackgroundColor;
-    }
-
-    /**
-     * @return the sceneBackgroundColor
-     */
-    public Color getSceneBackgroundColor() {
-        return this.sceneBackgroundColor;
-    }
-
-    /**
-     * @param gridVisible the gridVisible to set
-     */
-    public void setGridVisible(boolean gridVisible) {
-        this.gridVisible = gridVisible;
-    }
-
-    /**
-     * @return the gridVisible
-     */
-    public boolean isGridVisible() {
-        return this.gridVisible;
-    }
-
-    /**
-     * @param schemeDebugged the schemeDebugged to set
-     */
-    public void setSchemeDebugged(boolean schemeDebugged) {
-        this.schemeDebugged = schemeDebugged;
-    }
-
-    /**
-     * @return the schemeDebugged
-     */
-    public boolean isSchemeDebugged() {
-        return this.schemeDebugged;
+    public static String getFile() {
+        return GuiConfiguration.FILE;
     }
 
     /**
@@ -164,9 +42,138 @@ public class GuiConfiguration extends Configuration {
     }
 
     /**
-     * @return the FILE
+     * ScenePanel X and Y dimension.
      */
-    public static String getFile() {
-        return GuiConfiguration.FILE;
+    private Dimension sceneDim             = new Dimension(1280, 1024);
+    /**
+     * ScenePanel grid size.
+     */
+    private Unit      gridSize             = new Pixel(25);
+    /**
+     * Scheme antialiasing indicator.
+     */
+    private boolean   schemeAntialiased    = true;
+    /**
+     * Background color of ScenePanel.
+     */
+    private Color     sceneBackgroundColor = new Color(255, 255, 255);
+    /**
+     * Grid visibility indicator.
+     */
+    private boolean   gridVisible          = true;
+
+    /**
+     * Indicates, whether is scheme debugged.
+     */
+    private boolean   schemeDebugged       = false;
+
+    /**
+     * Indicate, whether is snap to grid or not.
+     */
+    private boolean   snapToGrid           = false;
+
+    /**
+     * 
+     */
+    public GuiConfiguration() {
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
+     * @return the gridSize
+     */
+    public Unit getGridSize() {
+        return this.gridSize;
+    }
+
+    /**
+     * @return the sceneBackgroundColor
+     */
+    public Color getSceneBackgroundColor() {
+        return this.sceneBackgroundColor;
+    }
+
+    /**
+     * @return the sceneDim
+     */
+    public Dimension getSceneDim() {
+        return this.sceneDim;
+    }
+
+    /**
+     * @return the gridVisible
+     */
+    public boolean isGridVisible() {
+        return this.gridVisible;
+    }
+
+    /**
+     * @return the schemeAntialiased
+     */
+    public boolean isSchemeAntialiased() {
+        return this.schemeAntialiased;
+    }
+
+    /**
+     * @return the schemeDebugged
+     */
+    public boolean isSchemeDebugged() {
+        return this.schemeDebugged;
+    }
+
+    /**
+     * @return the snapToGrid
+     */
+    public boolean isSnapToGrid() {
+        return this.snapToGrid;
+    }
+
+    /**
+     * @param gridSize the gridSize to set
+     */
+    public void setGridSize(Unit gridSize) {
+        this.gridSize = gridSize;
+    }
+
+    /**
+     * @param gridVisible the gridVisible to set
+     */
+    public void setGridVisible(boolean gridVisible) {
+        this.gridVisible = gridVisible;
+    }
+
+    /**
+     * @param sceneBackgroundColor the sceneBackgroundColor to set
+     */
+    public void setSceneColor(Color sceneBackgroundColor) {
+        this.sceneBackgroundColor = sceneBackgroundColor;
+    }
+
+    /**
+     * @param sceneDim the sceneDim to set
+     */
+    public void setSceneDim(Dimension sceneDim) {
+        this.sceneDim = sceneDim;
+    }
+
+    /**
+     * @param schemeAntialiased the schemeAntialiased to set
+     */
+    public void setSchemeAntialiased(boolean schemeAntialiased) {
+        this.schemeAntialiased = schemeAntialiased;
+    }
+
+    /**
+     * @param schemeDebugged the schemeDebugged to set
+     */
+    public void setSchemeDebugged(boolean schemeDebugged) {
+        this.schemeDebugged = schemeDebugged;
+    }
+
+    /**
+     * @param snapToGrid the snapToGrid to set
+     */
+    public void setSnapToGrid(boolean snapToGrid) {
+        this.snapToGrid = snapToGrid;
     }
 }

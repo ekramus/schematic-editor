@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
+import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.AboutMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.AntialiasedCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.DebugCheckBoxMenuItemListener;
@@ -20,6 +21,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.Sav
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ShowGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SnapToGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.MenuBarResources;
+import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
 
 /**
  * This class implements menu bar. It is used for all menu based operations.
@@ -33,8 +35,8 @@ public final class MenuBar extends JMenuBar {
     private static MenuBar menuBar = null;
 
     /**
-     * Getter of <code>menuBar</code> instance. As it is singleton, this method first checks
-     * whether it is null or not. When needed, new <code>menuBar</code> instance is created.
+     * Getter of <code>menuBar</code> instance. As it is singleton, this method first checks whether it is null or not.
+     * When needed, new <code>menuBar</code> instance is created.
      * 
      * @return <code>menuBar</code> instance.
      */
@@ -149,7 +151,7 @@ public final class MenuBar extends JMenuBar {
         if (this.antialiasedCheckBoxMenuItem == null) {
             this.antialiasedCheckBoxMenuItem = new JCheckBoxMenuItem();
             this.antialiasedCheckBoxMenuItem.setText(MenuBarResources.ANTIALIASED_CHECK_BOX_MENU_ITEM.getText());
-            this.antialiasedCheckBoxMenuItem.setSelected(true);
+            this.antialiasedCheckBoxMenuItem.setSelected(GuiConfiguration.getInstance().isSchemeAntialiased());
             this.antialiasedCheckBoxMenuItem.addActionListener(new AntialiasedCheckBoxMenuItemListener());
         }
         return this.antialiasedCheckBoxMenuItem;
@@ -164,8 +166,7 @@ public final class MenuBar extends JMenuBar {
         if (this.copyMenuItem == null) {
             this.copyMenuItem = new JMenuItem();
             this.copyMenuItem.setText(MenuBarResources.COPY_MENU_ITEM.getText());
-            this.copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK,
-                                                                    true));
+            this.copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK, true));
         }
         return this.copyMenuItem;
     }
@@ -179,8 +180,7 @@ public final class MenuBar extends JMenuBar {
         if (this.cutMenuItem == null) {
             this.cutMenuItem = new JMenuItem();
             this.cutMenuItem.setText(MenuBarResources.CUT_MENU_ITEM.getText());
-            this.cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK,
-                                                                   true));
+            this.cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK, true));
         }
         return this.cutMenuItem;
     }
@@ -194,7 +194,7 @@ public final class MenuBar extends JMenuBar {
         if (this.debugCheckBoxMenuItem == null) {
             this.debugCheckBoxMenuItem = new JCheckBoxMenuItem();
             this.debugCheckBoxMenuItem.setText(MenuBarResources.DEBUG_CHECK_BOX_MENU_ITEM.getText());
-            this.debugCheckBoxMenuItem.setSelected(false);
+            this.debugCheckBoxMenuItem.setSelected(GuiConfiguration.getInstance().isSchemeDebugged());
             this.debugCheckBoxMenuItem.addActionListener(new DebugCheckBoxMenuItemListener());
         }
         return this.debugCheckBoxMenuItem;
@@ -288,8 +288,7 @@ public final class MenuBar extends JMenuBar {
         if (this.pasteMenuItem == null) {
             this.pasteMenuItem = new JMenuItem();
             this.pasteMenuItem.setText(MenuBarResources.PASTE_MENU_ITEM.getText());
-            this.pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
-                                                                     Event.CTRL_MASK, true));
+            this.pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK, true));
         }
         return this.pasteMenuItem;
     }
@@ -318,8 +317,7 @@ public final class MenuBar extends JMenuBar {
         if (this.saveMenuItem == null) {
             this.saveMenuItem = new JMenuItem();
             this.saveMenuItem.setText(MenuBarResources.SAVE_MENU_ITEM.getText());
-            this.saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK,
-                                                                    true));
+            this.saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK, true));
         }
         return this.saveMenuItem;
     }
@@ -347,7 +345,7 @@ public final class MenuBar extends JMenuBar {
         if (this.showGridCheckBoxMenuItem == null) {
             this.showGridCheckBoxMenuItem = new JCheckBoxMenuItem();
             this.showGridCheckBoxMenuItem.setText(MenuBarResources.SHOW_GRID_CHECK_BOX_MENU_ITEM.getText());
-            this.showGridCheckBoxMenuItem.setSelected(true);
+            this.showGridCheckBoxMenuItem.setSelected(GuiConfiguration.getInstance().isGridVisible());
             this.showGridCheckBoxMenuItem.addActionListener(new ShowGridCheckBoxMenuItemListener());
         }
         return this.showGridCheckBoxMenuItem;
@@ -362,7 +360,7 @@ public final class MenuBar extends JMenuBar {
         if (this.snapToGridCheckBoxMenuItem == null) {
             this.snapToGridCheckBoxMenuItem = new JCheckBoxMenuItem();
             this.snapToGridCheckBoxMenuItem.setText(MenuBarResources.SNAP_TO_GRID_CHECK_BOX_MENU_ITEM.getText());
-            this.snapToGridCheckBoxMenuItem.setSelected(false);
+            this.snapToGridCheckBoxMenuItem.setSelected(GuiConfiguration.getInstance().isSnapToGrid());
             this.snapToGridCheckBoxMenuItem.addActionListener(new SnapToGridCheckBoxMenuItemListener());
         }
         return this.snapToGridCheckBoxMenuItem;
