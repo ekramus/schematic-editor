@@ -6,7 +6,6 @@ import java.awt.geom.Rectangle2D.Double;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
@@ -27,17 +26,6 @@ public class Select extends Manipulation {
         super(null);
         logger = Logger.getLogger(this.getClass().getName());
         setManipulatedGroup(null);
-    }
-
-    public final void setManipulatedGroup(GroupNode manipulatedGroup) {
-        this.manipulatedGroup = manipulatedGroup;
-    }
-
-    /**
-     * @return the manipulatedGroup
-     */
-    public final GroupNode getManipulatedGroup() {
-        return this.manipulatedGroup;
     }
 
     /**

@@ -11,15 +11,6 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  * @author Urban Kravjansky
  */
 public class Delete extends Manipulation {
-    private GroupNode deleteNode;
-
-    /**
-     * @param manipulatedElement
-     */
-    protected Delete() {
-        super(null);
-    }
-
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#getManipulationType()
      */
@@ -47,14 +38,14 @@ public class Delete extends Manipulation {
      */
     @Override
     protected void execute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.delete(getDeleteNode());
+        topNode.delete(getManipulatedGroup());
     }
 
     @Override
     protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
         // top node is not deleted
-        if (!getDeleteNode().isDisabled()) {
-            topNode.delete(getDeleteNode());
+        if (!getManipulatedGroup().isDisabled()) {
+            topNode.delete(getManipulatedGroup());
         }
     }
 
@@ -63,7 +54,7 @@ public class Delete extends Manipulation {
      */
     @Override
     protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.undelete(getDeleteNode());
+        topNode.undelete(getManipulatedGroup());
     }
 
     /**
@@ -74,7 +65,7 @@ public class Delete extends Manipulation {
     public Manipulation manipulationStop(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
-            setDeleteNode(topNode.findHit(r2d));
+            setManipulatedGroup(topNode.findHit(r2d));
         }
         return this;
     }
@@ -89,19 +80,5 @@ public class Delete extends Manipulation {
         setActive(true);
 
         return this;
-    }
-
-    /**
-     * @param deleteNode the deleteNode to set
-     */
-    private void setDeleteNode(GroupNode deleteNode) {
-        this.deleteNode = deleteNode;
-    }
-
-    /**
-     * @return the deleteNode
-     */
-    private GroupNode getDeleteNode() {
-        return deleteNode;
     }
 }

@@ -1,5 +1,10 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+/**
+ * This enumeration contains manipulation types, which are recognized by application.
+ * 
+ * @author Urban Kravjansky
+ */
 public enum ManipulationType {
     /**
      * Create manipulation.
@@ -20,5 +25,17 @@ public enum ManipulationType {
     /**
      * Move manipulation.
      */
-    MOVE;
+    MOVE,
+    /**
+     * Copy manipulation.
+     */
+    COPY,
+    /**
+     * Cut manipulation.
+     */
+    CUT,
+    /**
+     * Paste manipulation.
+     */
+    PASTE,
 }

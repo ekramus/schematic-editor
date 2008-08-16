@@ -25,6 +25,10 @@ public class ManipulationQueue {
      * Index of active {@link Manipulation} stored in {@link ManipulationQueue}.
      */
     private int                      activeManipulationIndex;
+    /**
+     * Clipboard for copy/past operations.
+     */
+    private GroupNode                clipboard;
 
     /**
      * Default constructor. It is for initialization purposes.
@@ -136,6 +140,7 @@ public class ManipulationQueue {
     /**
      * Unexecutes (undoes) manipualtion on position of active manipulation index.
      * 
+     * @param topNode Top {@link GroupNode} instance of scene graph.
      * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution problems, else
      *         <code>true</code>.
      */
@@ -206,5 +211,19 @@ public class ManipulationQueue {
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    /**
+     * @param clipboard the clipboard to set
+     */
+    public void setClipboard(GroupNode clipboard) {
+        this.clipboard = clipboard;
+    }
+
+    /**
+     * @return the clipboard
+     */
+    public GroupNode getClipboard() {
+        return this.clipboard;
     }
 }
