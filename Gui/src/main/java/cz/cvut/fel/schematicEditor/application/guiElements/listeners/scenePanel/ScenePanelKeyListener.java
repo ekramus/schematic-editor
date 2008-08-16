@@ -45,6 +45,7 @@ public class ScenePanelKeyListener implements KeyListener {
      */
     public void keyPressed(KeyEvent e) {
         try {
+            // CTRL alone was pressed - size locking
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
                 Manipulation manipulation = Structures.getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.CREATE) {
@@ -61,7 +62,7 @@ public class ScenePanelKeyListener implements KeyListener {
                     }
                 }
             }
-            // CTRL + Z
+            // CTRL + Z - undo
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Z)) {
                 logger.trace("UNexecuting...");
 
@@ -77,7 +78,7 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 logger.trace("Manipulation queue:\n" + Structures.getManipulationQueue());
             }
-            // CTRL + Y
+            // CTRL + Y - redo
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
                 logger.trace("REexecuting...");
 
@@ -92,6 +93,24 @@ public class ScenePanelKeyListener implements KeyListener {
                         .getActiveManipulation()));
 
                 logger.trace("Manipulation queue:\n" + Structures.getManipulationQueue());
+            }
+            // CTRL + C - copy
+            else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_C)) {
+                logger.trace("COPYing...");
+
+                // needs to be duplicated, because of possible delete
+                Structures.setClipboard((GroupNode) Structures.getActiveManipulation().getManipulatedGroup()
+                        .duplicate());
+            }
+            // CTRL + V - paste
+            else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_V)) {
+                logger.trace("PASTEing...");
+
+                // needs to be duplicated, because of possible multiple paste operations
+                ScenePanel.getInstance().getSchemeSG().getTopNode().add(Structures.getClipboard().duplicate());
+
+                // invalidate scheme
+                ScenePanel.getInstance().schemeInvalidate(null);
             }
             // DEL or BACKSPACE
             else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
