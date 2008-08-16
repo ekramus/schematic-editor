@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelKeyListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.ScenePanelMouseMotionListener;
-import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
@@ -25,9 +24,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.properties.Configuration;
 import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 

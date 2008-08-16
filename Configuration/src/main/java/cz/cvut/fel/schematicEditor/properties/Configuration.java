@@ -9,6 +9,9 @@ import java.io.IOException;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
+
 /**
  * This class serves as application properties superclass. It implements methods used by child classes, which have are
  * responsible for properties of specified part of application.
@@ -30,7 +33,7 @@ public class Configuration {
      */
     public static Configuration getInstance() {
         if (instance == null) {
-            instance = Configuration.deserialize(FILE);
+            instance = Configuration.deserialize(Configuration.class, FILE);
             if (instance == null) {
                 instance = new Configuration();
             }
@@ -48,14 +51,16 @@ public class Configuration {
     /**
      * Deserializes configuration from given file.
      * 
+     * @param clazz Class of deserialized configuration.
      * @param file Path to file, where is serialized {@link Configuration}.
      * @return Deserialized {@link Configuration} class.
      */
-    public static Configuration deserialize(String file) {
+    public static Configuration deserialize(Class<? extends Configuration> clazz, String file) {
         XStream xstream = new XStream(new DomDriver());
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
+            processAnnotations(xstream, clazz);
             return (Configuration) xstream.fromXML(br);
         } catch (IOException e) {
             return null;
@@ -71,11 +76,9 @@ public class Configuration {
     public static void serialize(Configuration configuration, String file) {
         XStream xstream = new XStream(new DomDriver());
 
-        // xstream.alias("person", Person.class);
-        // xstream.alias("phonenumber", PhoneNumber.class);
-
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            processAnnotations(xstream, configuration.getClass());
             xstream.toXML(configuration, bw);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -88,5 +91,17 @@ public class Configuration {
      */
     public static String getFile() {
         return Configuration.FILE;
+    }
+
+    /**
+     * Processes all {@link XStream} annotations in entered classes.
+     * 
+     * @param xstream {@link XStream} instance to configure.
+     * @param clazz Class of configuration object.
+     */
+    private static void processAnnotations(XStream xstream, Class<? extends Configuration> clazz) {
+        xstream.processAnnotations(clazz);
+        xstream.processAnnotations(Unit.class);
+        xstream.processAnnotations(Pixel.class);
     }
 }

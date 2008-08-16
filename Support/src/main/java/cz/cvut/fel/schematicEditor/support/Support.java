@@ -9,7 +9,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
  * This class is used for static support methods. It will be deprecated in time.
- *
+ * 
  * @author Urban Kravjansk�
  */
 @Deprecated
@@ -17,11 +17,9 @@ public class Support {
 
     /**
      * Calculates distance between given point and line.
-     *
-     * @param p
-     *            given point.
-     * @param l
-     *            given line.
+     * 
+     * @param p given point.
+     * @param l given line.
      * @return Distance between given point and line.
      */
     public static double distance(Point2D.Double p, Line2D.Double l) {
@@ -32,17 +30,16 @@ public class Support {
         double y1 = l.getY1();
         double y2 = l.getY2();
 
-        return Math.abs((x2 - x1) * (y1 - b) - (x1 - a) * (y2 - y1))
-               / Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        return Math.abs((x2 - x1) * (y1 - b) - (x1 - a) * (y2 - y1)) / Math.sqrt((x2 - x1) * (x2 - x1)
+                + (y2 - y1)
+                * (y2 - y1));
     }
 
     /**
      * Calculates distance between two given points.
-     *
-     * @param p1
-     *            given 1st point.
-     * @param p2
-     *            given 2nd point.
+     * 
+     * @param p1 given 1st point.
+     * @param p2 given 2nd point.
      * @return Distance between given points.
      */
     public static double distance(Point2D.Double p1, Point2D.Double p2) {
@@ -56,11 +53,9 @@ public class Support {
 
     /**
      * Calculates middle point between two given points.
-     *
-     * @param p1
-     *            given 1st point.
-     * @param p2
-     *            given 2nd point.
+     * 
+     * @param p1 given 1st point.
+     * @param p2 given 2nd point.
      * @return Middle point between given points.
      */
     public static Point2D.Double middle(Point2D.Double p1, Point2D.Double p2) {
@@ -69,11 +64,9 @@ public class Support {
 
     /**
      * Calculates average of two given {@link Unit}s.
-     *
-     * @param a
-     *            given 1st {@link Unit}.
-     * @param b
-     *            given 2nd {@link Unit}.
+     * 
+     * @param a given 1st {@link Unit}.
+     * @param b given 2nd {@link Unit}.
      * @return Average of two given {@link Unit}s.
      */
     public static Unit average(Unit a, Unit b) {
@@ -82,16 +75,14 @@ public class Support {
 
     /**
      * Calculates rectangle of given size around given point.
-     *
-     * @param point
-     *            center point of rectangle.
-     * @param size
-     *            diameter of rectangle.
+     * 
+     * @param point center point of rectangle.
+     * @param size diameter of rectangle.
      * @return Calculated {@link Rectangle2D.Double}.
      */
-    public static Rectangle2D.Double createPointerRectangle(Point2D.Double point, double size) {
-        Rectangle2D.Double result = new Rectangle2D.Double(point.getX() - size,
-                point.getY() - size, 2 * size, 2 * size);
+    public static Rectangle2D.Double createPointerRectangle(Point2D.Double point, Point2D.Double size) {
+        Rectangle2D.Double result = new Rectangle2D.Double(point.getX() - size.getX(), point.getY() - size.getY(),
+                2 * size.getX(), 2 * size.getY());
 
         return result;
     }

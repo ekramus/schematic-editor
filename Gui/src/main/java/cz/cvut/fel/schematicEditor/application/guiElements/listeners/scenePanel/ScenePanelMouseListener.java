@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopup;
-import cz.cvut.fel.schematicEditor.core.Constants;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
@@ -21,6 +20,7 @@ import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.support.Support;
 
 /**
@@ -119,7 +119,8 @@ public class ScenePanelMouseListener implements MouseListener {
 
             // get pointer rectangle
             Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
-                                                                    Constants.POINT_SIZE);
+                                                                    GuiConfiguration.getInstance()
+                                                                            .getPointerRectangle());
 
             Manipulation m = Structures.getActiveManipulation();
             if (!m.isActive() || m.getManipulationType() == ManipulationType.SELECT) {
@@ -147,7 +148,8 @@ public class ScenePanelMouseListener implements MouseListener {
 
             // get pointer rectangle
             Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
-                                                                    Constants.POINT_SIZE);
+                                                                    GuiConfiguration.getInstance()
+                                                                            .getPointerRectangle());
 
             GroupNode topNode = ScenePanel.getInstance().getSchemeSG().getTopNode();
 
