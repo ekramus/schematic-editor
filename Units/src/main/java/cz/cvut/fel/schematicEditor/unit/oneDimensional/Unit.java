@@ -1,5 +1,8 @@
 package cz.cvut.fel.schematicEditor.unit.oneDimensional;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 
 /**
@@ -7,6 +10,7 @@ import cz.cvut.fel.schematicEditor.unit.UnitType;
  * 
  * @author Urban Kravjansky
  */
+@XStreamAlias("unit")
 public abstract class Unit implements Comparable<Unit> {
     /**
      * Value of given unit.
@@ -17,9 +21,10 @@ public abstract class Unit implements Comparable<Unit> {
      */
     private double   doubleFactor;
     /**
-     * <code>unitType</code> represents {@link String}, which appears after unit value for unit specification (e.g.
-     * px for pixels, mm for milimeters, etc.).
+     * <code>unitType</code> represents {@link String}, which appears after unit value for unit specification (e.g. px
+     * for pixels, mm for milimeters, etc.).
      */
+    @XStreamOmitField
     private UnitType unitType;
 
     /**
@@ -43,8 +48,7 @@ public abstract class Unit implements Comparable<Unit> {
     /**
      * Setter for <code>doubleFactor</code>. Value means, how many dots are in one unit.
      * 
-     * @param doubleFactor
-     *            value of <code>doubleFactor</code> to set.
+     * @param doubleFactor value of <code>doubleFactor</code> to set.
      */
     protected final void setDoubleFactor(final double doubleFactor) {
         this.doubleFactor = doubleFactor;
@@ -80,8 +84,7 @@ public abstract class Unit implements Comparable<Unit> {
     /**
      * Setter of <code>double</code> value of this {@link Unit}.
      * 
-     * @param doubleValue
-     *            value of <code>double</code> to set.
+     * @param doubleValue value of <code>double</code> to set.
      */
     public final void setDouble(final double doubleValue) {
         setValue(doubleValue / getDoubleFactor());
@@ -99,8 +102,7 @@ public abstract class Unit implements Comparable<Unit> {
     /**
      * Setter for unit <code>value</code>.
      * 
-     * @param value
-     *            {@link Unit} <code>value</code>.
+     * @param value {@link Unit} <code>value</code>.
      */
     public final void setValue(final double value) {
         this.value = value;
@@ -128,14 +130,15 @@ public abstract class Unit implements Comparable<Unit> {
     /**
      * Setter for <code>unitType</code>.
      * 
-     * @param unitType
-     *            <code>unitType</code> value.
+     * @param unitType <code>unitType</code> value.
      */
     protected final void setUnitType(final UnitType unitType) {
         this.unitType = unitType;
     }
 
     /**
+     * @param unit
+     * @return
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Unit unit) {
