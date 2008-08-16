@@ -11,11 +11,14 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.manipulation.Copy;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.Paste;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
@@ -98,18 +101,33 @@ public class ScenePanelKeyListener implements KeyListener {
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_C)) {
                 logger.trace("COPYing...");
 
-                // needs to be duplicated, because of possible delete
-                Structures.setClipboard((GroupNode) Structures.getActiveManipulation().getManipulatedGroup()
+                // set active manipulation
+                Copy copy = new Copy();
+                // set manipulated group from select manipulation and duplicate it
+                copy.setManipulatedGroup((GroupNode) Structures.getActiveManipulation().getManipulatedGroup()
                         .duplicate());
+                copy.manipulationStop(null, null, Structures.getManipulationQueue(), ScenePanel.getInstance()
+                        .getSchemeSG().getTopNode(), false);
+
+                // execute manipulation
+                Structures.getManipulationQueue().execute(copy, ScenePanel.getInstance().getSchemeSG().getTopNode());
+
+                // redraw scheme
+                ScenePanel.getInstance().schemeInvalidate(null);
             }
             // CTRL + V - paste
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_V)) {
                 logger.trace("PASTEing...");
 
-                // needs to be duplicated, because of possible multiple paste operations
-                ScenePanel.getInstance().getSchemeSG().getTopNode().add(Structures.getClipboard().duplicate());
+                // set active manipulation
+                Paste paste = new Paste();
+                paste.manipulationStop(null, null, Structures.getManipulationQueue(), ScenePanel.getInstance()
+                        .getSchemeSG().getTopNode(), false);
 
-                // invalidate scheme
+                // execute manipulation
+                Structures.getManipulationQueue().execute(paste, ScenePanel.getInstance().getSchemeSG().getTopNode());
+
+                // redraw scheme
                 ScenePanel.getInstance().schemeInvalidate(null);
             }
             // DEL or BACKSPACE

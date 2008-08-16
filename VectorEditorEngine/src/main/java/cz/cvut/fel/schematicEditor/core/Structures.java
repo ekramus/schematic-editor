@@ -1,7 +1,6 @@
 package cz.cvut.fel.schematicEditor.core;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 
@@ -23,10 +22,6 @@ public class Structures {
      * Reference to active {@link Manipulation} instance.
      */
     private static Manipulation      activeManipulation = null;
-    /**
-     * Clipboard for copy and paste of selected {@link GroupNode}.
-     */
-    private static GroupNode         clipboard          = null;
 
     /**
      * Getter for <code>activeManipulation</code> instance.
@@ -68,19 +63,5 @@ public class Structures {
             manipulationQueue = new ManipulationQueue();
         }
         return manipulationQueue;
-    }
-
-    /**
-     * @param clipboard the clipboard to set
-     */
-    public static void setClipboard(GroupNode clipboard) {
-        Structures.clipboard = clipboard;
-    }
-
-    /**
-     * @return the clipboard
-     */
-    public static GroupNode getClipboard() {
-        return clipboard;
     }
 }
