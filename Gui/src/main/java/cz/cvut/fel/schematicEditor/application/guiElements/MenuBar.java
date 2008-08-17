@@ -17,6 +17,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.Deb
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ExitMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.GridMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveAsMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SavePreferencesMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ShowGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SnapToGridCheckBoxMenuItemListener;
@@ -318,6 +319,7 @@ public final class MenuBar extends JMenuBar {
             this.saveMenuItem = new JMenuItem();
             this.saveMenuItem.setText(MenuBarResources.SAVE_MENU_ITEM.getText());
             this.saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK, true));
+            this.saveMenuItem.addActionListener(new SaveMenuItemListener());
         }
         return this.saveMenuItem;
     }

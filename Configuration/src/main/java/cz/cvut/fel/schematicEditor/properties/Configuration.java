@@ -29,26 +29,6 @@ public class Configuration {
     private static Configuration instance = null;
 
     /**
-     * @return the appProperties
-     */
-    public static Configuration getInstance() {
-        if (instance == null) {
-            instance = Configuration.deserialize(Configuration.class, FILE);
-            if (instance == null) {
-                instance = new Configuration();
-            }
-        }
-        return instance;
-    }
-
-    /**
-     * {@link Configuration} constructor. It loads global properties file and log4j properties file.
-     */
-    protected Configuration() {
-        // nothing to do
-    }
-
-    /**
      * Deserializes configuration from given file.
      * 
      * @param clazz Class of deserialized configuration.
@@ -65,6 +45,26 @@ public class Configuration {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    /**
+     * @return the FILE
+     */
+    public static String getFile() {
+        return Configuration.FILE;
+    }
+
+    /**
+     * @return the appProperties
+     */
+    public static Configuration getInstance() {
+        if (instance == null) {
+            instance = Configuration.deserialize(Configuration.class, FILE);
+            if (instance == null) {
+                instance = new Configuration();
+            }
+        }
+        return instance;
     }
 
     /**
@@ -87,13 +87,6 @@ public class Configuration {
     }
 
     /**
-     * @return the FILE
-     */
-    public static String getFile() {
-        return Configuration.FILE;
-    }
-
-    /**
      * Processes all {@link XStream} annotations in entered classes.
      * 
      * @param xstream {@link XStream} instance to configure.
@@ -103,5 +96,12 @@ public class Configuration {
         xstream.processAnnotations(clazz);
         xstream.processAnnotations(Unit.class);
         xstream.processAnnotations(Pixel.class);
+    }
+
+    /**
+     * {@link Configuration} constructor. It loads global properties file and log4j properties file.
+     */
+    protected Configuration() {
+        // nothing to do
     }
 }

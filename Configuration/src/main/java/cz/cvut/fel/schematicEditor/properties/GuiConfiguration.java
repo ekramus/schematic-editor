@@ -46,25 +46,29 @@ public class GuiConfiguration extends Configuration {
     }
 
     /**
-     * ScenePanel X and Y dimension.
-     */
-    private Dimension      sceneDim             = new Dimension(1280, 1024);
-    /**
      * ScenePanel grid size.
      */
     private Unit           gridSize             = new Pixel(25);
     /**
-     * Scheme antialiasing indicator.
+     * Grid visibility indicator.
      */
-    private boolean        schemeAntialiased    = true;
+    private boolean        gridVisible          = true;
+    /**
+     * Size of pointer used in Manipulations.
+     */
+    private Point2D.Double pointerRectangle     = new Point2D.Double(5, 5);
     /**
      * Background color of ScenePanel.
      */
     private Color          sceneBackgroundColor = new Color(255, 255, 255);
     /**
-     * Grid visibility indicator.
+     * ScenePanel X and Y dimension.
      */
-    private boolean        gridVisible          = true;
+    private Dimension      sceneDim             = new Dimension(1280, 1024);
+    /**
+     * Scheme antialiasing indicator.
+     */
+    private boolean        schemeAntialiased    = true;
     /**
      * Indicates, whether is scheme debugged.
      */
@@ -73,16 +77,12 @@ public class GuiConfiguration extends Configuration {
      * Indicate, whether is snap to grid or not.
      */
     private boolean        snapToGrid           = false;
-    /**
-     * Size of pointer used in Manipulations.
-     */
-    private Point2D.Double pointerRectangle     = new Point2D.Double(5, 5);
 
     /**
      * 
      */
     public GuiConfiguration() {
-        // TODO Auto-generated constructor stub
+        // nothing to do
     }
 
     /**
@@ -90,6 +90,13 @@ public class GuiConfiguration extends Configuration {
      */
     public Unit getGridSize() {
         return this.gridSize;
+    }
+
+    /**
+     * @return the pointerRectangle
+     */
+    public Point2D.Double getPointerRectangle() {
+        return this.pointerRectangle;
     }
 
     /**
@@ -149,6 +156,13 @@ public class GuiConfiguration extends Configuration {
     }
 
     /**
+     * @param pointerRectangle the pointerRectangle to set
+     */
+    public void setPointerRectangle(Point2D.Double pointerRectangle) {
+        this.pointerRectangle = pointerRectangle;
+    }
+
+    /**
      * @param sceneBackgroundColor the sceneBackgroundColor to set
      */
     public void setSceneColor(Color sceneBackgroundColor) {
@@ -181,19 +195,5 @@ public class GuiConfiguration extends Configuration {
      */
     public void setSnapToGrid(boolean snapToGrid) {
         this.snapToGrid = snapToGrid;
-    }
-
-    /**
-     * @param pointerRectangle the pointerRectangle to set
-     */
-    public void setPointerRectangle(Point2D.Double pointerRectangle) {
-        this.pointerRectangle = pointerRectangle;
-    }
-
-    /**
-     * @return the pointerRectangle
-     */
-    public Point2D.Double getPointerRectangle() {
-        return this.pointerRectangle;
     }
 }
