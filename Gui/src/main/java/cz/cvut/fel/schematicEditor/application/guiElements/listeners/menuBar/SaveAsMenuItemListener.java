@@ -9,6 +9,8 @@ import javax.swing.JFileChooser;
 import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
+import cz.cvut.fel.schematicEditor.export.PSExport;
+import cz.cvut.fel.schematicEditor.export.SVGExport;
 
 /**
  * This class implements {@link ActionListener} for <code>saveAsMenuItem</code> in {@link MenuBar}.
@@ -27,16 +29,15 @@ public final class SaveAsMenuItemListener implements ActionListener {
     // FIXME add externalized strings
 
     /**
-     * Method invoked as result to an action. It initializes ne {@link JFileChooser} instance to select file and then
+     * Method invoked as result to an action. It initializes new {@link JFileChooser} instance to select file and then
      * executes export process.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * @param e
-     *            {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
+     * @param e {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.
      */
     public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = new JFileChooser("C:\\");
+        JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose file to export");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SVG, ExportFileFilter.SVGDESC));
         fileChooser
@@ -47,12 +48,10 @@ public final class SaveAsMenuItemListener implements ActionListener {
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (ExportFileFilter.getExtension(file).equalsIgnoreCase("svg")) {
-                // TODO enable SVGExport
-                // new SVGExport().export(Structures.getScenePanel().getSchemeSG(), file);
+                new SVGExport().export(ScenePanel.getInstance().getSchemeSG(), file);
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("eps")) {
-                // TODO enable PSExport
-                // new PSExport().export(Structures.getScenePanel().getSchemeSG(), file);
+                new PSExport().export(ScenePanel.getInstance().getSchemeSG(), file);
 
             } else {
                 System.out.println("Failed to export");

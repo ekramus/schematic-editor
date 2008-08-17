@@ -190,7 +190,7 @@ public class ScenePanel extends JPanel {
         sg.setTopNode(g);
 
         // try to draw elements using DisplayExport
-        DisplayExport de = DisplayExport.getExport();
+        DisplayExport de = DisplayExport.getInstance();
         de.export(sg, manipulatedGroup);
 
         return manipulatedGroup;
@@ -277,7 +277,7 @@ public class ScenePanel extends JPanel {
         BufferedImage scheme = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         // initialize DisplayExport
-        DisplayExport de = DisplayExport.getExport();
+        DisplayExport de = DisplayExport.getInstance();
         de.setAntialiased(configuration.isSchemeAntialiased());
         de.setDebugged(configuration.isSchemeDebugged());
         de.export(this.schemeSG, scheme);
