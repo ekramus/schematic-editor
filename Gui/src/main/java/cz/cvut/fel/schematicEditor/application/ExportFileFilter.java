@@ -17,10 +17,18 @@ public class ExportFileFilter extends FileFilter {
      * {@link Logger} instance for logging purposes.
      */
     private static Logger      logger;
-    public final static String POSTDESC   = "Encaptulated Postscript(*.eps)";
+    public final static String POSTDESC   = "Encaptulated Postscript (*.eps)";
     public final static String POSTSCRIPT = "eps";
     public final static String SVG        = "svg";
     public final static String SVGDESC    = "SVG files (*.svg)";
+    /**
+     * SEF file format description.
+     */
+    public static final String SEFDESC    = "Schematic Editor Format (*.sef)";
+    /**
+     * SEF file format extension.
+     */
+    public static final String SEF        = "sef";
 
     public static String getExtension(File f) {
 
