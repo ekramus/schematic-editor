@@ -1,11 +1,10 @@
-/**
- * 
- */
 package cz.cvut.fel.schematicEditor.application;
 
 import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
+
+import org.apache.log4j.Logger;
 
 /**
  * This class represents FileFilter of POSTSCRIPT and SVG file formats
@@ -14,6 +13,10 @@ import javax.swing.filechooser.FileFilter;
  * @author Urban Kravjansky
  */
 public class ExportFileFilter extends FileFilter {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger      logger;
     public final static String POSTDESC   = "Encaptulated Postscript(*.eps)";
     public final static String POSTSCRIPT = "eps";
     public final static String SVG        = "svg";
@@ -37,6 +40,8 @@ public class ExportFileFilter extends FileFilter {
     private String extension;
 
     public ExportFileFilter(String extension, String description) {
+        logger = Logger.getLogger(this.getClass().getName());
+
         this.extension = extension;
         this.description = description;
     }
@@ -45,10 +50,17 @@ public class ExportFileFilter extends FileFilter {
     public boolean accept(File arg0) {
         String ext = ExportFileFilter.getExtension(arg0);
 
-        if (arg0.isDirectory() || ext.equals(extension)) {
-            return true;
-        }
+        logger.trace("file: " + arg0 + ", ext: " + ext);
 
+        try {
+            if (arg0.isDirectory() || ext.equals(extension)) {
+                return true;
+            }
+        }
+        // file does not have extension
+        catch (NullPointerException npe) {
+            return false;
+        }
         return false;
     }
 

@@ -47,10 +47,8 @@ public class SVGExport implements Export {
     /**
      * Starts exporting into SVG
      * 
-     * @param sg
-     *            actual SceneGraph instance.
-     * @param output
-     *            output file name.
+     * @param sg actual SceneGraph instance.
+     * @param output output file name.
      */
     public void export(SceneGraph sg, Object output) {
         File file = (File) output;
@@ -79,8 +77,7 @@ public class SVGExport implements Export {
     /**
      * This method creates style string for given ParameterNode.
      * 
-     * @param pn
-     *            given ParameterNode.
+     * @param pn given ParameterNode.
      * @return String representing style attribute
      */
     private String createStyleString(ParameterNode pn) {
@@ -115,11 +112,7 @@ public class SVGExport implements Export {
         // fill color
         col = pn.getFill();
         if (col != null) {
-            fillString = "fill:rgb(" + String.valueOf(col.getRed() + ","
-                    + col.getGreen()
-                    + ","
-                    + col.getBlue()
-                    + ")");
+            fillString = "fill:rgb(" + String.valueOf(col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ")");
         } else {
             fillString = "fill:none";
         }
@@ -140,12 +133,13 @@ public class SVGExport implements Export {
     /**
      * This method creates transformation string from given Transformation.
      * 
-     * @param t
-     *            transformation to process.
+     * @param t transformation to process.
      * @return String representing transform attribute
      */
     private String createTransformString(Transformation t) {
         String transformString = "";
+
+        // TODO reimplement this with correct transformation string for SVG
 
         if (t == null) {
             return transformString;
@@ -250,8 +244,7 @@ public class SVGExport implements Export {
     /**
      * Draw ellipse defined by center point a with x,y radius
      */
-    private void drawEllipse(Point2D.Double center, double radiusX, double radiusY,
-            ParameterNode pn, Transformation tn) {
+    private void drawEllipse(Point2D.Double center, double radiusX, double radiusY, ParameterNode pn, Transformation tn) {
         out.println("<ellipse cx=\"" + center.x
                 + "\" cy=\""
                 + center.y
@@ -270,8 +263,7 @@ public class SVGExport implements Export {
     /*
      * Draw line.
      */
-    private void drawLine(Point2D.Double start, Point2D.Double finish, ParameterNode pn,
-            Transformation tn) {
+    private void drawLine(Point2D.Double start, Point2D.Double finish, ParameterNode pn, Transformation tn) {
         out.println("<line x1=\"" + start.getX()
                 + "\" y1=\""
                 + start.getY()
@@ -299,15 +291,13 @@ public class SVGExport implements Export {
 
             case ElementType.T_LINE:
                 Line l = (Line) en.getElement();
-                drawLine(new Point2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0)
-                        .doubleValue()), new Point2D.Double(l.getX().get(1).doubleValue(), l.getY()
-                        .get(1).doubleValue()), pn, tn);
+                drawLine(new Point2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue()),
+                         new Point2D.Double(l.getX().get(1).doubleValue(), l.getY().get(1).doubleValue()), pn, tn);
                 break;
 
             case ElementType.T_RECTANGLE:
                 Rectangle r = (Rectangle) en.getElement();
-                drawRectangle(new Point2D.Double(r.getTopLeftX(), r.getTopLeftY()), r.getWidth(), r
-                        .getHeight(), pn, tn);
+                drawRectangle(new Point2D.Double(r.getTopLeftX(), r.getTopLeftY()), r.getWidth(), r.getHeight(), pn, tn);
                 break;
 
             case ElementType.T_ARC:
@@ -317,9 +307,9 @@ public class SVGExport implements Export {
 
             case ElementType.T_ELLIPSE:
                 Ellipse ellipse = (Ellipse) en.getElement();
-                drawEllipse(new Point2D.Double(ellipse.getX().get(0).doubleValue() + (ellipse
-                        .getWidth() / 2), ellipse.getY().get(0).doubleValue() + (ellipse
-                        .getHeight() / 2)), ellipse.getWidth() / 2, ellipse.getHeight() / 2, pn, tn);
+                drawEllipse(new Point2D.Double(ellipse.getX().get(0).doubleValue() + (ellipse.getWidth() / 2), ellipse
+                        .getY().get(0).doubleValue() + (ellipse.getHeight() / 2)), ellipse.getWidth() / 2, ellipse
+                        .getHeight() / 2, pn, tn);
                 break;
 
             case ElementType.T_TRIANGLE:
@@ -339,8 +329,7 @@ public class SVGExport implements Export {
                 break;
             case ElementType.T_TEXT:
                 Text tx = (Text) en.getElement();
-                drawText(tx, new Point2D.Double(tx.getX().get(0).doubleValue(), tx.getY().get(0)
-                        .doubleValue()), pn, tn);
+                drawText(tx, new Point2D.Double(tx.getX().get(0).doubleValue(), tx.getY().get(0).doubleValue()), pn, tn);
                 break;
             default:
                 System.out.println(en.getElementType());
@@ -352,16 +341,14 @@ public class SVGExport implements Export {
     /**
      * This method draw polyline or polygon
      * 
-     * @param closedPath
-     *            true for polygon, false for polyline
+     * @param closedPath true for polygon, false for polyline
      * @param x
      * @param y
      * @param pn
      * @param tn
      */
 
-    private void drawPoly(boolean closedPath, Vector<Unit> x, Vector<Unit> y, ParameterNode pn,
-            Transformation tn) {
+    private void drawPoly(boolean closedPath, Vector<Unit> x, Vector<Unit> y, ParameterNode pn, Transformation tn) {
 
         int size;
 
@@ -386,8 +373,7 @@ public class SVGExport implements Export {
     /*
      * Draw rectangle.
      */
-    private void drawRectangle(Point2D.Double start, double width, double height, ParameterNode pn,
-            Transformation tn) {
+    private void drawRectangle(Point2D.Double start, double width, double height, ParameterNode pn, Transformation tn) {
         out.println("<rect x=\"" + start.getX()
                 + "\" y=\""
                 + start.getY()

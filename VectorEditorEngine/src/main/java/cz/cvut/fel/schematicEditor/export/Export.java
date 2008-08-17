@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.export;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
- * Interface for export classes.
+ * Interface for export classes. This classes are responsible for {@link SceneGraph} visualisation.
  * 
  * @author urban.kravjansky
  * 
@@ -11,13 +11,11 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 public interface Export {
 
     /**
-     * This method exports data obtained from <code>sg</code> into <code>output</code>.
-     * Exporting methods depend on export filtre.
+     * Exports data obtained from {@link SceneGraph} into <code>output</code> device. Exporting methods depend on export
+     * filter.
      * 
-     * @param sg
-     *            scene graph.
-     * @param output
-     *            output device.
+     * @param sceneGraph scene graph being drawn.
+     * @param output output device, where drawing is generated.
      */
-    public void export(SceneGraph sg, Object output);
+    public void export(SceneGraph sceneGraph, Object output);
 }
