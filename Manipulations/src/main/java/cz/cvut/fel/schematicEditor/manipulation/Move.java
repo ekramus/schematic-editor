@@ -3,7 +3,6 @@ package cz.cvut.fel.schematicEditor.manipulation;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 
 import org.apache.log4j.Logger;
 
@@ -31,6 +30,9 @@ public class Move extends Manipulation {
      */
     private Point2D.Double delta;
 
+    /**
+     * Default {@link Move} constructor. It initializes this {@link Manipulation}.
+     */
     protected Move() {
         super(null);
         setManipulatedGroup(null);
@@ -83,11 +85,11 @@ public class Move extends Manipulation {
     /**
      * Specific <code>manipulationStart</code> method for {@link Move} manipulation.
      * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Double,
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue mq, GroupNode topNode,
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue mq, GroupNode topNode,
             boolean isMouseClicked) throws UnknownManipulationException {
         // check, whether move is possible or not
         if (isActive() && getManipulatedGroup() == topNode.findHit(r2d)) {
@@ -108,11 +110,11 @@ public class Move extends Manipulation {
     /**
      * Specific <code>manipulationEnd</code> method for {@link Move} manipulation.
      * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Double,
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStop(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.debug("object MOVED");

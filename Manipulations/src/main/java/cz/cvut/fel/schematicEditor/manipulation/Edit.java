@@ -2,7 +2,7 @@ package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D.Double;
+import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
@@ -30,6 +30,9 @@ public class Edit extends Manipulation {
      */
     private static Logger  logger;
 
+    /**
+     * Default constructor. It initializes this {@link Edit} {@link Manipulation}.
+     */
     protected Edit() {
         super(null);
         setManipulatedGroup(null);
@@ -46,11 +49,11 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D.Double,
-     *      ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent,
+     *      java.awt.geom.Rectangle2D, ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         // check, whether move is possible or not
         if (isActive() && getManipulatedGroup() == topNode.findHit(r2d)) {
@@ -69,11 +72,11 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D.Double,
-     *      ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
+     *      ManipulationQueue, GroupNode, boolean) ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStop(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode grouNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.trace("object EDITED");
