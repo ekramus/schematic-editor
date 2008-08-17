@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D.Double;
+import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
@@ -17,7 +17,6 @@ public class Select extends Manipulation {
      * {@link Logger} instance for logging purposes.
      */
     private static Logger logger;
-    private GroupNode     manipulatedGroup;
 
     /**
      *
@@ -78,11 +77,11 @@ public class Select extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationEnd(MouseEvent, Rectangle2D.Double,
-     *      ManipulationQueue, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStop(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
         // mouse clicked and hit something
         if (isMouseClicked) {
@@ -104,11 +103,11 @@ public class Select extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D.Double,
-     *      ManipulationQueue, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode groupNode, boolean isMouseClick) throws UnknownManipulationException {
         Manipulation result = this;
 

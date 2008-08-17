@@ -6,12 +6,8 @@ import java.awt.geom.Rectangle2D;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
-import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -64,7 +60,7 @@ public class Create extends Manipulation {
      * Constructor used for {@link Create} initialization. It is protected so it {@link Manipulation} has to be created
      * using {@link ManipulationFactory}.
      * 
-     * @param manipulatedElement {@link Element}, which will be created using this {@link Create} manipulation.
+     * @param manipulatedGroup {@link GroupNode}, which will be created using this {@link Create} manipulation.
      */
     protected Create(GroupNode manipulatedGroup) {
         super(manipulatedGroup);
@@ -95,29 +91,10 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
-     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
+     * @return the elementModificator
      */
-    @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
-        super.replaceLastManipulationCoordinates(x, y);
-
-        // update manipulated group coordinates
-        getManipulatedGroup().setXY(getX(), getY());
-    }
-
-    /**
-     * @return the pointsLeft
-     */
-    public int getPointsLeft() {
-        return this.pointsLeft;
-    }
-
-    /**
-     * @param pointsLeft the pointsLeft to set
-     */
-    public void setPointsLeft(int pointsLeft) {
-        this.pointsLeft = pointsLeft;
+    public ElementModificator getElementModificator() {
+        return getManipulatedGroup().getElementModificator();
     }
 
     /**
@@ -129,17 +106,10 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @return the elementModificator
+     * @return the pointsLeft
      */
-    public ElementModificator getElementModificator() {
-        return getManipulatedGroup().getElementModificator();
-    }
-
-    /**
-     * @param elementModificator the elementModificator to set
-     */
-    public void setElementModificator(ElementModificator elementModificator) {
-        getManipulatedGroup().setElementModificator(elementModificator);
+    public int getPointsLeft() {
+        return this.pointsLeft;
     }
 
     /**
@@ -150,73 +120,30 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @param finished the finished to set
-     */
-    public final void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
-     */
-    @Override
-    protected Manipulation duplicate() {
-        Create c = new Create((GroupNode) getManipulatedGroup().duplicate());
-        return c;
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
-     */
-    @Override
-    protected Manipulation createNext() {
-        return duplicate();
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
-     */
-    @Override
-    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
-        GroupNode gn = getManipulatedGroup();
-
-        logger.debug("processing final manipulation step");
-
-        setActive(false);
-        setFinished(true);
-
-        topNode.add(gn);
-        logger.trace(this + " executed");
-    }
-
-    @Override
-    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
-        // if manipulated group was disabled by previous undo
-        if (getManipulatedGroup().isDisabled()) {
-            topNode.undelete(getManipulatedGroup());
-        }
-        // if redo is executed at the end of ManipulationQueue
-        else {
-            execute(topNode);
-        }
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
-     */
-    @Override
-    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.delete(getManipulatedGroup());
-
-        logger.trace(this + " unexecuted");
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D.Double,
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStop(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
+            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
+        logger.trace(this + " manipulation START");
+
+        // Create create = (Create) Structures.getManipulationQueue().peek();
+        setActive(true);
+
+        // add two pairs of coordinates (each element needs two)
+        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+
+        return this;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
+     *      ManipulationQueue, GroupNode, boolean)
+     */
+    @Override
+    public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
 
@@ -250,22 +177,36 @@ public class Create extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D.Double,
-     *      ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
-        logger.trace(this + " manipulation START");
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        super.replaceLastManipulationCoordinates(x, y);
 
-        // Create create = (Create) Structures.getManipulationQueue().peek();
-        setActive(true);
+        // update manipulated group coordinates
+        getManipulatedGroup().setXY(getX(), getY());
+    }
 
-        // add two pairs of coordinates (each element needs two)
-        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
-        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+    /**
+     * @param elementModificator the elementModificator to set
+     */
+    public void setElementModificator(ElementModificator elementModificator) {
+        getManipulatedGroup().setElementModificator(elementModificator);
+    }
 
-        return this;
+    /**
+     * @param finished the finished to set
+     */
+    public final void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    /**
+     * @param pointsLeft the pointsLeft to set
+     */
+    public void setPointsLeft(int pointsLeft) {
+        this.pointsLeft = pointsLeft;
     }
 
     /**
@@ -274,5 +215,63 @@ public class Create extends Manipulation {
     @Override
     public String toString() {
         return "Create(" + getManipulatedGroup() + ")";
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
+     */
+    @Override
+    protected Manipulation createNext() {
+        return duplicate();
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
+     */
+    @Override
+    protected Manipulation duplicate() {
+        Create c = new Create((GroupNode) getManipulatedGroup().duplicate());
+        return c;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute(GroupNode)
+     */
+    @Override
+    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
+        GroupNode gn = getManipulatedGroup();
+
+        logger.debug("processing final manipulation step");
+
+        setActive(false);
+        setFinished(true);
+
+        topNode.add(gn);
+        logger.trace(this + " executed");
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#reexecute(GroupNode)
+     */
+    @Override
+    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+        // if manipulated group was disabled by previous undo
+        if (getManipulatedGroup().isDisabled()) {
+            topNode.undelete(getManipulatedGroup());
+        }
+        // if redo is executed at the end of ManipulationQueue
+        else {
+            execute(topNode);
+        }
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute(GroupNode)
+     */
+    @Override
+    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+        topNode.delete(getManipulatedGroup());
+
+        logger.trace(this + " unexecuted");
     }
 }

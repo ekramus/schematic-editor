@@ -115,7 +115,7 @@ public class GroupNode extends Node {
         return result;
     }
 
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         if (isDisabled()) {
             return false;
         }
@@ -288,7 +288,7 @@ public class GroupNode extends Node {
      * @param point
      * @return
      */
-    public GroupNode findHit(Rectangle2D.Double rectangle) {
+    public GroupNode findHit(Rectangle2D rectangle) {
         if (isDisabled()) {
             return null;
         }
@@ -344,7 +344,7 @@ public class GroupNode extends Node {
      * @param r2d rectangle around pointer.
      * @return <code>true</code> if given rectangle contains any edit point from group, else <code>false</code>.
      */
-    public boolean startEdit(Rectangle2D.Double r2d) {
+    public boolean startEdit(Rectangle2D r2d) {
         if (isDisabled()) {
             return false;
         }
@@ -374,7 +374,7 @@ public class GroupNode extends Node {
      * @param r2d rectangle around pointer.
      * @return <code>true</code> if given rectangle is in rotate point of whole group, else <code>false</code>.
      */
-    public boolean isRotateZone(Rectangle2D.Double r2d) {
+    public boolean isRotateZone(Rectangle2D r2d) {
         // TODO implement functionality
         return false;
     }

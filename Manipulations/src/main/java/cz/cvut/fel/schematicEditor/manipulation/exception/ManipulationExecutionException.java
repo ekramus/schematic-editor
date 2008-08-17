@@ -6,5 +6,5 @@ package cz.cvut.fel.schematicEditor.manipulation.exception;
  * @author Urban Kravjansky
  */
 public class ManipulationExecutionException extends Exception {
-
+    // nothing to implement
 }

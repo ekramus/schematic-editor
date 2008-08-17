@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D.Double;
+import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
@@ -50,7 +50,7 @@ public class Delete extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute(GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute(GroupNode)
      */
     @Override
     protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
@@ -58,11 +58,11 @@ public class Delete extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D.Double,
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStop(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue,
+    public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
             setManipulatedGroup(topNode.findHit(r2d));
@@ -71,12 +71,12 @@ public class Delete extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D.Double,
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
      *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Double r2d, ManipulationQueue manipulationQueue, GroupNode gn,
-            boolean isMouseClicked) throws UnknownManipulationException {
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
+            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
         setActive(true);
 
         return this;

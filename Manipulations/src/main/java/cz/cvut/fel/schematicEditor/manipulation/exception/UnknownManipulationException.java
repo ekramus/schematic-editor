@@ -3,9 +3,8 @@ package cz.cvut.fel.schematicEditor.manipulation.exception;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 
 /**
- * This class implements unknown manipulation exception. It is raised, when unknown manipulation is
- * being used.
- *
+ * This class implements unknown manipulation exception. It is raised, when unknown manipulation is being used.
+ * 
  * @author Urban Kravjansky
  */
 public class UnknownManipulationException extends Exception {
@@ -16,9 +15,8 @@ public class UnknownManipulationException extends Exception {
 
     /**
      * Constructor used to create exception.
-     *
-     * @param manipulationType
-     *            name of manipulation causing exception.
+     * 
+     * @param manipulationType name of manipulation causing exception.
      */
     public UnknownManipulationException(ManipulationType manipulationType) {
         setManipulationType(manipulationType);
@@ -40,8 +38,7 @@ public class UnknownManipulationException extends Exception {
     }
 
     /**
-     * @param manipulationType
-     *            the manipulationType to set
+     * @param manipulationType the manipulationType to set
      */
     private void setManipulationType(ManipulationType manipulationType) {
         this.manipulationType = manipulationType;

@@ -52,7 +52,7 @@ public abstract class Manipulation {
      * Constructor with {@link GroupNode} parameter. It is protected because of {@link Manipulation}s are created using
      * {@link ManipulationFactory}.
      * 
-     * @param manipulatedGroup
+     * @param manipulatedGroup instance of manipulated group.
      */
     protected Manipulation(GroupNode manipulatedGroup) {
         setManipulatedGroup(manipulatedGroup);
@@ -61,8 +61,10 @@ public abstract class Manipulation {
     }
 
     /**
-     * @param x
-     * @param y
+     * Add given manipulation coordinates.
+     * 
+     * @param x <code>x</code> to add.
+     * @param y <code>y</code> to add
      */
     public void addManipulationCoordinates(Unit x, Unit y) {
         this.x.add(x);
@@ -95,34 +97,39 @@ public abstract class Manipulation {
     }
 
     /**
-     * Finishes everything at the end of manipulation correctly.
-     * 
-     * @param e {@link MouseEvent}, that invoked this method.
-     * @param r2d Rectangle, which contains mouse pointer.
-     * @param manipulationQueue used for {@link Manipulation} history and execution.
-     * @param gn TopNode of SchemeSG.
-     * @param isMouseClicked Indicates, whether mouse was clicked or not.
-     * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
-     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
-     */
-    public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
-            throws UnknownManipulationException;
-
-    /**
      * Initializes all necessary structures at the beginning of manipulation correctly.
      * 
      * @param e {@link MouseEvent}, that invoked this method.
      * @param r2d Rectangle, which contains mouse pointer.
      * @param manipulationQueue used for {@link Manipulation} history and execution.
-     * @param gn TopNode of SchemeSG.
+     * @param topNode TopNode of SchemeSG.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
+     * @return Pointer to manipulation or <code>null</code>, if manipulation was unsuccessful.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
-    public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D.Double r2d,
-            ManipulationQueue manipulationQueue, GroupNode gn, boolean isMouseClicked)
-            throws UnknownManipulationException;
+    public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
+            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException;
 
+    /**
+     * Finishes everything at the end of manipulation correctly.
+     * 
+     * @param e {@link MouseEvent}, that invoked this method.
+     * @param r2d Rectangle, which contains mouse pointer.
+     * @param manipulationQueue used for {@link Manipulation} history and execution.
+     * @param topNode TopNode of SchemeSG.
+     * @param isMouseClicked Indicates, whether mouse was clicked or not.
+     * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
+     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
+     */
+    public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
+            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException;
+
+    /**
+     * Replaces last manipulation <code>x</code>, <code>y</code> coordinates with given ones.
+     * 
+     * @param x new <code>x</code> coordinate.
+     * @param y new <code>y</code> coordinate.
+     */
     public void replaceLastManipulationCoordinates(Unit x, Unit y) {
         try {
             this.x.set(this.x.size() - 1, x);
@@ -161,13 +168,6 @@ public abstract class Manipulation {
     }
 
     /**
-     * Creates duplicate instance of {@link Manipulation} by duplicating its values.
-     * 
-     * @return Duplicated instance of {@link Manipulation}.
-     */
-    protected abstract Manipulation duplicate();
-
-    /**
      * Creates next {@link Manipulation} by duplicating its values according to create order.
      * 
      * @return Creates next instance of {@link Manipulation}.
@@ -177,6 +177,13 @@ public abstract class Manipulation {
     }
 
     /**
+     * Creates duplicate instance of {@link Manipulation} by duplicating its values.
+     * 
+     * @return Duplicated instance of {@link Manipulation}.
+     */
+    protected abstract Manipulation duplicate();
+
+    /**
      * Executes manipulation.
      * 
      * @param topNode top {@link GroupNode} of SceneGraph.
@@ -184,17 +191,6 @@ public abstract class Manipulation {
      * @throws ManipulationExecutionException in case of some error while executing manipulation.
      */
     protected abstract void execute(GroupNode topNode) throws ManipulationExecutionException;
-
-    /**
-     * Reexecutes manipulation. Mostly it only executes it, for special purposes it needs to be overwritten.
-     * 
-     * @param topNode top {@link GroupNode} of SceneGraph.
-     * 
-     * @throws ManipulationExecutionException in case of some error while reexecuting manipulation.
-     */
-    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
-        execute(topNode);
-    }
 
     /**
      * @return the x
@@ -210,6 +206,23 @@ public abstract class Manipulation {
         return this.y;
     }
 
+    /**
+     * Reexecutes manipulation. Mostly it only executes it, for special purposes it needs to be overwritten.
+     * 
+     * @param topNode top {@link GroupNode} of SceneGraph.
+     * 
+     * @throws ManipulationExecutionException in case of some error while reexecuting manipulation.
+     */
+    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+        execute(topNode);
+    }
+
+    /**
+     * Sets manipulation coordinates according to given ones.
+     * 
+     * @param x new <code>x</code> coordinates.
+     * @param y new <code>y</code> coordinates.
+     */
     protected void setManipulationCoordinates(Vector<Unit> x, Vector<Unit> y) {
         this.x = x;
         this.y = y;
@@ -217,6 +230,8 @@ public abstract class Manipulation {
 
     /**
      * Unexecutes (undoes) manipulation.
+     * 
+     * @param topNode reference to top node of scene graph.
      * 
      * @throws ManipulationExecutionException in case of some error while removing manipulation.
      */
