@@ -103,17 +103,16 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 // set active manipulation
                 Copy copy = new Copy();
-                // set manipulated group from select manipulation and duplicate it
-                copy.setManipulatedGroup((GroupNode) Structures.getActiveManipulation().getManipulatedGroup()
-                        .duplicate());
+                // set manipulated group from select manipulation
+                copy.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                 copy.manipulationStop(null, null, Structures.getManipulationQueue(), ScenePanel.getInstance()
                         .getSchemeSG().getTopNode(), false);
 
-                // execute manipulation
-                Structures.getManipulationQueue().execute(copy, ScenePanel.getInstance().getSchemeSG().getTopNode());
+                // set copy as active manipulation
+                Structures.setActiveManipulation(copy);
 
-                // redraw scheme
-                ScenePanel.getInstance().schemeInvalidate(null);
+                // try finish manipulation
+                ScenePanel.getInstance().tryFinishManipulation(null, null, Structures.getManipulationQueue(), false);
             }
             // CTRL + V - paste
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_V)) {
@@ -124,11 +123,11 @@ public class ScenePanelKeyListener implements KeyListener {
                 paste.manipulationStop(null, null, Structures.getManipulationQueue(), ScenePanel.getInstance()
                         .getSchemeSG().getTopNode(), false);
 
-                // execute manipulation
-                Structures.getManipulationQueue().execute(paste, ScenePanel.getInstance().getSchemeSG().getTopNode());
+                // set paste as active manipulation
+                Structures.setActiveManipulation(paste);
 
-                // redraw scheme
-                ScenePanel.getInstance().schemeInvalidate(null);
+                // try finish manipulation
+                ScenePanel.getInstance().tryFinishManipulation(null, null, Structures.getManipulationQueue(), false);
             }
             // DEL or BACKSPACE
             else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
