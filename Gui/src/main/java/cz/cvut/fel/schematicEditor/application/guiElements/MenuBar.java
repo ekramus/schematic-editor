@@ -16,6 +16,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.Ant
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.DebugCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ExitMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.GridMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.OpenMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveAsMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SavePreferencesMenuItemListener;
@@ -101,6 +102,10 @@ public final class MenuBar extends JMenuBar {
      * Save as menu item instance.
      */
     private JMenuItem         saveAsMenuItem              = null;
+    /**
+     * Open menu item instance.
+     */
+    private JMenuItem         openMenuItem                = null;
     /**
      * Save menu item instance.
      */
@@ -243,6 +248,7 @@ public final class MenuBar extends JMenuBar {
         if (this.fileMenu == null) {
             this.fileMenu = new JMenu();
             this.fileMenu.setText(MenuBarResources.FILE_MENU.getText());
+            this.fileMenu.add(getOpenMenuItem());
             this.fileMenu.add(getSaveMenuItem());
             this.fileMenu.add(getSaveAsMenuItem());
             this.fileMenu.add(getSavePreferencesMenuItem());
@@ -307,6 +313,21 @@ public final class MenuBar extends JMenuBar {
 
         }
         return this.saveAsMenuItem;
+    }
+
+    /**
+     * Getter for <code>openMenuItem</code>.
+     * 
+     * @return <code>openMenuItem</code> instance.
+     */
+    private JMenuItem getOpenMenuItem() {
+        if (this.openMenuItem == null) {
+            this.openMenuItem = new JMenuItem();
+            this.openMenuItem.setText(MenuBarResources.OPEN_MENU_ITEM.getText());
+            this.openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK, true));
+            this.openMenuItem.addActionListener(new OpenMenuItemListener());
+        }
+        return this.openMenuItem;
     }
 
     /**
