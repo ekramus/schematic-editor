@@ -408,4 +408,11 @@ public class ScenePanel extends JPanel {
             logger.trace("Waiting for manipulation end");
         }
     }
+
+    /**
+     * @param schemeSG the schemeSG to set
+     */
+    public void setSchemeSG(SceneGraph schemeSG) {
+        this.schemeSG = schemeSG;
+    }
 }

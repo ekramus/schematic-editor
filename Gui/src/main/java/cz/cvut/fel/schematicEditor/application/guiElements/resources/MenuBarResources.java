@@ -63,6 +63,10 @@ public enum MenuBarResources {
      */
     HELP_MENU("Help"),
     /**
+     * Open menu item string.
+     */
+    OPEN_MENU_ITEM("Open"),
+    /**
      * Save as menu item string.
      */
     SAVE_AS_MENU_ITEM("Save As"),
@@ -95,8 +99,7 @@ public enum MenuBarResources {
     /**
      * Constructor sets string value of enum item.
      * 
-     * @param text
-     *            String value of item.
+     * @param text String value of item.
      */
     private MenuBarResources(String text) {
         setText(text);
@@ -114,8 +117,7 @@ public enum MenuBarResources {
     /**
      * Setter of string value of item.
      * 
-     * @param text
-     *            String value of item to set.
+     * @param text String value of item to set.
      */
     private void setText(String text) {
         this.text = text;
