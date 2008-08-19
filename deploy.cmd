@@ -18,7 +18,7 @@ mkdir %CONF%
 
 copy %M2_REPO%\log4j\log4j\1.2.14\log4j-1.2.14.jar %LIB%
 copy %M2_REPO%\jgoodies\looks\1.2.2\looks-1.2.2.jar %LIB%
-copy %M2_REPO%\com\thoughtworks\xstream\xstream\1.2.2\xstream-1.2.2.jar %LIB%
+copy %M2_REPO%\com\thoughtworks\xstream\xstream\1.3\xstream-1.3.jar %LIB%
 
 copy Launchers\target\Launchers-1.0-SNAPSHOT.jar %JAR%
 copy Gui\target\Gui-1.0-SNAPSHOT.jar %JAR%

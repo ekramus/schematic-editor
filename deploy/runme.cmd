@@ -1,6 +1,6 @@
 @echo off
 
-set LIB_PATH=lib/log4j-1.2.14.jar;lib/looks-1.2.2.jar;lib/xstream-1.2.2.jar
+set LIB_PATH=lib/log4j-1.2.14.jar;lib/looks-1.2.2.jar;lib/xstream-1.3.jar
 
 set JAR_PATH=jar/Launchers-1.0-SNAPSHOT.jar
 set JAR_PATH=%JAR_PATH%;jar/Gui-1.0-SNAPSHOT.jar
