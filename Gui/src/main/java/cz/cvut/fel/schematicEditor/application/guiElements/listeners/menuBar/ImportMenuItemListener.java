@@ -20,16 +20,16 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
- * This class implements {@link ActionListener} for <code>openMenuItem</code> in {@link MenuBar}.
+ * This class implements {@link ActionListener} for <code>importMenuItem</code> in {@link MenuBar}.
  * 
  * @author Urban Kravjansky
  */
-public final class OpenMenuItemListener implements ActionListener {
+public final class ImportMenuItemListener implements ActionListener {
 
     /**
      * Default constructor. It only calls constructor of super class.
      */
-    public OpenMenuItemListener() {
+    public ImportMenuItemListener() {
         super();
     }
 
@@ -45,7 +45,7 @@ public final class OpenMenuItemListener implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Choose file to load");
+        fileChooser.setDialogTitle("Choose file to import");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SEF, ExportFileFilter.SEFDESC));
 
         int retValue = fileChooser.showOpenDialog(ScenePanel.getInstance());
@@ -53,7 +53,7 @@ public final class OpenMenuItemListener implements ActionListener {
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             SceneGraph sg = deserialize(ScenePanel.getInstance().getSchemeSG().getClass(), file);
-            ScenePanel.getInstance().setSchemeSG(sg);
+            ScenePanel.getInstance().getSchemeSG().getTopNode().add(sg.getTopNode());
 
             ScenePanel.getInstance().schemeInvalidate(null);
         }
