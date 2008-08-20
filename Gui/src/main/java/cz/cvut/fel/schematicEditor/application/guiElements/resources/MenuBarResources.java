@@ -63,6 +63,10 @@ public enum MenuBarResources {
      */
     HELP_MENU("Help"),
     /**
+     * Import menu item string.
+     */
+    IMPORT_MENU_ITEM("Import"),
+    /**
      * Open menu item string.
      */
     OPEN_MENU_ITEM("Open"),

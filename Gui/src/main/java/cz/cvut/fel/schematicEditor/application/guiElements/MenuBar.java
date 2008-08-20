@@ -10,12 +10,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
-import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.AboutMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.AntialiasedCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.DebugCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ExitMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.GridMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ImportMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.OpenMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveAsMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveMenuItemListener;
@@ -106,6 +106,10 @@ public final class MenuBar extends JMenuBar {
      * Open menu item instance.
      */
     private JMenuItem         openMenuItem                = null;
+    /**
+     * Import menu item instance.
+     */
+    private JMenuItem         importMenuItem              = null;
     /**
      * Save menu item instance.
      */
@@ -249,6 +253,7 @@ public final class MenuBar extends JMenuBar {
             this.fileMenu = new JMenu();
             this.fileMenu.setText(MenuBarResources.FILE_MENU.getText());
             this.fileMenu.add(getOpenMenuItem());
+            this.fileMenu.add(getImportMenuItem());
             this.fileMenu.add(getSaveMenuItem());
             this.fileMenu.add(getSaveAsMenuItem());
             this.fileMenu.add(getSavePreferencesMenuItem());
@@ -403,5 +408,20 @@ public final class MenuBar extends JMenuBar {
             this.viewMenu.add(getDebugCheckBoxMenuItem());
         }
         return this.viewMenu;
+    }
+
+    /**
+     * Getter for <code>openMenuItem</code>.
+     * 
+     * @return <code>openMenuItem</code> instance.
+     */
+    private JMenuItem getImportMenuItem() {
+        if (this.importMenuItem == null) {
+            this.importMenuItem = new JMenuItem();
+            this.importMenuItem.setText(MenuBarResources.IMPORT_MENU_ITEM.getText());
+            this.importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK, true));
+            this.importMenuItem.addActionListener(new ImportMenuItemListener());
+        }
+        return this.importMenuItem;
     }
 }
