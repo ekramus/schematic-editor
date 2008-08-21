@@ -18,6 +18,7 @@ import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.properties.EnvironmentConfiguration;
 
 /**
  * This class implements {@link ActionListener} for <code>openMenuItem</code> in {@link MenuBar}.
@@ -44,7 +45,9 @@ public final class OpenMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = new JFileChooser();
+        EnvironmentConfiguration env = EnvironmentConfiguration.getInstance();
+
+        JFileChooser fileChooser = new JFileChooser(env.getLastOpenFolder());
         fileChooser.setDialogTitle("Choose file to load");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SEF, ExportFileFilter.SEFDESC));
 
@@ -52,6 +55,7 @@ public final class OpenMenuItemListener implements ActionListener {
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            env.setLastOpenFolder(file.getParent());
             SceneGraph sg = deserialize(ScenePanel.getInstance().getSchemeSG().getClass(), file);
             ScenePanel.getInstance().setSchemeSG(sg);
 

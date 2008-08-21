@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.properties.Configuration;
+import cz.cvut.fel.schematicEditor.properties.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
 
 /**
@@ -32,5 +33,6 @@ public final class SavePreferencesMenuItemListener implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         Configuration.serialize(GuiConfiguration.getInstance(), GuiConfiguration.getFile());
+        Configuration.serialize(EnvironmentConfiguration.getInstance(), EnvironmentConfiguration.getFile());
     }
 }
