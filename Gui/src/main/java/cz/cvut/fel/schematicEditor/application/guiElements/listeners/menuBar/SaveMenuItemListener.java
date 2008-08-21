@@ -18,6 +18,7 @@ import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.properties.EnvironmentConfiguration;
 
 /**
  * This class implements {@link ActionListener} for <code>saveMenuItem</code> in {@link MenuBar}.
@@ -44,7 +45,9 @@ public final class SaveMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = new JFileChooser();
+        EnvironmentConfiguration env = EnvironmentConfiguration.getInstance();
+
+        JFileChooser fileChooser = new JFileChooser(env.getLastSaveFolder());
         fileChooser.setDialogTitle("Choose file to save");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SEF, ExportFileFilter.SEFDESC));
 
@@ -52,6 +55,8 @@ public final class SaveMenuItemListener implements ActionListener {
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            env.setLastSaveFolder(file.getParent());
+
             serialize(ScenePanel.getInstance().getSchemeSG(), file);
         }
     }
