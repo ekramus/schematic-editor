@@ -6,6 +6,12 @@ import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
+/**
+ * This class encapsulates electronic part informations.
+ * 
+ * @author Urban Kravjansky
+ * 
+ */
 public class Part extends Element {
 
     public UnitRectangle getBounds() {
@@ -40,8 +46,10 @@ public class Part extends Element {
         // TODO Auto-generated method stub
         return Element.INFINITE_COORDINATES;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override

@@ -1,33 +1,90 @@
 package cz.cvut.fel.schematicEditor.element.element.part;
 
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
+import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
+/**
+ * This class encapsulates wire part. Wire has special parameters needed for electronic circuits.
+ * 
+ * @author Urban Kravjansky
+ */
 public class Wire extends Element {
 
-    public UnitRectangle getBounds() {
-        // TODO Auto-generated method stub
-        return null;
+    /**
+     * Default {@link Wire} constructor.
+     */
+    public Wire() {
+        super();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@link Wire} constructor with coordinate vector.
      * 
-     * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
+     * @param x {@link Vector} of <code>x</code> coordinates.
+     * @param y {@link Vector} of <code>y</code> coordinates.
+     */
+    public Wire(Vector<Unit> x, Vector<Unit> y) {
+        super(x, y);
+    }
+
+    /**
+     * @see Element#getBounds()
+     */
+    @Override
+    public UnitRectangle getBounds() {
+        double top = Double.MAX_VALUE;
+        double bottom = Double.MIN_VALUE;
+        double left = Double.MAX_VALUE;
+        double right = Double.MIN_VALUE;
+
+        for (Unit u : this.y) {
+            double d = u.doubleValue();
+            top = (d < top) ? d : top;
+            bottom = (d > bottom) ? d : bottom;
+        }
+        for (Unit u : this.x) {
+            double d = u.doubleValue();
+            left = (d < left) ? d : left;
+            right = (d > right) ? d : right;
+        }
+
+        return new UnitRectangle(left - 2, top - 2, right - left + 5, bottom - top + 5);
+    }
+
+    /**
+     * @see Element#isHit(Rectangle2D.Double)
      */
     @Override
     public boolean isHit(Rectangle2D.Double rectangle) {
-        // TODO Auto-generated method stub
+        Iterator<Unit> itX = this.getX().iterator();
+        Iterator<Unit> itY = this.getY().iterator();
+
+        double x1 = itX.next().doubleValue();
+        double y1 = itY.next().doubleValue();
+
+        while (itX.hasNext()) {
+            double x2 = itX.next().doubleValue();
+            double y2 = itY.next().doubleValue();
+            // check, whether rectangle intersects line
+            Line2D.Double l2d = new Line2D.Double(x1, y1, x2, y2);
+            if (l2d.intersects(rectangle)) {
+                return true;
+            }
+            x1 = x2;
+            y1 = y2;
+        }
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
+    /**
+     * @see Element#getElementType()
      */
     @Override
     public int getElementType() {
@@ -35,19 +92,31 @@ public class Wire extends Element {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.element.Element#getNumberOfCoordinates()
+     * @see Element#getNumberOfCoordinates()
      */
     @Override
     public int getNumberOfCoordinates() {
-        return 2;
+        // TODO Auto-generated method stub
+        return Element.INFINITE_COORDINATES;
     }
-    
-    /* (non-Javadoc)
-     * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
+
+    /**
+     * @see Element#duplicate()
      */
     @Override
     public Element duplicate() {
-        Wire w = new Wire();
-        return w;
+        Wire wire = new Wire();
+
+        wire.duplicateCoordinates(getX(), getY());
+
+        return wire;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "WIRE";
     }
 }
