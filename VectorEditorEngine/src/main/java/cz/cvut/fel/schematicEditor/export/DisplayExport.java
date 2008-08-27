@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.CubicCurve2D;
@@ -31,6 +32,7 @@ import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.element.ElementType;
+import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
@@ -267,6 +269,20 @@ public class DisplayExport implements Export {
                 layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
                 break;
 
+            case ElementType.T_WIRE:
+                Wire wire = (Wire) elementNode.getElement();
+
+                Vector<Unit> xWi = wire.getX();
+                Vector<Unit> yWi = wire.getY();
+
+                for (int i = 0; i < xWi.size() - 1; i++) {
+                    Line2D.Double line2d = new Line2D.Double(xWi.get(i).doubleValue(), yWi.get(i).doubleValue(), xWi
+                            .get(i + 1).doubleValue(), yWi.get(i + 1).doubleValue());
+                    drawShape(nodeG2D, line2d, parameterNode.getColor(), ElementStyle.DOTTED, null, parameterNode
+                            .getFillStyle());
+                }
+                break;
+
             default:
                 break;
 
@@ -302,6 +318,11 @@ public class DisplayExport implements Export {
 
         if (strokeStyle != ElementStyle.NONE) {
             g2d.setColor(strokeColor);
+            if (strokeStyle == ElementStyle.DOTTED) {
+                float[] dots = { 1, 2 };
+                Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1, dots, 0);
+                g2d.setStroke(stroke);
+            }
             g2d.draw(shape);
         }
     }
