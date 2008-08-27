@@ -289,48 +289,50 @@ public class SVGExport implements Export {
 
         switch (en.getElementType()) {
 
-            case ElementType.T_LINE:
+            case T_LINE:
                 Line l = (Line) en.getElement();
                 drawLine(new Point2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue()),
                          new Point2D.Double(l.getX().get(1).doubleValue(), l.getY().get(1).doubleValue()), pn, tn);
                 break;
 
-            case ElementType.T_RECTANGLE:
+            case T_RECTANGLE:
                 Rectangle r = (Rectangle) en.getElement();
                 drawRectangle(new Point2D.Double(r.getTopLeftX(), r.getTopLeftY()), r.getWidth(), r.getHeight(), pn, tn);
                 break;
 
-            case ElementType.T_ARC:
+            case T_ARC:
                 Arc arc = (Arc) en.getElement();
                 drawArc(arc, pn, tn);
                 break;
 
-            case ElementType.T_ELLIPSE:
+            case T_ELLIPSE:
                 Ellipse ellipse = (Ellipse) en.getElement();
                 drawEllipse(new Point2D.Double(ellipse.getX().get(0).doubleValue() + (ellipse.getWidth() / 2), ellipse
                         .getY().get(0).doubleValue() + (ellipse.getHeight() / 2)), ellipse.getWidth() / 2, ellipse
                         .getHeight() / 2, pn, tn);
                 break;
 
-            case ElementType.T_TRIANGLE:
-            case ElementType.T_POLYGON:
+            case T_TRIANGLE:
+            case T_POLYGON:
                 Polygon polygon = (Polygon) en.getElement();
                 drawPoly(true, polygon.getX(), polygon.getY(), pn, tn);
                 break;
 
-            case ElementType.T_POLYLINE:
+            case T_POLYLINE:
                 Polyline d = (Polyline) en.getElement();
                 drawPoly(false, d.getX(), d.getY(), pn, tn);
                 break;
 
-            case ElementType.T_BEZIER:
+            case T_BEZIER:
                 BezierCurve bC = (BezierCurve) en.getElement();
                 drawCubicCurve(bC, pn, tn);
                 break;
-            case ElementType.T_TEXT:
+
+            case T_TEXT:
                 Text tx = (Text) en.getElement();
                 drawText(tx, new Point2D.Double(tx.getX().get(0).doubleValue(), tx.getY().get(0).doubleValue()), pn, tn);
                 break;
+
             default:
                 System.out.println(en.getElementType());
                 break;

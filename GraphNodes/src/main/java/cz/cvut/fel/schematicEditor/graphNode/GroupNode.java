@@ -9,6 +9,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.support.Transformation;
@@ -552,7 +553,7 @@ public class GroupNode extends Node {
         element.setY(new Vector<Unit>(y));
     }
 
-    public int getElementType() {
+    public ElementType getElementType() {
         // TODO this implementation gets only element type for first element. Change it!
         return getChildrenElementList().getFirst().getElement().getElementType();
     }

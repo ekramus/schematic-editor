@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
+import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -125,7 +126,7 @@ public abstract class Element {
         return null;
     }
 
-    public abstract int getElementType();
+    public abstract ElementType getElementType();
 
     /**
      * This method returns number of coordinates needed to create given {@link Element}.

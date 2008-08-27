@@ -89,7 +89,7 @@ public class Polyline extends Shape {
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
-    public int getElementType() {
+    public ElementType getElementType() {
         return ElementType.T_POLYLINE;
     }
 
