@@ -75,45 +75,44 @@ public class PSExport implements Export {
 
         switch (en.getElementType()) {
 
-            case ElementType.T_LINE:
+            case T_LINE:
                 Line l = (Line) en.getElement();
-                drawLine(new Point2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0)
-                        .doubleValue()), new Point2D.Double(l.getX().get(1).doubleValue(), l.getY()
-                        .get(1).doubleValue()), pn, tn.getTransformation());
+                drawLine(new Point2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue()),
+                         new Point2D.Double(l.getX().get(1).doubleValue(), l.getY().get(1).doubleValue()), pn, tn
+                                 .getTransformation());
                 break;
-            case ElementType.T_RECTANGLE:
+            case T_RECTANGLE:
                 Rectangle r = (Rectangle) en.getElement();
-                drawRectangle(new Point2D.Double(r.getTopLeftX(), r.getTopLeftY()), r.getWidth(), r
-                        .getHeight(), pn, tn.getTransformation());
+                drawRectangle(new Point2D.Double(r.getTopLeftX(), r.getTopLeftY()), r.getWidth(), r.getHeight(), pn, tn
+                        .getTransformation());
                 break;
-            case ElementType.T_ARC:
+            case T_ARC:
                 Arc ar = (Arc) en.getElement();
                 drawArc(ar, pn, tn.getTransformation());
                 break;
-            case ElementType.T_ELLIPSE:
+            case T_ELLIPSE:
                 Ellipse el = (Ellipse) en.getElement();
                 drawEllipse(el, pn, tn.getTransformation());
                 break;
-            case ElementType.T_TRIANGLE:
-            case ElementType.T_POLYGON:
+            case T_TRIANGLE:
+            case T_POLYGON:
                 Polygon p = (Polygon) en.getElement();
                 drawPoly(true, p.getX(), p.getY(), pn, tn.getTransformation());
                 break;
-            case ElementType.T_POLYLINE:
+            case T_POLYLINE:
                 Polyline d = (Polyline) en.getElement();
                 drawPoly(false, d.getX(), d.getY(), pn, tn.getTransformation());
                 break;
 
-            case ElementType.T_BEZIER:
+            case T_BEZIER:
                 BezierCurve bZ = (BezierCurve) en.getElement();
                 drawBezier(bZ, pn, tn.getTransformation());
                 break;
 
-            case ElementType.T_TEXT:
+            case T_TEXT:
                 Text t = (Text) en.getElement();
-                drawText(t.getText(), t.getSize(), new Point2D.Double(
-                        t.getX().get(0).doubleValue(), t.getY().get(0).doubleValue()), pn, tn
-                        .getTransformation());
+                drawText(t.getText(), t.getSize(), new Point2D.Double(t.getX().get(0).doubleValue(), t.getY().get(0)
+                        .doubleValue()), pn, tn.getTransformation());
                 break;
 
             default:
@@ -153,8 +152,7 @@ public class PSExport implements Export {
 
     }
 
-    private void drawPoly(boolean closedPath, Vector<Unit> x, Vector<Unit> y, ParameterNode pn,
-            Transformation tn) {
+    private void drawPoly(boolean closedPath, Vector<Unit> x, Vector<Unit> y, ParameterNode pn, Transformation tn) {
 
         out.println(" gsave");
 
@@ -215,8 +213,7 @@ public class PSExport implements Export {
         out.println(" grestore");
     }
 
-    private void drawRectangle(Point2D.Double start, double width, double height, ParameterNode pn,
-            Transformation tn) {
+    private void drawRectangle(Point2D.Double start, double width, double height, ParameterNode pn, Transformation tn) {
         out.println(" gsave");
 
         this.printTransformString(tn);
@@ -291,8 +288,7 @@ public class PSExport implements Export {
         out.println(" grestore");
     }
 
-    private void drawText(String text, int size, Point2D.Double start, ParameterNode pn,
-            Transformation tn) {
+    private void drawText(String text, int size, Point2D.Double start, ParameterNode pn, Transformation tn) {
 
         out.println("gsave");
 

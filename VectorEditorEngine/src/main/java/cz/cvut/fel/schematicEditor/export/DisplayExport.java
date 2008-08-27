@@ -31,7 +31,6 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
-import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -158,7 +157,7 @@ public class DisplayExport implements Export {
         }
 
         switch (elementNode.getElementType()) {
-            case ElementType.T_LINE:
+            case T_LINE:
                 Line l = (Line) elementNode.getElement();
                 Line2D.Double l2d = new Line2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue(), l
                         .getX().get(1).doubleValue(), l.getY().get(1).doubleValue());
@@ -168,7 +167,7 @@ public class DisplayExport implements Export {
 
                 break;
 
-            case ElementType.T_RECTANGLE:
+            case T_RECTANGLE:
                 Rectangle rectangle = (Rectangle) elementNode.getElement();
                 Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(), rectangle
                         .getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
@@ -177,7 +176,7 @@ public class DisplayExport implements Export {
                         .getFill(), parameterNode.getFillStyle());
                 break;
 
-            case ElementType.T_ELLIPSE:
+            case T_ELLIPSE:
                 Ellipse ellipse = (Ellipse) elementNode.getElement();
                 Ellipse2D.Double ell = new Ellipse2D.Double(ellipse.getTopLeftX(), ellipse.getTopLeftY(), ellipse
                         .getWidth(), ellipse.getHeight());
@@ -186,7 +185,7 @@ public class DisplayExport implements Export {
                           parameterNode.getFill(), parameterNode.getFillStyle());
                 break;
 
-            case ElementType.T_ARC:
+            case T_ARC:
                 Arc arc = (Arc) elementNode.getElement();
                 Arc2D.Double arc2d = new Arc2D.Double(arc.getTopLeftX(), arc.getTopLeftY(), arc.getWidth(), arc
                         .getHeight(), arc.getStartAngle(), arc.getArcAngle(), Arc2D.PIE);
@@ -195,7 +194,7 @@ public class DisplayExport implements Export {
                         .getFill(), parameterNode.getFillStyle());
                 break;
 
-            case ElementType.T_ARC_SEGMENT:
+            case T_ARC_SEGMENT:
                 Arc arcS = (Arc) elementNode.getElement();
                 Arc2D.Double arcS2d = new Arc2D.Double(arcS.getTopLeftX(), arcS.getTopLeftY(), arcS.getWidth(), arcS
                         .getHeight(), arcS.getStartAngle(), arcS.getArcAngle(), Arc2D.OPEN);
@@ -204,8 +203,8 @@ public class DisplayExport implements Export {
                         .getFill(), parameterNode.getFillStyle());
                 break;
 
-            case ElementType.T_TRIANGLE:
-            case ElementType.T_POLYGON:
+            case T_TRIANGLE:
+            case T_POLYGON:
                 Polyline pg = (Polyline) elementNode.getElement();
                 Polygon p = new Polygon();
 
@@ -219,7 +218,7 @@ public class DisplayExport implements Export {
                           parameterNode.getFillStyle());
                 break;
 
-            case ElementType.T_POLYLINE:
+            case T_POLYLINE:
                 Polyline poly = (Polyline) elementNode.getElement();
 
                 Vector<Unit> xPo = poly.getX();
@@ -233,7 +232,7 @@ public class DisplayExport implements Export {
                 }
                 break;
 
-            case ElementType.T_BEZIER:
+            case T_BEZIER:
                 BezierCurve bC = (BezierCurve) elementNode.getElement();
 
                 CubicCurve2D.Double quadCurve = new CubicCurve2D.Double(bC.getStart().getX(), bC.getStart().getY(), bC
@@ -245,7 +244,7 @@ public class DisplayExport implements Export {
 
                 break;
 
-            case ElementType.T_TEXT:
+            case T_TEXT:
 
                 Text text = (Text) elementNode.getElement();
 
@@ -269,7 +268,7 @@ public class DisplayExport implements Export {
                 layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
                 break;
 
-            case ElementType.T_WIRE:
+            case T_WIRE:
                 Wire wire = (Wire) elementNode.getElement();
 
                 Vector<Unit> xWi = wire.getX();

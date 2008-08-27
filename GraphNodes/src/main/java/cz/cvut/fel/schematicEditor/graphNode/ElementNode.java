@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.element.element.ElementFactory;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -14,9 +13,7 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.element.shape.Triangle;
 
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -31,19 +28,19 @@ public class ElementNode extends Node {
     /**
      * This field represents <code>element</code> of this node.
      */
-    private Element   element;
+    private Element     element;
     /**
      * Type of element.
      */
-    private int       elementType;
+    private ElementType elementType;
     /**
      * Indicates edit state.
      */
-    private boolean   edited;
+    private boolean     edited;
     /**
      * Point, which is being edited.
      */
-    private UnitPoint editedPoint;
+    private UnitPoint   editedPoint;
 
     /**
      * This is constructor.
@@ -75,25 +72,25 @@ public class ElementNode extends Node {
         // TODO complete rewrite
         this.element = element.duplicate();
         if (element instanceof Rectangle) {
-            this.elementType = ElementType.T_RECTANGLE;
+            setElementType(ElementType.T_RECTANGLE);
         } else if (element instanceof Triangle) {
-            this.elementType = ElementType.T_TRIANGLE;
+            setElementType(ElementType.T_TRIANGLE);
         } else if (element instanceof Polygon) {
-            this.elementType = ElementType.T_POLYGON;
+            setElementType(ElementType.T_POLYGON);
         } else if (element instanceof Line) {
-            this.elementType = ElementType.T_LINE;
+            setElementType(ElementType.T_LINE);
         } else if (element instanceof Polyline) {
-            this.elementType = ElementType.T_POLYLINE;
+            setElementType(ElementType.T_POLYLINE);
         } else if (element instanceof ArcSegment) {
-            this.elementType = ElementType.T_ARC_SEGMENT;
+            setElementType(ElementType.T_ARC_SEGMENT);
         } else if (element instanceof Arc) {
-            this.elementType = ElementType.T_ARC;
+            setElementType(ElementType.T_ARC);
         } else if (element instanceof BezierCurve) {
-            this.elementType = ElementType.T_BEZIER;
+            setElementType(ElementType.T_BEZIER);
         } else if (element instanceof Ellipse) {
-            this.elementType = ElementType.T_ELLIPSE;
+            setElementType(ElementType.T_ELLIPSE);
         } else if (element instanceof Text) {
-            this.elementType = ElementType.T_TEXT;
+            setElementType(ElementType.T_TEXT);
         }
     }
 
@@ -126,7 +123,7 @@ public class ElementNode extends Node {
      * 
      * @return the elementType
      */
-    public int getElementType() {
+    public ElementType getElementType() {
         return this.elementType;
     }
 
@@ -195,5 +192,12 @@ public class ElementNode extends Node {
         ElementNode result = new ElementNode(getElement());
 
         return result;
+    }
+
+    /**
+     * @param elementType the elementType to set
+     */
+    private void setElementType(ElementType elementType) {
+        this.elementType = elementType;
     }
 }

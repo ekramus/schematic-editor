@@ -157,7 +157,7 @@
                 </y>
                 <elementModificator>NO_MODIFICATION</elementModificator>
               </element>
-              <elementType>10</elementType>
+              <elementType>T_WIRE</elementType>
               <edited>false</edited>
             </cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
           </childrenElementList>

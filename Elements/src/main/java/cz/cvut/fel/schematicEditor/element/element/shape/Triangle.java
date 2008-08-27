@@ -51,7 +51,7 @@ public class Triangle extends Polygon {
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#getElementType()
      */
     @Override
-    public int getElementType() {
+    public ElementType getElementType() {
         return ElementType.T_TRIANGLE;
     }
 

@@ -30,7 +30,7 @@ public class Polygon extends Polyline {
      * @see cz.cvut.fel.schematicEditor.element.element.shape.Polyline#getElementType()
      */
     @Override
-    public int getElementType() {
+    public ElementType getElementType() {
         return ElementType.T_POLYGON;
     }
 
