@@ -29,6 +29,17 @@ public class Part extends Element {
 	 */
 	private String partVariant;
 
+	/**
+	 * Default constructor. It initializes {@link Part} element.
+	 */
+	public Part() {
+		super();
+
+		setConnectorVector(new Vector<UnitPoint>());
+		setPartDescription("");
+		setPartVariant("");
+	}
+
 	public UnitRectangle getBounds() {
 		// part as such has no bounds
 		return null;

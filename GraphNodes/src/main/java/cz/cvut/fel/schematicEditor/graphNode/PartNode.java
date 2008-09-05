@@ -1,6 +1,8 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class represents Part Node. It contains link to {@link Part} and to
@@ -36,6 +38,26 @@ public class PartNode extends ElementNode {
 	public PartNode(Part part, GroupNode partGroupNode, String id) {
 		super(part, id);
 		setPartGroupNode(partGroupNode);
+	}
+
+	/**
+	 * Getter for element bounds.
+	 * 
+	 * @param boundModifier
+	 *            modifier which affects boundary size of element.
+	 * @return Bounds of element.
+	 */
+	public UnitRectangle getBounds(Unit boundModifier) {
+		double x = getPartGroupNode().getBounds().getX()
+				- boundModifier.doubleValue();
+		double y = getPartGroupNode().getBounds().getY()
+				- boundModifier.doubleValue();
+		double w = getPartGroupNode().getBounds().getWidth() + 2
+				* boundModifier.doubleValue();
+		double h = getPartGroupNode().getBounds().getHeight() + 2
+				* boundModifier.doubleValue();
+
+		return new UnitRectangle(x, y, w, h);
 	}
 
 	/**
