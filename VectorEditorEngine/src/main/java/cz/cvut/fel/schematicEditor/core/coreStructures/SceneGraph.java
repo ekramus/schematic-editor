@@ -245,7 +245,6 @@ public class SceneGraph implements Iterable<Node> {
 	public void manualCreateSceneGraph2() {
 		this.topNode = new GroupNode();
 
-		ParameterNode pn = new ParameterNode();
 		GroupNode gn = new GroupNode();
 
 		GroupNode partGroupNode = new GroupNode();
@@ -255,11 +254,10 @@ public class SceneGraph implements Iterable<Node> {
 				new UnitPoint(10, 200)));
 		partGroupNode.add(sn1);
 		partGroupNode.add(sn2);
-		partGroupNode.add(new ParameterNode());
 
 		Part part = new Part();
 
-		PartNode partNode = new PartNode(part, partGroupNode);
+		PartNode partNode = new PartNode(part, partGroupNode, "pokus");
 		gn.add(new ParameterNode());
 		gn.add(partNode);
 
@@ -272,7 +270,6 @@ public class SceneGraph implements Iterable<Node> {
 	public void manualCreateSceneGraph() {
 		this.topNode = new GroupNode();
 
-		ParameterNode pn = new ParameterNode();
 		GroupNode gn = new GroupNode();
 
 		this.topNode.add(gn);
