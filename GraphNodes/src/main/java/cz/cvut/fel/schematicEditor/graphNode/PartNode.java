@@ -1,5 +1,7 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
+import java.awt.Color;
+
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -15,6 +17,10 @@ public class PartNode extends ElementNode {
 	 * GroupNode containing graphic representation of part shape.
 	 */
 	private GroupNode partGroupNode;
+	/**
+	 * {@link ParameterNode} containing parameters of part shape.
+	 */
+	private ParameterNode partParameterNode;
 
 	/**
 	 * This is constructor.
@@ -24,7 +30,8 @@ public class PartNode extends ElementNode {
 	 */
 	public PartNode(Part part, GroupNode partGroupNode) {
 		super(part);
-		setPartGroupNode(partGroupNode);
+
+		initialize(partGroupNode);
 	}
 
 	/**
@@ -37,6 +44,25 @@ public class PartNode extends ElementNode {
 	 */
 	public PartNode(Part part, GroupNode partGroupNode, String id) {
 		super(part, id);
+
+		initialize(partGroupNode);
+	}
+
+	/**
+	 * Initializes all necessary variables.
+	 * 
+	 * @param partGroupNode
+	 *            {@link GroupNode} describing shape of {@link Part}.
+	 */
+	private void initialize(GroupNode partGroupNode) {
+		ParameterNode pn = partGroupNode.getChildrenParameterNode();
+		// set parameter node if not set
+		if (pn == null) {
+			pn = new ParameterNode();
+			pn.setColor(Color.RED);
+			partGroupNode.add(pn);
+		}
+
 		setPartGroupNode(partGroupNode);
 	}
 
@@ -83,6 +109,21 @@ public class PartNode extends ElementNode {
 	 * @return the partGroupNode
 	 */
 	public GroupNode getPartGroupNode() {
-		return partGroupNode;
+		return this.partGroupNode;
+	}
+
+	/**
+	 * @param partParameterNode
+	 *            the partParameterNode to set
+	 */
+	private void setPartParameterNode(ParameterNode partParameterNode) {
+		this.partParameterNode = partParameterNode;
+	}
+
+	/**
+	 * @return the partParameterNode
+	 */
+	public ParameterNode getPartParameterNode() {
+		return this.partParameterNode;
 	}
 }
