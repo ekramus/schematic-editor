@@ -9,183 +9,175 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
  * This class represents ParameterNode.
- * 
+ *
  * @author uk
  */
 public class ParameterNode extends Node {
-	private ElementStyle lineStyle;
-	private ElementStyle fillStyle;
+    private ElementStyle lineStyle;
+    private ElementStyle fillStyle;
 
-	/**
-	 * This field represents color.
-	 */
-	private Color color;
+    /**
+     * This field represents color.
+     */
+    private Color        color;
 
-	/**
-	 * This field represents the fill of node.
-	 */
-	private Color fill;
+    /**
+     * This field represents the fill of node.
+     */
+    private Color        fill;
 
-	/**
-	 * This field represents the width of stroke.
-	 */
-	private Unit width;
+    /**
+     * This field represents the width of stroke.
+     */
+    private Unit         width;
 
-	/**
-	 * @return the color
-	 */
-	public Color getColor() {
-		return this.color;
-	}
+    /**
+     * @return the color
+     */
+    public Color getColor() {
+        return this.color;
+    }
 
-	/**
-	 * This is default constructor.
-	 */
-	public ParameterNode() {
-		this.setColor(Color.BLACK);
-		this.setWidth(new Pixel(1));
-		this.setFill(Color.WHITE);
-	}
+    /**
+     * This is default constructor.
+     */
+    public ParameterNode() {
+        this.setColor(Color.BLACK);
+        this.setWidth(new Pixel(1));
+        this.setFill(Color.WHITE);
+    }
 
-	/**
-	 * @param color
-	 *            the color to set
-	 */
-	public void setColor(Color color) {
-		this.color = color;
-	}
+    /**
+     * @param color the color to set
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
-	/**
-	 * @param fill
-	 *            the color of fill to set
-	 */
-	public void setFill(Color fill) {
-		this.fill = fill;
-	}
+    /**
+     * @param fill the color of fill to set
+     */
+    public void setFill(Color fill) {
+        this.fill = fill;
+    }
 
-	/**
-	 * @return the color of fill
-	 */
-	public Color getFill() {
-		return this.fill;
-	}
+    /**
+     * @return the color of fill
+     */
+    public Color getFill() {
+        return this.fill;
+    }
 
-	/**
-	 * @param width
-	 *            the width to set
-	 */
-	public void setWidth(Unit width) {
-		this.width = width;
-	}
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(Unit width) {
+        this.width = width;
+    }
 
-	/**
-	 * @return the width
-	 */
-	public Unit getWidth() {
-		return this.width;
-	}
+    /**
+     * @return the width
+     */
+    public Unit getWidth() {
+        return this.width;
+    }
 
-	/**
-	 * This method combines parametres from this node with given ones.
-	 * 
-	 * @param p
-	 *            parametres to combine.
-	 * @return Combined parametres.
-	 */
-	public ParameterNode combine(ParameterNode p) {
-		// TODO finish implementation
-		ParameterNode result = new ParameterNode();
+    /**
+     * This method combines parametres from this node with given ones.
+     *
+     * @param p parametres to combine.
+     * @return Combined parametres.
+     */
+    public ParameterNode combine(ParameterNode p) {
+        // TODO finish implementation
+        ParameterNode result = new ParameterNode();
 
-		if (getColor() == null) {
-			result.setColor(p.getColor());
-		} else {
-			result.setColor(getColor());
-		}
+        if (getColor() == null) {
+            result.setColor(p.getColor());
+        } else {
+            result.setColor(getColor());
+        }
 
-		if (getFill() == null) {
-			result.setFill(p.getFill());
-		} else {
-			result.setFill(getFill());
-		}
+        if (getFill() == null) {
+            result.setFill(p.getFill());
+        } else {
+            result.setFill(getFill());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Set properties of {@link ParameterNode} usint {@link ElementProperties}.
-	 * 
-	 * @param elementProperties
-	 *            instance of properties.
-	 */
-	public final void setProperties(ElementProperties elementProperties) {
-		Color c = elementProperties.getContourColor();
-		Color color = new Color(c.getRed(), c.getGreen(), c.getBlue(),
-				elementProperties.getContourColorAlpha());
+    /**
+     * Set properties of {@link ParameterNode} usint {@link ElementProperties}.
+     *
+     * @param elementProperties instance of properties.
+     */
+    public final void setProperties(ElementProperties elementProperties) {
+        Color c = elementProperties.getContourColor();
+        Color color = new Color(c.getRed(), c.getGreen(), c.getBlue(), elementProperties.getContourColorAlpha());
 
-		c = elementProperties.getFillColor();
-		Color fill = new Color(c.getRed(), c.getGreen(), c.getBlue(),
-				elementProperties.getFillColorAlpha());
+        c = elementProperties.getFillColor();
+        Color fill = new Color(c.getRed(), c.getGreen(), c.getBlue(), elementProperties.getFillColorAlpha());
 
-		setLineStyle(elementProperties.getContourStyle());
-		setColor(color);
-		setFillStyle(elementProperties.getFillStyle());
-		setFill(fill);
-		setWidth(elementProperties.getContourLineWidth());
-	}
+        setLineStyle(elementProperties.getContourStyle());
+        setColor(color);
+        setFillStyle(elementProperties.getFillStyle());
+        setFill(fill);
+        setWidth(elementProperties.getContourLineWidth());
+    }
 
-	/**
-	 * This method returns {@link ElementProperties} instance.
-	 * 
-	 * @return {@link ElementProperties} instance representing properties of
-	 *         this {@link ParameterNode}.
-	 */
-	public final ElementProperties getProperties() {
-		ElementProperties result = new ElementProperties();
+    /**
+     * This method returns {@link ElementProperties} instance.
+     *
+     * @return {@link ElementProperties} instance representing properties of this {@link ParameterNode}.
+     */
+    public final ElementProperties getProperties() {
+        ElementProperties result = new ElementProperties();
 
-		result.setContourStyle(getLineStyle());
-		result.setContourColor(new Color(getColor().getRGB()));
-		result.setContourColorAlpha(getColor().getAlpha());
-		result.setFillStyle(getFillStyle());
-		result.setFillColor(new Color(getFill().getRGB()));
-		result.setFillColorAlpha(getFill().getAlpha());
-		result.setContourLineWidth(getWidth());
+        result.setContourStyle(getLineStyle());
+        result.setContourColor(new Color(getColor().getRGB()));
+        result.setContourColorAlpha(getColor().getAlpha());
+        result.setFillStyle(getFillStyle());
+        result.setFillColor(new Color(getFill().getRGB()));
+        result.setFillColorAlpha(getFill().getAlpha());
+        result.setContourLineWidth(getWidth());
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * @see graphNode.Node#toString()
-	 */
-	@Override
-	public String toString() {
-		return id + " [ParameterNode]";
-	}
+    /**
+     * @see graphNode.Node#toString()
+     */
+    @Override
+    public String toString() {
+        return id + " [ParameterNode]";
+    }
 
-	public ElementStyle getFillStyle() {
-		return fillStyle;
-	}
+    public ElementStyle getFillStyle() {
+        return fillStyle;
+    }
 
-	public ElementStyle getLineStyle() {
-		return lineStyle;
-	}
+    public ElementStyle getLineStyle() {
+        return lineStyle;
+    }
 
-	public void setFillStyle(ElementStyle fillStyle) {
-		this.fillStyle = fillStyle;
-	}
+    public void setFillStyle(ElementStyle fillStyle) {
+        this.fillStyle = fillStyle;
+    }
 
-	public void setLineStyle(ElementStyle lineStyle) {
-		this.lineStyle = lineStyle;
-	}
+    public void setLineStyle(ElementStyle lineStyle) {
+        this.lineStyle = lineStyle;
+    }
 
-	/**
-	 * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
-	 */
-	@Override
-	public Node duplicate() {
-		ParameterNode result = new ParameterNode();
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
+     */
+    @Override
+    public Node duplicate() {
+        ParameterNode result = new ParameterNode();
 
-		result.setProperties(getProperties());
+        result.setProperties(getProperties());
 
-		return result;
-	}
+        return result;
+    }
 }

@@ -31,7 +31,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 /**
  * This class encapsulates scene JPanel. All main listeners are implemented here. This class is applications main
  * drawing interface.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ScenePanel extends JPanel {
@@ -46,7 +46,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method instantiates one instance of <code>SceneJPanel</code>.
-     * 
+     *
      * @return <code>SceneJPanel</code> instance to use.
      */
     public static ScenePanel getInstance() {
@@ -117,7 +117,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * Draws edit frame onto {@link BufferedImage}.
-     * 
+     *
      * @return {@link BufferedImage} with edit frame.
      * @throws UnknownManipulationException In case of unknown manipulation.
      */
@@ -141,7 +141,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws grid onto <code>BufferedImage</code>.
-     * 
+     *
      * @return <code>BufferedImage</code> with grid.
      */
     private BufferedImage drawGrid() {
@@ -198,7 +198,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws scene and it's specific features.
-     * 
+     *
      * @param g <code>Graphics</code> to draw on.
      * @throws UnknownManipulationException In case of unknown manipulation.
      */
@@ -265,7 +265,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws scheme onto <code>BufferedImage</code>.
-     * 
+     *
      * @return <code>BufferedImage</code> with scheme.
      */
     private BufferedImage drawScheme() {
@@ -290,7 +290,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method draws selection frame onto {@link BufferedImage}.
-     * 
+     *
      * @return {@link BufferedImage} with selection frame.
      * @throws UnknownManipulationException In case of unknown manipulation.
      */
@@ -347,7 +347,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method paints {@link ScenePanel}.
-     * 
+     *
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     @Override
@@ -363,7 +363,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method invalidates <code>scheme</code>.
-     * 
+     *
      * @param bounds bounds of invalid region.
      */
     public void schemeInvalidate(UnitRectangle bounds) {
@@ -381,7 +381,7 @@ public class ScenePanel extends JPanel {
 
     /**
      * Tries to finish currently active manipulation.
-     * 
+     *
      * @param e {@link MouseEvent} with coordinates.
      * @param r2d Pointer rectangle.
      * @param manipulationQueue Instance of {@link ManipulationQueue} containing all {@link Manipulation} instances.

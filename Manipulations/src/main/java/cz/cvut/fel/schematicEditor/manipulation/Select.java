@@ -56,13 +56,10 @@ public class Select extends Manipulation {
     /*
      * (non-Javadoc)
      *
-     * @see
-     * cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute
-     * ()
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute ()
      */
     @Override
-    protected void execute(GroupNode topNode)
-            throws ManipulationExecutionException {
+    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
         // activate selection
         setActive(true);
 
@@ -72,24 +69,20 @@ public class Select extends Manipulation {
     /*
      * (non-Javadoc)
      *
-     * @see
-     * cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute
-     * ()
+     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute ()
      */
     @Override
-    protected void unexecute(GroupNode topNode)
-            throws ManipulationExecutionException {
+    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
         setActive(false);
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent,
-     *      Rectangle2D, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d,
-            ManipulationQueue manipulationQueue, GroupNode topNode,
-            boolean isMouseClicked) throws UnknownManipulationException {
+    public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
+            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         // mouse clicked and hit something
         if (isMouseClicked) {
             // some group is hit
@@ -110,29 +103,25 @@ public class Select extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      Rectangle2D, ManipulationQueue, GroupNode, boolean)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
+     *      ManipulationQueue, GroupNode, boolean)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d,
-            ManipulationQueue manipulationQueue, GroupNode groupNode,
-            boolean isMouseClick) throws UnknownManipulationException {
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
+            GroupNode groupNode, boolean isMouseClick) throws UnknownManipulationException {
         Manipulation result = this;
 
         // select is active AND GroupNode is already selected
-        if ((getManipulatedGroup() != null)
-                && (groupNode.findHit(r2d) == getManipulatedGroup())) {
+        if ((getManipulatedGroup() != null) && (groupNode.findHit(r2d) == getManipulatedGroup())) {
             // select is in edit active zone
             if (getManipulatedGroup().startEdit(r2d)) {
                 // create Edit manipulation
-                Edit edit = (Edit) ManipulationFactory
-                        .create(ManipulationType.EDIT);
+                Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT);
                 edit.setManipulatedGroup(getManipulatedGroup());
                 edit.setActive(true);
 
                 // continue with edit manipulation start
-                edit.manipulationStart(e, r2d, manipulationQueue, groupNode,
-                        isMouseClick);
+                edit.manipulationStart(e, r2d, manipulationQueue, groupNode, isMouseClick);
 
                 result = edit;
             }
@@ -146,14 +135,12 @@ public class Select extends Manipulation {
                 logger.trace("creating MOVE manipulation");
 
                 // create Move manipulation
-                Move move = (Move) ManipulationFactory
-                        .create(ManipulationType.MOVE);
+                Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE);
                 move.setManipulatedGroup(getManipulatedGroup());
                 move.setActive(true);
 
                 // continue with move manipulation start
-                result = move.manipulationStart(e, r2d, manipulationQueue,
-                        groupNode, isMouseClick);
+                result = move.manipulationStart(e, r2d, manipulationQueue, groupNode, isMouseClick);
             }
         }
         return result;

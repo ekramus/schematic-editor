@@ -8,8 +8,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class represents Part Node. It contains link to {@link Part} and to
- * {@link GroupNode} with part's visual form.
+ * This class represents Part Node. It contains link to {@link Part} and to {@link GroupNode} with part's visual form.
  *
  * @author Urban Kravjansky
  */
@@ -17,7 +16,7 @@ public class PartNode extends ElementNode {
     /**
      * GroupNode containing graphic representation of part shape.
      */
-    private GroupNode partGroupNode;
+    private GroupNode     partGroupNode;
     /**
      * {@link ParameterNode} containing parameters of part shape.
      */
@@ -26,8 +25,7 @@ public class PartNode extends ElementNode {
     /**
      * This is constructor.
      *
-     * @param part
-     *            <code>Part</code> stored in this <code>PartNode</code>.
+     * @param part <code>Part</code> stored in this <code>PartNode</code>.
      */
     public PartNode(Part part, GroupNode partGroupNode) {
         super(part);
@@ -38,10 +36,8 @@ public class PartNode extends ElementNode {
     /**
      * This is constructor.
      *
-     * @param part
-     *            <code>Part</code> stored in this <code>PartNode</code>.
-     * @param id
-     *            identifier of this <code>PartNode</code>.
+     * @param part <code>Part</code> stored in this <code>PartNode</code>.
+     * @param id identifier of this <code>PartNode</code>.
      */
     public PartNode(Part part, GroupNode partGroupNode, String id) {
         super(part, id);
@@ -52,8 +48,7 @@ public class PartNode extends ElementNode {
     /**
      * Initializes all necessary variables.
      *
-     * @param partGroupNode
-     *            {@link GroupNode} describing shape of {@link Part}.
+     * @param partGroupNode {@link GroupNode} describing shape of {@link Part}.
      */
     private void initialize(GroupNode partGroupNode) {
         ParameterNode pn = partGroupNode.getChildrenParameterNode();
@@ -78,19 +73,14 @@ public class PartNode extends ElementNode {
     /**
      * Getter for element bounds.
      *
-     * @param boundModifier
-     *            modifier which affects boundary size of element.
+     * @param boundModifier modifier which affects boundary size of element.
      * @return Bounds of element.
      */
     public UnitRectangle getBounds(Unit boundModifier) {
-        double x = getPartGroupNode().getBounds().getX()
-                - boundModifier.doubleValue();
-        double y = getPartGroupNode().getBounds().getY()
-                - boundModifier.doubleValue();
-        double w = getPartGroupNode().getBounds().getWidth() + 2
-                * boundModifier.doubleValue();
-        double h = getPartGroupNode().getBounds().getHeight() + 2
-                * boundModifier.doubleValue();
+        double x = getPartGroupNode().getBounds().getX() - boundModifier.doubleValue();
+        double y = getPartGroupNode().getBounds().getY() - boundModifier.doubleValue();
+        double w = getPartGroupNode().getBounds().getWidth() + 2 * boundModifier.doubleValue();
+        double h = getPartGroupNode().getBounds().getHeight() + 2 * boundModifier.doubleValue();
 
         return new UnitRectangle(x, y, w, h);
     }
@@ -100,15 +90,13 @@ public class PartNode extends ElementNode {
      */
     @Override
     public Node duplicate() {
-        PartNode result = new PartNode((Part) getElement(),
-                (GroupNode) getPartGroupNode().duplicate());
+        PartNode result = new PartNode((Part) getElement(), (GroupNode) getPartGroupNode().duplicate());
 
         return result;
     }
 
     /**
-     * @param partGroupNode
-     *            the partGroupNode to set
+     * @param partGroupNode the partGroupNode to set
      */
     private void setPartGroupNode(GroupNode partGroupNode) {
         this.partGroupNode = partGroupNode;
@@ -122,8 +110,7 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * @param partParameterNode
-     *            the partParameterNode to set
+     * @param partParameterNode the partParameterNode to set
      */
     private void setPartParameterNode(ParameterNode partParameterNode) {
         this.partParameterNode = partParameterNode;
