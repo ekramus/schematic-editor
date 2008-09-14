@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
-import cz.cvut.fel.schematicEditor.properties.Configuration;
-import cz.cvut.fel.schematicEditor.properties.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.configuration.Configuration;
+import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 
 /**
  * This class implements {@link ActionListener} for <code>savePreferencesMenuItem</code> in {@link MenuBar}.

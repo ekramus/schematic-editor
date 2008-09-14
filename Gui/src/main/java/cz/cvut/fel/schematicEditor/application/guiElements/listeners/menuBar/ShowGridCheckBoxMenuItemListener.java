@@ -7,7 +7,7 @@ import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
-import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 
 /**
  * This class implements {@link ActionListener} for <code>showGridCheckBoxMenuItem</code> in {@link MenuBar}.

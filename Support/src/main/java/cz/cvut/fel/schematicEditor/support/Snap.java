@@ -1,6 +1,6 @@
 package cz.cvut.fel.schematicEditor.support;
 
-import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**

@@ -19,18 +19,19 @@ import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 
 /**
  * This class implements {@link ActionListener} for <code>importMenuItem</code> in {@link MenuBar}.
- * 
+ *
  * @author Urban Kravjansky
  */
-public final class ImportMenuItemListener implements ActionListener {
+public final class AddPartMenuItemListener implements ActionListener {
 
     /**
      * Default constructor. It only calls constructor of super class.
      */
-    public ImportMenuItemListener() {
+    public AddPartMenuItemListener() {
         super();
     }
 
@@ -39,7 +40,7 @@ public final class ImportMenuItemListener implements ActionListener {
     /**
      * Method invoked as result to an action. It initializes new {@link JFileChooser} instance to select file and then
      * executes export process.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param e {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.
@@ -48,8 +49,8 @@ public final class ImportMenuItemListener implements ActionListener {
         EnvironmentConfiguration env = EnvironmentConfiguration.getInstance();
 
         JFileChooser fileChooser = new JFileChooser(env.getLastImportFolder());
-        fileChooser.setDialogTitle("Choose file to import");
-        fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SEF, ExportFileFilter.SEFDESC));
+        fileChooser.setDialogTitle("Choose part to add");
+        fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.PRT, ExportFileFilter.PRTDESC));
 
         int retValue = fileChooser.showOpenDialog(ScenePanel.getInstance());
 
@@ -57,59 +58,38 @@ public final class ImportMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastImportFolder(file.getParent());
 
-            SceneGraph sg = deserialize(ScenePanel.getInstance().getSchemeSG().getClass(), file);
-            ScenePanel.getInstance().getSchemeSG().getTopNode().add(sg.getTopNode());
+            PartNode pn = deserialize(PartNode.class, file);
+            ScenePanel.getInstance().getSchemeSG().getTopNode().add(pn);
             ScenePanel.getInstance().schemeInvalidate(null);
         }
     }
 
     /**
-     * Deserializes {@link SceneGraph} from given file.
-     * 
-     * @param clazz Class of deserialized {@link SceneGraph}.
-     * @param file Path to file, where is serialized {@link SceneGraph}.
-     * @return Deserialized {@link SceneGraph} class.
+     * Deserializes {@link PartNode} from given file.
+     *
+     * @param clazz Class of deserialized {@link PartNode}.
+     * @param file Path to file, where is serialized {@link PartNode}.
+     * @return Deserialized {@link PartNode} class.
      */
-    protected static SceneGraph deserialize(Class<? extends SceneGraph> clazz, File file) {
+    protected static PartNode deserialize(Class<? extends PartNode> clazz, File file) {
         XStream xstream = new XStream(new DomDriver());
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             processAnnotations(xstream, clazz);
-            return (SceneGraph) xstream.fromXML(br);
+            return (PartNode) xstream.fromXML(br);
         } catch (IOException e) {
             return null;
         }
     }
 
     /**
-     * Serializes given {@link SceneGraph} into given file.
-     * 
-     * @param sceneGraph {@link SceneGraph} file to serialize.
-     * @param file Path to file, where should be {@link SceneGraph} serialized.
-     */
-    protected static void serialize(SceneGraph sceneGraph, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            processAnnotations(xstream, sceneGraph.getClass());
-            xstream.toXML(sceneGraph, bw);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Processes all {@link XStream} annotations in entered classes.
-     * 
+     *
      * @param xstream {@link XStream} instance to configure.
-     * @param clazz Class of {@link SceneGraph} object.
+     * @param clazz Class of {@link PartNode} object.
      */
-    private static void processAnnotations(XStream xstream, Class<? extends SceneGraph> clazz) {
+    private static void processAnnotations(XStream xstream, Class<? extends PartNode> clazz) {
         xstream.processAnnotations(clazz);
-        // xstream.processAnnotations(Unit.class);
-        // xstream.processAnnotations(Pixel.class);
     }
 }

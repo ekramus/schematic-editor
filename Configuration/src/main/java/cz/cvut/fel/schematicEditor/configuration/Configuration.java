@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.properties;
+package cz.cvut.fel.schematicEditor.configuration;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

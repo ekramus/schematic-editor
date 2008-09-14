@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.properties;
+package cz.cvut.fel.schematicEditor.configuration;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
  * This class encapsulates GUI properties.
- * 
+ *
  * @author Urban Kravjansky
  */
 @XStreamAlias("guiConfiguration")
@@ -79,7 +79,7 @@ public class GuiConfiguration extends Configuration {
     private boolean        snapToGrid           = false;
 
     /**
-     * 
+     *
      */
     public GuiConfiguration() {
         // nothing to do

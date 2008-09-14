@@ -17,12 +17,12 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
+import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.properties.EnvironmentConfiguration;
 
 /**
  * This class implements {@link ActionListener} for <code>saveMenuItem</code> in {@link MenuBar}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public final class SaveMenuItemListener implements ActionListener {
@@ -39,7 +39,7 @@ public final class SaveMenuItemListener implements ActionListener {
     /**
      * Method invoked as result to an action. It initializes new {@link JFileChooser} instance to select file and then
      * executes export process.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param e {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.
@@ -62,27 +62,8 @@ public final class SaveMenuItemListener implements ActionListener {
     }
 
     /**
-     * Deserializes {@link SceneGraph} from given file.
-     * 
-     * @param clazz Class of deserialized {@link SceneGraph}.
-     * @param file Path to file, where is serialized {@link SceneGraph}.
-     * @return Deserialized {@link SceneGraph} class.
-     */
-    protected static SceneGraph deserialize(Class<? extends SceneGraph> clazz, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            processAnnotations(xstream, clazz);
-            return (SceneGraph) xstream.fromXML(br);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
      * Serializes given {@link SceneGraph} into given file.
-     * 
+     *
      * @param sceneGraph {@link SceneGraph} file to serialize.
      * @param file Path to file, where should be {@link SceneGraph} serialized.
      */
@@ -101,7 +82,7 @@ public final class SaveMenuItemListener implements ActionListener {
 
     /**
      * Processes all {@link XStream} annotations in entered classes.
-     * 
+     *
      * @param xstream {@link XStream} instance to configure.
      * @param clazz Class of {@link SceneGraph} object.
      */

@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 /**
  * This class represents FileFilter of POSTSCRIPT and SVG file formats
- * 
+ *
  * @author Zdenek Straka
  * @author Urban Kravjansky
  */
@@ -29,6 +29,14 @@ public class ExportFileFilter extends FileFilter {
      * SEF file format extension.
      */
     public static final String SEF        = "sef";
+    /**
+     * PRT file format description.
+     */
+    public static final String PRTDESC    = "Schematic Editor Part Format (*.prt)";
+    /**
+     * PRT file format extension.
+     */
+    public static final String PRT        = "prt";
 
     public static String getExtension(File f) {
 
