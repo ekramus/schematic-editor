@@ -14,6 +14,7 @@ import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -350,7 +351,8 @@ public class GroupNode extends Node {
 
     public UnitRectangle getBounds() {
         // get bounds of first element, so there are some defined
-        UnitRectangle bounds = getChildrenElementList().getFirst().getBounds(getChildrenParameterNode().getWidth());
+        Unit width = getChildrenParameterNode().getWidth();
+        UnitRectangle bounds = getChildrenElementList().getFirst().getBounds(width);
 
         UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
