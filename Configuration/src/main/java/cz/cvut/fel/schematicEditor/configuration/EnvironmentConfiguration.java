@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.properties;
+package cz.cvut.fel.schematicEditor.configuration;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

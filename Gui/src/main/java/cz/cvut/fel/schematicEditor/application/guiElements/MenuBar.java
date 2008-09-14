@@ -11,6 +11,7 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.AboutMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.AddPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.AntialiasedCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.DebugCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ExitMenuItemListener;
@@ -18,16 +19,17 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.Gri
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ImportMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.OpenMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveAsMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveAsPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SavePreferencesMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ShowGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SnapToGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.MenuBarResources;
-import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 
 /**
  * This class implements menu bar. It is used for all menu based operations.
- * 
+ *
  * @author Urban Kravjanský
  */
 public final class MenuBar extends JMenuBar {
@@ -39,7 +41,7 @@ public final class MenuBar extends JMenuBar {
     /**
      * Getter of <code>menuBar</code> instance. As it is singleton, this method first checks whether it is null or not.
      * When needed, new <code>menuBar</code> instance is created.
-     * 
+     *
      * @return <code>menuBar</code> instance.
      */
     public static JMenuBar getInstance() {
@@ -58,6 +60,10 @@ public final class MenuBar extends JMenuBar {
      * About menu item instance.
      */
     private JMenuItem         aboutMenuItem               = null;
+    /**
+     * Add part menu item instance.
+     */
+    private JMenuItem         addPartMenuItem             = null;
     /**
      * Antialiased picture check box menu item instance.
      */
@@ -95,6 +101,14 @@ public final class MenuBar extends JMenuBar {
      */
     private JMenu             helpMenu                    = null;
     /**
+     * Import menu item instance.
+     */
+    private JMenuItem         importMenuItem              = null;
+    /**
+     * Open menu item instance.
+     */
+    private JMenuItem         openMenuItem                = null;
+    /**
      * Paste menu item instance.
      */
     private JMenuItem         pasteMenuItem               = null;
@@ -103,13 +117,9 @@ public final class MenuBar extends JMenuBar {
      */
     private JMenuItem         saveAsMenuItem              = null;
     /**
-     * Open menu item instance.
+     * Save as Part menu item instance.
      */
-    private JMenuItem         openMenuItem                = null;
-    /**
-     * Import menu item instance.
-     */
-    private JMenuItem         importMenuItem              = null;
+    private JMenuItem         saveAsPartMenuItem          = null;
     /**
      * Save menu item instance.
      */
@@ -140,7 +150,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>aboutMenuItem</code>.
-     * 
+     *
      * @return <code>aboutMenuItem</code> instance.
      */
     private JMenuItem getAboutMenuItem() {
@@ -153,8 +163,23 @@ public final class MenuBar extends JMenuBar {
     }
 
     /**
+     * Getter for <code>addPartMenuItem</code>.
+     *
+     * @return <code>addPartMenuItem</code> instance.
+     */
+    private JMenuItem getAddPartMenuItem() {
+        if (this.addPartMenuItem == null) {
+            this.addPartMenuItem = new JMenuItem();
+            this.addPartMenuItem.setText(MenuBarResources.ADD_PART_MENU_ITEM.getText());
+            this.addPartMenuItem.addActionListener(new AddPartMenuItemListener());
+
+        }
+        return this.addPartMenuItem;
+    }
+
+    /**
      * Getter for <code>antialiasedCheckBoxMenuItem</code>.
-     * 
+     *
      * @return <code>antialiasedCheckBoxMenuItem</code> instance.
      */
     private JCheckBoxMenuItem getAntialiasedCheckBoxMenuItem() {
@@ -169,7 +194,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>copyMenuItem</code>.
-     * 
+     *
      * @return <code>copyMenuItem</code> instance.
      */
     private JMenuItem getCopyMenuItem() {
@@ -183,7 +208,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>cutMenuItem</code>.
-     * 
+     *
      * @return <code>cutMenuItem</code> instance.
      */
     private JMenuItem getCutMenuItem() {
@@ -197,7 +222,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>debugCheckBoxMenuItem</code>.
-     * 
+     *
      * @return <code>debugCheckBoxMenuItem</code> instance.
      */
     private JCheckBoxMenuItem getDebugCheckBoxMenuItem() {
@@ -212,7 +237,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>editMenu</code>.
-     * 
+     *
      * @return <code>editMenu</code> instance.
      */
     private JMenu getEditMenu() {
@@ -231,7 +256,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>exitMenuItem</code>.
-     * 
+     *
      * @return <code>exitMenuItem</code> instance.
      */
     private JMenuItem getExitMenuItem() {
@@ -245,7 +270,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>fileMenu</code>.
-     * 
+     *
      * @return <code>fileMenu</code> instance.
      */
     private JMenu getFileMenu() {
@@ -254,8 +279,10 @@ public final class MenuBar extends JMenuBar {
             this.fileMenu.setText(MenuBarResources.FILE_MENU.getText());
             this.fileMenu.add(getOpenMenuItem());
             this.fileMenu.add(getImportMenuItem());
+            this.fileMenu.add(getAddPartMenuItem());
             this.fileMenu.add(getSaveMenuItem());
             this.fileMenu.add(getSaveAsMenuItem());
+            this.fileMenu.add(getSaveAsPartMenuItem());
             this.fileMenu.add(getSavePreferencesMenuItem());
             this.fileMenu.add(getExitMenuItem());
         }
@@ -264,13 +291,13 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>gridMenuItem</code>.
-     * 
+     *
      * @return <code>gridMenuItem</code> instance.
      */
     private JMenuItem getGridMenuItem() {
         if (this.gridMenuItem == null) {
             this.gridMenuItem = new JMenuItem();
-            this.gridMenuItem.setText("Grid Properties");
+            this.gridMenuItem.setText(MenuBarResources.GRID_MENU_ITEM.getText());
             this.gridMenuItem.addActionListener(new GridMenuItemListener());
 
         }
@@ -279,7 +306,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>helpMenu</code>.
-     * 
+     *
      * @return <code>helpMenu</code> instance.
      */
     private JMenu getHHelpMenu() {
@@ -292,37 +319,23 @@ public final class MenuBar extends JMenuBar {
     }
 
     /**
-     * Getter for <code>pasteMenuItem</code>.
-     * 
-     * @return <code>pasteMenuItem</code> instance.
+     * Getter for <code>openMenuItem</code>.
+     *
+     * @return <code>openMenuItem</code> instance.
      */
-    private JMenuItem getPasteMenuItem() {
-        if (this.pasteMenuItem == null) {
-            this.pasteMenuItem = new JMenuItem();
-            this.pasteMenuItem.setText(MenuBarResources.PASTE_MENU_ITEM.getText());
-            this.pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK, true));
+    private JMenuItem getImportMenuItem() {
+        if (this.importMenuItem == null) {
+            this.importMenuItem = new JMenuItem();
+            this.importMenuItem.setText(MenuBarResources.IMPORT_MENU_ITEM.getText());
+            this.importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK, true));
+            this.importMenuItem.addActionListener(new ImportMenuItemListener());
         }
-        return this.pasteMenuItem;
-    }
-
-    /**
-     * Getter for <code>saveAsMenuItem<code>.
-     * 
-     * @return <code>saveAsMenuItem<code> instance.
-     */
-    private JMenuItem getSaveAsMenuItem() {
-        if (this.saveAsMenuItem == null) {
-            this.saveAsMenuItem = new JMenuItem();
-            this.saveAsMenuItem.setText(MenuBarResources.SAVE_AS_MENU_ITEM.getText());
-            this.saveAsMenuItem.addActionListener(new SaveAsMenuItemListener());
-
-        }
-        return this.saveAsMenuItem;
+        return this.importMenuItem;
     }
 
     /**
      * Getter for <code>openMenuItem</code>.
-     * 
+     *
      * @return <code>openMenuItem</code> instance.
      */
     private JMenuItem getOpenMenuItem() {
@@ -336,8 +349,52 @@ public final class MenuBar extends JMenuBar {
     }
 
     /**
+     * Getter for <code>pasteMenuItem</code>.
+     *
+     * @return <code>pasteMenuItem</code> instance.
+     */
+    private JMenuItem getPasteMenuItem() {
+        if (this.pasteMenuItem == null) {
+            this.pasteMenuItem = new JMenuItem();
+            this.pasteMenuItem.setText(MenuBarResources.PASTE_MENU_ITEM.getText());
+            this.pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK, true));
+        }
+        return this.pasteMenuItem;
+    }
+
+    /**
+     * Getter for <code>saveAsMenuItem<code>.
+     *
+     * @return <code>saveAsMenuItem<code> instance.
+     */
+    private JMenuItem getSaveAsMenuItem() {
+        if (this.saveAsMenuItem == null) {
+            this.saveAsMenuItem = new JMenuItem();
+            this.saveAsMenuItem.setText(MenuBarResources.SAVE_AS_MENU_ITEM.getText());
+            this.saveAsMenuItem.addActionListener(new SaveAsMenuItemListener());
+
+        }
+        return this.saveAsMenuItem;
+    }
+
+    /**
+     * Getter for <code>saveAsPartMenuItem</code>.
+     *
+     * @return <code>saveAsPartMenuItem</code> instance.
+     */
+    private JMenuItem getSaveAsPartMenuItem() {
+        if (this.saveAsPartMenuItem == null) {
+            this.saveAsPartMenuItem = new JMenuItem();
+            this.saveAsPartMenuItem.setText(MenuBarResources.SAVE_AS_PART_MENU_ITEM.getText());
+            this.saveAsPartMenuItem.addActionListener(new SaveAsPartMenuItemListener());
+
+        }
+        return this.saveAsPartMenuItem;
+    }
+
+    /**
      * Getter for <code>saveMenuItem</code>.
-     * 
+     *
      * @return <code>saveMenuItem</code> instance.
      */
     private JMenuItem getSaveMenuItem() {
@@ -352,7 +409,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>savePreferencesMenuItem</code>.
-     * 
+     *
      * @return <code>savePreferencesMenuItem</code> instance.
      */
     private JMenuItem getSavePreferencesMenuItem() {
@@ -366,7 +423,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>showGridCheckBoxMenuItem</code>.
-     * 
+     *
      * @return <code>showGridCheckBoxMenuItem</code> instance.
      */
     private JCheckBoxMenuItem getShowGridCheckBoxMenuItem() {
@@ -381,7 +438,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>snapToGridCheckBoxMenuItem</code>.
-     * 
+     *
      * @return <code>snapToGridCheckBoxMenuItem</code> instance.
      */
     private JCheckBoxMenuItem getSnapToGridCheckBoxMenuItem() {
@@ -396,7 +453,7 @@ public final class MenuBar extends JMenuBar {
 
     /**
      * Getter for <code>viewMenu</code>.
-     * 
+     *
      * @return <code>viewMenu</code> instance.
      */
     private JMenu getViewMenu() {
@@ -408,20 +465,5 @@ public final class MenuBar extends JMenuBar {
             this.viewMenu.add(getDebugCheckBoxMenuItem());
         }
         return this.viewMenu;
-    }
-
-    /**
-     * Getter for <code>openMenuItem</code>.
-     * 
-     * @return <code>openMenuItem</code> instance.
-     */
-    private JMenuItem getImportMenuItem() {
-        if (this.importMenuItem == null) {
-            this.importMenuItem = new JMenuItem();
-            this.importMenuItem.setText(MenuBarResources.IMPORT_MENU_ITEM.getText());
-            this.importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK, true));
-            this.importMenuItem.addActionListener(new ImportMenuItemListener());
-        }
-        return this.importMenuItem;
     }
 }

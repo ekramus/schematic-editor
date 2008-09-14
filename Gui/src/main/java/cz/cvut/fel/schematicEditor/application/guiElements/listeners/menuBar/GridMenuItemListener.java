@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.MenuBarResources;
-import cz.cvut.fel.schematicEditor.properties.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 

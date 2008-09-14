@@ -2,14 +2,21 @@ package cz.cvut.fel.schematicEditor.application.guiElements.resources;
 
 /**
  * This enumerator implements menu bar resources.
- * 
+ *
+ * TODO Implement resources as serialized XML objects, so they can be modified.
+ *
  * @author Urban Kravjansky
  */
+@SuppressWarnings("nls")
 public enum MenuBarResources {
     /**
      * About menu item string.
      */
     ABOUT_MENU_ITEM("About"),
+    /**
+     * Add Part menu item string.
+     */
+    ADD_PART_MENU_ITEM("Add Part"),
     /**
      * Antialiased menu item string.
      */
@@ -19,17 +26,21 @@ public enum MenuBarResources {
      */
     COPY_MENU_ITEM("Copy"),
     /**
-     * Paste menu item string.
-     */
-    PASTE_MENU_ITEM("Paste"),
-    /**
      * Cut menu item string.
      */
     CUT_MENU_ITEM("Cut"),
     /**
+     * Debug menu item string.
+     */
+    DEBUG_CHECK_BOX_MENU_ITEM("Scheme Debugged"),
+    /**
      * Edit menu string.
      */
     EDIT_MENU("Edit"),
+    /**
+     * Exit menu item string.
+     */
+    EXIT_MENU_ITEM("Exit"),
     /**
      * Export menu string.
      */
@@ -43,17 +54,13 @@ public enum MenuBarResources {
      */
     EXPORT_TO_PS_MENU_ITEM("PostScript (PS)"),
     /**
-     * Exit menu item string.
-     */
-    EXIT_MENU_ITEM("Exit"),
-    /**
-     * Debug menu item string.
-     */
-    DEBUG_CHECK_BOX_MENU_ITEM("Scheme Debugged"),
-    /**
      * File menu string.
      */
     FILE_MENU("File"),
+    /**
+     * Grid properties menu item string.
+     */
+    GRID_MENU_ITEM("Grid Properties"),
     /**
      * Grid menu item dialog string.
      */
@@ -71,9 +78,17 @@ public enum MenuBarResources {
      */
     OPEN_MENU_ITEM("Open"),
     /**
+     * Paste menu item string.
+     */
+    PASTE_MENU_ITEM("Paste"),
+    /**
      * Save as menu item string.
      */
     SAVE_AS_MENU_ITEM("Save As"),
+    /**
+     * Save as Part menu item string.
+     */
+    SAVE_AS_PART_MENU_ITEM("Save As Part"),
     /**
      * Save menu item string.
      */
@@ -102,7 +117,7 @@ public enum MenuBarResources {
 
     /**
      * Constructor sets string value of enum item.
-     * 
+     *
      * @param text String value of item.
      */
     private MenuBarResources(String text) {
@@ -111,7 +126,7 @@ public enum MenuBarResources {
 
     /**
      * Getter for string value of item.
-     * 
+     *
      * @return String value of item.
      */
     public String getText() {
@@ -120,7 +135,7 @@ public enum MenuBarResources {
 
     /**
      * Setter of string value of item.
-     * 
+     *
      * @param text String value of item to set.
      */
     private void setText(String text) {

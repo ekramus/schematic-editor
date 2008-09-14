@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.launcher;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.properties.Configuration;
+import cz.cvut.fel.schematicEditor.configuration.Configuration;
 
 /**
  * This method implements stand alone launcher. It is used for stand alone launching of <em>SchematicEditor</em>
