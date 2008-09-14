@@ -335,7 +335,7 @@ public class ScenePanel extends JPanel {
         this.grid = null;
         this.scheme = null;
         this.schemeSG = new SceneGraph();
-        this.schemeSG.manualCreateSceneGraph2();
+        this.schemeSG.manualCreateSceneGraph();
     }
 
     /**

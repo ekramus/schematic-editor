@@ -20,6 +20,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 
 /**
@@ -59,10 +60,14 @@ public final class AddPartMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastImportFolder(file.getParent());
 
-            PartNode pn = deserialize(PartNode.class, file);
-            GroupNode gn = new GroupNode();
-            gn.add(pn);
-            ScenePanel.getInstance().getSchemeSG().getTopNode().add(gn);
+            PartNode partNode = deserialize(PartNode.class, file);
+            GroupNode groupNode = new GroupNode();
+            ParameterNode parameterNode = new ParameterNode();
+
+            groupNode.add(partNode);
+            groupNode.add(parameterNode);
+
+            ScenePanel.getInstance().getSchemeSG().getTopNode().add(groupNode);
             ScenePanel.getInstance().schemeInvalidate(null);
         }
     }
