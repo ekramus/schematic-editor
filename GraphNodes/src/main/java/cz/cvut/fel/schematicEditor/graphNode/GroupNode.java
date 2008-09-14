@@ -202,10 +202,40 @@ public class GroupNode extends Node {
     /**
      * This method returns list of GroupNode children
      *
-     * @return childrenGroupList;
+     * @return children GroupList
      */
     public LinkedList<GroupNode> getChildrenGroupList() {
         return this.childrenGroupList;
+    }
+
+    /**
+     * This method returns GroupNode with enabled Nodes only.
+     *
+     * @return GroupNode with only enabled Nodes
+     */
+    public GroupNode getEnabledOnly() {
+        GroupNode result = (GroupNode) duplicate();
+
+        if (result.isDisabled()) {
+            return null;
+        }
+
+        for (int i = result.getChildrenElementList().size() - 1; i >= 0; i--) {
+            ElementNode child = result.getChildrenElementList().get(i);
+            if (child.isDisabled()) {
+                result.getChildrenElementList().remove(i);
+            }
+        }
+        for (int i = result.getChildrenGroupList().size() - 1; i >= 0; i--) {
+            GroupNode child = result.getChildrenGroupList().get(i);
+            if (child.isDisabled()) {
+                result.getChildrenGroupList().remove(i);
+            } else {
+                result.getChildrenGroupList().set(i, child.getEnabledOnly());
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -454,8 +484,15 @@ public class GroupNode extends Node {
     @Override
     public Node duplicate() {
         GroupNode result = new GroupNode();
+        ParameterNode chPN = null;
 
-        ParameterNode chPN = (ParameterNode) getChildrenParameterNode().duplicate();
+        result.setDisabled(isDisabled());
+
+        try {
+            chPN = (ParameterNode) getChildrenParameterNode().duplicate();
+        } catch (NullPointerException npe) {
+            // nothing to do
+        }
         result.setChidrenParameterNode(chPN);
 
         LinkedList<ElementNode> chEL = new LinkedList<ElementNode>();

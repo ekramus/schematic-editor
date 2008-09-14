@@ -60,7 +60,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             env.setLastSaveFolder(file.getParent());
 
             Part p = new Part();
-            PartNode pn = new PartNode(p, ScenePanel.getInstance().getSchemeSG().getTopNode());
+            PartNode pn = new PartNode(p, ScenePanel.getInstance().getSchemeSG().getTopNode().getEnabledOnly());
             serialize(pn, file);
         }
     }
