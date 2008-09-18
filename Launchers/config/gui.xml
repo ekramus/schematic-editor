@@ -1,0 +1,24 @@
+<guiConfiguration>
+  <gridSize class="pixel">
+    <value>25.0</value>
+    <doubleFactor>1.0</doubleFactor>
+  </gridSize>
+  <gridVisible>true</gridVisible>
+  <pointerRectangle>
+    <x>5.0</x>
+    <y>5.0</y>
+  </pointerRectangle>
+  <sceneBackgroundColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
+  </sceneBackgroundColor>
+  <sceneDim>
+    <width>1280</width>
+    <height>1024</height>
+  </sceneDim>
+  <schemeAntialiased>true</schemeAntialiased>
+  <schemeDebugged>false</schemeDebugged>
+  <snapToGrid>false</snapToGrid>
+</guiConfiguration>

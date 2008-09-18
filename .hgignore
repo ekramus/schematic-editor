@@ -1,0 +1,29 @@
+syntax: glob
+
+# skip Mac OS X files
+.DS_Store
+
+# skip subversion files
+.svn
+
+# skip IDEA project and workspace files
+*.iml
+*.iws
+*ipr
+
+# skip Eclipse workspace files
+.metadata
+
+# skip Eclipse project files
+.classpath
+.project
+.settings
+
+# skip project build files
+*.class
+*.log*
+*.jar
+target
+bin
+deploy/*.xml
+deploy/config/*
