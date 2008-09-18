@@ -9,11 +9,11 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial.Inch;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.metric.Milimeter;
 
 /**
- * @author Urban Kravjansky
+ * JUnit test class for {@link UnitType}.
  * 
+ * @author Urban Kravjansky
  */
 public class UnitTypeTest {
-
     /**
      * Test method for {@link cz.cvut.fel.schematicEditor.unit.UnitType#getUnitString()}.
      */
