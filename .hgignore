@@ -23,6 +23,7 @@ syntax: glob
 *.class
 *.log*
 *.jar
+*.zip
 target
 bin
 deploy/*.xml
