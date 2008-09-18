@@ -6,6 +6,11 @@ syntax: glob
 # skip subversion files
 .svn
 
+# skip IDEA project and workspace files
+*.iml
+*.iws
+*ipr
+
 # skip Eclipse workspace files
 .metadata
 

@@ -27,6 +27,10 @@ public class Configuration {
      * {@link Configuration} singleton instance.
      */
     private static Configuration instance = null;
+    /**
+     * Application version string.
+     */
+    private String version="0.0.10";
 
     /**
      * Deserializes configuration from given file.
@@ -103,5 +107,12 @@ public class Configuration {
      */
     protected Configuration() {
         // nothing to do
+    }
+
+    /**
+     * @return version instance.
+     */
+    public String getVersion() {
+        return this.version;
     }
 }

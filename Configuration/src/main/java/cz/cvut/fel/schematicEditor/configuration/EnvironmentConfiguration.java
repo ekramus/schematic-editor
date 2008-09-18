@@ -53,7 +53,26 @@ public class EnvironmentConfiguration extends Configuration {
     /**
      * Application last used save folder.
      */
-    private String lastSaveFolder   = null;
+    private String lastSaveFolder   = "parts";
+
+    /**
+     * @return the partsFolder
+     */
+    public String getPartsFolder() {
+        return this.partsFolder;
+    }
+
+    /**
+     * @param partsFolder the partsFolder to set
+     */
+    public void setPartsFolder(final String partsFolder) {
+        this.partsFolder = partsFolder;
+    }
+
+    /**
+     * Parts folder.
+     */
+    private String partsFolder      = null;
 
     /**
      * 

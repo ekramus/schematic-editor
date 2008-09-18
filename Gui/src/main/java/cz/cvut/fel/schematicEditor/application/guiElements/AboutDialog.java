@@ -1,13 +1,13 @@
 package cz.cvut.fel.schematicEditor.application.guiElements;
 
+import cz.cvut.fel.schematicEditor.configuration.Configuration;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import cz.cvut.fel.schematicEditor.application.Application;
 
 /**
  * @author Urban Kravjansky
@@ -74,7 +74,8 @@ public final class AboutDialog extends JDialog {
     private JLabel getAboutVersionLabel() {
         if (this.aboutVersionLabel == null) {
             this.aboutVersionLabel = new JLabel();
-            this.aboutVersionLabel.setText("Version " + Application.version);
+            Configuration conf = Configuration.getInstance();
+            this.aboutVersionLabel.setText("Version " + conf.getVersion());
             this.aboutVersionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         }
         return this.aboutVersionLabel;
