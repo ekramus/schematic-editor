@@ -54,4 +54,8 @@ public enum ElementType {
      * Identifier for arc segment element type.
      */
     T_ARC_SEGMENT,
+    /**
+     * Identifier for connector element type.
+     */
+    T_CONNECTOR,
 }
