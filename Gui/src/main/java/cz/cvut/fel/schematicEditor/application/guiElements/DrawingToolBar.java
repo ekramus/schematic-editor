@@ -10,6 +10,7 @@ import javax.swing.JToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.DeleteButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.DrawShapeButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.SelectButtonListener;
+import cz.cvut.fel.schematicEditor.element.element.part.Connector;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -62,6 +63,10 @@ public final class DrawingToolBar extends JToolBar {
      * Delete button caption.
      */
     private static final String   DELETE_BTN       = "delete";
+    /**
+     * Connector button caption.
+     */
+    private static final String   CONNECTOR_BTN    = "connector";
 
     /**
      * {@link DrawingToolBar} instance.
@@ -90,6 +95,7 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(drawingToolBar.getArcButton());
             drawingToolBar.add(drawingToolBar.getArcSegmentButton());
             drawingToolBar.add(drawingToolBar.getRectButton());
+            drawingToolBar.add(drawingToolBar.getConnectorButton());
         }
         return drawingToolBar;
     }
@@ -138,6 +144,10 @@ public final class DrawingToolBar extends JToolBar {
      * Delete {@link JButton} instance.
      */
     private JButton deleteButton     = null;
+    /**
+     * Connector {@link JButton} instance.
+     */
+    private JButton connectorButton  = null;
 
     /**
      * Default constructor. It calls default constructor of super class. It is private, because {@link DrawingToolBar}
@@ -173,6 +183,20 @@ public final class DrawingToolBar extends JToolBar {
             this.arcSegmentButton.addActionListener(new DrawShapeButtonListener(new ArcSegment()));
         }
         return this.arcSegmentButton;
+    }
+
+    /**
+     * <code>connectorButton</code> getter.
+     * 
+     * @return <code>connectorButton</code> instance.
+     */
+    private JButton getConnectorButton() {
+        if (this.connectorButton == null) {
+            this.connectorButton = new JButton();
+            this.connectorButton.setText(CONNECTOR_BTN);
+            this.connectorButton.addActionListener(new DrawShapeButtonListener(new Connector()));
+        }
+        return this.connectorButton;
     }
 
     /**
