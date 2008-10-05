@@ -9,13 +9,11 @@ import javax.swing.JFileChooser;
 import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
-import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.export.PSExport;
 
 /**
  * This class implements {@link ActionListener} for <code>exportToPsMenuItem</code> in
  * {@link MenuBar}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public final class ExportToPsMenuItemListener implements ActionListener {
@@ -30,9 +28,9 @@ public final class ExportToPsMenuItemListener implements ActionListener {
     /**
      * Method invoked as result to an action. It initializes new {@link JFileChooser} instance and
      * then initializes export to PS.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * 
+     *
      * @param ae
      *            {@link ActionEvent} parameter. This parameter is only for implementing purposes,
      *            it is not used nor needed.

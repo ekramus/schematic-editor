@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 
 /**
  * This abstract class implements listener model for {@link PropertiesToolBar} other listeners.
- * 
+ *
  * @author Urban Kravjansky
  */
 public abstract class PropertiesToolBarListener {
@@ -19,7 +19,7 @@ public abstract class PropertiesToolBarListener {
     /**
      * Selects active element {@link ElementProperties} instance. If there is no active element, this method returns
      * global scene {@link ElementProperties}.
-     * 
+     *
      * @return active element {@link ElementProperties} instance in case there is active element, otherwise global scene
      *         {@link ElementProperties}.
      */
@@ -37,7 +37,7 @@ public abstract class PropertiesToolBarListener {
     /**
      * Update active element {@link ElementProperties} instance, if necessary. Update is executed only in case of
      * {@link Select} manipulation.
-     * 
+     *
      * @param elementProperties properties to update.
      */
     protected final void updateProperties(final ElementProperties elementProperties)

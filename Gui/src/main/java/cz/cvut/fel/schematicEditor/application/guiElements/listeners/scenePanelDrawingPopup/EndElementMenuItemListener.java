@@ -13,11 +13,10 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanelDrawingPopu
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.support.Support;
 
 /**
  * This class implements listener for {@link ScenePanelDrawingPopup}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class EndElementMenuItemListener implements ActionListener {
@@ -36,7 +35,7 @@ public class EndElementMenuItemListener implements ActionListener {
 
     /**
      * Default MenuItem listener constructor.
-     * 
+     *
      * @param e {@link MouseEvent}, which preceded this {@link Listener} construction.
      * @param r2d Pointer square, where {@link MouseEvent} occured.
      */
@@ -49,7 +48,7 @@ public class EndElementMenuItemListener implements ActionListener {
 
     /**
      * Method is invoked as result to an action. It invokes final manipulation step.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param ae {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.

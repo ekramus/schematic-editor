@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 
@@ -13,7 +12,6 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
