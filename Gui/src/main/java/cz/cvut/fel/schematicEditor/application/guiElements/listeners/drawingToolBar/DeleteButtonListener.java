@@ -15,7 +15,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 
 /**
  * This class implements listener for {@link Delete} manipulation button.
- * 
+ *
  * @author Urban Kravjansky
  */
 public final class DeleteButtonListener implements ActionListener {
@@ -35,7 +35,7 @@ public final class DeleteButtonListener implements ActionListener {
 
     /**
      * Method is invoked as result to an action. It initializes new {@link Delete} instance.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param ae {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.

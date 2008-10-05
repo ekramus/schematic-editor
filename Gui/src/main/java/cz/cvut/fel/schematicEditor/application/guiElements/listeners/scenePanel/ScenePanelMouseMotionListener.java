@@ -9,16 +9,13 @@ import cz.cvut.fel.schematicEditor.application.Gui;
 import cz.cvut.fel.schematicEditor.application.StatusBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.support.Snap;
-import cz.cvut.fel.schematicEditor.support.Support;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
-import cz.cvut.fel.schematicEditor.manipulation.Move;
+import cz.cvut.fel.schematicEditor.support.Snap;
 
 /**
  * This class implements {@link MouseMotionListener} for {@link ScenePanel}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ScenePanelMouseMotionListener implements MouseMotionListener {
@@ -37,7 +34,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
     /**
      * Method for mouse drag events processing.
-     * 
+     *
      * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
      */
     public void mouseDragged(MouseEvent e) {
@@ -61,7 +58,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
     /**
      * Method for mouse move events processing.
-     * 
+     *
      * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
      */
     public void mouseMoved(MouseEvent e) {

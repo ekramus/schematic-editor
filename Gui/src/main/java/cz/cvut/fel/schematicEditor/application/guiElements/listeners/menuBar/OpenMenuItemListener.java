@@ -22,7 +22,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
  * This class implements {@link ActionListener} for <code>openMenuItem</code> in {@link MenuBar}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public final class OpenMenuItemListener implements ActionListener {
@@ -39,7 +39,7 @@ public final class OpenMenuItemListener implements ActionListener {
     /**
      * Method invoked as result to an action. It initializes new {@link JFileChooser} instance to select file and then
      * executes export process.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param e {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.
@@ -65,7 +65,7 @@ public final class OpenMenuItemListener implements ActionListener {
 
     /**
      * Deserializes {@link SceneGraph} from given file.
-     * 
+     *
      * @param clazz Class of deserialized {@link SceneGraph}.
      * @param file Path to file, where is serialized {@link SceneGraph}.
      * @return Deserialized {@link SceneGraph} class.
@@ -84,7 +84,7 @@ public final class OpenMenuItemListener implements ActionListener {
 
     /**
      * Serializes given {@link SceneGraph} into given file.
-     * 
+     *
      * @param sceneGraph {@link SceneGraph} file to serialize.
      * @param file Path to file, where should be {@link SceneGraph} serialized.
      */
@@ -103,7 +103,7 @@ public final class OpenMenuItemListener implements ActionListener {
 
     /**
      * Processes all {@link XStream} annotations in entered classes.
-     * 
+     *
      * @param xstream {@link XStream} instance to configure.
      * @param clazz Class of {@link SceneGraph} object.
      */

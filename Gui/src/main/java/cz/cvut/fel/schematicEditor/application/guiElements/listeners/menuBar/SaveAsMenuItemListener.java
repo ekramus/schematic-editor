@@ -14,7 +14,7 @@ import cz.cvut.fel.schematicEditor.export.SVGExport;
 
 /**
  * This class implements {@link ActionListener} for <code>saveAsMenuItem</code> in {@link MenuBar}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public final class SaveAsMenuItemListener implements ActionListener {
@@ -31,7 +31,7 @@ public final class SaveAsMenuItemListener implements ActionListener {
     /**
      * Method invoked as result to an action. It initializes new {@link JFileChooser} instance to select file and then
      * executes export process.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param e {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.

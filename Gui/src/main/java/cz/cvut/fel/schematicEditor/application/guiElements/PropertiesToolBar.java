@@ -3,7 +3,6 @@ package cz.cvut.fel.schematicEditor.application.guiElements;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BoxLayout;
@@ -56,8 +55,16 @@ public class PropertiesToolBar extends JToolBar {
     /**
      * Line width predefined values.
      */
-    private static final String[]    LINE_WIDTH              = { "1 px", "2 px", "3 px", "4 px",
-            "5 px", "6 px", "7 px", "8 px", "9 px", "10 px" };
+    private static final String[]    LINE_WIDTH              = { "1 px",
+            "2 px",
+            "3 px",
+            "4 px",
+            "5 px",
+            "6 px",
+            "7 px",
+            "8 px",
+            "9 px",
+            "10 px"                                         };
     /**
      * Value for maximum alpha value (minimal transparency).
      */
@@ -144,22 +151,12 @@ public class PropertiesToolBar extends JToolBar {
             ep = Structures.getSceneProperties().getSelectedElementProperties();
         }
 
-        propertiesToolBar.getLineWidthComboBox().setSelectedItem(
-                                                                 String.valueOf(ep.getContourLineWidth()));
-        propertiesToolBar.getContourCheckBox().setSelected(
-                                                           ep.getContourStyle() == ElementStyle.NONE
-                                                                                                    ? false
-                                                                                                    : true);
-        propertiesToolBar.getFillCheckBox().setSelected(
-                                                        ep.getFillStyle() == ElementStyle.NONE
-                                                                                              ? false
-                                                                                              : true);
-        propertiesToolBar.getContourColorButton().setIcon(
-                                                          getColorIcon(ep.getContourColor(),
-                                                                       ep.getContourColorAlpha()));
-        propertiesToolBar.getFillColorButton().setIcon(
-                                                       getColorIcon(ep.getFillColor(),
-                                                                    ep.getFillColorAlpha()));
+        propertiesToolBar.getLineWidthComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
+        propertiesToolBar.getContourCheckBox().setSelected(ep.getContourStyle() == ElementStyle.NONE ? false : true);
+        propertiesToolBar.getFillCheckBox().setSelected(ep.getFillStyle() == ElementStyle.NONE ? false : true);
+        propertiesToolBar.getContourColorButton()
+                .setIcon(getColorIcon(ep.getContourColor(), ep.getContourColorAlpha()));
+        propertiesToolBar.getFillColorButton().setIcon(getColorIcon(ep.getFillColor(), ep.getFillColorAlpha()));
         propertiesToolBar.getContourColorAlphaSlider().setValue(ep.getContourColorAlpha());
         propertiesToolBar.getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
 
@@ -186,12 +183,11 @@ public class PropertiesToolBar extends JToolBar {
 
     private JCheckBox getContourCheckBox() {
         if (this.contourCheckBox == null) {
-            this.contourCheckBox = new JCheckBox(
-                    PropertiesToolBarResources.CONTOUR_CHECK_BOX.getText());
+            this.contourCheckBox = new JCheckBox(PropertiesToolBarResources.CONTOUR_CHECK_BOX.getText());
             this.contourCheckBox.setSelected(true);
             this.contourCheckBox.addActionListener(new ContourCheckBoxListener(this.contourCheckBox));
         }
-        return contourCheckBox;
+        return this.contourCheckBox;
     }
 
     /**
@@ -235,7 +231,7 @@ public class PropertiesToolBar extends JToolBar {
             this.fillCheckBox.setSelected(true);
             this.fillCheckBox.addActionListener(new FillCheckBoxListener(this.fillCheckBox));
         }
-        return fillCheckBox;
+        return this.fillCheckBox;
     }
 
     /**
@@ -282,8 +278,7 @@ public class PropertiesToolBar extends JToolBar {
         if (this.lineWidthComboBox == null) {
             this.lineWidthComboBox = new JComboBox(LINE_WIDTH);
             this.lineWidthComboBox.setEditable(true);
-            this.lineWidthComboBox.addActionListener(new LineWidthComboBoxActionListener(
-                    this.lineWidthComboBox));
+            this.lineWidthComboBox.addActionListener(new LineWidthComboBoxActionListener(this.lineWidthComboBox));
         }
         return this.lineWidthComboBox;
     }
@@ -297,10 +292,10 @@ public class PropertiesToolBar extends JToolBar {
         if (this.contourColorButton == null) {
             this.contourColorButton = new JButton();
             this.contourColorButton.setText(PropertiesToolBarResources.CONTOUR_COLOR_BTN.getText());
-            this.contourColorButton.setIcon(getColorIcon(Structures.getSceneProperties().getSceneElementProperties().getContourColor(),
-                                                         Structures.getSceneProperties().getSceneElementProperties().getContourColorAlpha()));
-            this.contourColorButton.addActionListener(new ContourColorButtonActionListener(
-                    this.contourColorButton));
+            this.contourColorButton.setIcon(getColorIcon(Structures.getSceneProperties().getSceneElementProperties()
+                    .getContourColor(), Structures.getSceneProperties().getSceneElementProperties()
+                    .getContourColorAlpha()));
+            this.contourColorButton.addActionListener(new ContourColorButtonActionListener(this.contourColorButton));
         }
         return this.contourColorButton;
     }
@@ -313,22 +308,18 @@ public class PropertiesToolBar extends JToolBar {
     private JButton getFillColorButton() {
         if (this.fillColorButton == null) {
             this.fillColorButton = new JButton(PropertiesToolBarResources.FILL_COLOR_BTN.getText());
-            this.fillColorButton.setIcon(getColorIcon(Structures.getSceneProperties().getSceneElementProperties().getFillColor(),
-                                                      Structures.getSceneProperties().getSceneElementProperties().getFillColorAlpha()));
-            this.fillColorButton.addActionListener(new FillColorButtonActionListener(
-                    this.fillColorButton));
+            this.fillColorButton.setIcon(getColorIcon(Structures.getSceneProperties().getSceneElementProperties()
+                    .getFillColor(), Structures.getSceneProperties().getSceneElementProperties().getFillColorAlpha()));
+            this.fillColorButton.addActionListener(new FillColorButtonActionListener(this.fillColorButton));
         }
         return this.fillColorButton;
     }
 
     /**
-     * Getter for image representing selected color on button. TODO Should be moved into some
-     * adequate package.
+     * Getter for image representing selected color on button. TODO Should be moved into some adequate package.
      *
-     * @param color
-     *            color to be present on image.
-     * @param alpha
-     *            alpha of given color.
+     * @param color color to be present on image.
+     * @param alpha alpha of given color.
      * @return Image with given color.
      */
     @Deprecated

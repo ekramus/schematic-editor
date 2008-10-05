@@ -15,7 +15,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 /**
  * This class serves as application properties superclass. It implements methods used by child classes, which have are
  * responsible for properties of specified part of application.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Configuration {
@@ -30,11 +30,11 @@ public class Configuration {
     /**
      * Application version string.
      */
-    private String version="0.0.10";
+    private final String         version  = "0.0.10";
 
     /**
      * Deserializes configuration from given file.
-     * 
+     *
      * @param clazz Class of deserialized configuration.
      * @param file Path to file, where is serialized {@link Configuration}.
      * @return Deserialized {@link Configuration} class.
@@ -73,7 +73,7 @@ public class Configuration {
 
     /**
      * Serializes given configuration into given file.
-     * 
+     *
      * @param configuration {@link Configuration} file to serialize.
      * @param file Path to file, where should be {@link Configuration} serialized.
      */
@@ -92,7 +92,7 @@ public class Configuration {
 
     /**
      * Processes all {@link XStream} annotations in entered classes.
-     * 
+     *
      * @param xstream {@link XStream} instance to configure.
      * @param clazz Class of configuration object.
      */
