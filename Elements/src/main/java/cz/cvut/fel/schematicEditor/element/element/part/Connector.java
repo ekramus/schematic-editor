@@ -1,21 +1,18 @@
 package cz.cvut.fel.schematicEditor.element.element.part;
 
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Iterator;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
-import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class encapsulates connector part. Connector serves as bridge between {@link Wire} and {@link Part}. It is
  * visible in application, exported is invisible.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Connector extends Element {
@@ -29,7 +26,7 @@ public class Connector extends Element {
 
     /**
      * {@link Connector} constructor with coordinate vector.
-     * 
+     *
      * @param x {@link Vector} of <code>x</code> coordinates.
      * @param y {@link Vector} of <code>y</code> coordinates.
      */
