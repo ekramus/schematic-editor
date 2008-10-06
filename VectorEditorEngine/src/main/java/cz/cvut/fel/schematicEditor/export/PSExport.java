@@ -1,26 +1,14 @@
 package cz.cvut.fel.schematicEditor.export;
 
-import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
-import cz.cvut.fel.schematicEditor.graphNode.Node;
-import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
-
 import java.awt.Color;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-
-import cz.cvut.fel.schematicEditor.support.Transformation;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
-import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
@@ -29,29 +17,35 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polygon;
 import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
+import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.support.Transformation;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 public class PSExport implements Export {
 
-    private boolean monochromaticColor = false;
+    private final boolean monochromaticColor = false;
 
     PrintStream     out;
     File            file;
 
     public void export(SceneGraph sg, Object output) {
 
-        file = (File) output;
+        this.file = (File) output;
         FileOutputStream fos = null;
         TransformationNode tn = null;
         ParameterNode pn = null;
         ElementNode en = null;
 
         try {
-            fos = new FileOutputStream(file);
+            fos = new FileOutputStream(this.file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        out = new PrintStream(fos);
+        this.out = new PrintStream(fos);
 
         printHead(new Point2D.Float(0, 0), new Point2D.Float(1000, 1000));
 
@@ -68,12 +62,12 @@ public class PSExport implements Export {
 
         printFooter();
 
-        out.close();
+        this.out.close();
     }
 
     private void drawNode(ElementNode en, ParameterNode pn, TransformationNode tn) {
 
-        switch (en.getElementType()) {
+        switch (en.getElement().getElementType()) {
 
             case T_LINE:
                 Line l = (Line) en.getElement();
@@ -123,44 +117,44 @@ public class PSExport implements Export {
 
     private void printHead(Point2D.Float startBoundingBox, Point2D.Float endBoundingBox) {
 
-        out.println("%!PS-Adobe-3.0 EPSF-3.0");
+        this.out.println("%!PS-Adobe-3.0 EPSF-3.0");
 
-        out.println("%%BoundingBox: " + (int) startBoundingBox.getX()
+        this.out.println("%%BoundingBox: " + (int) startBoundingBox.getX()
                 + " "
                 + (int) startBoundingBox.getX()
                 + " "
                 + (int) endBoundingBox.getX()
                 + " "
                 + (int) endBoundingBox.getY());
-        out.println("%%Title: " + this.file.getName());
-        out.println("%%Creator: Schematic Editor");
-        out.println("%%Pages: 1");
+        this.out.println("%%Title: " + this.file.getName());
+        this.out.println("%%Creator: Schematic Editor");
+        this.out.println("%%Pages: 1");
 
-        out.println("%%EndProlog");
-        out.println("%%Page: 1 1");
+        this.out.println("%%EndProlog");
+        this.out.println("%%Page: 1 1");
 
-        out.println("1 -1 scale");
-        out.println("0 -" + endBoundingBox.getX() + " translate");
-        out.println("gsave");
+        this.out.println("1 -1 scale");
+        this.out.println("0 -" + endBoundingBox.getX() + " translate");
+        this.out.println("gsave");
 
     }
 
     private void printFooter() {
-        out.println("grestore");
-        out.println(" showpage");
-        out.println("%%EOF");
+        this.out.println("grestore");
+        this.out.println(" showpage");
+        this.out.println("%%EOF");
 
     }
 
     private void drawPoly(boolean closedPath, Vector<Unit> x, Vector<Unit> y, ParameterNode pn, Transformation tn) {
 
-        out.println(" gsave");
+        this.out.println(" gsave");
 
         this.printTransformString(tn);
 
         printStyleString(pn);
 
-        out.print(" newpath");
+        this.out.print(" newpath");
 
         int size;
 
@@ -172,32 +166,32 @@ public class PSExport implements Export {
 
         for (int i = 0; i < size; i++) {
             if (i == 0) {
-                out.print(" " + x.get(i) + " " + y.get(i) + " moveto");
+                this.out.print(" " + x.get(i) + " " + y.get(i) + " moveto");
             }
-            out.print(" " + x.get(i) + " " + y.get(i) + " lineto");
+            this.out.print(" " + x.get(i) + " " + y.get(i) + " lineto");
         }
 
         if (closedPath) {
-            out.print(" closepath");
+            this.out.print(" closepath");
         }
 
         printFill(pn.getColor(), pn.getFill());
 
-        out.println(" grestore");
+        this.out.println(" grestore");
     }
 
     private void drawEllipse(Ellipse el, ParameterNode pn, Transformation tn) {
 
         float ratio = (float) el.getHeight() / (float) el.getWidth();
 
-        out.println(" gsave");
+        this.out.println(" gsave");
 
         this.printTransformString(tn);
-        out.println("1 " + "" + ratio + "" + " scale");
+        this.out.println("1 " + "" + ratio + "" + " scale");
         printStyleString(pn);
 
-        out.println("newpath");
-        out.println((el.getX().get(0).doubleValue() + el.getWidth() / 2) + " "
+        this.out.println("newpath");
+        this.out.println((el.getX().get(0).doubleValue() + el.getWidth() / 2) + " "
                 + ((el.getY().get(0).doubleValue() / ratio + el.getWidth() / 2))
                 + " "
                 + el.getWidth()
@@ -210,46 +204,46 @@ public class PSExport implements Export {
 
         printFill(pn.getColor(), pn.getFill());
 
-        out.println(" grestore");
+        this.out.println(" grestore");
     }
 
     private void drawRectangle(Point2D.Double start, double width, double height, ParameterNode pn, Transformation tn) {
-        out.println(" gsave");
+        this.out.println(" gsave");
 
         this.printTransformString(tn);
 
         printStyleString(pn);
 
-        out.print(start.getX() + " " + start.getY() + " " + width + " " + height + " rectstroke");
+        this.out.print(start.getX() + " " + start.getY() + " " + width + " " + height + " rectstroke");
 
-        out.println(" grestore");
+        this.out.println(" grestore");
     }
 
     private void drawLine(Point2D start, Point2D finish, ParameterNode pn, Transformation tn) {
 
-        out.println(" gsave");
+        this.out.println(" gsave");
 
         this.printTransformString(tn);
 
         printStyleString(pn);
 
-        out.print(" newpath");
-        out.print(" " + finish.getX() + " " + finish.getY() + " moveto");
-        out.print(" " + start.getX() + " " + start.getY() + " lineto");
+        this.out.print(" newpath");
+        this.out.print(" " + finish.getX() + " " + finish.getY() + " moveto");
+        this.out.print(" " + start.getX() + " " + start.getY() + " lineto");
 
         printFill(pn.getColor(), pn.getFill());
 
-        out.println(" grestore");
+        this.out.println(" grestore");
     }
 
     private void drawBezier(BezierCurve bC, ParameterNode pn, Transformation tn) {
-        out.println(" gsave");
+        this.out.println(" gsave");
 
         this.printTransformString(tn);
         printStyleString(pn);
 
-        out.println(bC.getX().get(0) + " " + bC.getY().get(0) + " moveto");
-        out.println(bC.getX().get(2) + " "
+        this.out.println(bC.getX().get(0) + " " + bC.getY().get(0) + " moveto");
+        this.out.println(bC.getX().get(2) + " "
                 + bC.getY().get(2)
                 + " "
                 + bC.getX().get(3)
@@ -263,17 +257,17 @@ public class PSExport implements Export {
 
         printFill(pn.getColor(), pn.getFill());
 
-        out.println(" grestore");
+        this.out.println(" grestore");
     }
 
     private void drawArc(Arc arc, ParameterNode pn, Transformation tn) {
-        out.println(" gsave");
+        this.out.println(" gsave");
 
         this.printTransformString(tn);
         printStyleString(pn);
 
-        out.println("newpath");
-        out.println((arc.getX().get(0).doubleValue() + arc.getWidth() / 2) + " "
+        this.out.println("newpath");
+        this.out.println((arc.getX().get(0).doubleValue() + arc.getWidth() / 2) + " "
                 + (arc.getY().get(0).doubleValue() + arc.getWidth() / 2)
                 + " "
                 + arc.getWidth()
@@ -285,63 +279,63 @@ public class PSExport implements Export {
                 + " arcn");
 
         printFill(pn.getColor(), pn.getFill());
-        out.println(" grestore");
+        this.out.println(" grestore");
     }
 
     private void drawText(String text, int size, Point2D.Double start, ParameterNode pn, Transformation tn) {
 
-        out.println("gsave");
+        this.out.println("gsave");
 
         this.printTransformString(tn);
-        out.println(start.getX() + " " + start.getY() + " moveto");
+        this.out.println(start.getX() + " " + start.getY() + " moveto");
         printStyleString(pn);
 
-        out.println("-1 1 scale");
-        out.println("/Helvetica findfont");
-        out.println("-" + size + " scalefont setfont");
-        out.println("(" + text + ") show");
+        this.out.println("-1 1 scale");
+        this.out.println("/Helvetica findfont");
+        this.out.println("-" + size + " scalefont setfont");
+        this.out.println("(" + text + ") show");
 
-        out.println("grestore");
+        this.out.println("grestore");
 
     }
 
     private void printFill(Color strokeColor, Color fillColor) {
 
         if ((strokeColor != null) && (fillColor == null)) {
-            out.println(" stroke");
+            this.out.println(" stroke");
         } else if ((strokeColor == null) && (fillColor != null)) {
-            out.println((fillColor.getRed() / 255.0) + " "
+            this.out.println((fillColor.getRed() / 255.0) + " "
                     + (fillColor.getGreen() / 255.0)
                     + " "
                     + (fillColor.getBlue() / 255.0)
                     + " "
                     + " setrgbcolor");
-            out.println(" fill");
+            this.out.println(" fill");
         } else if ((strokeColor != null) && (fillColor != null)) {
-            out.println("gsave");
+            this.out.println("gsave");
 
-            out.println((fillColor.getRed() / 255.0) + " "
+            this.out.println((fillColor.getRed() / 255.0) + " "
                     + (fillColor.getGreen() / 255.0)
                     + " "
                     + (fillColor.getBlue() / 255.0)
                     + " "
                     + " setrgbcolor");
-            out.println("fill");
+            this.out.println("fill");
 
-            out.println("grestore");
+            this.out.println("grestore");
 
-            out.println("stroke");
+            this.out.println("stroke");
         }
 
     }
 
     private void printTransformString(Transformation t) {
 
-        if (t == null || t.isIdentity()) {
+        if ((t == null) || t.isIdentity()) {
             return;
         }
 
-        out.println("[" + t.toString() + "] concat");
+        this.out.println("[" + t.toString() + "] concat");
 
     }
 
@@ -361,7 +355,7 @@ public class PSExport implements Export {
         }
 
         if (col != null) {
-            out.println((col.getRed() / 255.0) + " "
+            this.out.println((col.getRed() / 255.0) + " "
                     + (col.getGreen() / 255.0)
                     + " "
                     + (col.getBlue() / 255.0)
@@ -372,7 +366,7 @@ public class PSExport implements Export {
         // stroking width
         int width = pn.getWidth().intValue();
         if (width != 1) {
-            out.println(width + " setlinewidth");
+            this.out.println(width + " setlinewidth");
         }
 
     }

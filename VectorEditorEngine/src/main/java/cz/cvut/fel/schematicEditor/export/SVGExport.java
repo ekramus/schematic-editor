@@ -9,10 +9,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.support.Transformation;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
@@ -27,10 +24,12 @@ import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
+import cz.cvut.fel.schematicEditor.support.Transformation;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * This class represents export to the SVG graphic format.
- * 
+ *
  * @author Zdenek Straka
  * @author Urban Kravjansky
  */
@@ -38,15 +37,15 @@ public class SVGExport implements Export {
     /**
      * This field represents monochromatic status.
      */
-    private boolean isMonochromaticColor = false;
+    private final boolean isMonochromaticColor = false;
     /**
      * This field reperesents output PrintStream for SVG output.
      */
-    PrintStream     out;
+    PrintStream           out;
 
     /**
      * Starts exporting into SVG
-     * 
+     *
      * @param sg actual SceneGraph instance.
      * @param output output file name.
      */
@@ -76,7 +75,7 @@ public class SVGExport implements Export {
 
     /**
      * This method creates style string for given ParameterNode.
-     * 
+     *
      * @param pn given ParameterNode.
      * @return String representing style attribute
      */
@@ -132,7 +131,7 @@ public class SVGExport implements Export {
 
     /**
      * This method creates transformation string from given Transformation.
-     * 
+     *
      * @param t transformation to process.
      * @return String representing transform attribute
      */
@@ -184,7 +183,7 @@ public class SVGExport implements Export {
 
         double semiWidth = arc.getWidth() / 2;
 
-        out.println("<path transform=\"translate(" + (arc.getX().get(0).doubleValue() + semiWidth)
+        this.out.println("<path transform=\"translate(" + (arc.getX().get(0).doubleValue() + semiWidth)
                 + ","
                 + (arc.getY().get(0).doubleValue() + semiWidth)
                 + "),rotate("
@@ -219,7 +218,7 @@ public class SVGExport implements Export {
      * Draw BezierCurve
      */
     private void drawCubicCurve(BezierCurve bC, ParameterNode pn, Transformation tn) {
-        out.println("<path d=\"M" + bC.getX().get(0)
+        this.out.println("<path d=\"M" + bC.getX().get(0)
                 + ","
                 + bC.getY().get(0)
                 + " C"
@@ -245,7 +244,7 @@ public class SVGExport implements Export {
      * Draw ellipse defined by center point a with x,y radius
      */
     private void drawEllipse(Point2D.Double center, double radiusX, double radiusY, ParameterNode pn, Transformation tn) {
-        out.println("<ellipse cx=\"" + center.x
+        this.out.println("<ellipse cx=\"" + center.x
                 + "\" cy=\""
                 + center.y
                 + "\" rx=\""
@@ -264,7 +263,7 @@ public class SVGExport implements Export {
      * Draw line.
      */
     private void drawLine(Point2D.Double start, Point2D.Double finish, ParameterNode pn, Transformation tn) {
-        out.println("<line x1=\"" + start.getX()
+        this.out.println("<line x1=\"" + start.getX()
                 + "\" y1=\""
                 + start.getY()
                 + "\" x2=\""
@@ -280,14 +279,14 @@ public class SVGExport implements Export {
 
     /**
      * This method draw node with its transformation and parameters
-     * 
+     *
      * @param en
      * @param pn
      * @param tn
      */
     private void drawNode(ElementNode en, ParameterNode pn, Transformation tn) {
 
-        switch (en.getElementType()) {
+        switch (en.getElement().getElementType()) {
 
             case T_LINE:
                 Line l = (Line) en.getElement();
@@ -334,7 +333,7 @@ public class SVGExport implements Export {
                 break;
 
             default:
-                System.out.println(en.getElementType());
+                System.out.println(en.getElement().getElementType());
                 break;
         }
 
@@ -342,7 +341,7 @@ public class SVGExport implements Export {
 
     /**
      * This method draw polyline or polygon
-     * 
+     *
      * @param closedPath true for polygon, false for polyline
      * @param x
      * @param y
@@ -355,20 +354,20 @@ public class SVGExport implements Export {
         int size;
 
         if (closedPath) {
-            out.print("<polygon points=\"");
+            this.out.print("<polygon points=\"");
             size = x.size() - 1;
         } else {
-            out.print("<polyline points=\"");
+            this.out.print("<polyline points=\"");
             size = x.size();
         }
 
         for (int i = 0; i < size; i++) {
-            out.print(x.get(i) + "," + y.get(i) + " ");
+            this.out.print(x.get(i) + "," + y.get(i) + " ");
         }
 
-        out.print("\" ");
+        this.out.print("\" ");
 
-        out.print(createTransformString(tn) + "" + createStyleString(pn) + "/>");
+        this.out.print(createTransformString(tn) + "" + createStyleString(pn) + "/>");
 
     }
 
@@ -376,7 +375,7 @@ public class SVGExport implements Export {
      * Draw rectangle.
      */
     private void drawRectangle(Point2D.Double start, double width, double height, ParameterNode pn, Transformation tn) {
-        out.println("<rect x=\"" + start.getX()
+        this.out.println("<rect x=\"" + start.getX()
                 + "\" y=\""
                 + start.getY()
                 + "\" width=\""
@@ -400,7 +399,7 @@ public class SVGExport implements Export {
             color = Color.BLACK;
         }
 
-        out.println("<text x=\"" + start.getX()
+        this.out.println("<text x=\"" + start.getX()
                 + "\" y=\""
                 + start.getY()
                 + "\" font-size=\""
@@ -414,9 +413,9 @@ public class SVGExport implements Export {
                         + createTransformString(tn)
                         + " >"));
 
-        out.println(text.getText());
+        this.out.println(text.getText());
 
-        out.println("</text>");
+        this.out.println("</text>");
 
     }
 
@@ -424,17 +423,17 @@ public class SVGExport implements Export {
      * Print <i>svg</i> tag to end of document
      */
     private void printFooter() {
-        out.println("</svg>");
+        this.out.println("</svg>");
     }
 
     /**
      * Prints head of SVG document with neccesary information
      */
     private void printHead(int width, int height, int viewBoxWidth, int viewBoxHeight) {
-        out.println("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\" ?>");
-        out
+        this.out.println("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\" ?>");
+        this.out
                 .println("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">");
-        out.println("<svg width=\"" + width
+        this.out.println("<svg width=\"" + width
                 + "px\" height=\""
                 + height
                 + "px\" viewBox=\"0 0 "

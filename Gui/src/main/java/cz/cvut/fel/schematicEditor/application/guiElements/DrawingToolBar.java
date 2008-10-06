@@ -12,6 +12,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingTool
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.DrawShapeButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToolBar.SelectButtonListener;
 import cz.cvut.fel.schematicEditor.element.element.part.Connector;
+import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -22,8 +23,7 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 
 /**
- * This class implements drawing tool bar. It is used for drawing tool
- * selection.
+ * This class implements drawing tool bar. It is used for drawing tool selection.
  *
  * @author Urban Kravjansky
  */
@@ -32,52 +32,56 @@ public final class DrawingToolBar extends JToolBar {
     /**
      * Arc button caption.
      */
-    private static final String ARC_BTN = "arc";
+    private static final String   ARC_BTN          = "arc";
     /**
      * Arc segment button caption.
      */
-    private static final String ARC_SEGMENT_BTN = "arc segment";
+    private static final String   ARC_SEGMENT_BTN  = "arc segment";
     /**
      * Bezier curve button caption.
      */
-    private static final String BEZIER_BTN = "beziere";
+    private static final String   BEZIER_BTN       = "beziere";
     /**
      * Line tool tip button text.
      */
-    private static final String LINE_TOOLTIP_BTN = "line";
+    private static final String   LINE_TOOLTIP_BTN = "line";
     /**
      * Polygon button caption.
      */
-    private static final String POLYGON_BTN = "polygone";
+    private static final String   POLYGON_BTN      = "polygone";
     /**
      * Polyline button caption.
      */
-    private static final String POLYLINE_BTN = "polyline";
+    private static final String   POLYLINE_BTN     = "polyline";
     /**
      * Rectangle button caption.
      */
-    private static final String RECT_BTN = "rectangle";
+    private static final String   RECT_BTN         = "rectangle";
     /**
      * Select button caption.
      */
-    private static final String SELECT_BTN = "select";
+    private static final String   SELECT_BTN       = "select";
     /**
      * Delete button caption.
      */
-    private static final String DELETE_BTN = "delete";
+    private static final String   DELETE_BTN       = "delete";
     /**
      * Connector button caption.
      */
-    private static final String CONNECTOR_BTN = "connector";
+    private static final String   CONNECTOR_BTN    = "connector";
+    /**
+     * Wire button caption.
+     */
+    private static final String   WIRE_BTN         = "wire";
 
     /**
      * {@link DrawingToolBar} instance.
      */
-    private static DrawingToolBar drawingToolBar = null;
+    private static DrawingToolBar drawingToolBar   = null;
 
     /**
-     * {@link DrawingToolBar} is singleton. This method returns the only one
-     * instance, that exists. If none exist, one is created.
+     * {@link DrawingToolBar} is singleton. This method returns the only one instance, that exists. If none exist, one
+     * is created.
      *
      * @return instance of {@link DrawingToolBar}.
      */
@@ -85,8 +89,7 @@ public final class DrawingToolBar extends JToolBar {
         if (drawingToolBar == null) {
             // create drawing tool bar
             drawingToolBar = new DrawingToolBar();
-            drawingToolBar.setLayout(new BoxLayout(drawingToolBar,
-                    BoxLayout.Y_AXIS));
+            drawingToolBar.setLayout(new BoxLayout(drawingToolBar, BoxLayout.Y_AXIS));
             // add buttons to the tool bar
             drawingToolBar.add(drawingToolBar.getSelectButton());
             drawingToolBar.add(drawingToolBar.getDeleteButton());
@@ -99,6 +102,7 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(drawingToolBar.getArcSegmentButton());
             drawingToolBar.add(drawingToolBar.getRectButton());
             drawingToolBar.add(drawingToolBar.getConnectorButton());
+            drawingToolBar.add(drawingToolBar.getWireButton());
         }
         return drawingToolBar;
     }
@@ -106,7 +110,7 @@ public final class DrawingToolBar extends JToolBar {
     /**
      * Arc {@link JButton} instance.
      */
-    private JButton arcButton = null;
+    private JButton arcButton        = null;
     /**
      * Arc {@link JButton} instance.
      */
@@ -114,47 +118,47 @@ public final class DrawingToolBar extends JToolBar {
     /**
      * Beziere curve {@link JButton} instance.
      */
-    private JButton beziereButton = null;
-    /**
-     * Edit {@link JButton} instance.
-     */
-    private JButton editButton = null;
+    private JButton beziereButton    = null;
     /**
      * Ellipse {@link JButton} instance.
      */
-    private JButton ellipseButton = null;
+    private JButton ellipseButton    = null;
     /**
      * Line {@link JButton} instance.
      */
-    private JButton lineButton = null;
+    private JButton lineButton       = null;
     /**
      * Polygon {@link JButton} instance.
      */
-    private JButton polygonButton = null;
+    private JButton polygonButton    = null;
     /**
      * Polyline {@link JButton} instance.
      */
-    private JButton polylineButton = null;
+    private JButton polylineButton   = null;
     /**
      * Rectangle {@link JButton} instance.
      */
-    private JButton rectButton = null;
+    private JButton rectButton       = null;
     /**
      * Select {@link JButton} instance.
      */
-    private JButton selectButton = null;
+    private JButton selectButton     = null;
     /**
      * Delete {@link JButton} instance.
      */
-    private JButton deleteButton = null;
+    private JButton deleteButton     = null;
     /**
      * Connector {@link JButton} instance.
      */
-    private JButton connectorButton = null;
+    private JButton connectorButton  = null;
+    /**
+     * Wire {@link JButton} instance.
+     */
+    private JButton wireButton       = null;
 
     /**
-     * Default constructor. It calls default constructor of super class. It is
-     * private, because {@link DrawingToolBar} is singleton.
+     * Default constructor. It calls default constructor of super class. It is private, because {@link DrawingToolBar}
+     * is singleton.
      */
     private DrawingToolBar() {
         super();
@@ -169,8 +173,7 @@ public final class DrawingToolBar extends JToolBar {
         if (this.arcButton == null) {
             this.arcButton = new JButton();
             this.arcButton.setText(ARC_BTN);
-            this.arcButton.addActionListener(new DrawShapeButtonListener(
-                    new Arc()));
+            this.arcButton.addActionListener(new DrawShapeButtonListener(new Arc()));
         }
         return this.arcButton;
     }
@@ -184,9 +187,7 @@ public final class DrawingToolBar extends JToolBar {
         if (this.arcSegmentButton == null) {
             this.arcSegmentButton = new JButton();
             this.arcSegmentButton.setText(ARC_SEGMENT_BTN);
-            this.arcSegmentButton
-                    .addActionListener(new DrawShapeButtonListener(
-                            new ArcSegment()));
+            this.arcSegmentButton.addActionListener(new DrawShapeButtonListener(new ArcSegment()));
         }
         return this.arcSegmentButton;
     }
@@ -200,11 +201,23 @@ public final class DrawingToolBar extends JToolBar {
         if (this.connectorButton == null) {
             this.connectorButton = new JButton();
             this.connectorButton.setText(CONNECTOR_BTN);
-            this.connectorButton
-                    .addActionListener(new DrawCircuitPartButtonListener(
-                            new Connector()));
+            this.connectorButton.addActionListener(new DrawCircuitPartButtonListener(new Connector()));
         }
         return this.connectorButton;
+    }
+
+    /**
+     * <code>wireButton</code> getter.
+     *
+     * @return <code>wireButton</code> instance.
+     */
+    private JButton getWireButton() {
+        if (this.wireButton == null) {
+            this.wireButton = new JButton();
+            this.wireButton.setText(WIRE_BTN);
+            this.wireButton.addActionListener(new DrawCircuitPartButtonListener(new Wire()));
+        }
+        return this.wireButton;
     }
 
     /**
@@ -216,8 +229,7 @@ public final class DrawingToolBar extends JToolBar {
         if (this.beziereButton == null) {
             this.beziereButton = new JButton();
             this.beziereButton.setText(BEZIER_BTN);
-            this.beziereButton.addActionListener(new DrawShapeButtonListener(
-                    new BezierCurve()));
+            this.beziereButton.addActionListener(new DrawShapeButtonListener(new BezierCurve()));
         }
         return this.beziereButton;
     }
@@ -233,8 +245,7 @@ public final class DrawingToolBar extends JToolBar {
             // read resource from jar file
             URL url = this.getClass().getResource("resources/ellipse_32.png");
             this.ellipseButton.setIcon(new ImageIcon(url));
-            this.ellipseButton.addActionListener(new DrawShapeButtonListener(
-                    new Ellipse()));
+            this.ellipseButton.addActionListener(new DrawShapeButtonListener(new Ellipse()));
         }
         return this.ellipseButton;
     }
@@ -251,8 +262,7 @@ public final class DrawingToolBar extends JToolBar {
             URL url = this.getClass().getResource("resources/line_32.png");
             this.lineButton.setIcon(new ImageIcon(url));
             this.lineButton.setToolTipText(LINE_TOOLTIP_BTN);
-            this.lineButton.addActionListener(new DrawShapeButtonListener(
-                    new Line()));
+            this.lineButton.addActionListener(new DrawShapeButtonListener(new Line()));
         }
         return this.lineButton;
     }
@@ -266,8 +276,7 @@ public final class DrawingToolBar extends JToolBar {
         if (this.polygonButton == null) {
             this.polygonButton = new JButton();
             this.polygonButton.setText(POLYGON_BTN);
-            this.polygonButton.addActionListener(new DrawShapeButtonListener(
-                    new Polygon()));
+            this.polygonButton.addActionListener(new DrawShapeButtonListener(new Polygon()));
         }
         return this.polygonButton;
     }
@@ -281,8 +290,7 @@ public final class DrawingToolBar extends JToolBar {
         if (this.polylineButton == null) {
             this.polylineButton = new JButton();
             this.polylineButton.setText(POLYLINE_BTN);
-            this.polylineButton.addActionListener(new DrawShapeButtonListener(
-                    new Polyline()));
+            this.polylineButton.addActionListener(new DrawShapeButtonListener(new Polyline()));
         }
         return this.polylineButton;
     }
@@ -296,8 +304,7 @@ public final class DrawingToolBar extends JToolBar {
         if (this.rectButton == null) {
             this.rectButton = new JButton();
             this.rectButton.setText(RECT_BTN);
-            this.rectButton.addActionListener(new DrawShapeButtonListener(
-                    new Rectangle()));
+            this.rectButton.addActionListener(new DrawShapeButtonListener(new Rectangle()));
         }
         return this.rectButton;
     }
