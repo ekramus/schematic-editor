@@ -11,10 +11,8 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -57,10 +55,10 @@ public class GroupNode extends Node {
 
         logger = Logger.getLogger(this.getClass().getName());
 
-        childrenGroupList = new LinkedList<GroupNode>();
-        childrenElementList = new LinkedList<ElementNode>();
-        childrenTransformationList = new LinkedList<TransformationNode>();
-        chidrenParameterNode = null;
+        this.childrenGroupList = new LinkedList<GroupNode>();
+        this.childrenElementList = new LinkedList<ElementNode>();
+        this.childrenTransformationList = new LinkedList<TransformationNode>();
+        this.chidrenParameterNode = null;
         // this.chidrenParameterNode = new ParameterNode();
         setEditedElement(null);
     }
@@ -97,7 +95,7 @@ public class GroupNode extends Node {
      */
     public Transformation getTransformation() {
         Transformation t = new Transformation(Transformation.getIdentity());
-        for (Node child : childrenTransformationList) {
+        for (Node child : this.childrenTransformationList) {
             t = Transformation.multiply(t, ((TransformationNode) child).getTransformation());
         }
         return t;
@@ -111,7 +109,7 @@ public class GroupNode extends Node {
     public GroupNode getGroup() {
         GroupNode result = null;
 
-        for (Node child : childrenGroupList) {
+        for (Node child : this.childrenGroupList) {
             // TODO shape manipulation
         }
 
@@ -262,13 +260,13 @@ public class GroupNode extends Node {
      */
     @Override
     public String toString() {
-        String result = id + "[GroupNode]{";
+        String result = this.id + "[GroupNode]{";
         result += "#GroupList:";
-        for (GroupNode g : childrenGroupList) {
+        for (GroupNode g : this.childrenGroupList) {
             result += "(" + g.toString() + ")";
         }
         result += "#ElementList:";
-        for (ElementNode e : childrenElementList) {
+        for (ElementNode e : this.childrenElementList) {
             result += "(" + e.toString() + ")";
         }
         result += "}";
@@ -289,9 +287,9 @@ public class GroupNode extends Node {
 
         // get correct ParameterNode for this level.
         if (pn == null) {
-            p = chidrenParameterNode;
+            p = this.chidrenParameterNode;
         } else {
-            p = chidrenParameterNode.combine(pn);
+            p = this.chidrenParameterNode.combine(pn);
         }
         // get correct Transformation for this level
         if (tn == null) {
@@ -302,9 +300,9 @@ public class GroupNode extends Node {
 
         result.add(t);
         result.add(p);
-        for (ElementNode elementNode : childrenElementList) {
+        for (ElementNode elementNode : this.childrenElementList) {
             if (!elementNode.isDisabled()) {
-                if (elementNode.getElementType() == ElementType.T_PART) {
+                if (elementNode.getElement().getElementType() == ElementType.T_PART) {
                     PartNode partNode = (PartNode) elementNode;
                     result.addAll(partNode.getPartGroupNode().getNodeArray(t, p));
                 } else {
@@ -312,7 +310,7 @@ public class GroupNode extends Node {
                 }
             }
         }
-        for (GroupNode groupNode : childrenGroupList) {
+        for (GroupNode groupNode : this.childrenGroupList) {
             // result.add(t);
             // result.add(p);
             if (!groupNode.isDisabled()) {
@@ -372,7 +370,7 @@ public class GroupNode extends Node {
      */
     public void removeLastTransformation() {
         try {
-            childrenTransformationList.removeLast();
+            this.childrenTransformationList.removeLast();
         } catch (NoSuchElementException nsee) {
             logger.debug("no transformation to remove");
         }
