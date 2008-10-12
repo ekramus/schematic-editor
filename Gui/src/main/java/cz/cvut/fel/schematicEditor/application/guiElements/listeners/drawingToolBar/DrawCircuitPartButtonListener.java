@@ -2,31 +2,29 @@ package cz.cvut.fel.schematicEditor.application.guiElements.listeners.drawingToo
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Connector;
-import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
-import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
- * This class implements listener for every circuit part drawing button. It is
- * implemented by instantiating a new class.
+ * This class implements listener for every circuit part drawing button. It is implemented by instantiating a new class.
  *
  * @author Urban Kravjansky
  */
@@ -34,18 +32,17 @@ public class DrawCircuitPartButtonListener implements ActionListener {
     /**
      * Element instance used by this listener.
      */
-    private Element element = null;
+    private Element       element = null;
     /**
      * {@link Logger} instance for logging purposes.
      */
     private static Logger logger;
 
     /**
-     * {@link DrawCircuitPartButtonListener} constructor. It uses
-     * {@link Element} instance to instantiate new circuit part.
+     * {@link DrawCircuitPartButtonListener} constructor. It uses {@link Element} instance to instantiate new circuit
+     * part.
      *
-     * @param element
-     *            instance used for new circuit part instantiation.
+     * @param element instance used for new circuit part instantiation.
      */
     public DrawCircuitPartButtonListener(final Element element) {
         logger = Logger.getLogger(this.getClass().getName());
@@ -54,12 +51,10 @@ public class DrawCircuitPartButtonListener implements ActionListener {
     }
 
     /**
-     * Method invoked as result to an action. It initializes properties inside
-     * {@link Structures} class.
+     * Method invoked as result to an action. It initializes properties inside {@link Structures} class.
      *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * @param ae
-     *            {@link ActionEvent} parameter.
+     * @param ae {@link ActionEvent} parameter.
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
@@ -69,25 +64,29 @@ public class DrawCircuitPartButtonListener implements ActionListener {
             ElementNode en = null;
 
             switch (getElement().getElementType()) {
-            case T_CONNECTOR:
-                en = new ConnectorNode((Connector) getElement());
-                break;
-            case T_WIRE:
-                en = new WireNode((Wire) getElement());
-                break;
-            case T_PART:
-                // en = new PartNode((Part) getElement());
-                break;
-            default:
-                break;
+                case T_CONNECTOR:
+                    en = new ConnectorNode((Connector) getElement());
+                    break;
+                case T_WIRE:
+                    en = new WireNode((Wire) getElement());
+                    break;
+                case T_PART:
+                    // en = new PartNode((Part) getElement());
+                    break;
+                default:
+                    break;
             }
 
             gn.add(pn);
             gn.add(en);
 
+            // get all coordinates for snapping
+            Vector<UnitPoint> snapCoordinates = new Vector<UnitPoint>();
+            snapCoordinates = ScenePanel.getInstance().getSchemeSG().getTopNode().getPartsCoordinates();
+
             // create active manipulation
-            Manipulation m = ManipulationFactory.create(
-                    ManipulationType.CREATE, gn);
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, gn);
+            m.setSnapCoordinates(snapCoordinates);
             Structures.setActiveManipulation(m);
             logger.trace(Structures.getActiveManipulation());
 
@@ -107,8 +106,7 @@ public class DrawCircuitPartButtonListener implements ActionListener {
     /**
      * Setter for element field.
      *
-     * @param element
-     *            the {@link Element} to set
+     * @param element the {@link Element} to set
      */
     private void setElement(final Element element) {
         this.element = element;

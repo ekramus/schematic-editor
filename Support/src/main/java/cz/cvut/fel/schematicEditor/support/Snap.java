@@ -3,6 +3,7 @@ package cz.cvut.fel.schematicEditor.support;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
@@ -19,7 +20,7 @@ public class Snap {
      * @param coordinate coordinate to snap.
      * @return Snapped coordinate value.
      */
-    public static UnitPoint getSnap(UnitPoint coordinate) {
+    private static UnitPoint getSnap(UnitPoint coordinate) {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
         Pixel x;
         Pixel y;
@@ -45,14 +46,28 @@ public class Snap {
      */
     public static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints) {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
-        Pixel result;
+        UnitPoint result = new UnitPoint(coordinate);
+        Unit minDelta = configuration.getSnapDelta();
 
-        if (!configuration.isSnapToGrid()) {
-            return new UnitPoint(coordinate);
+        // do we have list of coordinates to use for snap?
+        if (snapPoints == null) {
+            return getSnap(coordinate);
         }
-        result = new Pixel(configuration.getGridSize().doubleValue() * (int) ((coordinate.getX() + configuration
-                .getGridSize().doubleValue() / 2) / configuration.getGridSize().doubleValue()));
 
-        return null;
+        // try to snap to nearest given coordinate
+        for (UnitPoint up : snapPoints) {
+            Unit delta = Support.distance(coordinate, up);
+            if (delta.compareTo(minDelta) < 0) {
+                result = new UnitPoint(up);
+                minDelta = new Pixel(delta.doubleValue());
+            }
+        }
+
+        // snap to grid if not snapped to any of given coordinates
+        if (result.equals(coordinate)) {
+            result = getSnap(coordinate);
+        }
+
+        return result;
     }
 }

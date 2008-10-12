@@ -50,6 +50,10 @@ public class GuiConfiguration extends Configuration {
      */
     private Unit           gridSize             = new Pixel(25);
     /**
+     * Delta for snapping on special elements.
+     */
+    private final Unit     snapDelta            = new Pixel(5);
+    /**
      * Grid visibility indicator.
      */
     private boolean        gridVisible          = true;
@@ -195,5 +199,12 @@ public class GuiConfiguration extends Configuration {
      */
     public void setSnapToGrid(boolean snapToGrid) {
         this.snapToGrid = snapToGrid;
+    }
+
+    /**
+     * @return the snapDelta to get.
+     */
+    public Unit getSnapDelta() {
+        return this.snapDelta;
     }
 }

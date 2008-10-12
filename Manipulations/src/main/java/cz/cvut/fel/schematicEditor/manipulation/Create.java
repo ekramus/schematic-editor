@@ -134,7 +134,7 @@ public class Create extends Manipulation {
 
         // add two pairs of coordinates (each element needs two)
         UnitPoint up = new UnitPoint(e.getX(), e.getY());
-        UnitPoint snap = Snap.getSnap(up);
+        UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
@@ -157,15 +157,10 @@ public class Create extends Manipulation {
                 setFinished(true);
                 break;
             case Element.INFINITE_COORDINATES:
-                // add next coordinate
-                up = new UnitPoint(e.getX(), e.getY());
-                snap = Snap.getSnap(up);
-                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
-                break;
             default:
                 // add next coordinate
                 up = new UnitPoint(e.getX(), e.getY());
-                snap = Snap.getSnap(up);
+                snap = Snap.getSnap(up, getSnapCoordinates());
                 addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
                 break;
         }

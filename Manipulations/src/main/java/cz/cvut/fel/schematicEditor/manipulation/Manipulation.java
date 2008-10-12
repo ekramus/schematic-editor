@@ -10,33 +10,38 @@ import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This is parental class for all manipulations. It implements basic methods necessary for every manipulation.
- * 
+ *
  * @author Urban Kravjansky
  */
 public abstract class Manipulation {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger logger;
+    private static Logger     logger;
     /**
      * Contains {@link GroupNode} manipulated by {@link Manipulation}.
      */
-    private GroupNode     manipulatedGroup;
+    private GroupNode         manipulatedGroup;
     /**
      * This field represents x coordinates of manipulated element.
      */
-    private Vector<Unit>  x;
+    private Vector<Unit>      x;
     /**
      * This field represents y coordinates of manipulated element.
      */
-    private Vector<Unit>  y;
+    private Vector<Unit>      y;
     /**
      * Indicates, whether manipulation is active or not.
      */
-    private boolean       active;
+    private boolean           active;
+    /**
+     * {@link Vector} of coordinates used for snap.
+     */
+    private Vector<UnitPoint> snapCoordinates;
 
     /**
      * Default constructor. It is private because of {@link Manipulation}s are created using {@link ManipulationFactory}
@@ -51,7 +56,7 @@ public abstract class Manipulation {
     /**
      * Constructor with {@link GroupNode} parameter. It is protected because of {@link Manipulation}s are created using
      * {@link ManipulationFactory}.
-     * 
+     *
      * @param manipulatedGroup instance of manipulated group.
      */
     protected Manipulation(GroupNode manipulatedGroup) {
@@ -62,7 +67,7 @@ public abstract class Manipulation {
 
     /**
      * Add given manipulation coordinates.
-     * 
+     *
      * @param x <code>x</code> to add.
      * @param y <code>y</code> to add
      */
@@ -82,14 +87,14 @@ public abstract class Manipulation {
 
     /**
      * This method returns manipulation type of used manipulation.
-     * 
+     *
      * @return Type of {@link Manipulation}.
      */
     public abstract ManipulationType getManipulationType();
 
     /**
      * Manipulation active state. If is manipulation active, it means, it is being currently processed.
-     * 
+     *
      * @return active state of current manipulation.
      */
     public boolean isActive() {
@@ -98,7 +103,7 @@ public abstract class Manipulation {
 
     /**
      * Initializes all necessary structures at the beginning of manipulation correctly.
-     * 
+     *
      * @param e {@link MouseEvent}, that invoked this method.
      * @param r2d Rectangle, which contains mouse pointer.
      * @param manipulationQueue used for {@link Manipulation} history and execution.
@@ -112,7 +117,7 @@ public abstract class Manipulation {
 
     /**
      * Finishes everything at the end of manipulation correctly.
-     * 
+     *
      * @param e {@link MouseEvent}, that invoked this method.
      * @param r2d Rectangle, which contains mouse pointer.
      * @param manipulationQueue used for {@link Manipulation} history and execution.
@@ -126,7 +131,7 @@ public abstract class Manipulation {
 
     /**
      * Replaces last manipulation <code>x</code>, <code>y</code> coordinates with given ones.
-     * 
+     *
      * @param x new <code>x</code> coordinate.
      * @param y new <code>y</code> coordinate.
      */
@@ -169,7 +174,7 @@ public abstract class Manipulation {
 
     /**
      * Creates next {@link Manipulation} by duplicating its values according to create order.
-     * 
+     *
      * @return Creates next instance of {@link Manipulation}.
      */
     protected Manipulation createNext() {
@@ -178,16 +183,16 @@ public abstract class Manipulation {
 
     /**
      * Creates duplicate instance of {@link Manipulation} by duplicating its values.
-     * 
+     *
      * @return Duplicated instance of {@link Manipulation}.
      */
     protected abstract Manipulation duplicate();
 
     /**
      * Executes manipulation.
-     * 
+     *
      * @param topNode top {@link GroupNode} of SceneGraph.
-     * 
+     *
      * @throws ManipulationExecutionException in case of some error while executing manipulation.
      */
     protected abstract void execute(GroupNode topNode) throws ManipulationExecutionException;
@@ -208,9 +213,9 @@ public abstract class Manipulation {
 
     /**
      * Reexecutes manipulation. Mostly it only executes it, for special purposes it needs to be overwritten.
-     * 
+     *
      * @param topNode top {@link GroupNode} of SceneGraph.
-     * 
+     *
      * @throws ManipulationExecutionException in case of some error while reexecuting manipulation.
      */
     protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
@@ -219,7 +224,7 @@ public abstract class Manipulation {
 
     /**
      * Sets manipulation coordinates according to given ones.
-     * 
+     *
      * @param x new <code>x</code> coordinates.
      * @param y new <code>y</code> coordinates.
      */
@@ -230,10 +235,24 @@ public abstract class Manipulation {
 
     /**
      * Unexecutes (undoes) manipulation.
-     * 
+     *
      * @param topNode reference to top node of scene graph.
-     * 
+     *
      * @throws ManipulationExecutionException in case of some error while removing manipulation.
      */
     protected abstract void unexecute(GroupNode topNode) throws ManipulationExecutionException;
+
+    /**
+     * @param snapCoordinates the snapCoordinates to set
+     */
+    public void setSnapCoordinates(Vector<UnitPoint> snapCoordinates) {
+        this.snapCoordinates = snapCoordinates;
+    }
+
+    /**
+     * @return the snapCoordinates
+     */
+    public Vector<UnitPoint> getSnapCoordinates() {
+        return this.snapCoordinates;
+    }
 }

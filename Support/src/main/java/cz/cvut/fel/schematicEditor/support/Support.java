@@ -6,10 +6,11 @@ import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class is used for static support methods. It will be deprecated in time.
- * 
+ *
  * @author Urban Kravjansk�
  */
 @Deprecated
@@ -17,43 +18,44 @@ public class Support {
 
     /**
      * Calculates distance between given point and line.
-     * 
+     *
      * @param p given point.
      * @param l given line.
      * @return Distance between given point and line.
      */
     public static double distance(Point2D.Double p, Line2D.Double l) {
-        double a = p.getX();
-        double b = p.getY();
-        double x1 = l.getX1();
-        double x2 = l.getX2();
-        double y1 = l.getY1();
-        double y2 = l.getY2();
+        return l.ptLineDist(p);
+    }
 
-        return Math.abs((x2 - x1) * (y1 - b) - (x1 - a) * (y2 - y1)) / Math.sqrt((x2 - x1) * (x2 - x1)
-                + (y2 - y1)
-                * (y2 - y1));
+    /**
+     * Calculates distance between two {@link UnitPoint} instances.
+     *
+     * @param p1 First {@link UnitPoint} instance.
+     * @param p2 Second {@link UnitPoint} instance.
+     * @return {@link Unit} instance representing distance.
+     */
+    public static Unit distance(UnitPoint p1, UnitPoint p2) {
+        Unit result;
+
+        result = new Pixel(distance(new Point2D.Double(p1.getX(), p1.getY()), new Point2D.Double(p2.getX(), p2.getY())));
+
+        return result;
     }
 
     /**
      * Calculates distance between two given points.
-     * 
+     *
      * @param p1 given 1st point.
      * @param p2 given 2nd point.
      * @return Distance between given points.
      */
     public static double distance(Point2D.Double p1, Point2D.Double p2) {
-        double x1 = p1.getX();
-        double y1 = p1.getY();
-        double x2 = p2.getX();
-        double y2 = p2.getY();
-
-        return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        return p1.distance(p2);
     }
 
     /**
      * Calculates middle point between two given points.
-     * 
+     *
      * @param p1 given 1st point.
      * @param p2 given 2nd point.
      * @return Middle point between given points.
@@ -64,7 +66,7 @@ public class Support {
 
     /**
      * Calculates average of two given {@link Unit}s.
-     * 
+     *
      * @param a given 1st {@link Unit}.
      * @param b given 2nd {@link Unit}.
      * @return Average of two given {@link Unit}s.
@@ -75,7 +77,7 @@ public class Support {
 
     /**
      * Calculates rectangle of given size around given point.
-     * 
+     *
      * @param point center point of rectangle.
      * @param size diameter of rectangle.
      * @return Calculated {@link Rectangle2D.Double}.

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -616,5 +617,37 @@ public class GroupNode extends Node {
      */
     public Element getEditedElement() {
         return this.editedElement;
+    }
+
+    /**
+     * @return {@link Vector} of coordinates of all {@link Part} elements.
+     */
+    public Vector<UnitPoint> getPartsCoordinates() {
+        Vector<UnitPoint> result = new Vector<UnitPoint>();
+
+        if (isDisabled()) {
+            return result;
+        }
+
+        for (ElementNode childNode : getChildrenElementList()) {
+            switch (childNode.getElement().getElementType()) {
+                case T_CONNECTOR:
+                case T_WIRE:
+                    Element element = childNode.getElement();
+                    for (int i = 0; i < element.getX().size(); i++) {
+                        result.add(new UnitPoint(element.getX().get(i), element.getY().get(i)));
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        for (GroupNode groupNode : getChildrenGroupList()) {
+            result.addAll(groupNode.getPartsCoordinates());
+        }
+
+        return result;
     }
 }
