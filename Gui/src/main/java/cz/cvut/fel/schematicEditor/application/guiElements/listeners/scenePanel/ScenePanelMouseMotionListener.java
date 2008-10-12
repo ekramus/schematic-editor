@@ -10,7 +10,6 @@ import cz.cvut.fel.schematicEditor.application.StatusBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
@@ -43,12 +42,11 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
             Manipulation m = Structures.getActiveManipulation();
-            ManipulationType mt = m.getManipulationType();
 
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
-                UnitPoint snap = Snap.getSnap(up);
+                UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates());
                 m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
                 // repaint scene, it is much faster than full scene invalidate
@@ -73,7 +71,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
-                UnitPoint snap = Snap.getSnap(up);
+                UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates());
                 m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
                 // repaint scene, it is much faster than full scene invalidate

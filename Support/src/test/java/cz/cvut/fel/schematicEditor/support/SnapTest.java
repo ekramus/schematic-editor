@@ -29,7 +29,7 @@ public class SnapTest {
         configuration.setSnapToGrid(false);
         while (d < 2 * gridSize) {
             UnitPoint up = new UnitPoint(d, d);
-            assertEquals(Snap.getSnap(up), new UnitPoint(d, d));
+            assertEquals(Snap.getSnap(up, null), new UnitPoint(d, d));
             d++;
         }
 
@@ -38,7 +38,7 @@ public class SnapTest {
         d = 0;
         while (d < 2 * gridSize) {
             UnitPoint up = new UnitPoint(d, d);
-            assertEquals((int) (Snap.getSnap(up).getX() / gridSize), (int) ((d + gridSize / 2) / gridSize));
+            assertEquals((int) (Snap.getSnap(up, null).getX() / gridSize), (int) ((d + gridSize / 2) / gridSize));
             d++;
         }
     }
