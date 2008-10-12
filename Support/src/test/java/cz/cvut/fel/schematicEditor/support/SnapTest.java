@@ -1,20 +1,21 @@
 package cz.cvut.fel.schematicEditor.support;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * JUnit test class for {@link Snap}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class SnapTest {
     /**
-     * Test method for {@link Snap#getSnap(double)} method.
+     * Test method for {@link Snap#getSnap(UnitPoint)} method.
      */
     @Test
     public void getSnap() {
@@ -27,7 +28,8 @@ public class SnapTest {
         // from 0 to 9, no snap
         configuration.setSnapToGrid(false);
         while (d < 2 * gridSize) {
-            assertEquals(Snap.getSnap(d), new Pixel(d));
+            UnitPoint up = new UnitPoint(d, d);
+            assertEquals(Snap.getSnap(up), new UnitPoint(d, d));
             d++;
         }
 
@@ -35,7 +37,8 @@ public class SnapTest {
         configuration.setSnapToGrid(true);
         d = 0;
         while (d < 2 * gridSize) {
-            assertEquals((int) (Snap.getSnap(d).doubleValue() / gridSize), (int) ((d + gridSize / 2) / gridSize));
+            UnitPoint up = new UnitPoint(d, d);
+            assertEquals((int) (Snap.getSnap(up).getX() / gridSize), (int) ((d + gridSize / 2) / gridSize));
             d++;
         }
     }
