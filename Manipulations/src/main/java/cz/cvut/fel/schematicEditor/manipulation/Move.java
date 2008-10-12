@@ -13,11 +13,12 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements move {@link Manipulation}. Using this manipulation user is able to move with selected groups of
  * objects. Move is achieved by creating {@link Transformation} and adding it to the selected group node.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Move extends Manipulation {
@@ -53,7 +54,7 @@ public class Move extends Manipulation {
 
     /**
      * Switches last transformation node with transformation node containing delta.
-     * 
+     *
      * @param delta shift parameter.
      */
     private void switchLastTransformation(Point2D.Double delta) {
@@ -66,7 +67,7 @@ public class Move extends Manipulation {
 
     /**
      * Computes delta value based on <code>x</code> and <code>y</code> parameters.
-     * 
+     *
      * @return delta shift parameter.
      */
     private Point2D.Double computeDelta() {
@@ -84,7 +85,7 @@ public class Move extends Manipulation {
 
     /**
      * Specific <code>manipulationStart</code> method for {@link Move} manipulation.
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
      *      ManipulationQueue, GroupNode, boolean)
      */
@@ -92,13 +93,15 @@ public class Move extends Manipulation {
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue mq, GroupNode topNode,
             boolean isMouseClicked) throws UnknownManipulationException {
         // check, whether move is possible or not
-        if (isActive() && getManipulatedGroup() == topNode.findHit(r2d)) {
+        if (isActive() && (getManipulatedGroup() == topNode.findHit(r2d))) {
             // add identity transformation, so it can be later changed
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
-            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
-            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint snap = Snap.getSnap(up);
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         }
         // move is not possible - fall back to Select manipulation
         else {
@@ -109,7 +112,7 @@ public class Move extends Manipulation {
 
     /**
      * Specific <code>manipulationEnd</code> method for {@link Move} manipulation.
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
      *      ManipulationQueue, GroupNode, boolean)
      */
@@ -119,7 +122,9 @@ public class Move extends Manipulation {
         if (isActive()) {
             logger.debug("object MOVED");
 
-            replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint snap = Snap.getSnap(up);
+            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
             // compute delta
             setDelta(computeDelta());
@@ -200,7 +205,7 @@ public class Move extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override

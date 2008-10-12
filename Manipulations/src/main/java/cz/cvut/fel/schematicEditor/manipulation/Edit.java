@@ -56,13 +56,15 @@ public class Edit extends Manipulation {
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         // check, whether move is possible or not
-        if (isActive() && getManipulatedGroup() == topNode.findHit(r2d)) {
+        if (isActive() && (getManipulatedGroup() == topNode.findHit(r2d))) {
             // add identity transformation, so it can be later changed
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
-            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
-            addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint snap = Snap.getSnap(up);
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         }
         // edit is not possible - fall back to Select manipulation
         else {
@@ -82,7 +84,9 @@ public class Edit extends Manipulation {
             logger.trace("object EDITED");
 
             // replace last manipulation coordinates for delta
-            replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint snap = Snap.getSnap(up);
+            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
             // compute delta
             setDelta(computeDelta());
@@ -159,7 +163,7 @@ public class Edit extends Manipulation {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
      */
     @Override
@@ -179,7 +183,7 @@ public class Edit extends Manipulation {
 
     /**
      * Computes delta value based on <code>x</code> and <code>y</code> parameters.
-     * 
+     *
      * @return delta shift parameter.
      */
     private Point2D.Double computeDelta() {

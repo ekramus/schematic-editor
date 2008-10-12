@@ -12,11 +12,12 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionE
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class represents create {@link Manipulation}. It is created, when user presses any button for new shape
  * creation.
- * 
+ *
  * Lifecycle of <code>active</code> and <code>finished</code> fields is presented in this table:
  * <table>
  * <th>
@@ -39,7 +40,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
  * </tr>
  * </tbody>
  * </table>
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Create extends Manipulation {
@@ -59,7 +60,7 @@ public class Create extends Manipulation {
     /**
      * Constructor used for {@link Create} initialization. It is protected so it {@link Manipulation} has to be created
      * using {@link ManipulationFactory}.
-     * 
+     *
      * @param manipulatedGroup {@link GroupNode}, which will be created using this {@link Create} manipulation.
      */
     protected Create(GroupNode manipulatedGroup) {
@@ -132,8 +133,10 @@ public class Create extends Manipulation {
         setActive(true);
 
         // add two pairs of coordinates (each element needs two)
-        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
-        addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+        UnitPoint up = new UnitPoint(e.getX(), e.getY());
+        UnitPoint snap = Snap.getSnap(up);
+        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
         return this;
     }
@@ -146,7 +149,8 @@ public class Create extends Manipulation {
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
-
+        UnitPoint up;
+        UnitPoint snap;
         // check, what to do
         switch (getPointsLeft()) {
             case Element.ZERO_COORDINATES:
@@ -154,11 +158,15 @@ public class Create extends Manipulation {
                 break;
             case Element.INFINITE_COORDINATES:
                 // add next coordinate
-                addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+                up = new UnitPoint(e.getX(), e.getY());
+                snap = Snap.getSnap(up);
+                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
                 break;
             default:
                 // add next coordinate
-                addManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+                up = new UnitPoint(e.getX(), e.getY());
+                snap = Snap.getSnap(up);
+                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
                 break;
         }
 

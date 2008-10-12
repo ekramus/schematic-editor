@@ -12,6 +12,7 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.support.Snap;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements {@link MouseMotionListener} for {@link ScenePanel}.
@@ -46,7 +47,9 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
             // manipulation is active
             if (m.isActive()) {
-                m.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+                UnitPoint up = new UnitPoint(e.getX(), e.getY());
+                UnitPoint snap = Snap.getSnap(up);
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
                 // repaint scene, it is much faster than full scene invalidate
                 ScenePanel.getInstance().repaint();
@@ -69,7 +72,9 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
             // manipulation is active
             if (m.isActive()) {
-                m.replaceLastManipulationCoordinates(Snap.getSnap(e.getX()), Snap.getSnap(e.getY()));
+                UnitPoint up = new UnitPoint(e.getX(), e.getY());
+                UnitPoint snap = Snap.getSnap(up);
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
                 // repaint scene, it is much faster than full scene invalidate
                 ScenePanel.getInstance().repaint();
