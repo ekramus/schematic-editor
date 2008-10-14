@@ -25,3 +25,4 @@ cp "Manipulations/target/VectorEditorEngine-1.0-SNAPSHOT.jar" "$JAR"
 
 cp "Launchers/log4j.xml" "$DEPLOY"
 cp "Launchers/properties.xml" "$DEPLOY"
+
