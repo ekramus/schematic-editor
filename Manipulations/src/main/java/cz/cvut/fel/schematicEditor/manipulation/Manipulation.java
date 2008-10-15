@@ -255,4 +255,13 @@ public abstract class Manipulation {
     public Vector<UnitPoint> getSnapCoordinates() {
         return this.snapCoordinates;
     }
+
+    /**
+     * Returns {@link UnitPoint} of last manipulation coordinate.
+     *
+     * @return Value of last manipulation coordinate.
+     */
+    public UnitPoint getLastManipulationCoordinate() {
+        return new UnitPoint(getX().lastElement().doubleValue(), getY().lastElement().doubleValue());
+    }
 }

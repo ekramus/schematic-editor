@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 
@@ -26,6 +27,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Transformation;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -245,6 +247,10 @@ public class ScenePanel extends JPanel {
                 manipulatedElement = drawManipulatedGroup();
                 g2d.drawImage(manipulatedElement, 0, 0, null);
 
+                // draw snap symbol
+                BufferedImage snapSymbol = drawSnapSymbol();
+                g2d.drawImage(snapSymbol, 0, 0, null);
+
                 // draw frame around selected group
                 if (m.getManipulationType() == ManipulationType.SELECT) {
                     logger.trace("selected element frame drawing");
@@ -310,6 +316,41 @@ public class ScenePanel extends JPanel {
         g2d.draw(rect);
 
         return selectionFrame;
+    }
+
+    /**
+     * This method draws snap symbol onto {@link BufferedImage}.
+     *
+     * @return {@link BufferedImage} with snap symbol.
+     * @throws UnknownManipulationException In case of unknown manipulation.
+     */
+    private BufferedImage drawSnapSymbol() throws UnknownManipulationException {
+        // create new snap symbol
+        BufferedImage snapSymbol = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        // get configuration
+        GuiConfiguration configuration = GuiConfiguration.getInstance();
+
+        Manipulation m = Structures.getActiveManipulation();
+        Transformation t = m.getManipulatedGroup().getTransformation();
+        UnitPoint up = m.getLastManipulationCoordinate();
+        Vector<UnitPoint> sc = m.getSnapCoordinates();
+
+        for (UnitPoint unitPoint : sc) {
+            if (unitPoint.equals(up)) {
+                Graphics2D g2d = (Graphics2D) snapSymbol.getGraphics();
+                Rectangle2D.Double rect = new Rectangle2D.Double(up.getX() - configuration.getSnapSymbolSize()
+                        .doubleValue(), up.getY() - configuration.getSnapSymbolSize().doubleValue(), configuration
+                        .getSnapSymbolSize().doubleValue() * 2, configuration.getSnapSymbolSize().doubleValue() * 2);
+                rect = t.shift(rect);
+                g2d.setColor(Color.YELLOW);
+                g2d.draw(rect);
+
+                return snapSymbol;
+            }
+        }
+
+        return snapSymbol;
     }
 
     /**
