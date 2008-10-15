@@ -22,6 +22,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Connector;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -277,6 +278,16 @@ public class DisplayExport implements Export {
                     drawShape(nodeG2D, line2d, parameterNode.getColor(), ElementStyle.DOTTED, null, parameterNode
                             .getFillStyle());
                 }
+                break;
+
+            case T_CONNECTOR:
+                Connector connector = (Connector) elementNode.getElement();
+
+                Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2,
+                        connector.getY().firstElement().doubleValue() - 2, 5, 5);
+                drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode
+                        .getFillStyle());
+
                 break;
 
             case T_PART:

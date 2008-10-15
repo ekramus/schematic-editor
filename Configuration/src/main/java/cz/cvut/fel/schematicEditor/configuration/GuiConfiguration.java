@@ -54,6 +54,10 @@ public class GuiConfiguration extends Configuration {
      */
     private final Unit     snapDelta            = new Pixel(5);
     /**
+     * Size of snap symbol size. Ideally the same as snapDelta value.
+     */
+    private final Unit     snapSymbolSize       = new Pixel(5);
+    /**
      * Grid visibility indicator.
      */
     private boolean        gridVisible          = true;
@@ -206,5 +210,12 @@ public class GuiConfiguration extends Configuration {
      */
     public Unit getSnapDelta() {
         return this.snapDelta;
+    }
+
+    /**
+     * @return the snapSymbolSize
+     */
+    public Unit getSnapSymbolSize() {
+        return this.snapSymbolSize;
     }
 }
