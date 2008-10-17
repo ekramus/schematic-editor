@@ -5,11 +5,11 @@
     <doubleFactor>1.0</doubleFactor>
   </gridSize>
   <snapDelta class="pixel">
-    <value>10.0</value>
+    <value>5.0</value>
     <doubleFactor>1.0</doubleFactor>
   </snapDelta>
   <snapSymbolSize class="pixel">
-    <value>10.0</value>
+    <value>5.0</value>
     <doubleFactor>1.0</doubleFactor>
   </snapSymbolSize>
   <gridVisible>true</gridVisible>

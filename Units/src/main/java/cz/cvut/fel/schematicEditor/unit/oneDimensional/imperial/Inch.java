@@ -4,8 +4,8 @@ import cz.cvut.fel.schematicEditor.unit.UnitType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
- * This class defines methods for {@link Inch} subclass. It also encapsulates all data fields
- * necessary for correct behavior.
+ * This class defines methods for {@link Inch} subclass. It also encapsulates all data fields necessary for correct
+ * behavior.
  *
  * @author Urban Kravjansky
  */
@@ -20,19 +20,24 @@ public class Inch extends Unit {
      */
     public Inch() {
         setDoubleFactor(PIXEL_PER_INCH);
-        setUnitType(UnitType.INCH);
         setValue(0);
     }
 
     /**
      * Constructor with given value. It initializes <code>value</code> parameter.
      *
-     * @param value
-     *            <code>value</code> of {@link Inch} unit.
+     * @param value <code>value</code> of {@link Inch} unit.
      */
     public Inch(final double value) {
         setDoubleFactor(PIXEL_PER_INCH);
-        setUnitType(UnitType.INCH);
         setValue(value);
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit#getUnitType()
+     */
+    @Override
+    protected UnitType getUnitType() {
+        return UnitType.INCH;
     }
 }

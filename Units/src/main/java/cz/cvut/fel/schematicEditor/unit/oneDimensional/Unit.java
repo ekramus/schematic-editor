@@ -7,7 +7,7 @@ import cz.cvut.fel.schematicEditor.unit.UnitType;
 
 /**
  * This class defines methods for {@link Unit} subclasses. It also encapsulates data fields used for unit conversions.
- * 
+ *
  * @author Urban Kravjansky
  */
 @XStreamAlias("unit")
@@ -33,12 +33,11 @@ public abstract class Unit implements Comparable<Unit> {
     public Unit() {
         setDoubleFactor(0);
         setValue(0);
-        setUnitType(UnitType.PIXEL);
     }
 
     /**
      * Getter for <code>doubleFactor</code>. Value means, how many dots are in one unit.
-     * 
+     *
      * @return <code>doubleFactor</code> value.
      */
     private double getDoubleFactor() {
@@ -47,7 +46,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Setter for <code>doubleFactor</code>. Value means, how many dots are in one unit.
-     * 
+     *
      * @param doubleFactor value of <code>doubleFactor</code> to set.
      */
     protected final void setDoubleFactor(final double doubleFactor) {
@@ -56,7 +55,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Getter for <code>double</code> value of this {@link Unit}.
-     * 
+     *
      * @return <code>double</code> value.
      */
     public final double doubleValue() {
@@ -65,7 +64,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Getter for <code>int</code> value of this {@link Unit}.
-     * 
+     *
      * @return <code>int</code> value.
      */
     public final int intValue() {
@@ -74,7 +73,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Getter for <code>float</code> value of this {@link Unit}.
-     * 
+     *
      * @return <code>float</code> value.
      */
     public final float floatValue() {
@@ -83,7 +82,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Setter of <code>double</code> value of this {@link Unit}.
-     * 
+     *
      * @param doubleValue value of <code>double</code> to set.
      */
     public final void setDouble(final double doubleValue) {
@@ -92,7 +91,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Getter for unit <code>value</code>.
-     * 
+     *
      * @return {@link Unit} <code>value</code>.
      */
     public final double getValue() {
@@ -101,7 +100,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Setter for unit <code>value</code>.
-     * 
+     *
      * @param value {@link Unit} <code>value</code>.
      */
     public final void setValue(final double value) {
@@ -110,7 +109,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /**
      * Method used for conversion of this class into {@link String}.
-     * 
+     *
      * @return {@link String} representation of class.
      */
     @Override
@@ -119,22 +118,11 @@ public abstract class Unit implements Comparable<Unit> {
     }
 
     /**
-     * Getter for <code>unitType</code>.
-     * 
+     * Returns {@link UnitType} code of {@link Unit}.
+     *
      * @return <code>unitType</code> value.
      */
-    private UnitType getUnitType() {
-        return this.unitType;
-    }
-
-    /**
-     * Setter for <code>unitType</code>.
-     * 
-     * @param unitType <code>unitType</code> value.
-     */
-    protected final void setUnitType(final UnitType unitType) {
-        this.unitType = unitType;
-    }
+    protected abstract UnitType getUnitType();
 
     /**
      * @param unit
@@ -154,7 +142,7 @@ public abstract class Unit implements Comparable<Unit> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

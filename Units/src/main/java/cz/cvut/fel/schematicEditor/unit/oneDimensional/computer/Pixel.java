@@ -8,7 +8,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 /**
  * This class defines methods for {@link Pixel} subclasses. It also encapsulates all data fields necessary for correct
  * behavior.
- * 
+ *
  * @author Urban Kravjansky
  */
 @XStreamAlias("pixel")
@@ -18,18 +18,24 @@ public class Pixel extends Unit {
      */
     public Pixel() {
         setDoubleFactor(1);
-        setUnitType(UnitType.PIXEL);
         setValue(0);
     }
 
     /**
      * Constructor with given value. It initializes <code>value</code> parameter.
-     * 
+     *
      * @param value <code>value</code> of {@link Pixel} unit.
      */
     public Pixel(final double value) {
         setDoubleFactor(1);
-        setUnitType(UnitType.PIXEL);
         setValue(value);
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit#getUnitType()
+     */
+    @Override
+    protected UnitType getUnitType() {
+        return UnitType.PIXEL;
     }
 }
