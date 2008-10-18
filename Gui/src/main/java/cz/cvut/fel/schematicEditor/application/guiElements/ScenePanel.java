@@ -248,8 +248,10 @@ public class ScenePanel extends JPanel {
                 g2d.drawImage(manipulatedElement, 0, 0, null);
 
                 // draw snap symbol
-                BufferedImage snapSymbol = drawSnapSymbol();
-                g2d.drawImage(snapSymbol, 0, 0, null);
+                if (m.getManipulationType() != ManipulationType.SELECT) {
+                    BufferedImage snapSymbol = drawSnapSymbol();
+                    g2d.drawImage(snapSymbol, 0, 0, null);
+                }
 
                 // draw frame around selected group
                 if (m.getManipulationType() == ManipulationType.SELECT) {
