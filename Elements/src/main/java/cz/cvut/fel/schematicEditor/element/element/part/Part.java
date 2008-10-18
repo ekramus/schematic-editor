@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -20,13 +21,9 @@ public class Part extends Element {
      */
     private Vector<UnitPoint> connectorVector;
     /**
-     * String containing part description.
+     * Field containing part properties.
      */
-    private String            partDescription;
-    /**
-     * String containing part variant.
-     */
-    private String            partVariant;
+    private PartProperties    partProperties;
 
     /**
      * Default constructor. It initializes {@link Part} element.
@@ -35,22 +32,32 @@ public class Part extends Element {
         super();
 
         setConnectorVector(new Vector<UnitPoint>());
-        setPartDescription("");
-        setPartVariant("");
+        setPartProperties(new PartProperties());
     }
 
+    /**
+     * @see Element#duplicate()
+     */
+    @Override
+    public Element duplicate() {
+        Part p = new Part();
+        return p;
+    }
+
+    /**
+     * @see Element#getBounds()
+     */
+    @Override
     public UnitRectangle getBounds() {
         // part as such has no bounds
         return null;
     }
 
     /**
-     * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types .Point2D.Double)
+     * @return the connectorVector
      */
-    @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
-        // part cannot be hit
-        return false;
+    public Vector<UnitPoint> getConnectorVector() {
+        return this.connectorVector;
     }
 
     /**
@@ -71,12 +78,26 @@ public class Part extends Element {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
+     * @return the partProperties
+     */
+    public PartProperties getPartProperties() {
+        return this.partProperties;
+    }
+
+    /**
+     * @see Element#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
-    public Element duplicate() {
-        Part p = new Part();
-        return p;
+    public boolean isHit(Rectangle2D.Double rectangle) {
+        // part cannot be hit
+        return false;
+    }
+
+    /**
+     * @param partProperties the partProperties to set
+     */
+    public void setPartProperties(PartProperties partProperties) {
+        this.partProperties = partProperties;
     }
 
     /**
@@ -84,40 +105,5 @@ public class Part extends Element {
      */
     private void setConnectorVector(Vector<UnitPoint> connectorVector) {
         this.connectorVector = connectorVector;
-    }
-
-    /**
-     * @return the connectorVector
-     */
-    public Vector<UnitPoint> getConnectorVector() {
-        return connectorVector;
-    }
-
-    /**
-     * @param partDescription the partDescription to set
-     */
-    private void setPartDescription(String partDescription) {
-        this.partDescription = partDescription;
-    }
-
-    /**
-     * @return the partDescription
-     */
-    public String getPartDescription() {
-        return partDescription;
-    }
-
-    /**
-     * @param partVariant the partVariant to set
-     */
-    private void setPartVariant(String partVariant) {
-        this.partVariant = partVariant;
-    }
-
-    /**
-     * @return the partVariant
-     */
-    public String getPartVariant() {
-        return partVariant;
     }
 }
