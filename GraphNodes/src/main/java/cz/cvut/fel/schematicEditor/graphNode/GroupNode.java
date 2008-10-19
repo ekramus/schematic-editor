@@ -348,27 +348,25 @@ public class GroupNode extends Node {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public UnitRectangle getBounds() {
         UnitRectangle bounds;
+        UnitRectangle result = null;
 
-        // get bounds of first element, so there are some defined
+        // get bounds from child elements
         Unit width = getChildrenParameterNode().getWidth();
-        try {
-            bounds = getChildrenElementList().getFirst().getBounds(width);
-        }
-        // group node contains no elements, hopefully it contains other groups
-        catch (NoSuchElementException e) {
-            bounds = new UnitRectangle(0, 0, 0, 0);
-        }
-
-        UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-
-        logger.debug("1st getBounds: " + result);
-
         for (ElementNode child : getChildrenElementList()) {
             // union child bounds with result
-            result = (UnitRectangle) result.createUnion(bounds);
+            result = new UnitRectangle(child.getBounds(width).createUnion(result));
             logger.debug("getBounds: " + result);
+        }
+
+        // get bounds from child group nodes
+        for (GroupNode groupNode : getChildrenGroupList()) {
+            result = new UnitRectangle(groupNode.getBounds().createUnion(result));
         }
 
         return result;

@@ -76,6 +76,7 @@ public class PartNode extends ElementNode {
      * @param boundModifier modifier which affects boundary size of element.
      * @return Bounds of element.
      */
+    @Override
     public UnitRectangle getBounds(Unit boundModifier) {
         double x = getPartGroupNode().getBounds().getX() - boundModifier.doubleValue();
         double y = getPartGroupNode().getBounds().getY() - boundModifier.doubleValue();
