@@ -642,6 +642,10 @@ public class GroupNode extends Node {
                         result.add(new UnitPoint(element.getX().get(i), element.getY().get(i)));
                     }
                     break;
+                case T_PART:
+                    PartNode partNode = (PartNode) childNode;
+                    result.addAll(partNode.getPartGroupNode().getPartsCoordinates());
+                    break;
                 default:
                     break;
             }
