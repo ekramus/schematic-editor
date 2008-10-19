@@ -261,7 +261,7 @@ public class ScenePanel extends JPanel {
                 }
                 // draw frame around edited group
                 else if (m.getManipulationType() == ManipulationType.EDIT) {
-                    logger.trace("create element frame drawing");
+                    logger.trace("edited element frame drawing");
                     BufferedImage selectionFrame = drawEditFrame();
                     g2d.drawImage(selectionFrame, 0, 0, null);
                 }
@@ -338,18 +338,24 @@ public class ScenePanel extends JPanel {
         UnitPoint up = m.getLastManipulationCoordinate();
         Vector<UnitPoint> sc = m.getSnapCoordinates();
 
-        for (UnitPoint unitPoint : sc) {
-            if (unitPoint.equals(up)) {
-                Graphics2D g2d = (Graphics2D) snapSymbol.getGraphics();
-                Rectangle2D.Double rect = new Rectangle2D.Double(up.getX() - configuration.getSnapSymbolSize()
-                        .doubleValue(), up.getY() - configuration.getSnapSymbolSize().doubleValue(), configuration
-                        .getSnapSymbolSize().doubleValue() * 2, configuration.getSnapSymbolSize().doubleValue() * 2);
-                rect = t.shift(rect);
-                g2d.setColor(Color.YELLOW);
-                g2d.draw(rect);
+        try {
+            for (UnitPoint unitPoint : sc) {
+                if (unitPoint.equals(up)) {
+                    Graphics2D g2d = (Graphics2D) snapSymbol.getGraphics();
+                    Rectangle2D.Double rect = new Rectangle2D.Double(up.getX() - configuration.getSnapSymbolSize()
+                            .doubleValue(), up.getY() - configuration.getSnapSymbolSize().doubleValue(), configuration
+                            .getSnapSymbolSize().doubleValue() * 2, configuration.getSnapSymbolSize().doubleValue() * 2);
+                    rect = t.shift(rect);
+                    g2d.setColor(Color.YELLOW);
+                    g2d.draw(rect);
 
-                return snapSymbol;
+                    return snapSymbol;
+                }
             }
+        }
+        // e.g. no elements in sc
+        catch (NullPointerException npe) {
+            return snapSymbol;
         }
 
         return snapSymbol;

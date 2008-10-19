@@ -349,19 +349,17 @@ public class GroupNode extends Node {
     }
 
     /**
+     * Computes bounds of all elements contained inside this {@link GroupNode}.
      *
-     * @return
+     * @return bounds union of all elements contained in this {@link GroupNode}.
      */
     public UnitRectangle getBounds() {
-        UnitRectangle bounds;
         UnitRectangle result = null;
 
         // get bounds from child elements
         Unit width = getChildrenParameterNode().getWidth();
         for (ElementNode child : getChildrenElementList()) {
-            // union child bounds with result
             result = new UnitRectangle(child.getBounds(width).createUnion(result));
-            logger.debug("getBounds: " + result);
         }
 
         // get bounds from child group nodes
