@@ -349,9 +349,17 @@ public class GroupNode extends Node {
     }
 
     public UnitRectangle getBounds() {
+        UnitRectangle bounds;
+
         // get bounds of first element, so there are some defined
         Unit width = getChildrenParameterNode().getWidth();
-        UnitRectangle bounds = getChildrenElementList().getFirst().getBounds(width);
+        try {
+            bounds = getChildrenElementList().getFirst().getBounds(width);
+        }
+        // group node contains no elements, hopefully it contains other groups
+        catch (NoSuchElementException e) {
+            bounds = new UnitRectangle(0, 0, 0, 0);
+        }
 
         UnitRectangle result = new UnitRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
