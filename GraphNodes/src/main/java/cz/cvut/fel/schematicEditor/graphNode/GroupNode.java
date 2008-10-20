@@ -18,9 +18,10 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class represents Group Node in scene graph.
+ * This class represents <em>Group node</em> in scene graph. Group node is node which groups other nodes as its
+ * children, allowing existence of tree-like scheme structures.
  *
- * @author uk
+ * @author Urban Kravjansky
  */
 public class GroupNode extends Node {
     /**
@@ -49,39 +50,35 @@ public class GroupNode extends Node {
     private Element                        editedElement;
 
     /**
-     * This is default constructor.
+     * Default constructor. It initializes all fields with default values, thus creating empty {@link GroupNode}.
      */
     public GroupNode() {
         super();
 
         logger = Logger.getLogger(this.getClass().getName());
 
-        this.childrenGroupList = new LinkedList<GroupNode>();
-        this.childrenElementList = new LinkedList<ElementNode>();
-        this.childrenTransformationList = new LinkedList<TransformationNode>();
-        this.chidrenParameterNode = null;
-        // this.chidrenParameterNode = new ParameterNode();
+        setChildrenGroupList(new LinkedList<GroupNode>());
+        setChildrenElementList(new LinkedList<ElementNode>());
+        setChildrenTransformationList(new LinkedList<TransformationNode>());
+        setChidrenParameterNode(null);
         setEditedElement(null);
     }
 
     /**
-     * This method adds child node into this node.
+     * Adds any {@link Node} as child into this {@link GroupNode}. Node is saved into correct field.
      *
      * @param child child node to add.
      */
     public void add(Node child) {
         if (child instanceof GroupNode) {
-            // System.out.println("Adding group node: " + child.toString());
             this.childrenGroupList.add((GroupNode) child);
         } else if (child instanceof ElementNode) {
-            // System.out.println("Adding element node: " + child.toString());
             this.childrenElementList.add((ElementNode) child);
         } else if (child instanceof TransformationNode) {
             logger.trace("Adding transformation node: " + child.toString());
             logger.trace("List of transformation nodes: " + child);
             this.childrenTransformationList.add((TransformationNode) child);
         } else if (child instanceof ParameterNode) {
-            // System.out.println("Adding parameter node: " + child.toString());
             this.chidrenParameterNode = (ParameterNode) child;
         } else {
             // TODO add handling
@@ -90,9 +87,9 @@ public class GroupNode extends Node {
     }
 
     /**
-     * This method returns transformation applied on this group.
+     * Returns transformation applied on this {@link GroupNode}.
      *
-     * @return
+     * @return Transformation made as matrix multiplication of all contained transformations.
      */
     public Transformation getTransformation() {
         Transformation t = new Transformation(Transformation.getIdentity());
@@ -103,20 +100,11 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Getter for group
+     * Indicates, whether {@link GroupNode} is hit by mouse cursor or not.
      *
-     * @return group node.
+     * @param rectangle
+     * @return
      */
-    public GroupNode getGroup() {
-        GroupNode result = null;
-
-        for (Node child : this.childrenGroupList) {
-            // TODO shape manipulation
-        }
-
-        return result;
-    }
-
     public boolean isHit(Rectangle2D rectangle) {
         if (isDisabled()) {
             return false;
