@@ -16,7 +16,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 
 /**
  * This class represents GUI of schematic editor.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Gui extends JApplet {
@@ -43,7 +43,7 @@ public class Gui extends JApplet {
 
     /**
      * This method initializes jContentPane
-     * 
+     *
      * @return javax.swing.JPanel
      */
     public JPanel getJContentPane() {
@@ -60,7 +60,7 @@ public class Gui extends JApplet {
 
     /**
      * This method initializes jFrame
-     * 
+     *
      * @return javax.swing.JFrame
      */
     public JFrame getJFrame() {
@@ -77,7 +77,7 @@ public class Gui extends JApplet {
 
     /**
      * This method initializes sceneJContentPane
-     * 
+     *
      * @return javax.swing.JPanel
      */
     private JPanel getSceneJContentPane() {
@@ -95,7 +95,7 @@ public class Gui extends JApplet {
 
     /**
      * This method initializes sceneJScrollPane
-     * 
+     *
      * @return javax.swing.JScrollPane
      */
     private JScrollPane getSceneJScrollPane() {

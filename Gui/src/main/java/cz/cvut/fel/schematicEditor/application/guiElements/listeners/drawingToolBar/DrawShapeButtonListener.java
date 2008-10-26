@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -19,7 +20,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 /**
  * This class implements listener for every shape drawing button. It is implemented by instantiating a new class of
  * {@link Shape}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class DrawShapeButtonListener implements ActionListener {
@@ -34,7 +35,7 @@ public class DrawShapeButtonListener implements ActionListener {
 
     /**
      * {@link DrawShapeButtonListener} constructor. It uses {@link Shape} instance to instantiate new {@link Shape}.
-     * 
+     *
      * @param shape instance used for new {@link Shape} instantiation.
      */
     public DrawShapeButtonListener(final Shape shape) {
@@ -45,7 +46,7 @@ public class DrawShapeButtonListener implements ActionListener {
 
     /**
      * Method invoked as result to an action. It initializes properties inside {@link Structures} class.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param ae {@link ActionEvent} parameter.
      */
@@ -59,7 +60,8 @@ public class DrawShapeButtonListener implements ActionListener {
             gn.add(sn);
 
             // create active manipulation
-            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, gn);
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, ScenePanel.getInstance().getSchemeSG()
+                    .getTopNode(), gn);
             Structures.setActiveManipulation(m);
             logger.trace(Structures.getActiveManipulation());
 
@@ -78,7 +80,7 @@ public class DrawShapeButtonListener implements ActionListener {
 
     /**
      * Setter for shape field.
-     * 
+     *
      * @param shape the shape to set
      */
     private void setShape(final Shape shape) {
@@ -87,7 +89,7 @@ public class DrawShapeButtonListener implements ActionListener {
 
     /**
      * Getter for shape field.
-     * 
+     *
      * @return the shape of this instance.
      */
     private Shape getShape() {

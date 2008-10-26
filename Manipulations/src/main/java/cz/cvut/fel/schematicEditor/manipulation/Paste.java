@@ -9,10 +9,19 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 
 /**
  * This class implements Copy manipulation.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Paste extends Manipulation {
+    /**
+     * This method instantiates new instance.
+     *
+     * @param topNode top node of scene graph.
+     */
+    protected Paste(GroupNode topNode) {
+        super(topNode);
+    }
+
     /**
      * Instance of {@link ManipulationQueue} for accessing clippboard.
      */
@@ -28,22 +37,22 @@ public class Paste extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         // mothing to do
         return this;
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         setManipulationQueue(manipulationQueue);
 
         return this;
@@ -56,10 +65,13 @@ public class Paste extends Manipulation {
         return this.manipulationQueue;
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#createNext()
+     */
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select();
+        Select s = new Select(getTopNode());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
@@ -83,7 +95,7 @@ public class Paste extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Paste paste = new Paste();
+        Paste paste = new Paste(getTopNode());
 
         paste.setManipulatedGroup(getManipulatedGroup());
         paste.setManipulationQueue(getManipulationQueue());
@@ -92,23 +104,23 @@ public class Paste extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute(cz.cvut.fel.schematicEditor.graphNode.GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         setManipulatedGroup((GroupNode) getManipulationQueue().getClipboard().duplicate());
-        topNode.add(getManipulatedGroup());
+        getTopNode().add(getManipulatedGroup());
 
         // if original GroupNode was deleted, undelete it
-        topNode.undelete(getManipulatedGroup());
+        getTopNode().undelete(getManipulatedGroup());
 
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute(cz.cvut.fel.schematicEditor.graphNode.GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.delete(getManipulatedGroup());
+    protected void unexecute() throws ManipulationExecutionException {
+        getTopNode().delete(getManipulatedGroup());
     }
 }

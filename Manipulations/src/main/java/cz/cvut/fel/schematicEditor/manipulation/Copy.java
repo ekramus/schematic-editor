@@ -9,10 +9,19 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 
 /**
  * This class implements Copy manipulation.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Copy extends Manipulation {
+    /**
+     * This method instantiates new instance.
+     *
+     * @param topNode top node of scene graph.
+     */
+    protected Copy(GroupNode topNode) {
+        super(topNode);
+    }
+
     /**
      * Instance of {@link ManipulationQueue} for accessing clippboard.
      */
@@ -28,31 +37,36 @@ public class Copy extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
-        // mothing to do
+            boolean isMouseClicked) throws UnknownManipulationException {
+
+        // nothing to do
         return this;
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         setManipulationQueue(manipulationQueue);
 
+        // nothing to do
         return this;
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#createNext()
+     */
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select();
+        Select s = new Select(getTopNode());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
@@ -83,7 +97,7 @@ public class Copy extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Copy copy = new Copy();
+        Copy copy = new Copy(getTopNode());
 
         copy.setManipulatedGroup(getManipulatedGroup());
         copy.setManipulationQueue(getManipulationQueue());
@@ -92,18 +106,18 @@ public class Copy extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute(cz.cvut.fel.schematicEditor.graphNode.GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         getManipulationQueue().setClipboard((GroupNode) getManipulatedGroup().duplicate());
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute(cz.cvut.fel.schematicEditor.graphNode.GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void unexecute() throws ManipulationExecutionException {
         getManipulationQueue().setClipboard(null);
     }
 

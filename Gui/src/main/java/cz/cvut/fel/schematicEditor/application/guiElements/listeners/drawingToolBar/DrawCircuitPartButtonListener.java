@@ -85,7 +85,8 @@ public class DrawCircuitPartButtonListener implements ActionListener {
             snapCoordinates = ScenePanel.getInstance().getSchemeSG().getTopNode().getPartsCoordinates();
 
             // create active manipulation
-            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, gn);
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, ScenePanel.getInstance().getSchemeSG()
+                    .getTopNode(), gn);
             m.setSnapCoordinates(snapCoordinates);
             Structures.setActiveManipulation(m);
             logger.trace(Structures.getActiveManipulation());

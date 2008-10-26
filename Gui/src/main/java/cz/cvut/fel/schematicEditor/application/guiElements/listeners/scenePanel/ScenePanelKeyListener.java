@@ -16,15 +16,13 @@ import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Paste;
-import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ScenePanelKeyListener implements KeyListener {
@@ -43,7 +41,7 @@ public class ScenePanelKeyListener implements KeyListener {
 
     /**
      * Key listener for {@link ScenePanel}. It scans pressed keys and invokes action based on keycodes.
-     * 
+     *
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
     public void keyPressed(KeyEvent e) {
@@ -70,7 +68,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 logger.trace("UNexecuting...");
 
                 // unexecute manipulation
-                Structures.getManipulationQueue().unexecute(ScenePanel.getInstance().getSchemeSG().getTopNode());
+                Structures.getManipulationQueue().unexecute();
 
                 // invalidate scheme
                 ScenePanel.getInstance().schemeInvalidate(null);
@@ -86,7 +84,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 logger.trace("REexecuting...");
 
                 // reexecute manipulation
-                Structures.getManipulationQueue().reexecute(ScenePanel.getInstance().getSchemeSG().getTopNode());
+                Structures.getManipulationQueue().reexecute();
 
                 // invalidate scheme
                 ScenePanel.getInstance().schemeInvalidate(null);
@@ -102,11 +100,11 @@ public class ScenePanelKeyListener implements KeyListener {
                 logger.trace("COPYing...");
 
                 // set active manipulation
-                Copy copy = new Copy();
+                Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, ScenePanel.getInstance()
+                        .getSchemeSG().getTopNode());
                 // set manipulated group from select manipulation
                 copy.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
-                copy.manipulationStop(null, null, Structures.getManipulationQueue(), ScenePanel.getInstance()
-                        .getSchemeSG().getTopNode(), false);
+                copy.manipulationStop(null, null, Structures.getManipulationQueue(), false);
 
                 // set copy as active manipulation
                 Structures.setActiveManipulation(copy);
@@ -119,9 +117,9 @@ public class ScenePanelKeyListener implements KeyListener {
                 logger.trace("PASTEing...");
 
                 // set active manipulation
-                Paste paste = new Paste();
-                paste.manipulationStop(null, null, Structures.getManipulationQueue(), ScenePanel.getInstance()
-                        .getSchemeSG().getTopNode(), false);
+                Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, ScenePanel.getInstance()
+                        .getSchemeSG().getTopNode());
+                paste.manipulationStop(null, null, Structures.getManipulationQueue(), false);
 
                 // set paste as active manipulation
                 Structures.setActiveManipulation(paste);
@@ -135,7 +133,8 @@ public class ScenePanelKeyListener implements KeyListener {
                 if (manipulation.getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = manipulation.getManipulatedGroup();
                     if (ScenePanel.getInstance().getSchemeSG().getTopNode().delete(selected)) {
-                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE);
+                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, ScenePanel
+                                .getInstance().getSchemeSG().getTopNode());
                         delete.setActive(true);
                         Structures.getActiveManipulation();
                         // ScenePanel.getInstance().processFinalManipulationStep();
@@ -150,7 +149,6 @@ public class ScenePanelKeyListener implements KeyListener {
     /**
      * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
      */
-    @SuppressWarnings("unused")
     public void keyReleased(KeyEvent e) {
         // nothing to do
     }
@@ -158,7 +156,6 @@ public class ScenePanelKeyListener implements KeyListener {
     /**
      * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
      */
-    @SuppressWarnings("unused")
     public void keyTyped(KeyEvent e) {
         // nothing to do
     }
