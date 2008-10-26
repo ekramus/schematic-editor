@@ -33,10 +33,11 @@ public class Move extends Manipulation {
 
     /**
      * Default {@link Move} constructor. It initializes this {@link Manipulation}.
+     *
+     * @param topNode top node of scene graph.
      */
-    protected Move() {
-        super(null);
-        setManipulatedGroup(null);
+    protected Move(GroupNode topNode) {
+        super(topNode);
 
         logger = Logger.getLogger(this.getClass().getName());
     }
@@ -87,13 +88,13 @@ public class Move extends Manipulation {
      * Specific <code>manipulationStart</code> method for {@link Move} manipulation.
      *
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
-    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue mq, GroupNode topNode,
-            boolean isMouseClicked) throws UnknownManipulationException {
+    public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue mq, boolean isMouseClicked)
+            throws UnknownManipulationException {
         // check, whether move is possible or not
-        if (isActive() && (getManipulatedGroup() == topNode.findHit(r2d))) {
+        if (isActive() && (getManipulatedGroup() == getTopNode().findHit(r2d))) {
             // add identity transformation, so it can be later changed
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
@@ -114,11 +115,11 @@ public class Move extends Manipulation {
      * Specific <code>manipulationEnd</code> method for {@link Move} manipulation.
      *
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode groupNode, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.debug("object MOVED");
 
@@ -158,9 +159,12 @@ public class Move extends Manipulation {
         this.delta = delta;
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
+     */
     @Override
     protected Manipulation duplicate() {
-        Move m = new Move();
+        Move m = new Move(getTopNode());
         // m.setManipulatedGroup((GroupNode) getManipulatedGroup().duplicate());
         m.setManipulatedGroup(getManipulatedGroup());
         m.setManipulationCoordinates(getX(), getY());
@@ -169,10 +173,13 @@ public class Move extends Manipulation {
         return m;
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#createNext()
+     */
     @Override
     protected Manipulation createNext() {
         // After move select is next manipulation..
-        Select s = new Select();
+        Select s = new Select(getTopNode());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
@@ -185,31 +192,29 @@ public class Move extends Manipulation {
     }
 
     /**
-     * @see Manipulation#execute(GroupNode)
+     * @see Manipulation#execute()
      */
     @Override
-    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         switchLastTransformation(getDelta());
     }
 
     /**
-     * @see Manipulation#reexecute(GroupNode)
+     * @see Manipulation#reexecute()
      */
     @Override
-    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void reexecute() throws ManipulationExecutionException {
         Transformation t = Transformation.getShift(getDelta().getX(), getDelta().getY());
         TransformationNode tn = new TransformationNode(t);
 
         getManipulatedGroup().add(tn);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void unexecute() throws ManipulationExecutionException {
         getManipulatedGroup().removeLastTransformation();
     }
 }

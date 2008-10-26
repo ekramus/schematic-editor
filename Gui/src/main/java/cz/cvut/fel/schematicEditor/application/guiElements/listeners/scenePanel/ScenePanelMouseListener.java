@@ -25,7 +25,7 @@ import cz.cvut.fel.schematicEditor.support.Support;
 
 /**
  * This class implements {@link MouseListener} for {@link ScenePanel}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ScenePanelMouseListener implements MouseListener {
@@ -53,7 +53,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Getter for <code>mousePressedPoint</code>.
-     * 
+     *
      * @return {@link Point2D.Double} value of <code>mousePressedPoint</code>.
      */
     private Point2D.Double getMousePressedPoint() {
@@ -62,7 +62,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Getter for <code>mouseReleasedPoint</code>.
-     * 
+     *
      * @return {@link Point2D.Double} value of <code>mouseReleasedPoint</code>.
      */
     private Point2D.Double getMouseReleasedPoint() {
@@ -71,7 +71,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Indicates, whether mouse was clicked or not.
-     * 
+     *
      * @return <code>true</code>, if mouse was clicked, <code>false</code> else.
      */
     private boolean isMouseClicked() {
@@ -80,7 +80,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse click events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
     public void mouseClicked(MouseEvent e) {
@@ -89,7 +89,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse enter events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
      */
     public void mouseEntered(MouseEvent e) {
@@ -101,7 +101,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse exit events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
     public void mouseExited(MouseEvent e) {
@@ -110,7 +110,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse press events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
     public void mousePressed(MouseEvent e) {
@@ -123,11 +123,10 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                             .getPointerRectangle());
 
             Manipulation m = Structures.getActiveManipulation();
-            if (!m.isActive() || m.getManipulationType() == ManipulationType.SELECT) {
+            if (!m.isActive() || (m.getManipulationType() == ManipulationType.SELECT)) {
                 // start manipulation and set result as active manipulation
                 Structures.setActiveManipulation(m.manipulationStart(e, r2d, Structures.getManipulationQueue(),
-                                                                     ScenePanel.getInstance().getSchemeSG()
-                                                                             .getTopNode(), isMouseClicked()));
+                                                                     isMouseClicked()));
             }
 
         } catch (UnknownManipulationException ume) {
@@ -137,7 +136,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
     /**
      * Method for mouse release events processing.
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
     public void mouseReleased(MouseEvent e) {

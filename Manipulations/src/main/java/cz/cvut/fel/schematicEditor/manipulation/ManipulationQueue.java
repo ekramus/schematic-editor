@@ -9,7 +9,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionE
 
 /**
  * This class encapsulates manipulations, which are to be executed or already were executed.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ManipulationQueue {
@@ -42,14 +42,12 @@ public class ManipulationQueue {
 
     /**
      * Executes given active manipulation.
-     * 
+     *
      * @param activeManipulation {@link Manipulation} to be executed.
-     * @param topNode Top {@link GroupNode} of SceneGraph.
-     * 
      * @return status of executed {@link Manipulation}. <code>false</code> in case of execution problems, else
      *         <code>true</code>.
      */
-    public boolean execute(Manipulation activeManipulation, GroupNode topNode) {
+    public boolean execute(Manipulation activeManipulation) {
         // try to add and execute manipulation
         try {
             // move index of active manipulation to the next one
@@ -65,7 +63,7 @@ public class ManipulationQueue {
             getManipulationQueue().add(activeManipulation);
 
             // execute manipulation
-            activeManipulation.execute(topNode);
+            activeManipulation.execute();
         }
         // manipulation was null
         catch (NullPointerException e) {
@@ -83,13 +81,11 @@ public class ManipulationQueue {
 
     /**
      * Reexecutes (redoes) manipulation on active manipulation index position.
-     * 
-     * @param topNode Top {@link GroupNode} of SceneGraph.
-     * 
+     *
      * @return status of reexecuted {@link Manipulation}. <code>false</code> in case of reexecution problems, else
      *         <code>true</code>.
      */
-    public boolean reexecute(GroupNode topNode) {
+    public boolean reexecute() {
         // move index of active manipulation to the next one
         setActiveManipulationIndex(getActiveManipulationIndex() + 1);
 
@@ -103,7 +99,7 @@ public class ManipulationQueue {
 
         // try to reexecute manipulation
         try {
-            manipulation.reexecute(topNode);
+            manipulation.reexecute();
         }
         // manipulation was null
         catch (NullPointerException npe) {
@@ -139,17 +135,16 @@ public class ManipulationQueue {
 
     /**
      * Unexecutes (undoes) manipualtion on position of active manipulation index.
-     * 
-     * @param topNode Top {@link GroupNode} instance of scene graph.
+     *
      * @return status of unexecuted {@link Manipulation}. <code>false</code> in case of unexecution problems, else
      *         <code>true</code>.
      */
-    public boolean unexecute(GroupNode topNode) {
+    public boolean unexecute() {
         Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex());
 
         // try to unexecute manipulation
         try {
-            manipulation.unexecute(topNode);
+            manipulation.unexecute();
 
             // move index of active manipulation to the previous one
             setActiveManipulationIndex(getActiveManipulationIndex() - 1);
@@ -168,7 +163,7 @@ public class ManipulationQueue {
 
     /**
      * Getter for <code>activeManipulationIndex</code> field.
-     * 
+     *
      * @return The index of active {@link Manipulation}.
      */
     private int getActiveManipulationIndex() {
@@ -177,7 +172,7 @@ public class ManipulationQueue {
 
     /**
      * Getter for <code>manipulationQueue</code>.
-     * 
+     *
      * @return the <code>manipulationQueue</code> instance.
      */
     private LinkedList<Manipulation> getManipulationQueue() {
@@ -186,7 +181,7 @@ public class ManipulationQueue {
 
     /**
      * Setter for <code>activeManipulationIndex</code> field.
-     * 
+     *
      * @param activeManipulationIndex Index of active {@link Manipulation}.
      */
     private void setActiveManipulationIndex(int activeManipulationIndex) {
@@ -202,7 +197,7 @@ public class ManipulationQueue {
 
     /**
      * Getter for <code>activeManipulation</code>.
-     * 
+     *
      * @return Actual <code>activeManipulation</code> instance.
      */
     public Manipulation getActiveManipulation() {

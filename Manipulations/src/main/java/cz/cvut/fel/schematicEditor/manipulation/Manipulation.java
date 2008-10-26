@@ -27,6 +27,10 @@ public abstract class Manipulation {
      */
     private GroupNode         manipulatedGroup;
     /**
+     * Contains link to topNode of scene graph.
+     */
+    private GroupNode         topNode;
+    /**
      * This field represents x coordinates of manipulated element.
      */
     private Vector<Unit>      x;
@@ -46,8 +50,11 @@ public abstract class Manipulation {
     /**
      * Default constructor. It is private because of {@link Manipulation}s are created using {@link ManipulationFactory}
      * .
+     *
+     * @param topNode top node of scene graph.
      */
-    protected Manipulation() {
+    protected Manipulation(GroupNode topNode) {
+        setTopNode(topNode);
         setManipulatedGroup(null);
 
         finalizeInit();
@@ -58,8 +65,10 @@ public abstract class Manipulation {
      * {@link ManipulationFactory}.
      *
      * @param manipulatedGroup instance of manipulated group.
+     * @param topNode top node of scene graph.
      */
-    protected Manipulation(GroupNode manipulatedGroup) {
+    protected Manipulation(GroupNode topNode, GroupNode manipulatedGroup) {
+        setTopNode(topNode);
         setManipulatedGroup(manipulatedGroup);
 
         finalizeInit();
@@ -107,13 +116,12 @@ public abstract class Manipulation {
      * @param e {@link MouseEvent}, that invoked this method.
      * @param r2d Rectangle, which contains mouse pointer.
      * @param manipulationQueue used for {@link Manipulation} history and execution.
-     * @param topNode TopNode of SchemeSG.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
      * @return Pointer to manipulation or <code>null</code>, if manipulation was unsuccessful.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
     public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException;
+            boolean isMouseClicked) throws UnknownManipulationException;
 
     /**
      * Finishes everything at the end of manipulation correctly.
@@ -121,13 +129,12 @@ public abstract class Manipulation {
      * @param e {@link MouseEvent}, that invoked this method.
      * @param r2d Rectangle, which contains mouse pointer.
      * @param manipulationQueue used for {@link Manipulation} history and execution.
-     * @param topNode TopNode of SchemeSG.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
      * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
     public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException;
+            boolean isMouseClicked) throws UnknownManipulationException;
 
     /**
      * Replaces last manipulation <code>x</code>, <code>y</code> coordinates with given ones.
@@ -158,6 +165,20 @@ public abstract class Manipulation {
      */
     public void setManipulatedGroup(GroupNode manipulatedGroup) {
         this.manipulatedGroup = manipulatedGroup;
+
+        try {
+            switch (getManipulatedGroup().getElementType()) {
+                case T_WIRE:
+                case T_CONNECTOR:
+                case T_PART:
+                    setSnapCoordinates(getTopNode().getPartsCoordinates());
+                    break;
+                default:
+                    break;
+            }
+        } catch (NullPointerException npe) {
+            // nothing to do
+        }
     }
 
     /**
@@ -178,7 +199,7 @@ public abstract class Manipulation {
      * @return Creates next instance of {@link Manipulation}.
      */
     protected Manipulation createNext() {
-        return duplicate();
+        return ManipulationFactory.duplicate(this);
     }
 
     /**
@@ -191,11 +212,9 @@ public abstract class Manipulation {
     /**
      * Executes manipulation.
      *
-     * @param topNode top {@link GroupNode} of SceneGraph.
-     *
      * @throws ManipulationExecutionException in case of some error while executing manipulation.
      */
-    protected abstract void execute(GroupNode topNode) throws ManipulationExecutionException;
+    protected abstract void execute() throws ManipulationExecutionException;
 
     /**
      * @return the x
@@ -214,12 +233,10 @@ public abstract class Manipulation {
     /**
      * Reexecutes manipulation. Mostly it only executes it, for special purposes it needs to be overwritten.
      *
-     * @param topNode top {@link GroupNode} of SceneGraph.
-     *
      * @throws ManipulationExecutionException in case of some error while reexecuting manipulation.
      */
-    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
-        execute(topNode);
+    protected void reexecute() throws ManipulationExecutionException {
+        execute();
     }
 
     /**
@@ -236,11 +253,9 @@ public abstract class Manipulation {
     /**
      * Unexecutes (undoes) manipulation.
      *
-     * @param topNode reference to top node of scene graph.
-     *
      * @throws ManipulationExecutionException in case of some error while removing manipulation.
      */
-    protected abstract void unexecute(GroupNode topNode) throws ManipulationExecutionException;
+    protected abstract void unexecute() throws ManipulationExecutionException;
 
     /**
      * @param snapCoordinates the snapCoordinates to set
@@ -263,5 +278,19 @@ public abstract class Manipulation {
      */
     public UnitPoint getLastManipulationCoordinate() {
         return new UnitPoint(getX().lastElement().doubleValue(), getY().lastElement().doubleValue());
+    }
+
+    /**
+     * @return the topNode
+     */
+    protected GroupNode getTopNode() {
+        return this.topNode;
+    }
+
+    /**
+     * @param topNode the topNode to set
+     */
+    protected void setTopNode(GroupNode topNode) {
+        this.topNode = topNode;
     }
 }

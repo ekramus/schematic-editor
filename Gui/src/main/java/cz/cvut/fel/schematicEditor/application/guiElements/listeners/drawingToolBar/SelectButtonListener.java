@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
@@ -42,7 +43,8 @@ public final class SelectButtonListener implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         try {
-            Manipulation m = ManipulationFactory.create(ManipulationType.SELECT);
+            Manipulation m = ManipulationFactory.create(ManipulationType.SELECT, ScenePanel.getInstance().getSchemeSG()
+                    .getTopNode());
             Structures.setActiveManipulation(m);
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());

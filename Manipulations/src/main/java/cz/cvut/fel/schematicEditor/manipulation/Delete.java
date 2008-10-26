@@ -12,6 +12,15 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  */
 public class Delete extends Manipulation {
     /**
+     * This method instantiates new instance.
+     *
+     * @param topNode top node of scene graph.
+     */
+    protected Delete(GroupNode topNode) {
+        super(topNode);
+    }
+
+    /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#getManipulationType()
      */
     @Override
@@ -19,64 +28,63 @@ public class Delete extends Manipulation {
         return ManipulationType.DELETE;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#newInstance(cz.cvut.fel.schematicEditor
-     * .manipulation.Manipulation)
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
      */
     @Override
     protected Manipulation duplicate() {
-        Delete d = new Delete();
+        Delete d = new Delete(getTopNode());
+
         return d;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#execute(GroupNode)
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.delete(getManipulatedGroup());
+    protected void execute() throws ManipulationExecutionException {
+        getTopNode().delete(getManipulatedGroup());
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#reexecute()
+     */
     @Override
-    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void reexecute() throws ManipulationExecutionException {
         // top node is not deleted
         if (!getManipulatedGroup().isDisabled()) {
-            topNode.delete(getManipulatedGroup());
+            getTopNode().delete(getManipulatedGroup());
         }
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute(GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.undelete(getManipulatedGroup());
+    protected void unexecute() throws ManipulationExecutionException {
+        getTopNode().undelete(getManipulatedGroup());
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
-            setManipulatedGroup(topNode.findHit(r2d));
+            setManipulatedGroup(getTopNode().findHit(r2d));
         }
         return this;
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         setActive(true);
 
         return this;

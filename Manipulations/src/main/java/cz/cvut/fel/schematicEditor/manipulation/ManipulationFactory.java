@@ -5,7 +5,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 
 /**
  * This class implements factory pattern for {@link Manipulation} creation.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ManipulationFactory {
@@ -18,21 +18,22 @@ public class ManipulationFactory {
 
     /**
      * Creates {@link Manipulation} according to given {@link ManipulationType}.
-     * 
+     *
      * @param type type of manipulation.
+     * @param topNode top node of scene graph.
      * @return {@link Manipulation} of correct {@link ManipulationType}.
      * @throws UnknownManipulationException In case of unknown manipulation type.
      */
-    public static Manipulation create(ManipulationType type) throws UnknownManipulationException {
+    public static Manipulation create(ManipulationType type, GroupNode topNode) throws UnknownManipulationException {
         switch (type) {
             case DELETE:
-                return new Delete();
+                return new Delete(topNode);
             case MOVE:
-                return new Move();
+                return new Move(topNode);
             case SELECT:
-                return new Select();
+                return new Select(topNode);
             case EDIT:
-                return new Edit();
+                return new Edit(topNode);
             default:
                 throw new UnknownManipulationException(type);
         }
@@ -40,16 +41,18 @@ public class ManipulationFactory {
 
     /**
      * Creates {@link Manipulation}, which needs additional data.
-     * 
+     *
      * @param type type of manipulation.
+     * @param topNode top node of scene graph.
      * @param data additional requested data.
      * @return {@link Manipulation} of correct {@link ManipulationType}.
      * @throws UnknownManipulationException In case of unknown manipulation type.
      */
-    public static Manipulation create(ManipulationType type, Object data) throws UnknownManipulationException {
+    public static Manipulation create(ManipulationType type, GroupNode topNode, Object data)
+            throws UnknownManipulationException {
         switch (type) {
             case CREATE:
-                return new Create((GroupNode) data);
+                return new Create(topNode, (GroupNode) data);
             default:
                 throw new UnknownManipulationException(type);
         }
@@ -57,7 +60,7 @@ public class ManipulationFactory {
 
     /**
      * Duplicates given {@link Manipulation}.
-     * 
+     *
      * @param manipulation {@link Manipulation} instance to be duplicated.
      * @return New duplicated {@link Manipulation}.
      */
@@ -67,7 +70,7 @@ public class ManipulationFactory {
 
     /**
      * Creates {@link Manipulation} which should be active after given.
-     * 
+     *
      * @param manipulation {@link Manipulation}, according which new one will be created.
      * @return New {@link Manipulation} according to creation order.
      */

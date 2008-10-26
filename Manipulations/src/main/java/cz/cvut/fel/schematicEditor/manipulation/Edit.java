@@ -32,9 +32,11 @@ public class Edit extends Manipulation {
 
     /**
      * Default constructor. It initializes this {@link Edit} {@link Manipulation}.
+     *
+     * @param topNode top node of scene graph.
      */
-    protected Edit() {
-        super(null);
+    protected Edit(GroupNode topNode) {
+        super(topNode);
         setManipulatedGroup(null);
 
         logger = Logger.getLogger(this.getClass().getName());
@@ -50,13 +52,13 @@ public class Edit extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      java.awt.geom.Rectangle2D, ManipulationQueue, GroupNode, boolean)
+     *      java.awt.geom.Rectangle2D, ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         // check, whether move is possible or not
-        if (isActive() && (getManipulatedGroup() == topNode.findHit(r2d))) {
+        if (isActive() && (getManipulatedGroup() == getTopNode().findHit(r2d))) {
             // add identity transformation, so it can be later changed
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
@@ -75,11 +77,11 @@ public class Edit extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean) ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean) ManipulationQueue, GroupNode, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode grouNode, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.trace("object EDITED");
 
@@ -108,9 +110,12 @@ public class Edit extends Manipulation {
         this.delta = delta;
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
+     */
     @Override
     protected Manipulation duplicate() {
-        Edit e = new Edit();
+        Edit e = new Edit(getTopNode());
 
         e.setManipulatedGroup(getManipulatedGroup());
         e.setManipulationCoordinates(getX(), getY());
@@ -119,10 +124,13 @@ public class Edit extends Manipulation {
         return e;
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#createNext()
+     */
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select();
+        Select s = new Select(getTopNode());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
@@ -135,19 +143,19 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see Manipulation#execute(GroupNode)
+     * @see Manipulation#execute()
      */
     @Override
-    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         // change edited point using delta
         getManipulatedGroup().stopEdit(new UnitPoint(getDelta()));
     }
 
     /**
-     * @see Manipulation#execute(GroupNode)
+     * @see Manipulation#execute()
      */
     @Override
-    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void reexecute() throws ManipulationExecutionException {
         Element e = getManipulatedGroup().getEditedElement();
 
         if (e != null) {
@@ -161,13 +169,11 @@ public class Edit extends Manipulation {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cz.cvut.fel.schematicEditor.manipulation.manipulation.Manipulation#unexecute()
+    /**
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void unexecute() throws ManipulationExecutionException {
         Element e = getManipulatedGroup().getEditedElement();
 
         if (e != null) {

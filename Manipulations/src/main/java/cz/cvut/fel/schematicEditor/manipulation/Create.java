@@ -61,10 +61,11 @@ public class Create extends Manipulation {
      * Constructor used for {@link Create} initialization. It is protected so it {@link Manipulation} has to be created
      * using {@link ManipulationFactory}.
      *
+     * @param topNode top node of scene graph.
      * @param manipulatedGroup {@link GroupNode}, which will be created using this {@link Create} manipulation.
      */
-    protected Create(GroupNode manipulatedGroup) {
-        super(manipulatedGroup);
+    protected Create(GroupNode topNode, GroupNode manipulatedGroup) {
+        super(topNode, manipulatedGroup);
 
         logger = Logger.getLogger(this.getClass().getName());
 
@@ -122,11 +123,11 @@ public class Create extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode gn, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation START");
 
         // Create create = (Create) Structures.getManipulationQueue().peek();
@@ -143,11 +144,11 @@ public class Create extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            GroupNode topNode, boolean isMouseClicked) throws UnknownManipulationException {
+            boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
         UnitPoint up;
         UnitPoint snap;
@@ -224,24 +225,17 @@ public class Create extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
      */
     @Override
-    protected Manipulation createNext() {
-        return duplicate();
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#duplicate()
-     */
-    @Override
     protected Manipulation duplicate() {
-        Create c = new Create((GroupNode) getManipulatedGroup().duplicate());
+        Create c = new Create(getTopNode(), (GroupNode) getManipulatedGroup().duplicate());
+
         return c;
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute(GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#execute()
      */
     @Override
-    protected void execute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void execute() throws ManipulationExecutionException {
         GroupNode gn = getManipulatedGroup();
 
         logger.debug("processing final manipulation step");
@@ -249,31 +243,31 @@ public class Create extends Manipulation {
         setActive(false);
         setFinished(true);
 
-        topNode.add(gn);
+        getTopNode().add(gn);
         logger.trace(this + " executed");
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#reexecute(GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#reexecute()
      */
     @Override
-    protected void reexecute(GroupNode topNode) throws ManipulationExecutionException {
+    protected void reexecute() throws ManipulationExecutionException {
         // if manipulated group was disabled by previous undo
         if (getManipulatedGroup().isDisabled()) {
-            topNode.undelete(getManipulatedGroup());
+            getTopNode().undelete(getManipulatedGroup());
         }
         // if redo is executed at the end of ManipulationQueue
         else {
-            execute(topNode);
+            execute();
         }
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute(GroupNode)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#unexecute()
      */
     @Override
-    protected void unexecute(GroupNode topNode) throws ManipulationExecutionException {
-        topNode.delete(getManipulatedGroup());
+    protected void unexecute() throws ManipulationExecutionException {
+        getTopNode().delete(getManipulatedGroup());
 
         logger.trace(this + " unexecuted");
     }
