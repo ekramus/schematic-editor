@@ -27,12 +27,14 @@ public class Part extends Element {
 
     /**
      * Default constructor. It initializes {@link Part} element.
+     *
+     * @param partProperties part properties containing part variant and part description.
      */
-    public Part() {
+    public Part(PartProperties partProperties) {
         super();
 
         setConnectorVector(new Vector<UnitPoint>());
-        setPartProperties(new PartProperties());
+        setPartProperties(partProperties);
     }
 
     /**
@@ -40,7 +42,7 @@ public class Part extends Element {
      */
     @Override
     public Element duplicate() {
-        Part p = new Part();
+        Part p = new Part(getPartProperties());
         return p;
     }
 
