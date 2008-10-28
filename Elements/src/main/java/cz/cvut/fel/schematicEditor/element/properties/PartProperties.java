@@ -1,6 +1,9 @@
 package cz.cvut.fel.schematicEditor.element.properties;
 
+import java.util.HashMap;
 import java.util.Vector;
+
+import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 
@@ -10,6 +13,10 @@ import cz.cvut.fel.schematicEditor.element.element.part.Part;
  * @author Urban Kravjansky
  */
 public class PartProperties {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger  logger;
     /**
      * String containing part description.
      */
@@ -30,6 +37,8 @@ public class PartProperties {
      * @param description desccription of part.
      */
     public PartProperties(String variant, String description) {
+        logger = Logger.getLogger(this.getClass().getName());
+
         setPartDescription(description);
         setPartVariant(variant);
     }
@@ -70,14 +79,25 @@ public class PartProperties {
     }
 
     /**
+     * Generates part connectors string. Connector names are separated using special symbol.
+     *
      * @return the partConnectors
      */
-    public Vector<String> getPartConnectors() {
-        return this.partConnectors;
+    public String getPartConnectors() {
+        String result = "";
+
+        for (String connector : this.partConnectors) {
+            // TODO set as configurable
+            result += connector + "::";
+        }
+
+        result = result.substring(0, result.length() - 2);
+
+        return result;
     }
 
     /**
-     * Returns list of all properties in form of {@link Vector}. Each property is also {@link Vector} containing:
+     * Returns map of all properties in form of {@link Vector}. Each property is also {@link Vector} containing:
      * <dl>
      * <dt><code>name</code></dt>
      * <dd>name of property</dd>
@@ -85,25 +105,14 @@ public class PartProperties {
      * <dd>current value of property</dd>
      *</dl>
      *
-     * @return List of all properties in form of {@link Vector}.
+     * @return {@link HashMap} of all properties in form of {@link Vector}.
      */
-    public Vector<Vector<String>> getPartPropertiesVector() {
-        Vector<Vector<String>> result = new Vector<Vector<String>>();
+    public HashMap<String, String> getPartPropertiesMap() {
+        HashMap<String, String> result = new HashMap<String, String>();
 
-        Vector<String> pv = new Vector<String>();
-        pv.add("variant");
-        pv.add(getPartVariant());
-        result.add(pv);
-
-        pv = new Vector<String>();
-        pv.add("description");
-        pv.add(getPartDescription());
-        result.add(pv);
-
-        pv = new Vector<String>();
-        pv.add("connectors");
-        pv.addAll(getPartConnectors());
-        result.add(pv);
+        result.put("variant", getPartVariant());
+        result.put("description", getPartDescription());
+        result.put("connectors", getPartConnectors());
 
         return result;
     }
