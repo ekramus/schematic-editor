@@ -29,7 +29,6 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
-
 /**
  * This class encapsulates scene JPanel. All main listeners are implemented here. This class is applications main
  * drawing interface.
