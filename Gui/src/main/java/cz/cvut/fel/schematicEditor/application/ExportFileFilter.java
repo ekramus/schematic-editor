@@ -21,6 +21,8 @@ public class ExportFileFilter extends FileFilter {
     public final static String POSTSCRIPT = "eps";
     public final static String SVG        = "svg";
     public final static String SVGDESC    = "SVG files (*.svg)";
+    public final static String NET        = "net";
+    public final static String NETDESC    = "netlist files (*.net)";
     /**
      * SEF file format description.
      */
@@ -44,16 +46,16 @@ public class ExportFileFilter extends FileFilter {
         String s = f.getName();
         int i = s.lastIndexOf('.');
 
-        if (i > 0 && i < s.length() - 1) {
+        if ((i > 0) && (i < s.length() - 1)) {
             ext = s.substring(i + 1).toLowerCase();
         }
 
         return ext;
     }
 
-    private String description;
+    private final String description;
 
-    private String extension;
+    private final String extension;
 
     public ExportFileFilter(String extension, String description) {
         logger = Logger.getLogger(this.getClass().getName());
@@ -69,7 +71,7 @@ public class ExportFileFilter extends FileFilter {
         logger.trace("file: " + arg0 + ", ext: " + ext);
 
         try {
-            if (arg0.isDirectory() || ext.equals(extension)) {
+            if (arg0.isDirectory() || ext.equals(this.extension)) {
                 return true;
             }
         }
