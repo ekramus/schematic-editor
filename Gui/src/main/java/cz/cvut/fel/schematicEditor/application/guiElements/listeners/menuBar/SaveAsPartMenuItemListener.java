@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 
@@ -18,8 +19,8 @@ import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
-import cz.cvut.fel.schematicEditor.export.PSExport;
-import cz.cvut.fel.schematicEditor.export.SVGExport;
+import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 
 /**
@@ -59,7 +60,14 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastSaveFolder(file.getParent());
 
-            Part p = new Part();
+            // FIXME rewrite, so it is generated automatically
+            PartProperties pp = new ResistorProperties("variant", "variant description");
+            Vector<String> c = new Vector<String>();
+            c.add("a");
+            c.add("b");
+            pp.setPartConnectors(c);
+            Part p = new Part(pp);
+
             PartNode pn = new PartNode(p, ScenePanel.getInstance().getSchemeSG().getTopNode().getEnabledOnly());
             serialize(pn, file);
         }

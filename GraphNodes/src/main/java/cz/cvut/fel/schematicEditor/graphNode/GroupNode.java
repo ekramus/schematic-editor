@@ -293,6 +293,8 @@ public class GroupNode extends Node {
             if (!elementNode.isDisabled()) {
                 if (elementNode.getElement().getElementType() == ElementType.T_PART) {
                     PartNode partNode = (PartNode) elementNode;
+                    // TODO optimize, this doubles data value (as complete part node is sent twice into queue)
+                    result.add(partNode);
                     result.addAll(partNode.getPartGroupNode().getNodeArray(t, p));
                 } else {
                     result.add(elementNode);

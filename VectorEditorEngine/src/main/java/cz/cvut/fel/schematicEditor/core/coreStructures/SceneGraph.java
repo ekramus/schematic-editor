@@ -1,10 +1,19 @@
 package cz.cvut.fel.schematicEditor.core.coreStructures;
 
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Vector;
+
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
 import cz.cvut.fel.schematicEditor.element.element.shape.Line;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
+import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
@@ -12,13 +21,6 @@ import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
-
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.types.SceneGraphIterator;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -234,7 +236,12 @@ public class SceneGraph implements Iterable<Node> {
         partGroupNode.add(sn1);
         partGroupNode.add(sn2);
 
-        Part part = new Part();
+        PartProperties pp = new ResistorProperties("variant", "variant description");
+        Vector<String> c = new Vector<String>();
+        c.add("a");
+        c.add("b");
+        pp.setPartConnectors(c);
+        Part part = new Part(pp);
 
         PartNode partNode = new PartNode(part, partGroupNode, "pokus");
         gn.add(new ParameterNode());
@@ -277,8 +284,9 @@ public class SceneGraph implements Iterable<Node> {
         LinkedList<UnitRectangle> result = new LinkedList<UnitRectangle>();
 
         for (Node node : this) {
-            if (node instanceof GroupNode)
+            if (node instanceof GroupNode) {
                 result.add(((GroupNode) node).getBounds());
+            }
         }
 
         return result;

@@ -5,6 +5,7 @@ import java.util.Vector;
 import org.junit.Test;
 
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
 
 /**
  * JUnit test class for {@link PartPropertiesPanel}.
@@ -19,7 +20,7 @@ public class PartPropertiesPanelTest {
     public void getInstance() {
         PartPropertiesPanel p = PartPropertiesPanel.getInstance();
 
-        PartProperties pp = new PartProperties("variant", "variant desc");
+        PartProperties pp = new ResistorProperties("variant", "variant desc");
         Vector<String> c = new Vector<String>();
         c.add("Alpha");
         c.add("Beta");

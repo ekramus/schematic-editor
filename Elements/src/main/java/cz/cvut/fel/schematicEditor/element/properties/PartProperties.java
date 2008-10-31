@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.element.properties;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -12,7 +13,7 @@ import cz.cvut.fel.schematicEditor.element.element.part.Part;
  *
  * @author Urban Kravjansky
  */
-public class PartProperties {
+public abstract class PartProperties {
     /**
      * {@link Logger} instance for logging purposes.
      */
@@ -113,6 +114,81 @@ public class PartProperties {
         result.put("variant", getPartVariant());
         result.put("description", getPartDescription());
         result.put("connectors", getPartConnectors());
+
+        return result;
+    }
+
+    /**
+     * Get netlist specific to part.
+     *
+     * @return Netlist represented by {@link String}.
+     */
+    public abstract String getNetList();
+
+    /**
+     * Expands prototype netlist {@link String} into correct netlist representation based on given prototype and
+     * {@link PartProperties}.
+     *
+     * @param netlistPrototype Netlist prototype to be expanded.
+     * @param partProperties Part properties, which will be searched for values during expansion.
+     * @return Expanded netlist {@link String}.
+     */
+    protected String expandPrototype(String netlistPrototype, PartProperties partProperties) {
+        String result = "";
+
+        int i = 0;
+        String c = netlistPrototype.substring(i, ++i);
+
+        try {
+            while (i < netlistPrototype.length()) {
+
+                // parameter substitution
+                if (c.equals("<")) {
+                    int j = netlistPrototype.indexOf(">", i);
+                    String param = netlistPrototype.substring(i, j);
+                    result += processParameter(param, partProperties);
+                    i = j + 1;
+                }
+                // optional value
+                else if (c.equals("[")) {
+                    try {
+                        int k = netlistPrototype.indexOf("]", i);
+                        String buf = "";
+                        c = netlistPrototype.substring(i, ++i);
+                        while (i < k) {
+                            if (c.equals("<")) {
+                                int j = netlistPrototype.indexOf(">", i);
+                                String param = netlistPrototype.substring(i, j);
+                                buf += processParameter(param, partProperties);
+                                i = j + 1;
+                            } else {
+                                buf += c;
+                            }
+                            c = netlistPrototype.substring(i, ++i);
+                        }
+                        result += buf;
+                    } catch (NoSuchElementException nsee) {
+                        // nothing to do
+                    }
+                } else {
+                    result += c;
+                }
+                c = netlistPrototype.substring(i, ++i);
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            // TODO fix this parser
+        }
+
+        return result;
+    }
+
+    private String processParameter(String param, PartProperties partProperties) throws NoSuchElementException {
+        String result = "";
+
+        result = partProperties.getPartPropertiesMap().get(param);
+        if (result == null) {
+            throw new NoSuchElementException();
+        }
 
         return result;
     }

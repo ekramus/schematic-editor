@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
+
 /**
  * JUnit test class for {@link PartProperties}.
  *
@@ -15,7 +17,7 @@ public class PartPropertiesTest {
      */
     @Test
     public void getPartConnectors() {
-        PartProperties pp = new PartProperties("variant A", "This is variant A");
+        PartProperties pp = new ResistorProperties("variant A", "This is variant A");
 
         Vector<String> pc = new Vector<String>();
         pc.add("A, A");

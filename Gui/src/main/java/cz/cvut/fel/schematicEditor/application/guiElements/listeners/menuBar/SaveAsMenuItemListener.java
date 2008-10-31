@@ -9,6 +9,7 @@ import javax.swing.JFileChooser;
 import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
+import cz.cvut.fel.schematicEditor.export.NetListExport;
 import cz.cvut.fel.schematicEditor.export.PSExport;
 import cz.cvut.fel.schematicEditor.export.SVGExport;
 
@@ -42,6 +43,7 @@ public final class SaveAsMenuItemListener implements ActionListener {
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SVG, ExportFileFilter.SVGDESC));
         fileChooser
                 .addChoosableFileFilter(new ExportFileFilter(ExportFileFilter.POSTSCRIPT, ExportFileFilter.POSTDESC));
+        fileChooser.addChoosableFileFilter(new ExportFileFilter(ExportFileFilter.NET, ExportFileFilter.NETDESC));
 
         int retValue = fileChooser.showSaveDialog(ScenePanel.getInstance());
 
@@ -52,6 +54,9 @@ public final class SaveAsMenuItemListener implements ActionListener {
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("eps")) {
                 new PSExport().export(ScenePanel.getInstance().getSchemeSG(), file);
+
+            } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("net")) {
+                new NetListExport().export(ScenePanel.getInstance().getSchemeSG(), file);
 
             } else {
                 System.out.println("Failed to export");
