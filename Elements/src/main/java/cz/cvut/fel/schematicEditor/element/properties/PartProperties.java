@@ -20,19 +20,19 @@ public abstract class PartProperties implements Iterable<Property<String, String
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger                 logger;
+    private static Logger                                   logger;
     /**
      * String containing part description.
      */
-    private String                        partDescription;
+    private String                                          partDescription;
     /**
      * String containing part variant.
      */
-    private String                        partVariant;
+    private String                                          partVariant;
     /**
      * {@link HashMap} containing all part specific properties, used e.g. for netlist generation.
      */
-    private final HashMap<String, String> partPropertiesMap;
+    private final HashMap<String, Property<String, String>> partPropertiesMap;
 
     /**
      * Default constructor. It initializes part with default values.
@@ -46,7 +46,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
         setPartDescription(description);
         setPartVariant(variant);
 
-        this.partPropertiesMap = new HashMap<String, String>();
+        this.partPropertiesMap = new HashMap<String, Property<String, String>>();
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
      *
      * @return {@link HashMap} of all properties in.
      */
-    protected HashMap<String, String> getPartPropertiesMap() {
+    protected HashMap<String, Property<String, String>> getPartPropertiesMap() {
         return this.partPropertiesMap;
     }
 
@@ -113,16 +113,28 @@ public abstract class PartProperties implements Iterable<Property<String, String
      * @param propertyValue value of given property.
      */
     public void setProperty(String propertyName, String propertyValue) {
-        getPartPropertiesMap().put(propertyName, propertyValue);
+        setProperty(propertyName, propertyValue, "");
     }
 
     /**
-     * Gets value of given property name. Properties are internally stored in {@link HashMap}.
+     * Sets value of given property name. Properties are internally stored in {@link HashMap}.
+     *
+     * @param propertyName name of property to be stored.
+     * @param propertyValue value of given property.
+     * @param propertyDescription description of given property.
+     */
+    public void setProperty(String propertyName, String propertyValue, String propertyDescription) {
+        Property<String, String> p = new Property<String, String>(propertyName, propertyValue, propertyDescription);
+        getPartPropertiesMap().put(propertyName, p);
+    }
+
+    /**
+     * Gets {@link Property} assigned property name. Properties are internally stored in {@link HashMap}.
      *
      * @param propertyName name of property to be retrieved.
-     * @return value of given property.
+     * @return Instance of property.
      */
-    public String getProperty(String propertyName) {
+    public Property<String, String> getProperty(String propertyName) {
         return getPartPropertiesMap().get(propertyName);
     }
 
@@ -144,7 +156,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
 
         Matcher optionalMatcher = optionalPattern.matcher(result);
         while (optionalMatcher.find()) {
-            String value = partProperties.getPartPropertiesMap().get(optionalMatcher.group(2));
+            String value = partProperties.getProperty(optionalMatcher.group(2)).getValue();
             // if parameter value is found
             if (value != null) {
                 result = result.replaceAll(optionalMatcher.group(1), value);
@@ -158,7 +170,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
 
         Matcher mandatoryMatcher = mandatoryPattern.matcher(result);
         while (mandatoryMatcher.find()) {
-            String value = partProperties.getPartPropertiesMap().get(mandatoryMatcher.group(1));
+            String value = partProperties.getProperty(mandatoryMatcher.group(1)).getValue();
             // if parameter value is found
             if (value != null) {
                 result = result.replaceAll(mandatoryMatcher.group(), value);
@@ -184,7 +196,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
         Vector<Property<String, String>> collection = new Vector<Property<String, String>>();
 
         for (String key : getPartPropertiesMap().keySet()) {
-            collection.add(new Property<String, String>(key, getPartPropertiesMap().get(key)));
+            collection.add(getProperty(key));
         }
 
         return collection.iterator();
