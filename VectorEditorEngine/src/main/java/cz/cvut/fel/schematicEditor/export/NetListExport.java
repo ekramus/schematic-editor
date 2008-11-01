@@ -56,7 +56,7 @@ public class NetListExport implements Export {
 
             case T_PART:
                 Part part = (Part) en.getElement();
-                this.out.println(part.getPartProperties().getNetList());
+                this.out.println(part.getPartProperties().getNetlist());
                 break;
 
             default:

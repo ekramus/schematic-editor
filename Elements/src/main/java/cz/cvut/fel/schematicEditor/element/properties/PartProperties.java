@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.element.properties;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,25 +9,30 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.support.Property;
 
 /**
  * This class encapsulates properties specific for any {@link Part}.
  *
  * @author Urban Kravjansky
  */
-public abstract class PartProperties {
+public abstract class PartProperties implements Iterable<Property<String, String>> {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger logger;
+    private static Logger                 logger;
     /**
      * String containing part description.
      */
-    private String        partDescription;
+    private String                        partDescription;
     /**
      * String containing part variant.
      */
-    private String        partVariant;
+    private String                        partVariant;
+    /**
+     * {@link HashMap} containing all part specific properties, used e.g. for netlist generation.
+     */
+    private final HashMap<String, String> partPropertiesMap;
 
     /**
      * Default constructor. It initializes part with default values.
@@ -39,6 +45,8 @@ public abstract class PartProperties {
 
         setPartDescription(description);
         setPartVariant(variant);
+
+        this.partPropertiesMap = new HashMap<String, String>();
     }
 
     /**
@@ -77,23 +85,18 @@ public abstract class PartProperties {
     public abstract Vector<String> getPartConnectors();
 
     /**
-     * Returns map of all properties in form of {@link Vector}. Each property is also {@link Vector} containing:
+     * Returns map of all properties. Each property contains:
      * <dl>
-     * <dt><code>name</code></dt>
+     * <dt><code>key</code></dt>
      * <dd>name of property</dd>
      * <dt><code>value</code></dt>
      * <dd>current value of property</dd>
      *</dl>
      *
-     * @return {@link HashMap} of all properties in form of {@link Vector}.
+     * @return {@link HashMap} of all properties in.
      */
-    public HashMap<String, String> getPartPropertiesMap() {
-        HashMap<String, String> result = new HashMap<String, String>();
-
-        result.put("variant", getPartVariant());
-        result.put("description", getPartDescription());
-
-        return result;
+    protected HashMap<String, String> getPartPropertiesMap() {
+        return this.partPropertiesMap;
     }
 
     /**
@@ -101,7 +104,27 @@ public abstract class PartProperties {
      *
      * @return Netlist represented by {@link String}.
      */
-    public abstract String getNetList();
+    public abstract String getNetlist();
+
+    /**
+     * Sets value of given property name. Properties are internally stored in {@link HashMap}.
+     *
+     * @param propertyName name of property to be stored.
+     * @param propertyValue value of given property.
+     */
+    public void setProperty(String propertyName, String propertyValue) {
+        getPartPropertiesMap().put(propertyName, propertyValue);
+    }
+
+    /**
+     * Gets value of given property name. Properties are internally stored in {@link HashMap}.
+     *
+     * @param propertyName name of property to be retrieved.
+     * @return value of given property.
+     */
+    public String getProperty(String propertyName) {
+        return getPartPropertiesMap().get(propertyName);
+    }
 
     /**
      * Expands prototype netlist {@link String} into correct netlist representation based on given prototype and
@@ -146,7 +169,24 @@ public abstract class PartProperties {
         result = result.replaceAll("\\[(?:\\S+=)?\\]", "");
         // clean netlist from brackets left with filled optional values
         result = result.replaceAll("[\\[\\]]", "");
+        // replace multiple white chars with one space
+        result = result.replaceAll("\\s+", " ");
+        // remove space at the end of string, if present
+        result = result.replaceAll(" $", "");
 
         return result;
+    }
+
+    /**
+     * @see java.lang.Iterable#iterator()
+     */
+    public Iterator<Property<String, String>> iterator() {
+        Vector<Property<String, String>> collection = new Vector<Property<String, String>>();
+
+        for (String key : getPartPropertiesMap().keySet()) {
+            collection.add(new Property<String, String>(key, getPartPropertiesMap().get(key)));
+        }
+
+        return collection.iterator();
     }
 }
