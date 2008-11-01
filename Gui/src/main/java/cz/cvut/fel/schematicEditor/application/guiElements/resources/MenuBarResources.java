@@ -108,7 +108,11 @@ public enum MenuBarResources {
     /**
      * View menu string.
      */
-    VIEW_MENU("View");
+    VIEW_MENU("View"),
+    /**
+     * View part properties menu item string.
+     */
+    VIEW_PART_PROPERTIES_MENU_ITEM("View part properties..");
 
     /**
      * String value of item.
