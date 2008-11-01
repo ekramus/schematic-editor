@@ -15,8 +15,6 @@ public class ResistorProperties extends PartProperties {
      */
     private final String netlistPrototype = "r<name> <connectorP> <connectorM> [<value>] [<model>] [l=<length>] [w=<width>] [temp=<temperature>]";
 
-    // private final String netlistPrototype = "r<name> <connector+> <connector-> [<value>]";
-
     /**
      * This method instantiates new instance.
      *
@@ -26,7 +24,10 @@ public class ResistorProperties extends PartProperties {
     public ResistorProperties(String variant, String description) {
         super(variant, description);
 
-        // TODO add resistor specific values into constructor
+        // add resistor specific values into constructor
+        for (ResistorPropertiesEnum resistorProperty : ResistorPropertiesEnum.values()) {
+            setProperty(resistorProperty.getKey(), "");
+        }
     }
 
     /**
@@ -44,8 +45,8 @@ public class ResistorProperties extends PartProperties {
     public Vector<String> getPartConnectors() {
         Vector<String> result = new Vector<String>();
 
-        result.add(getPartPropertiesMap().get("connectorP"));
-        result.add(getPartPropertiesMap().get("connectorM"));
+        result.add(getProperty(ResistorPropertiesEnum.CONNECTOR_P.getKey()).getValue());
+        result.add(getProperty(ResistorPropertiesEnum.CONNECTOR_M.getKey()).getValue());
 
         return result;
     }
