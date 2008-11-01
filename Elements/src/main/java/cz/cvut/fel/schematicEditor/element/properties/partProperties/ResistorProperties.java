@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.element.properties.partProperties;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 
@@ -13,10 +14,9 @@ public class ResistorProperties extends PartProperties {
     /**
      * Prototype of netlist string, where codes will be replaced with values.
      */
-    private final String netlistPrototype = "r<name> <connector+> <connector-> [<value>]";
+    private final String netlistPrototype = "r<name> <connectorP> <connectorM> [<value>] [<model>] [l=<length>] [w=<width>] [temp=<temperature>]";
 
-    // private final String netlistPrototype =
-    // "r<name> <connector+> <connector-> [<value>] [<model>] [l=<length>] [w=<width>] [temp=<temperature>]";
+    // private final String netlistPrototype = "r<name> <connector+> <connector-> [<value>]";
 
     /**
      * This method instantiates new instance.
@@ -40,8 +40,8 @@ public class ResistorProperties extends PartProperties {
         result.putAll(super.getPartPropertiesMap());
 
         result.put("name", "R");
-        result.put("connector+", "R+");
-        result.put("connector-", "R-");
+        result.put("connectorP", "R+");
+        result.put("connectorM", "R-");
         result.put("value", "10");
 
         return result;
@@ -53,5 +53,18 @@ public class ResistorProperties extends PartProperties {
     @Override
     public String getNetList() {
         return expandPrototype(this.netlistPrototype, this);
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectors()
+     */
+    @Override
+    public Vector<String> getPartConnectors() {
+        Vector<String> result = new Vector<String>();
+
+        result.add(getPartPropertiesMap().get("connector+"));
+        result.add(getPartPropertiesMap().get("connector-"));
+
+        return result;
     }
 }

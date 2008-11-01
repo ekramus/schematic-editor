@@ -22,7 +22,6 @@ public class PartPropertiesTest {
         Vector<String> pc = new Vector<String>();
         pc.add("A, A");
         pc.add("B, BBa");
-        pp.setPartConnectors(pc);
 
         pp.getPartConnectors();
     }

@@ -240,7 +240,6 @@ public class SceneGraph implements Iterable<Node> {
         Vector<String> c = new Vector<String>();
         c.add("a");
         c.add("b");
-        pp.setPartConnectors(c);
         Part part = new Part(pp);
 
         PartNode partNode = new PartNode(part, partGroupNode, "pokus");
