@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
+
 /**
  * This class extends {@link JDialog} so it is possible to set properties on {@link PartPropertiesPanel}.
  *
@@ -33,9 +35,12 @@ public class PartPropertiesDialog extends JDialog implements ActionListener {
     public PartPropertiesDialog(JFrame frame, boolean modal) {
         super(frame, modal);
 
-        //this.myPanel = PartPropertiesPanel.getInstance();
+        // this.myPanel = PartPropertiesPanel.getInstance();
         this.myPanel = new JPanel();
         getContentPane().add(this.myPanel);
+
+        PartPropertiesPanel.getInstance().setPartProperties(new ResistorProperties("variant", "Variant desc"));
+        this.myPanel.add(PartPropertiesPanel.getInstance());
 
         this.yesButton = new JButton("Yes");
         this.yesButton.addActionListener(this);

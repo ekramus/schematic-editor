@@ -24,6 +24,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.Sav
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SavePreferencesMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ShowGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SnapToGridCheckBoxMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ViewPartPropertiesMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.resources.MenuBarResources;
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 
@@ -140,6 +141,10 @@ public final class MenuBar extends JMenuBar {
      * View menu instance.
      */
     private JMenu             viewMenu                    = null;
+    /**
+     * View part properties menu item instance.
+     */
+    private JMenuItem         viewPartPropertiesMenuItem  = null;
 
     /**
      * Default constructor. As {@link MenuBar} is singleton, it is defined as private.
@@ -463,7 +468,22 @@ public final class MenuBar extends JMenuBar {
             this.viewMenu.add(getAntialiasedCheckBoxMenuItem());
             this.viewMenu.add(getShowGridCheckBoxMenuItem());
             this.viewMenu.add(getDebugCheckBoxMenuItem());
+            this.viewMenu.add(getViewPartPropertiesMenuItem());
         }
         return this.viewMenu;
+    }
+
+    /**
+     * Getter for <code>viewPartPropertiesMenuItem</code>.
+     *
+     * @return <code>viewPartPropertiesMenuItem</code> instance.
+     */
+    private JMenuItem getViewPartPropertiesMenuItem() {
+        if (this.viewPartPropertiesMenuItem == null) {
+            this.viewPartPropertiesMenuItem = new JMenuItem();
+            this.viewPartPropertiesMenuItem.setText(MenuBarResources.VIEW_PART_PROPERTIES_MENU_ITEM.getText());
+            this.viewPartPropertiesMenuItem.addActionListener(new ViewPartPropertiesMenuItemListener());
+        }
+        return this.viewPartPropertiesMenuItem;
     }
 }
