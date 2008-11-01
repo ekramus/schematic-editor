@@ -92,6 +92,9 @@ public class PartPropertiesPanel extends JPanel {
         this.partProperties = partProperties;
 
         logger.debug("properties panel will be rebuilded");
+        // clean up panel
+        removeAll();
+        // add all elements
         for (Property<String, String> property : getPartProperties()) {
             add(getPropertyKeyLabel(property));
             add(getPropertyValueField(property));

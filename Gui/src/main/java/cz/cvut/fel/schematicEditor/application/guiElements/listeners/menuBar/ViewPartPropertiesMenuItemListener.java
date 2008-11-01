@@ -17,7 +17,7 @@ public class ViewPartPropertiesMenuItemListener implements ActionListener {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        PartPropertiesDialog ppd = new PartPropertiesDialog(null, false);
+        PartPropertiesDialog ppd = new PartPropertiesDialog(null, true);
         ppd.setVisible(true);
     }
 }
