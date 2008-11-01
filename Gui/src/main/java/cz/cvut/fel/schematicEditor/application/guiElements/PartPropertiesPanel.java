@@ -1,12 +1,11 @@
 package cz.cvut.fel.schematicEditor.application.guiElements;
 
-import java.util.HashMap;
-
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.support.Property;
 
 /**
  * This class implements panel for access to part properties. It is created dynamically based on properties of each
@@ -62,11 +61,9 @@ public class PartPropertiesPanel extends JPanel {
     public void setPartProperties(PartProperties partProperties) {
         this.partProperties = partProperties;
 
-        HashMap<String, String> partPropertiesMap = this.partProperties.getPartPropertiesMap();
-
         logger.debug("properties panel will go visible");
-        for (String key : partPropertiesMap.keySet()) {
-            logger.trace(key + ": " + partPropertiesMap.get(key));
+        for (Property<String, String> property : getPartProperties()) {
+            logger.trace(property.getKey() + ": " + property.getValue());
         }
     }
 }
