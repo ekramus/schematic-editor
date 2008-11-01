@@ -65,7 +65,6 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             Vector<String> c = new Vector<String>();
             c.add("a");
             c.add("b");
-            pp.setPartConnectors(c);
             Part p = new Part(pp);
 
             PartNode pn = new PartNode(p, ScenePanel.getInstance().getSchemeSG().getTopNode().getEnabledOnly());

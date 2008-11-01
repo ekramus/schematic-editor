@@ -24,7 +24,6 @@ public class PartPropertiesPanelTest {
         Vector<String> c = new Vector<String>();
         c.add("Alpha");
         c.add("Beta");
-        pp.setPartConnectors(c);
 
         p.setPartProperties(pp);
         p.setVisible(true);

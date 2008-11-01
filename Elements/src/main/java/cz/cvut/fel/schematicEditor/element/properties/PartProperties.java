@@ -1,8 +1,9 @@
 package cz.cvut.fel.schematicEditor.element.properties;
 
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
@@ -17,25 +18,21 @@ public abstract class PartProperties {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger  logger;
+    private static Logger logger;
     /**
      * String containing part description.
      */
-    private String         partDescription;
+    private String        partDescription;
     /**
      * String containing part variant.
      */
-    private String         partVariant;
-    /**
-     * Vector containing names of all part connectors.
-     */
-    private Vector<String> partConnectors;
+    private String        partVariant;
 
     /**
      * Default constructor. It initializes part with default values.
      *
      * @param variant variant of part.
-     * @param description desccription of part.
+     * @param description description of part.
      */
     public PartProperties(String variant, String description) {
         logger = Logger.getLogger(this.getClass().getName());
@@ -73,29 +70,11 @@ public abstract class PartProperties {
     }
 
     /**
-     * @param partConnectors the partConnectors to set
-     */
-    public void setPartConnectors(Vector<String> partConnectors) {
-        this.partConnectors = partConnectors;
-    }
-
-    /**
-     * Generates part connectors string. Connector names are separated using special symbol.
+     * Retrieves part connector values, so they can be used for connector matching.
      *
      * @return the partConnectors
      */
-    public String getPartConnectors() {
-        String result = "";
-
-        for (String connector : this.partConnectors) {
-            // TODO set as configurable
-            result += connector + "::";
-        }
-
-        result = result.substring(0, result.length() - 2);
-
-        return result;
-    }
+    public abstract Vector<String> getPartConnectors();
 
     /**
      * Returns map of all properties in form of {@link Vector}. Each property is also {@link Vector} containing:
@@ -113,7 +92,6 @@ public abstract class PartProperties {
 
         result.put("variant", getPartVariant());
         result.put("description", getPartDescription());
-        result.put("connectors", getPartConnectors());
 
         return result;
     }
@@ -127,68 +105,47 @@ public abstract class PartProperties {
 
     /**
      * Expands prototype netlist {@link String} into correct netlist representation based on given prototype and
-     * {@link PartProperties}.
+     * {@link PartProperties}. Expansion is done using regular expressions, it is faster and more bug resistant.
      *
      * @param netlistPrototype Netlist prototype to be expanded.
      * @param partProperties Part properties, which will be searched for values during expansion.
      * @return Expanded netlist {@link String}.
      */
-    protected String expandPrototype(String netlistPrototype, PartProperties partProperties) {
-        String result = "";
+    protected String expandPrototype(final String netlistPrototype, final PartProperties partProperties) {
+        String result = netlistPrototype;
 
-        int i = 0;
-        String c = netlistPrototype.substring(i, ++i);
+        String mandatoryString = "<(\\S+)>";
+        String optionalString = "\\[\\S*(<(\\S+)>)\\]";
+        Pattern mandatoryPattern = Pattern.compile(mandatoryString);
+        Pattern optionalPattern = Pattern.compile(optionalString);
 
-        try {
-            while (i < netlistPrototype.length()) {
-
-                // parameter substitution
-                if (c.equals("<")) {
-                    int j = netlistPrototype.indexOf(">", i);
-                    String param = netlistPrototype.substring(i, j);
-                    result += processParameter(param, partProperties);
-                    i = j + 1;
-                }
-                // optional value
-                else if (c.equals("[")) {
-                    try {
-                        int k = netlistPrototype.indexOf("]", i);
-                        String buf = "";
-                        c = netlistPrototype.substring(i, ++i);
-                        while (i < k) {
-                            if (c.equals("<")) {
-                                int j = netlistPrototype.indexOf(">", i);
-                                String param = netlistPrototype.substring(i, j);
-                                buf += processParameter(param, partProperties);
-                                i = j + 1;
-                            } else {
-                                buf += c;
-                            }
-                            c = netlistPrototype.substring(i, ++i);
-                        }
-                        result += buf;
-                    } catch (NoSuchElementException nsee) {
-                        // nothing to do
-                    }
-                } else {
-                    result += c;
-                }
-                c = netlistPrototype.substring(i, ++i);
+        Matcher optionalMatcher = optionalPattern.matcher(result);
+        while (optionalMatcher.find()) {
+            String value = partProperties.getPartPropertiesMap().get(optionalMatcher.group(2));
+            // if parameter value is found
+            if (value != null) {
+                result = result.replaceAll(optionalMatcher.group(1), value);
             }
-        } catch (StringIndexOutOfBoundsException e) {
-            // TODO fix this parser
+            // parameter value was not found
+            else {
+                // we have to left [ and ] characters, as they are special chars for regexp
+                result = result.replaceAll(optionalMatcher.group(1), "");
+            }
         }
 
-        return result;
-    }
-
-    private String processParameter(String param, PartProperties partProperties) throws NoSuchElementException {
-        String result = "";
-
-        result = partProperties.getPartPropertiesMap().get(param);
-        if (result == null) {
-            throw new NoSuchElementException();
+        Matcher mandatoryMatcher = mandatoryPattern.matcher(result);
+        while (mandatoryMatcher.find()) {
+            String value = partProperties.getPartPropertiesMap().get(mandatoryMatcher.group(1));
+            // if parameter value is found
+            if (value != null) {
+                result = result.replaceAll(mandatoryMatcher.group(), value);
+            }
         }
+
+        // clean netlist string from left brackets and undefined variables
+        result = result.replaceAll("\\[(?:\\S+=)?\\]", "");
+        // clean netlist from brackets left with filled optional values
+        result = result.replaceAll("[\\[\\]]", "");
 
         return result;
     }
