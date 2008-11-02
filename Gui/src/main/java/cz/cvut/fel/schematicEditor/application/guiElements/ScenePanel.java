@@ -19,16 +19,19 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.scenePanel.
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
+
 /**
  * This class encapsulates scene JPanel. All main listeners are implemented here. This class is applications main
  * drawing interface.
@@ -443,6 +446,23 @@ public class ScenePanel extends JPanel {
         if (m != null) {
             // execute manipulation
             manipulationQueue.execute(Structures.getActiveManipulation());
+
+            // process manipulation dependent actions
+            switch (Structures.getActiveManipulation().getManipulationType()) {
+                case SELECT:
+                    Select select = (Select) Structures.getActiveManipulation();
+                    try {
+                        Part part = (Part) select.getManipulatedGroup().getChildrenElementList().getFirst()
+                                .getElement();
+                        MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(true);
+                        PartPropertiesPanel.getInstance().setPartProperties(part.getPartProperties());
+                    } catch (ClassCastException cce) {
+                        MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(false);
+                    }
+                    break;
+                default:
+                    break;
+            }
 
             // redraw scheme
             ScenePanel.getInstance().schemeInvalidate(null);
