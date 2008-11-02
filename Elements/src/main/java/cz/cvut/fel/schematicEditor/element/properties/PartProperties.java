@@ -158,7 +158,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
         while (optionalMatcher.find()) {
             String value = partProperties.getProperty(optionalMatcher.group(2)).getValue();
             // if parameter value is found
-            if (value != null) {
+            if ((value != null) && (!value.equals(""))) {
                 result = result.replaceAll(optionalMatcher.group(1), value);
             }
             // parameter value was not found

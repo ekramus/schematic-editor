@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.PartPropertiesDialog;
+import cz.cvut.fel.schematicEditor.application.guiElements.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 
 /**
  * This class implements {@link ActionListener} for <code>viewPartPropertiesMenuItem</code> in {@link MenuBar}.
@@ -18,6 +21,11 @@ public class ViewPartPropertiesMenuItemListener implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         PartPropertiesDialog ppd = new PartPropertiesDialog(null, true);
-        ppd.setVisible(true);
+        // if dialog was accepted, modify part properties
+        if (ppd.isAccepted()) {
+            Part part = (Part) Structures.getActiveManipulation().getManipulatedGroup().getChildrenElementList()
+                    .getFirst().getElement();
+            part.setPartProperties(PartPropertiesPanel.getInstance().getPartProperties());
+        }
     }
 }

@@ -14,6 +14,6 @@ public class PartPropertiesDialogTest {
     @Test
     public void PartPropertiesDialog() {
         PartPropertiesDialog p = new PartPropertiesDialog(null, false);
-        p.getAnswer();
+        p.isAccepted();
     }
 }
