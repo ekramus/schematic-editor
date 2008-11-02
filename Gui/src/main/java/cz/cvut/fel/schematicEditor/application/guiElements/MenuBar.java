@@ -45,7 +45,7 @@ public final class MenuBar extends JMenuBar {
      *
      * @return <code>menuBar</code> instance.
      */
-    public static JMenuBar getInstance() {
+    public static MenuBar getInstance() {
         if (menuBar == null) {
             menuBar = new MenuBar();
             menuBar.add(menuBar.getFileMenu());
@@ -478,7 +478,7 @@ public final class MenuBar extends JMenuBar {
      *
      * @return <code>viewPartPropertiesMenuItem</code> instance.
      */
-    private JMenuItem getViewPartPropertiesMenuItem() {
+    public JMenuItem getViewPartPropertiesMenuItem() {
         if (this.viewPartPropertiesMenuItem == null) {
             this.viewPartPropertiesMenuItem = new JMenuItem();
             this.viewPartPropertiesMenuItem.setText(MenuBarResources.VIEW_PART_PROPERTIES_MENU_ITEM.getText());
