@@ -1,5 +1,8 @@
 package cz.cvut.fel.schematicEditor.application.guiElements;
 
+import java.awt.Dimension;
+import java.util.HashMap;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,15 +23,19 @@ public class PartPropertiesPanel extends JPanel {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger              logger;
+    private static Logger               logger;
     /**
      * {@link PartPropertiesPanel} singleton instance field.
      */
-    private static PartPropertiesPanel instance       = null;
+    private static PartPropertiesPanel  instance                    = null;
     /**
      * Part properties, which is being manipulated with.
      */
-    private PartProperties             partProperties = null;
+    private PartProperties              partProperties              = null;
+    /**
+     * Stores reference to text field for each part property key.
+     */
+    private HashMap<String, JTextField> partPropertiesTextFieldsMap = null;
 
     /**
      * This method instantiates new instance.
@@ -59,7 +66,7 @@ public class PartPropertiesPanel extends JPanel {
     private JLabel getPropertyKeyLabel(Property<String, String> property) {
         JLabel result = new JLabel();
 
-        result.setText(property.getKey());
+        result.setText(property.getKey() + ": ");
 
         return result;
     }
@@ -74,6 +81,7 @@ public class PartPropertiesPanel extends JPanel {
         JTextField result = new JTextField();
 
         result.setText(property.getValue());
+        result.setPreferredSize(new Dimension(50, 20));
 
         return result;
     }
@@ -94,10 +102,40 @@ public class PartPropertiesPanel extends JPanel {
         logger.debug("properties panel will be rebuilded");
         // clean up panel
         removeAll();
+        // reinitialize partProperties
+        setPartPropertiesTextFieldsMap(new HashMap<String, JTextField>());
         // add all elements
         for (Property<String, String> property : getPartProperties()) {
             add(getPropertyKeyLabel(property));
-            add(getPropertyValueField(property));
+            JTextField ptf = getPropertyValueField(property);
+            add(ptf);
+            // add reference to text field to hash map
+            getPartPropertiesTextFieldsMap().put(property.getKey(), ptf);
         }
+    }
+
+    /**
+     * Actualizes properties according to filled in values.
+     */
+    public void actualizeProperties() {
+        for (String key : getPartPropertiesTextFieldsMap().keySet()) {
+            Property<String, String> p = getPartProperties().getProperty(key);
+            getPartProperties().setProperty(key, getPartPropertiesTextFieldsMap().get(key).getText(),
+                                            p.getDescription());
+        }
+    }
+
+    /**
+     * @param partPropertiesTextFieldsMap the partPropertiesTextFieldsMap to set
+     */
+    private void setPartPropertiesTextFieldsMap(HashMap<String, JTextField> partPropertiesTextFieldsMap) {
+        this.partPropertiesTextFieldsMap = partPropertiesTextFieldsMap;
+    }
+
+    /**
+     * @return the partPropertiesTextFieldsMap
+     */
+    private HashMap<String, JTextField> getPartPropertiesTextFieldsMap() {
+        return this.partPropertiesTextFieldsMap;
     }
 }
