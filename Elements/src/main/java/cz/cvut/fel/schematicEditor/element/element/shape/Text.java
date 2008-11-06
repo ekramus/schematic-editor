@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
-import java.awt.geom.Rectangle2D;
 import java.awt.Font;
+import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
@@ -27,8 +27,8 @@ public class Text extends Shape {
     public Text(UnitPoint start, String text, int size) {
         super();
 
-        this.x.add(start.getUnitX());
-        this.y.add(start.getUnitY());
+        getX().add(start.getUnitX());
+        getY().add(start.getUnitY());
 
         setText(text);
         setSize(size);
@@ -39,8 +39,8 @@ public class Text extends Shape {
     public Text(UnitPoint start, String text, int size, int style, String fontName) {
         super();
 
-        this.x.add(start.getUnitX());
-        this.y.add(start.getUnitY());
+        getX().add(start.getUnitX());
+        getY().add(start.getUnitY());
 
         setText(text);
         setSize(size);
@@ -49,7 +49,7 @@ public class Text extends Shape {
     }
 
     /**
-     * 
+     *
      */
     public Text() {
         // TODO Auto-generated constructor stub
@@ -89,7 +89,7 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -100,7 +100,7 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -118,7 +118,7 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override

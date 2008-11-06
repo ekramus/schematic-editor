@@ -12,7 +12,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class encapsulates wire part. Wire has special parameters needed for electronic circuits.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Wire extends Element {
@@ -26,7 +26,7 @@ public class Wire extends Element {
 
     /**
      * {@link Wire} constructor with coordinate vector.
-     * 
+     *
      * @param x {@link Vector} of <code>x</code> coordinates.
      * @param y {@link Vector} of <code>y</code> coordinates.
      */
@@ -44,12 +44,12 @@ public class Wire extends Element {
         double left = Double.MAX_VALUE;
         double right = Double.MIN_VALUE;
 
-        for (Unit u : this.y) {
+        for (Unit u : getY()) {
             double d = u.doubleValue();
             top = (d < top) ? d : top;
             bottom = (d > bottom) ? d : bottom;
         }
-        for (Unit u : this.x) {
+        for (Unit u : getX()) {
             double d = u.doubleValue();
             left = (d < left) ? d : left;
             right = (d > right) ? d : right;

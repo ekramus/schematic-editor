@@ -8,11 +8,12 @@ import java.util.Vector;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class represents polyline.
- * 
+ *
  * @author uk
  */
 public class Polyline extends Shape {
@@ -26,12 +27,16 @@ public class Polyline extends Shape {
 
     /**
      * This is constructor.
-     * 
+     *
      * @param x Vector of x coordinates.
      * @param y Vecotr of y coordinates.
      */
     public Polyline(Vector<Unit> x, Vector<Unit> y) {
         super(x, y);
+    }
+
+    public Polyline(UnitPoint a, UnitPoint b) {
+        super(a, b);
     }
 
     /**
@@ -44,12 +49,12 @@ public class Polyline extends Shape {
         double left = Double.MAX_VALUE;
         double right = Double.MIN_VALUE;
 
-        for (Unit u : this.y) {
+        for (Unit u : getY()) {
             double d = u.doubleValue();
             top = (d < top) ? d : top;
             bottom = (d > bottom) ? d : bottom;
         }
-        for (Unit u : this.x) {
+        for (Unit u : getX()) {
             double d = u.doubleValue();
             left = (d < left) ? d : left;
             right = (d > right) ? d : right;
@@ -85,7 +90,7 @@ public class Polyline extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -104,7 +109,7 @@ public class Polyline extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
