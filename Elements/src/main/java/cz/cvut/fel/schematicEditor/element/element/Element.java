@@ -13,7 +13,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This is abstract class representing all elements.
- * 
+ *
  * @author uk
  */
 public abstract class Element {
@@ -29,7 +29,15 @@ public abstract class Element {
      * Index of edited point.
      */
     private int                editedPointIndex     = 0;
+    /**
+     * Original value of edited coordinate.
+     */
     private UnitPoint          editedPointOriginalValue;
+
+    /**
+     * Name of the element.
+     */
+    private String             elementName          = "";
 
     protected Vector<Unit>     x;
     protected Vector<Unit>     y;
@@ -47,7 +55,7 @@ public abstract class Element {
 
     /**
      * This is the constructor.
-     * 
+     *
      * @param x Vector of x coordinates.
      * @param y Vecotr of y coordinates.
      */
@@ -95,14 +103,14 @@ public abstract class Element {
     /**
      * This method calculates and then returns bounds of element. This bound does not need to be necesserilly the
      * closest.
-     * 
+     *
      * @return Bounds of element.
      */
     public abstract UnitRectangle getBounds();
 
     /**
      * This method indicates, whether given point hits this element.
-     * 
+     *
      * @param point hit point to check.
      * @return Status of hit.
      */
@@ -130,7 +138,7 @@ public abstract class Element {
 
     /**
      * This method returns number of coordinates needed to create given {@link Element}.
-     * 
+     *
      * @return Number of coordinates neccesarry to create given element.
      */
     public abstract int getNumberOfCoordinates();
@@ -207,12 +215,12 @@ public abstract class Element {
      * @return the editedPointOriginalValue
      */
     private UnitPoint getEditedPointOriginalValue() {
-        return editedPointOriginalValue;
+        return this.editedPointOriginalValue;
     }
 
     /**
      * Duplicates coordinates of
-     * 
+     *
      * @param element
      */
     protected void duplicateCoordinates(Vector<Unit> x, Vector<Unit> y) {
@@ -220,5 +228,19 @@ public abstract class Element {
             getX().add(new Pixel(x.get(i).doubleValue()));
             getY().add(new Pixel(y.get(i).doubleValue()));
         }
+    }
+
+    /**
+     * @return the elementName
+     */
+    public String getElementName() {
+        return this.elementName;
+    }
+
+    /**
+     * @param elementName the elementName to set
+     */
+    public void setElementName(String elementName) {
+        this.elementName = elementName;
     }
 }
