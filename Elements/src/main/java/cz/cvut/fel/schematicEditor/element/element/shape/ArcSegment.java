@@ -1,8 +1,5 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
-import java.awt.geom.Arc2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -13,7 +10,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * This class implements arc segment shape. It is represented by two data vectors.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class ArcSegment extends Arc {
@@ -34,7 +31,7 @@ public class ArcSegment extends Arc {
     /**
      * Constructor with parameters. First element contains start point, second contains width and height, third arc
      * start point and fourth is arc end point. Arc is drawn in counterclockwise direction.
-     * 
+     *
      * @param x
      * @param y
      */
@@ -63,14 +60,14 @@ public class ArcSegment extends Arc {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Ellipse#newInstance()
      */
     @Override
     public Element duplicate() {
         ArcSegment as = new ArcSegment();
 
-        as.duplicateCoordinates(getX(), getY());
+        as.duplicateCoordinates(this);
 
         return as;
     }

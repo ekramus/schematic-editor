@@ -20,19 +20,19 @@ public abstract class Element {
     /**
      * Infinite number of coordinates.
      */
-    public static final int    INFINITE_COORDINATES = -1;
+    public static final int    INFINITE_COORDINATES  = -1;
     /**
      * Zero number of coordinates.
      */
-    public static final int    ZERO_COORDINATES     = 0;
+    public static final int    ZERO_COORDINATES      = 0;
     /**
-     * Index of edited point.
+     * Index of edited coordinate.
      */
-    private int                editedPointIndex     = 0;
+    private int                editedCoordinateIndex = 0;
     /**
      * Original value of edited coordinate.
      */
-    private UnitPoint          editedPointOriginalValue;
+    private UnitPoint          editedCoordinateOriginalValue;
     /**
      * Vector of <code>x</code> coordinates of element.
      */
@@ -145,14 +145,14 @@ public abstract class Element {
         for (int i = 0; i < getX().size(); i++) {
             Point2D.Double p = new Point2D.Double(getX().elementAt(i).doubleValue(), getY().elementAt(i).doubleValue());
             if (r2d.contains(p)) {
-                setEditedPointIndex(i);
-                setEditedPointOriginalValue(new UnitPoint(getX().get(getEditedPointIndex()), getY()
-                        .get(getEditedPointIndex())));
+                setEditedCoordinateIndex(i);
+                setEditedCoordinateOriginalValue(new UnitPoint(getX().get(getEditedCoordinateIndex()), getY()
+                        .get(getEditedCoordinateIndex())));
                 return this;
             }
         }
 
-        setEditedPointIndex(-1);
+        setEditedCoordinateIndex(-1);
         return null;
     }
 
@@ -180,82 +180,83 @@ public abstract class Element {
     }
 
     /**
+     * Setter for <code>elementModificator</code>.
+     *
      * @param elementModificator the elementModificator to set
      */
     public void setElementModificator(ElementModificator elementModificator) {
         this.elementModificator = elementModificator;
     }
 
+    /**
+     * Duplicates element.
+     *
+     * @return Duplicated element.
+     */
     public abstract Element duplicate();
 
     /**
-     * @param delta
+     * Sets edited coordinate to new value relative to original by delta.
+     *
+     * @param delta delta against the original coordinates.
      */
-    public void stopEdit(UnitPoint delta) {
-        double x = getEditedPointOriginalValue().getX();
-        double y = getEditedPointOriginalValue().getY();
+    public void setEditedCoordinate(UnitPoint delta) {
+        double x = getEditedCoordinateOriginalValue().getX();
+        double y = getEditedCoordinateOriginalValue().getY();
 
         x += delta.getX();
         y += delta.getY();
 
-        getX().set(getEditedPointIndex(), new Pixel(x));
-        getY().set(getEditedPointIndex(), new Pixel(y));
-
-        // setEditedPointIndex(-1);
-        // setEditedPointOriginalValue(null);
+        getX().set(getEditedCoordinateIndex(), new Pixel(x));
+        getY().set(getEditedCoordinateIndex(), new Pixel(y));
     }
 
     /**
-     * @param delta
+     * Getter for <code>editedCoordinateIndex</code>.
+     *
+     * @return the index of edited coordinate in coordinates vector.
      */
-    public void switchEdit(UnitPoint delta) {
-        double x = getEditedPointOriginalValue().getX();
-        double y = getEditedPointOriginalValue().getY();
-
-        x += delta.getX();
-        y += delta.getY();
-
-        getX().set(getEditedPointIndex(), new Pixel(x));
-        getY().set(getEditedPointIndex(), new Pixel(y));
+    public int getEditedCoordinateIndex() {
+        return this.editedCoordinateIndex;
     }
 
     /**
-     * @return the editedPointIndex
+     * Setter for <code>editedCoordinateIndex</code>.
+     *
+     * @param editedCoordinateIndex the index of edited coordinate in coordinates vector.
      */
-    public int getEditedPointIndex() {
-        return this.editedPointIndex;
+    private void setEditedCoordinateIndex(int editedCoordinateIndex) {
+        this.editedCoordinateIndex = editedCoordinateIndex;
     }
 
     /**
-     * @param editedPointIndex the editedPointIndex to set
+     * Setter for <code>editedCoordinateOriginalValue</code>.Fs
+     *
+     * @param editedCoordinateOriginalValue the original value of edited coordinate to set.
      */
-    private void setEditedPointIndex(int editedPointIndex) {
-        this.editedPointIndex = editedPointIndex;
-    }
-
-    /**
-     * @param editedPointOriginalValue the editedPointOriginalValue to set
-     */
-    private void setEditedPointOriginalValue(UnitPoint editedPointOriginalValue) {
-        this.editedPointOriginalValue = editedPointOriginalValue;
+    private void setEditedCoordinateOriginalValue(UnitPoint editedCoordinateOriginalValue) {
+        this.editedCoordinateOriginalValue = editedCoordinateOriginalValue;
     }
 
     /**
      * @return the editedPointOriginalValue
      */
-    private UnitPoint getEditedPointOriginalValue() {
-        return this.editedPointOriginalValue;
+    private UnitPoint getEditedCoordinateOriginalValue() {
+        return this.editedCoordinateOriginalValue;
     }
 
     /**
-     * Duplicates coordinates of
+     * Duplicates coordinates of given element instance.
      *
-     * @param element
+     * @param element {@link Element} instance, which coordinates are to duplicate.
      */
-    protected void duplicateCoordinates(Vector<Unit> x, Vector<Unit> y) {
-        for (int i = 0; i < x.size(); i++) {
-            getX().add(new Pixel(x.get(i).doubleValue()));
-            getY().add(new Pixel(y.get(i).doubleValue()));
+    protected void duplicateCoordinates(Element element) {
+        setX(new Vector<Unit>());
+        setY(new Vector<Unit>());
+
+        for (int i = 0; i < this.x.size(); i++) {
+            getX().add(new Pixel(element.getX().get(i).doubleValue()));
+            getY().add(new Pixel(element.getY().get(i).doubleValue()));
         }
     }
 }

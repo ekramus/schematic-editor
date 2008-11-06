@@ -73,7 +73,7 @@ public class Triangle extends Polygon {
     public Element duplicate() {
         Triangle t = new Triangle();
 
-        t.duplicateCoordinates(getX(), getY());
+        t.duplicateCoordinates(this);
 
         return t;
     }

@@ -35,7 +35,7 @@ public class Ellipse extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -109,14 +109,14 @@ public class Ellipse extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
     public Element duplicate() {
         Ellipse e = new Ellipse();
 
-        e.duplicateCoordinates(getX(), getY());
+        e.duplicateCoordinates(this);
 
         return e;
     }

@@ -112,7 +112,7 @@ public class BezierCurve extends Shape {
     public Element duplicate() {
         BezierCurve bc = new BezierCurve();
 
-        bc.duplicateCoordinates(getX(), getY());
+        bc.duplicateCoordinates(this);
 
         return bc;
     }

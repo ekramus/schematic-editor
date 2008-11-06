@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
 /**
  * This class represents polygon element.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class Polygon extends Polyline {
@@ -36,7 +36,7 @@ public class Polygon extends Polyline {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
@@ -58,14 +58,14 @@ public class Polygon extends Polyline {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override
     public Element duplicate() {
         Polygon p = new Polygon();
 
-        p.duplicateCoordinates(getX(), getY());
+        p.duplicateCoordinates(this);
 
         return p;
     }
