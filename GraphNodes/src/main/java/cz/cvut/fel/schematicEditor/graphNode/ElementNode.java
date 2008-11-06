@@ -163,7 +163,7 @@ public class ElementNode extends Node {
      */
     protected void stopEdit(UnitPoint delta) {
         if (isEdited()) {
-            getElement().stopEdit(delta);
+            getElement().setEditedCoordinate(delta);
             setEdited(false);
         }
     }
@@ -173,7 +173,7 @@ public class ElementNode extends Node {
      */
     protected void switchEdit(UnitPoint delta) {
         if (isEdited()) {
-            getElement().switchEdit(delta);
+            getElement().setEditedCoordinate(delta);
         }
     }
 

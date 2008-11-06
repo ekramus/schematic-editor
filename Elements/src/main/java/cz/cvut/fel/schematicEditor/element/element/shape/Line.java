@@ -65,7 +65,7 @@ public class Line extends Polyline {
     public Element duplicate() {
         Line l = new Line();
 
-        l.duplicateCoordinates(getX(), getY());
+        l.duplicateCoordinates(this);
 
         return l;
     }

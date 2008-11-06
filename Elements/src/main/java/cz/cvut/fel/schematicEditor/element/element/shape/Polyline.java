@@ -116,7 +116,7 @@ public class Polyline extends Shape {
     public Element duplicate() {
         Polyline p = new Polyline();
 
-        p.duplicateCoordinates(getX(), getY());
+        p.duplicateCoordinates(this);
 
         return p;
     }

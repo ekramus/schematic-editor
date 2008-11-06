@@ -159,7 +159,7 @@ public class Edit extends Manipulation {
         Element e = getManipulatedGroup().getEditedElement();
 
         if (e != null) {
-            int i = e.getEditedPointIndex();
+            int i = e.getEditedCoordinateIndex();
             if (i != -1) {
                 Pixel x = new Pixel(e.getX().get(i).doubleValue() + getDelta().getX());
                 Pixel y = new Pixel(e.getY().get(i).doubleValue() + getDelta().getY());
@@ -177,7 +177,7 @@ public class Edit extends Manipulation {
         Element e = getManipulatedGroup().getEditedElement();
 
         if (e != null) {
-            int i = e.getEditedPointIndex();
+            int i = e.getEditedCoordinateIndex();
             if (i != -1) {
                 Pixel x = new Pixel(e.getX().get(i).doubleValue() - getDelta().getX());
                 Pixel y = new Pixel(e.getY().get(i).doubleValue() - getDelta().getY());

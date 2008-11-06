@@ -10,7 +10,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class represents rectangle.
- * 
+ *
  * @author uk
  */
 public class Rectangle extends Polygon {
@@ -23,7 +23,7 @@ public class Rectangle extends Polygon {
 
     /**
      * This is constructor.
-     * 
+     *
      * @param tl top left corner.
      * @param br bottom right corner.
      */
@@ -45,7 +45,7 @@ public class Rectangle extends Polygon {
     }
 
     /**
-     * 
+     *
      */
     public double getTopLeftX() {
         // x is in right half
@@ -57,7 +57,7 @@ public class Rectangle extends Polygon {
     }
 
     /**
-     * 
+     *
      */
     public double getTopLeftY() {
         // y is in bottom half
@@ -69,7 +69,7 @@ public class Rectangle extends Polygon {
     }
 
     /**
-     * 
+     *
      */
     public double getWidth() {
         double w = Math.abs(getX().get(1).doubleValue() - getX().get(0).doubleValue());
@@ -84,7 +84,7 @@ public class Rectangle extends Polygon {
     }
 
     /**
-     * 
+     *
      */
     public double getHeight() {
         double w = Math.abs(getX().get(1).doubleValue() - getX().get(0).doubleValue());
@@ -100,7 +100,7 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Polygon#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
@@ -115,7 +115,7 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#getElementType()
      */
     @Override
@@ -133,14 +133,14 @@ public class Rectangle extends Polygon {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override
     public Element duplicate() {
         Rectangle r = new Rectangle();
 
-        r.duplicateCoordinates(getX(), getY());
+        r.duplicateCoordinates(this);
 
         return r;
     }

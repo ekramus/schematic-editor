@@ -81,7 +81,7 @@ public class Connector extends Element {
     public Element duplicate() {
         Connector connector = new Connector();
 
-        connector.duplicateCoordinates(getX(), getY());
+        connector.duplicateCoordinates(this);
 
         return connector;
     }

@@ -125,7 +125,7 @@ public class Text extends Shape {
     public Element duplicate() {
         Text t = new Text();
 
-        t.duplicateCoordinates(getX(), getY());
+        t.duplicateCoordinates(this);
 
         return t;
     }

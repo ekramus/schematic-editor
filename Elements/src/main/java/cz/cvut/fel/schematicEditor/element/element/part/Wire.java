@@ -107,7 +107,7 @@ public class Wire extends Element {
     public Element duplicate() {
         Wire wire = new Wire();
 
-        wire.duplicateCoordinates(getX(), getY());
+        wire.duplicateCoordinates(this);
 
         return wire;
     }
