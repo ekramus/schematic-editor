@@ -301,6 +301,7 @@ public class DisplayExport implements Export {
                 PartNode partNode = (PartNode) elementNode;
 
                 // TODO retrieve connectors and match them to correct names
+                // for now, connectors are in fixed order as are they returned by getPartConnectors() method.
                 partNode.getPartGroupNode();
                 partNode.getPartParameterNode();
 

@@ -23,9 +23,10 @@ public class PartNode extends ElementNode {
     private ParameterNode partParameterNode;
 
     /**
-     * This is constructor.
+     * Constructor with default set of parameters. It instantiates new {@link PartNode}.
      *
      * @param part <code>Part</code> stored in this <code>PartNode</code>.
+     * @param partGroupNode graphical representation of part.
      */
     public PartNode(Part part, GroupNode partGroupNode) {
         super(part);
@@ -34,9 +35,10 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * This is constructor.
+     * Constructor with extra parameter for id.
      *
      * @param part <code>Part</code> stored in this <code>PartNode</code>.
+     * @param partGroupNode graphical representation of part.
      * @param id identifier of this <code>PartNode</code>.
      */
     public PartNode(Part part, GroupNode partGroupNode, String id) {
@@ -108,13 +110,6 @@ public class PartNode extends ElementNode {
      */
     public GroupNode getPartGroupNode() {
         return this.partGroupNode;
-    }
-
-    /**
-     * @param partParameterNode the partParameterNode to set
-     */
-    private void setPartParameterNode(ParameterNode partParameterNode) {
-        this.partParameterNode = partParameterNode;
     }
 
     /**

@@ -1,14 +1,12 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
-import java.awt.geom.Point2D;
-
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class represents line.
- * 
+ *
  * @author uk
  */
 public class Line extends Polyline {
@@ -24,17 +22,12 @@ public class Line extends Polyline {
 
     /**
      * This is constructor.
-     * 
+     *
      * @param a starting point.
      * @param b ending point.
      */
     public Line(UnitPoint a, UnitPoint b) {
-        super();
-
-        this.x.add(a.getUnitX());
-        this.y.add(a.getUnitY());
-        this.x.add(b.getUnitX());
-        this.y.add(b.getUnitY());
+        super(a, b);
     }
 
     /**
@@ -47,7 +40,7 @@ public class Line extends Polyline {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#getElementType()
      */
     @Override
@@ -65,7 +58,7 @@ public class Line extends Polyline {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#newInstance()
      */
     @Override

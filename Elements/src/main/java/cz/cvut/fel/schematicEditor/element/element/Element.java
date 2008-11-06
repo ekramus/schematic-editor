@@ -33,91 +33,113 @@ public abstract class Element {
      * Original value of edited coordinate.
      */
     private UnitPoint          editedPointOriginalValue;
-
     /**
-     * Name of the element.
+     * Vector of <code>x</code> coordinates of element.
      */
-    private String             elementName          = "";
-
-    protected Vector<Unit>     x;
-    protected Vector<Unit>     y;
-
+    private Vector<Unit>       x;
+    /**
+     * Vector of <code>y</code> coordinates of element.
+     */
+    private Vector<Unit>       y;
+    /**
+     * Instance of {@link ElementModificator} class. It indicates special element modifications (e.g. symmetric element
+     * which in case of ellipse results into circle).
+     */
     private ElementModificator elementModificator;
 
     /**
-     * This is the default constructor.
+     * Default constructor. It instantiates new {@link Element} instance with default values set.
      */
     public Element() {
-        this.x = new Vector<Unit>();
-        this.y = new Vector<Unit>();
+        setX(new Vector<Unit>());
+        setY(new Vector<Unit>());
         setElementModificator(ElementModificator.NO_MODIFICATION);
     }
 
     /**
-     * This is the constructor.
+     * Constructor with coordinates. It instantiates new {@link Element} instance with coordinates set.
      *
      * @param x Vector of x coordinates.
-     * @param y Vecotr of y coordinates.
+     * @param y Vector of y coordinates.
      */
     public Element(Vector<Unit> x, Vector<Unit> y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
     }
 
     /**
-     * @param a
-     * @param b
+     * Constructor with coordinates. It instantiates new {@link Element} instance with two coordinates (usefull e.g. for
+     * line, circle, etc..).
+     *
+     * @param a first element coordinate.
+     * @param b second element coordinate.
      */
     public Element(UnitPoint a, UnitPoint b) {
-        Vector<Unit> xv = new Vector<Unit>(10);
-        Vector<Unit> yv = new Vector<Unit>(10);
+        setX(new Vector<Unit>());
+        setY(new Vector<Unit>());
 
-        xv.add(a.getUnitX());
-        yv.add(a.getUnitY());
-        xv.add(b.getUnitX());
-        yv.add(b.getUnitY());
+        getX().add(a.getUnitX());
+        getX().add(b.getUnitX());
+        getY().add(a.getUnitY());
+        getY().add(b.getUnitY());
     }
 
     /**
-     * @return the x
+     * Getter for <code>x</code> coordinates.
+     *
+     * @return the {@link Vector} of <code>x</code> coordinates.
      */
     public Vector<Unit> getX() {
         return this.x;
     }
 
     /**
-     * @return the y
+     * Getter for <code>y</code> coordinates.
+     *
+     * @return the {@link Vector} of <code>y</code> coordinates.
      */
     public Vector<Unit> getY() {
         return this.y;
     }
 
+    /**
+     * Setter for <code>x</code> coordinates.
+     *
+     * @param x {@link Vector} of <code>c</code> coordinates.
+     */
     public void setX(Vector<Unit> x) {
         this.x = x;
     }
 
+    /**
+     * Setter for <code>y</code> coordinates.
+     *
+     * @param y {@link Vector} of <code>c</code> coordinates.
+     */
     public void setY(Vector<Unit> y) {
         this.y = y;
     }
 
     /**
-     * This method calculates and then returns bounds of element. This bound does not need to be necesserilly the
-     * closest.
+     * Calculates and then returns bounds of the element. This bound does not need to be necesserilly the closest.
      *
      * @return Bounds of element.
      */
     public abstract UnitRectangle getBounds();
 
     /**
-     * This method indicates, whether given point hits this element.
+     * Indicates, whether given rectangle hits this element.
      *
-     * @param point hit point to check.
+     * @param r2d hit rectangle to check.
      * @return Status of hit.
      */
     public abstract boolean isHit(Rectangle2D.Double r2d);
 
     /**
-     * Indicates, whether given rectangle is in edit zone or not.
+     * Checks, whether given rectangle is in edit zone or not. In case it is, this <code>element</code> is returned.
+     *
+     * @param r2d hit rectangle to check.
+     * @return Pointer to <em>this</em>, if hit, otherwise <em>null</em>.
      */
     public Element startEdit(Rectangle2D.Double r2d) {
         for (int i = 0; i < getX().size(); i++) {
@@ -134,16 +156,23 @@ public abstract class Element {
         return null;
     }
 
+    /**
+     * Getter for element type. Element type is one of {@link ElementType}.
+     *
+     * @return type of element.
+     */
     public abstract ElementType getElementType();
 
     /**
-     * This method returns number of coordinates needed to create given {@link Element}.
+     * Getter for number of coordinates needed to create given {@link Element}.
      *
-     * @return Number of coordinates neccesarry to create given element.
+     * @return Number of coordinates necessary to create given element.
      */
     public abstract int getNumberOfCoordinates();
 
     /**
+     * Getter for <code>elementModificator</code>.
+     *
      * @return the elementModificator
      */
     public ElementModificator getElementModificator() {
@@ -228,19 +257,5 @@ public abstract class Element {
             getX().add(new Pixel(x.get(i).doubleValue()));
             getY().add(new Pixel(y.get(i).doubleValue()));
         }
-    }
-
-    /**
-     * @return the elementName
-     */
-    public String getElementName() {
-        return this.elementName;
-    }
-
-    /**
-     * @param elementName the elementName to set
-     */
-    public void setElementName(String elementName) {
-        this.elementName = elementName;
     }
 }

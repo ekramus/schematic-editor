@@ -30,12 +30,12 @@ public class BezierCurve extends Shape {
         double left = Double.MAX_VALUE;
         double right = Double.MIN_VALUE;
 
-        for (Unit u : y) {
+        for (Unit u : getY()) {
             double d = u.doubleValue();
             top = (d < top) ? d : top;
             bottom = (d > bottom) ? d : bottom;
         }
-        for (Unit u : x) {
+        for (Unit u : getX()) {
             double d = u.doubleValue();
             left = (d < left) ? d : left;
             right = (d > right) ? d : right;
@@ -46,7 +46,7 @@ public class BezierCurve extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
@@ -86,7 +86,7 @@ public class BezierCurve extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -105,7 +105,7 @@ public class BezierCurve extends Shape {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override

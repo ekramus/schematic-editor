@@ -36,16 +36,14 @@ public enum UnitType {
     /**
      * Constructor with <code>unitString</code> initialization.
      *
-     * @param unitString
-     *            <code>unitString</code> value.
+     * @param unitString <code>unitString</code> value.
      */
     private UnitType(final String unitString) {
         setUnitString(unitString);
     }
 
     /**
-     * @param unitString
-     *            the unitString to set
+     * @param unitString the unitString to set
      */
     private void setUnitString(final String unitString) {
         this.unitString = unitString;
@@ -59,11 +57,10 @@ public enum UnitType {
     }
 
     /**
-     * Method for parsing {@link Unit} input. This method takes input string, parses it and returns
-     * correct {@link Unit} instance. Value should be further validated e.g. to be grater than zero.
+     * Method for parsing {@link Unit} input. This method takes input string, parses it and returns correct {@link Unit}
+     * instance. Value should be further validated e.g. to be grater than zero.
      *
-     * @param string
-     *            {@link Unit} string representation
+     * @param string {@link Unit} string representation
      * @return new {@link Unit} instance.
      */
     public static Unit parseUnit(final String string) {
