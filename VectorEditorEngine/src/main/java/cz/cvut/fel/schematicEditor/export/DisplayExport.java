@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Connector;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -32,9 +33,11 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
+import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -94,12 +97,15 @@ public class DisplayExport implements Export {
         TransformationNode tn = null;
         ParameterNode pn = null;
         ElementNode en = null;
+        PartProperties pp = null;
 
         for (Node node : sg) {
             if (node instanceof TransformationNode) {
                 tn = (TransformationNode) node;
             } else if (node instanceof ParameterNode) {
                 pn = (ParameterNode) node;
+            } else if (node instanceof PartNode) {
+                pp = ((Part) ((PartNode) node).getElement()).getPartProperties();
             } else if (node instanceof ElementNode) {
                 en = (ElementNode) node;
                 drawNode(en, pn, tn, img);
@@ -291,7 +297,15 @@ public class DisplayExport implements Export {
                 break;
 
             case T_PART:
-                // TODO draw part specific parts (connectors, description, etc)
+                // TODO draw part specific descriptions and symbols, e.g. connector descriptions
+                PartNode partNode = (PartNode) elementNode;
+
+                // TODO retrieve connectors and match them to correct names
+                partNode.getPartGroupNode();
+                partNode.getPartParameterNode();
+
+                // TODO draw all necessary info
+
                 break;
 
             default:
