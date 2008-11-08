@@ -22,6 +22,8 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.ElementType;
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Connector;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
@@ -302,8 +304,18 @@ public class DisplayExport implements Export {
 
                 // TODO retrieve connectors and match them to correct names
                 // for now, connectors are in fixed order as are they returned by getPartConnectors() method.
-                partNode.getPartGroupNode();
-                partNode.getPartParameterNode();
+
+                Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectors();
+                int i = 0;
+                // search for connectors
+                for (ElementNode eNode : partNode.getPartGroupNode().getChildrenElementList()) {
+                    Element e = eNode.getElement();
+                    if (e.getElementType() == ElementType.T_CONNECTOR) {
+                        nodeG2D.drawString(connectorNames.get(i), e.getX().firstElement().floatValue() - 10, e.getY()
+                                .firstElement().floatValue() - 10);
+                        i++;
+                    }
+                }
 
                 // TODO draw all necessary info
 
