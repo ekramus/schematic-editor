@@ -80,10 +80,10 @@ public class PartNode extends ElementNode {
      */
     @Override
     public UnitRectangle getBounds(Unit boundModifier) {
-        double x = getPartGroupNode().getBounds().getX() - boundModifier.doubleValue();
-        double y = getPartGroupNode().getBounds().getY() - boundModifier.doubleValue();
-        double w = getPartGroupNode().getBounds().getWidth() + 2 * boundModifier.doubleValue();
-        double h = getPartGroupNode().getBounds().getHeight() + 2 * boundModifier.doubleValue();
+        double x = getPartGroupNode().getBounds().getX() - 50 * boundModifier.doubleValue();
+        double y = getPartGroupNode().getBounds().getY() - 50 * boundModifier.doubleValue();
+        double w = getPartGroupNode().getBounds().getWidth() + 2 * 50 * boundModifier.doubleValue();
+        double h = getPartGroupNode().getBounds().getHeight() + 2 * 50 * boundModifier.doubleValue();
 
         return new UnitRectangle(x, y, w, h);
     }

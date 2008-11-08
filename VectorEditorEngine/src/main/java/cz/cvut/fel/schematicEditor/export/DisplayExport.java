@@ -35,8 +35,8 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
-import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
@@ -99,15 +99,12 @@ public class DisplayExport implements Export {
         TransformationNode tn = null;
         ParameterNode pn = null;
         ElementNode en = null;
-        PartProperties pp = null;
 
         for (Node node : sg) {
             if (node instanceof TransformationNode) {
                 tn = (TransformationNode) node;
             } else if (node instanceof ParameterNode) {
                 pn = (ParameterNode) node;
-            } else if (node instanceof PartNode) {
-                pp = ((Part) ((PartNode) node).getElement()).getPartProperties();
             } else if (node instanceof ElementNode) {
                 en = (ElementNode) node;
                 drawNode(en, pn, tn, img);
@@ -308,9 +305,10 @@ public class DisplayExport implements Export {
                 Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectors();
                 int i = 0;
                 // search for connectors
-                for (ElementNode eNode : partNode.getPartGroupNode().getChildrenElementList()) {
-                    Element e = eNode.getElement();
+                for (GroupNode gNode : partNode.getPartGroupNode().getChildrenGroupList()) {
+                    Element e = gNode.getChildrenElementList().getFirst().getElement();
                     if (e.getElementType() == ElementType.T_CONNECTOR) {
+                        nodeG2D.setColor(Color.BLACK);
                         nodeG2D.drawString(connectorNames.get(i), e.getX().firstElement().floatValue() - 10, e.getY()
                                 .firstElement().floatValue() - 10);
                         i++;
