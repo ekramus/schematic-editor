@@ -254,7 +254,7 @@ public abstract class Element {
         setX(new Vector<Unit>());
         setY(new Vector<Unit>());
 
-        for (int i = 0; i < this.x.size(); i++) {
+        for (int i = 0; i < element.getX().size(); i++) {
             getX().add(new Pixel(element.getX().get(i).doubleValue()));
             getY().add(new Pixel(element.getY().get(i).doubleValue()));
         }
