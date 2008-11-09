@@ -34,6 +34,8 @@ public class ManipulationFactory {
                 return new Select(topNode);
             case EDIT:
                 return new Edit(topNode);
+            case ROTATE:
+                return new Rotate(topNode);
             default:
                 throw new UnknownManipulationException(type);
         }

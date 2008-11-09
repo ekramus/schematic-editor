@@ -116,7 +116,15 @@ public enum MenuBarResources {
     /**
      * View part properties menu item string.
      */
-    VIEW_PART_PROPERTIES_MENU_ITEM("View part properties..");
+    VIEW_PART_PROPERTIES_MENU_ITEM("View part properties.."),
+    /**
+     * Rotate left menu item string.
+     */
+    ROTATE_LEFT_MENU_ITEM("Rotate Left"),
+    /**
+     * Rotate right menu item string.
+     */
+    ROTATE_RIGHT_MENU_ITEM("Rotate Right");
 
     /**
      * String value of item.
