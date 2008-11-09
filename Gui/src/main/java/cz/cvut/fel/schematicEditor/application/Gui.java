@@ -1,11 +1,17 @@
 package cz.cvut.fel.schematicEditor.application;
 
 import java.awt.BorderLayout;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import javax.swing.JApplet;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +19,8 @@ import cz.cvut.fel.schematicEditor.application.guiElements.DrawingToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
+import cz.cvut.fel.schematicEditor.core.Plugin;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
  * This class represents GUI of schematic editor.
@@ -40,6 +48,13 @@ public class Gui extends JApplet {
      *
      */
     private JScrollPane       sceneJScrollPane  = null;
+
+    /**
+     * Default singleton constructor.
+     */
+    public Gui() {
+        logger = Logger.getLogger(this.getClass());
+    }
 
     /**
      * This method initializes jContentPane
@@ -71,6 +86,9 @@ public class Gui extends JApplet {
             this.jFrame.setSize(566, 387);
             this.jFrame.setContentPane(getSceneJContentPane());
             this.jFrame.setTitle("Application");
+
+            initializePlugins(MenuBar.getInstance().getPluginsMenu(), DrawingToolBar.getInstance(), ScenePanel
+                    .getInstance().getSchemeSG());
         }
         return this.jFrame;
     }
@@ -105,5 +123,30 @@ public class Gui extends JApplet {
             this.sceneJScrollPane.setViewportView(ScenePanel.getInstance());
         }
         return this.sceneJScrollPane;
+    }
+
+    /**
+     * Initializes all plugins found in plugin folder.
+     *
+     * @param pluginsMenu plugins menu used for displaying plugin menu items.
+     * @param drawingToolBar tool bar for drawing buttons.
+     * @param sceneGraph scene graph for access to scene elements.
+     */
+    private void initializePlugins(JMenu pluginsMenu, JToolBar drawingToolBar, SceneGraph sceneGraph) {
+        try {
+            URLClassLoader urlClassLoader = URLClassLoader.newInstance(new URL[] { new File("plugins/plugin.jar")
+                    .toURI().toURL() });
+            try {
+                Class<?> clazz = urlClassLoader.loadClass("cz.cvut.fel.schematicEditor.core.plugins.elementsCount");
+                Object o = clazz.cast(Object.class);
+                ((Plugin) o).activate(pluginsMenu, drawingToolBar, sceneGraph);
+                logger.trace("plugin loaded");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }

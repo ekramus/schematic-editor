@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.core;
 
 import javax.swing.JButton;
-import javax.swing.JMenuBar;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
@@ -45,9 +45,10 @@ public interface Plugin {
     /**
      * Activates plugin, so it is able to process data and be accessed by the user.
      *
-     * @param menuBar menu bar, so custom menu items can be added.
-     * @param drawingBar drawing bar, so custom drawing buttons can be added.
+     * @param pluginsMenu menu, so custom menu items can be added as its children.
+     * @param drawingToolBar drawing bar, so custom drawing buttons can be added.
      * @param sceneGraph scene graph, so data in scene can be manipulated.
+     * @return <code>true</code>, if plugin was activated successfully, <code>false</code> else.
      */
-    void activate(JMenuBar menuBar, JToolBar drawingBar, SceneGraph sceneGraph);
+    boolean activate(JMenu pluginsMenu, JToolBar drawingToolBar, SceneGraph sceneGraph);
 }

@@ -51,6 +51,7 @@ public final class MenuBar extends JMenuBar {
             menuBar.add(menuBar.getFileMenu());
             menuBar.add(menuBar.getEditMenu());
             menuBar.add(menuBar.getViewMenu());
+            menuBar.add(menuBar.getPluginsMenu());
             menuBar.add(menuBar.getHHelpMenu());
             // menuBar.add(getExportMenu());
         }
@@ -93,6 +94,10 @@ public final class MenuBar extends JMenuBar {
      * File menu instance.
      */
     private JMenu             fileMenu                    = null;
+    /**
+     * Plugins menu instance.
+     */
+    private JMenu             pluginsMenu                 = null;
     /**
      * Grid menu item instance.
      */
@@ -271,6 +276,19 @@ public final class MenuBar extends JMenuBar {
             this.exitMenuItem.addActionListener(new ExitMenuItemListener());
         }
         return this.exitMenuItem;
+    }
+
+    /**
+     * Getter for <code>pluginsMenu</code>.
+     *
+     * @return <code>pluginsMenu</code> instance.
+     */
+    public JMenu getPluginsMenu() {
+        if (this.pluginsMenu == null) {
+            this.pluginsMenu = new JMenu();
+            this.pluginsMenu.setText(MenuBarResources.PLUGINS_MENU_ITEM.getText());
+        }
+        return this.pluginsMenu;
     }
 
     /**

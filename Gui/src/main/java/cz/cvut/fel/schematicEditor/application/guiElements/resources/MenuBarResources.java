@@ -82,6 +82,10 @@ public enum MenuBarResources {
      */
     PASTE_MENU_ITEM("Paste"),
     /**
+     * Plugins menu item string.
+     */
+    PLUGINS_MENU_ITEM("Plugins"),
+    /**
      * Save as menu item string.
      */
     SAVE_AS_MENU_ITEM("Save As"),
