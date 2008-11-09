@@ -2,7 +2,7 @@ package cz.cvut.fel.schematicEditor.manipulation;
 
 /**
  * This enumeration contains manipulation types, which are recognized by application.
- * 
+ *
  * @author Urban Kravjansky
  */
 public enum ManipulationType {
@@ -38,4 +38,8 @@ public enum ManipulationType {
      * Paste manipulation.
      */
     PASTE,
+    /**
+     * Rotate manipulation.
+     */
+    ROTATE,
 }

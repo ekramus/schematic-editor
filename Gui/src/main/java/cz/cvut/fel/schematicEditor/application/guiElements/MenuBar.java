@@ -18,6 +18,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.Exi
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.GridMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.ImportMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.OpenMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.RotateElementMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveAsMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveAsPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.listeners.menuBar.SaveMenuItemListener;
@@ -95,10 +96,6 @@ public final class MenuBar extends JMenuBar {
      */
     private JMenu             fileMenu                    = null;
     /**
-     * Plugins menu instance.
-     */
-    private JMenu             pluginsMenu                 = null;
-    /**
      * Grid menu item instance.
      */
     private JMenuItem         gridMenuItem                = null;
@@ -118,6 +115,18 @@ public final class MenuBar extends JMenuBar {
      * Paste menu item instance.
      */
     private JMenuItem         pasteMenuItem               = null;
+    /**
+     * Plugins menu instance.
+     */
+    private JMenu             pluginsMenu                 = null;
+    /**
+     * Rotate left menu item instance.
+     */
+    private JMenuItem         rotateLeftMenuItem          = null;
+    /**
+     * Rotate right menu item instance.
+     */
+    private JMenuItem         rotateRightMenuItem         = null;
     /**
      * Save as menu item instance.
      */
@@ -156,6 +165,19 @@ public final class MenuBar extends JMenuBar {
      */
     private MenuBar() {
         super();
+    }
+
+    /**
+     * Getter for <code>pluginsMenu</code>.
+     *
+     * @return <code>pluginsMenu</code> instance.
+     */
+    public JMenu getPluginsMenu() {
+        if (this.pluginsMenu == null) {
+            this.pluginsMenu = new JMenu();
+            this.pluginsMenu.setText(MenuBarResources.PLUGINS_MENU_ITEM.getText());
+        }
+        return this.pluginsMenu;
     }
 
     /**
@@ -258,6 +280,9 @@ public final class MenuBar extends JMenuBar {
             this.editMenu.add(getCopyMenuItem());
             this.editMenu.add(getPasteMenuItem());
             this.editMenu.add(new JSeparator());
+            this.editMenu.add(getRotateLeftMenuItem());
+            this.editMenu.add(getRotateRightMenuItem());
+            this.editMenu.add(new JSeparator());
             this.editMenu.add(getSnapToGridCheckBoxMenuItem());
             this.editMenu.add(getGridMenuItem());
         }
@@ -276,19 +301,6 @@ public final class MenuBar extends JMenuBar {
             this.exitMenuItem.addActionListener(new ExitMenuItemListener());
         }
         return this.exitMenuItem;
-    }
-
-    /**
-     * Getter for <code>pluginsMenu</code>.
-     *
-     * @return <code>pluginsMenu</code> instance.
-     */
-    public JMenu getPluginsMenu() {
-        if (this.pluginsMenu == null) {
-            this.pluginsMenu = new JMenu();
-            this.pluginsMenu.setText(MenuBarResources.PLUGINS_MENU_ITEM.getText());
-        }
-        return this.pluginsMenu;
     }
 
     /**
@@ -383,6 +395,34 @@ public final class MenuBar extends JMenuBar {
             this.pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK, true));
         }
         return this.pasteMenuItem;
+    }
+
+    /**
+     * Getter for <code>rotateLeftMenuItem</code>.
+     *
+     * @return <code>rotateLeftMenuItem</code> instance.
+     */
+    private JMenuItem getRotateLeftMenuItem() {
+        if (this.rotateLeftMenuItem == null) {
+            this.rotateLeftMenuItem = new JMenuItem();
+            this.rotateLeftMenuItem.setText(MenuBarResources.ROTATE_LEFT_MENU_ITEM.getText());
+            this.rotateLeftMenuItem.addActionListener(new RotateElementMenuItemListener());
+        }
+        return this.rotateLeftMenuItem;
+    }
+
+    /**
+     * Getter for <code>rotateRightMenuItem</code>.
+     *
+     * @return <code>rotateRightMenuItem</code> instance.
+     */
+    private JMenuItem getRotateRightMenuItem() {
+        if (this.rotateRightMenuItem == null) {
+            this.rotateRightMenuItem = new JMenuItem();
+            this.rotateRightMenuItem.setText(MenuBarResources.ROTATE_RIGHT_MENU_ITEM.getText());
+            this.rotateRightMenuItem.addActionListener(new RotateElementMenuItemListener());
+        }
+        return this.rotateRightMenuItem;
     }
 
     /**
@@ -496,7 +536,7 @@ public final class MenuBar extends JMenuBar {
      *
      * @return <code>viewPartPropertiesMenuItem</code> instance.
      */
-    public JMenuItem getViewPartPropertiesMenuItem() {
+    JMenuItem getViewPartPropertiesMenuItem() {
         if (this.viewPartPropertiesMenuItem == null) {
             this.viewPartPropertiesMenuItem = new JMenuItem();
             this.viewPartPropertiesMenuItem.setText(MenuBarResources.VIEW_PART_PROPERTIES_MENU_ITEM.getText());
