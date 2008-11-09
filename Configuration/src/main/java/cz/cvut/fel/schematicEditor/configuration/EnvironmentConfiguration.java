@@ -4,7 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class encapsulates environment properties.
- * 
+ *
  * @author Urban Kravjansky
  */
 @XStreamAlias("guiConfiguration")
@@ -54,6 +54,10 @@ public class EnvironmentConfiguration extends Configuration {
      * Application last used save folder.
      */
     private String lastSaveFolder   = "parts";
+    /**
+     * Application plugins folder.
+     */
+    private String pluginsFolder    = "plugins";
 
     /**
      * @return the partsFolder
@@ -72,10 +76,10 @@ public class EnvironmentConfiguration extends Configuration {
     /**
      * Parts folder.
      */
-    private String partsFolder      = null;
+    private String partsFolder = null;
 
     /**
-     * 
+     *
      */
     public EnvironmentConfiguration() {
         // nothing to do
@@ -110,6 +114,13 @@ public class EnvironmentConfiguration extends Configuration {
     }
 
     /**
+     * @return the pluginsFolder
+     */
+    public String getPluginsFolder() {
+        return this.pluginsFolder;
+    }
+
+    /**
      * @param lastExportFolder the lastExportFolder to set
      */
     public void setLastExportFolder(String lastExportFolder) {
@@ -135,5 +146,12 @@ public class EnvironmentConfiguration extends Configuration {
      */
     public void setLastSaveFolder(String lastSaveFolder) {
         this.lastSaveFolder = lastSaveFolder;
+    }
+
+    /**
+     * @param pluginsFolder the pluginsFolder to set
+     */
+    public void setPluginsFolder(String pluginsFolder) {
+        this.pluginsFolder = pluginsFolder;
     }
 }
