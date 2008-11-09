@@ -19,7 +19,6 @@ import cz.cvut.fel.schematicEditor.application.guiElements.DrawingToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
-import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
@@ -137,9 +136,9 @@ public class Gui extends JApplet {
             URLClassLoader urlClassLoader = URLClassLoader.newInstance(new URL[] { new File("plugins/plugin.jar")
                     .toURI().toURL() });
             try {
-                Class<?> clazz = urlClassLoader.loadClass("cz.cvut.fel.schematicEditor.core.plugins.elementsCount");
-                Object o = clazz.cast(Object.class);
-                ((Plugin) o).activate(pluginsMenu, drawingToolBar, sceneGraph);
+                Class<?> clazz = urlClassLoader
+                        .loadClass("cz.cvut.fel.schematicEditor.core.plugins.elementsCount.ElementsCount");
+
                 logger.trace("plugin loaded");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
