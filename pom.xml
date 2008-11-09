@@ -16,5 +16,6 @@
 		<module>Support</module>
 		<module>Configuration</module>
 		<module>Units</module>
+		<module>Plugins-ElementsCount</module>
 	</modules>
 </project>
