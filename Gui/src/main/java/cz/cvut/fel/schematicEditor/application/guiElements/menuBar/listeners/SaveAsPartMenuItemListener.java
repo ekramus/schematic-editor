@@ -22,7 +22,11 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 import cz.cvut.fel.schematicEditor.element.properties.PartType;
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.CapacitorProperties;
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.CurrentSourceProperties;
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.InductorProperties;
 import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
+import cz.cvut.fel.schematicEditor.element.properties.partProperties.VoltageSourceProperties;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 
 /**
@@ -75,10 +79,16 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
                     pp = new ResistorProperties("variant", "variant description");
                     break;
                 case CAPACITOR:
+                    pp = new CapacitorProperties("variant", "variant description");
                     break;
                 case INDUCTOR:
+                    pp = new InductorProperties("variant", "variant description");
                     break;
-                case SOURCE:
+                case VOLTAGE_SOURCE:
+                    pp = new VoltageSourceProperties("variant", "variant description");
+                    break;
+                case CURRENT_SOURCE:
+                    pp = new CurrentSourceProperties("variant", "variant description");
                     break;
                 default:
                     break;
