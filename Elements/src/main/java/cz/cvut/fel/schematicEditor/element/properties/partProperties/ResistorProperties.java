@@ -3,6 +3,7 @@ package cz.cvut.fel.schematicEditor.element.properties.partProperties;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.element.properties.PartType;
 
 /**
  * This class implements properties with are unique for resistor part.
@@ -49,5 +50,15 @@ public class ResistorProperties extends PartProperties {
         result.add(getProperty(ResistorPropertiesEnum.CONNECTOR_M.getKey()).getValue());
 
         return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartType()
+     */
+    @Override
+    public PartType getPartType() {
+        return PartType.RESISTOR;
     }
 }

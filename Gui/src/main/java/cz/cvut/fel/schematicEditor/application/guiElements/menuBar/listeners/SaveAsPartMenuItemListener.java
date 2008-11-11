@@ -6,20 +6,22 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Vector;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.MenuBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.element.properties.PartType;
 import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 
@@ -48,6 +50,12 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(ActionEvent e) {
+        if (!PartPropertiesPanel.getInstance().getEditingPartCheckBox().isSelected()) {
+            JOptionPane.showMessageDialog(null, "Part creation is not enabled", "Unable to save as part",
+                                          JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         EnvironmentConfiguration env = EnvironmentConfiguration.getInstance();
 
         JFileChooser fileChooser = new JFileChooser(env.getLastSaveFolder());
@@ -61,10 +69,21 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             env.setLastSaveFolder(file.getParent());
 
             // FIXME rewrite, so it is generated automatically
-            PartProperties pp = new ResistorProperties("variant", "variant description");
-            Vector<String> c = new Vector<String>();
-            c.add("a");
-            c.add("b");
+            PartProperties pp = null;
+            switch ((PartType) PartPropertiesPanel.getInstance().getPartTypeComboBox().getSelectedItem()) {
+                case RESISTOR:
+                    pp = new ResistorProperties("variant", "variant description");
+                    break;
+                case CAPACITOR:
+                    break;
+                case INDUCTOR:
+                    break;
+                case SOURCE:
+                    break;
+                default:
+                    break;
+            }
+
             Part p = new Part(pp);
 
             PartNode pn = new PartNode(p, ScenePanel.getInstance().getSchemeSG().getTopNode().getEnabledOnly());

@@ -201,4 +201,6 @@ public abstract class PartProperties implements Iterable<Property<String, String
 
         return collection.iterator();
     }
+
+    public abstract PartType getPartType();
 }

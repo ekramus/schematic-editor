@@ -10,7 +10,7 @@ import javax.swing.JColorChooser;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.GeneralPropertiesPanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
@@ -60,7 +60,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
         Color c = JColorChooser.showDialog(ScenePanel.getInstance(), CONTOUR_COLOR_TITLE, ep.getContourColor());
         if (c != null) {
             ep.setContourColor(c);
-            getContourColorButton().setIcon(PartPropertiesPanel.getColorIcon(c, ep.getContourColorAlpha()));
+            getContourColorButton().setIcon(GeneralPropertiesPanel.getColorIcon(c, ep.getContourColorAlpha()));
         }
 
         // update properties only when using Select manipulation

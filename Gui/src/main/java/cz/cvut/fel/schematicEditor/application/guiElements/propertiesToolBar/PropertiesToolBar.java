@@ -1,5 +1,7 @@
 package cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar;
 
+import java.awt.Dimension;
+
 import javax.swing.BoxLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
@@ -40,6 +42,7 @@ public class PropertiesToolBar extends JToolBar {
         if (propertiesToolBar == null) {
             propertiesToolBar = new PropertiesToolBar();
             propertiesToolBar.setLayout(new BoxLayout(propertiesToolBar, BoxLayout.Y_AXIS));
+            propertiesToolBar.setPreferredSize(new Dimension(225, 400));
 
             // add elements
             propertiesToolBar.add(propertiesToolBar.getTabbedPane());
@@ -53,6 +56,7 @@ public class PropertiesToolBar extends JToolBar {
     public JTabbedPane getTabbedPane() {
         if (this.tabbedPane == null) {
             this.tabbedPane = new JTabbedPane();
+            this.tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
             // add elements
             this.tabbedPane.addTab("general properties", GeneralPropertiesPanel.getInstance());

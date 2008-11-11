@@ -10,7 +10,7 @@ import javax.swing.JColorChooser;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
-import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.GeneralPropertiesPanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
@@ -60,7 +60,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
         Color c = JColorChooser.showDialog(ScenePanel.getInstance(), FILL_COLOR_TITLE, ep.getFillColor());
         if (c != null) {
             ep.setFillColor(c);
-            getFillColorButton().setIcon(PartPropertiesPanel.getColorIcon(c, ep.getFillColorAlpha()));
+            getFillColorButton().setIcon(GeneralPropertiesPanel.getColorIcon(c, ep.getFillColorAlpha()));
         }
 
         // update properties only when using Select manipulation
