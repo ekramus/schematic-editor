@@ -126,7 +126,7 @@ public class Rotate extends Manipulation {
         // UnitPoint first = new UnitPoint(getX().get(1), getY().get(1));
         // UnitPoint last = new UnitPoint(getX().get(2), getY().get(2));
 
-        double angle = 90;
+        double angle = Math.PI;
 
         Transformation rotate = Transformation.getRotation(angle);
         getManipulatedGroup().add(new TransformationNode(rotate));
@@ -150,7 +150,7 @@ public class Rotate extends Manipulation {
         // UnitPoint first = new UnitPoint(getX().get(1), getY().get(1));
         // UnitPoint last = new UnitPoint(getX().get(2), getY().get(2));
 
-        double angle = -90;
+        double angle = -Math.PI;
 
         Transformation rotate = Transformation.getRotation(angle);
     }
