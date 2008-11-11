@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.listeners;
 
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
@@ -43,7 +44,7 @@ public abstract class PropertiesToolBarListener {
     protected final void updateProperties(final ElementProperties elementProperties)
             throws UnknownManipulationException {
         // refresh all elements on properties toolbar
-        PropertiesToolBar.refresh();
+        PartPropertiesPanel.refresh();
 
         Manipulation m = Structures.getActiveManipulation();
 
