@@ -19,7 +19,11 @@ public enum PartType {
      */
     CAPACITOR,
     /**
-     * Identifier for source part.
+     * Identifier for voltage source part.
      */
-    SOURCE,
+    VOLTAGE_SOURCE,
+    /**
+     * Identifier for current source part.
+     */
+    CURRENT_SOURCE,
 }
