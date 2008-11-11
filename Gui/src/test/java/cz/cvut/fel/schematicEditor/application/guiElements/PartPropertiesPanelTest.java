@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import cz.cvut.fel.schematicEditor.application.guiElements.partProperties.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
 

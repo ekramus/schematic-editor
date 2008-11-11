@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.application.guiElements;
 
 import org.junit.Test;
 
+import cz.cvut.fel.schematicEditor.application.guiElements.partProperties.PartPropertiesDialog;
+
 /**
  * JUnit test class for {@link PartPropertiesDialog}.
  *
