@@ -10,6 +10,7 @@ import javax.swing.JColorChooser;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
@@ -20,8 +21,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  *
  * @author Urban Kravjansky
  */
-public class FillColorButtonActionListener extends PropertiesToolBarListener implements
-        ActionListener {
+public class FillColorButtonActionListener extends PropertiesToolBarListener implements ActionListener {
     /**
      * {@link Logger} instance for logging purposes.
      */
@@ -36,11 +36,10 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     private JButton             fillColorButton  = null;
 
     /**
-     * {@link FillColorButtonActionListener} constructor. It initializes
-     * <code>fillColorButton</code> field with given parameter.
+     * {@link FillColorButtonActionListener} constructor. It initializes <code>fillColorButton</code> field with given
+     * parameter.
      *
-     * @param fillColorButton
-     *            fill color {@link JButton} parameter.
+     * @param fillColorButton fill color {@link JButton} parameter.
      */
     public FillColorButtonActionListener(final JButton fillColorButton) {
         logger = Logger.getLogger(Gui.class.getName());
@@ -48,22 +47,20 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     }
 
     /**
-     * Method is invoked as result to an action. It initializes {@link JColorChooser} dialog window
-     * enabling fill color selection.
+     * Method is invoked as result to an action. It initializes {@link JColorChooser} dialog window enabling fill color
+     * selection.
      *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     * @param ae
-     *            {@link ActionEvent} parameter. This parameter is only for implementing purposes,
-     *            it is not used nor needed.
+     * @param ae {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
+     *            needed.
      */
     public final void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(ScenePanel.getInstance(), FILL_COLOR_TITLE,
-                                           ep.getFillColor());
+        Color c = JColorChooser.showDialog(ScenePanel.getInstance(), FILL_COLOR_TITLE, ep.getFillColor());
         if (c != null) {
             ep.setFillColor(c);
-            getFillColorButton().setIcon(PropertiesToolBar.getColorIcon(c, ep.getFillColorAlpha()));
+            getFillColorButton().setIcon(PartPropertiesPanel.getColorIcon(c, ep.getFillColorAlpha()));
         }
 
         // update properties only when using Select manipulation
@@ -86,8 +83,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     /**
      * Setter for <code>fillColorButton</code>.
      *
-     * @param fillColorButton
-     *            the fillColorButton to set
+     * @param fillColorButton the fillColorButton to set
      */
     private void setFillColorButton(final JButton fillColorButton) {
         this.fillColorButton = fillColorButton;

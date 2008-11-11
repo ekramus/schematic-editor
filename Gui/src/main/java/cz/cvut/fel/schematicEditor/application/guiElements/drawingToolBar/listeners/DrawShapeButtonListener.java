@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
@@ -68,7 +68,7 @@ public class DrawShapeButtonListener implements ActionListener {
             // set selected element properties to null
             Structures.getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
-            PropertiesToolBar.refresh();
+            PartPropertiesPanel.refresh();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
