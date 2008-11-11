@@ -12,7 +12,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
@@ -34,7 +33,7 @@ import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
  *
  * @author Urban Kravjansky
  */
-public class GeneralPropertiesPanel extends JToolBar {
+public class GeneralPropertiesPanel extends JPanel {
     /**
      * {@link Logger} instance for logging purposes.
      */

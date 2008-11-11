@@ -82,7 +82,7 @@ public class Gui extends JApplet {
             this.jFrame = new JFrame();
             this.jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.jFrame.setJMenuBar(MenuBar.getInstance());
-            this.jFrame.setSize(566, 387);
+            this.jFrame.setSize(800, 600);
             this.jFrame.setContentPane(getSceneJContentPane());
             this.jFrame.setTitle("Application");
 
