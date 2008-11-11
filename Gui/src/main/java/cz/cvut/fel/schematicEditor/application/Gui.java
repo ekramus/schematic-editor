@@ -15,10 +15,10 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.application.guiElements.DrawingToolBar;
-import cz.cvut.fel.schematicEditor.application.guiElements.MenuBar;
-import cz.cvut.fel.schematicEditor.application.guiElements.PropertiesToolBar;
-import cz.cvut.fel.schematicEditor.application.guiElements.ScenePanel;
+import cz.cvut.fel.schematicEditor.application.guiElements.drawingToolBar.DrawingToolBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.MenuBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
