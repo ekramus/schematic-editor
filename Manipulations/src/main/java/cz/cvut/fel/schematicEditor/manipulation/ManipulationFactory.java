@@ -36,6 +36,13 @@ public class ManipulationFactory {
                 return new Edit(topNode);
             case ROTATE:
                 return new Rotate(topNode);
+            case COPY:
+                return new Copy(topNode);
+            case CUT:
+                // return new Cut(topNode);
+                throw new UnknownManipulationException(type);
+            case PASTE:
+                return new Paste(topNode);
             default:
                 throw new UnknownManipulationException(type);
         }
