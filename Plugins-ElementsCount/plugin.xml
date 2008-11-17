@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin>
-    <name>Elements count</name>
-    <classpath>cz.cvut.fel.schematicEditor.core.plugins.elementsCount</classpath>
-    <classname>ElementsCount</classname>
-</plugin>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <entry key="name">Elements count</entry>
+  <entry key="description">This plugin adds one menu item and on invocation shows dialog box with number of elements used in current scene.</entry>
+  <entry key="classpath">cz.cvut.fel.schematicEditor.core.plugins.elementsCount</entry>
+  <entry key="classname">ElementsCount</entry>
+</properties>
