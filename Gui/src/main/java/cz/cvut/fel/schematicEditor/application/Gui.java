@@ -173,14 +173,13 @@ public class Gui extends JApplet {
 
         File pluginsDirectory = new File(directory);
         for (String fileName : pluginsDirectory.list()) {
-            File file = new File(fileName);
+            File file = new File(directory + File.separator + fileName);
             if (file.isDirectory()) {
                 logger.trace("folder " + fileName + " will be examined");
-                result.addAll(findPlugins(directory + "/" + fileName));
-            } else {
-                // } else if (file.isFile()) {
+                result.addAll(findPlugins(directory + File.separator + fileName));
+            } else if (file.isFile()) {
                 logger.trace("plugin " + fileName + " added");
-                result.add(directory + "/" + fileName);
+                result.add(directory + File.separator + fileName);
             }
         }
 
