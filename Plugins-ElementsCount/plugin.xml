@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <name>Elements count</name>
+    <classpath>cz.cvut.fel.schematicEditor.core.plugins.elementsCount</classpath>
+    <classname>ElementsCount</classname>
+</plugin>

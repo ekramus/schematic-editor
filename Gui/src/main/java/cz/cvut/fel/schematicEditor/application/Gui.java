@@ -5,6 +5,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Collection;
+import java.util.Vector;
 
 import javax.swing.JApplet;
 import javax.swing.JFrame;
@@ -19,6 +21,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.drawingToolBar.Drawin
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
+import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
@@ -132,20 +135,55 @@ public class Gui extends JApplet {
      * @param sceneGraph scene graph for access to scene elements.
      */
     private void initializePlugins(JMenu pluginsMenu, JToolBar drawingToolBar, SceneGraph sceneGraph) {
-        try {
-            URLClassLoader urlClassLoader = URLClassLoader.newInstance(new URL[] { new File("plugins/plugin.jar")
-                    .toURI().toURL() });
-            try {
-                Class<?> clazz = urlClassLoader
-                        .loadClass("cz.cvut.fel.schematicEditor.core.plugins.elementsCount.ElementsCount");
+        Collection<String> pluginsCollection = findPlugins("plugins");
 
-                logger.trace("plugin loaded");
-            } catch (ClassNotFoundException e) {
+        for (String pluginPath : pluginsCollection) {
+            try {
+                URLClassLoader urlClassLoader = URLClassLoader.newInstance(new URL[] { new File(pluginPath).toURI()
+                        .toURL() });
+                try {
+                    Class<?> clazz = urlClassLoader
+                            .loadClass("cz.cvut.fel.schematicEditor.core.plugins.elementsCount.ElementsCount");
+                    Plugin plugin = (Plugin) clazz.newInstance();
+                    plugin.activate(pluginsMenu, drawingToolBar, sceneGraph);
+
+                    logger.trace("plugin loaded");
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         }
+    }
+
+    /**
+     * Finds all available plugins in given directory and returns {@link Collection} of paths.
+     *
+     * @param directory directory, in which search for plugins will be conducted.
+     * @return {@link Collection} of paths to available plugins.
+     */
+    private final Collection<String> findPlugins(String directory) {
+        Vector<String> result = new Vector<String>();
+
+        File pluginsDirectory = new File(directory);
+        for (String fileName : pluginsDirectory.list()) {
+            File file = new File(fileName);
+            if (file.isDirectory()) {
+                logger.trace("folder " + fileName + " will be examined");
+                result.addAll(findPlugins(directory + "/" + fileName));
+            } else {
+                // } else if (file.isFile()) {
+                logger.trace("plugin " + fileName + " added");
+                result.add(directory + "/" + fileName);
+            }
+        }
+
+        return result;
     }
 }
