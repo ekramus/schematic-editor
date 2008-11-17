@@ -1,13 +1,16 @@
 package cz.cvut.fel.schematicEditor.application.guiElements.aboutDialog;
 
-import cz.cvut.fel.schematicEditor.configuration.Configuration;
-
 import java.awt.BorderLayout;
+import java.util.Properties;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+
+import cz.cvut.fel.schematicEditor.configuration.Configuration;
+import cz.cvut.fel.schematicEditor.core.Structures;
 
 /**
  * @author Urban Kravjansky
@@ -16,28 +19,31 @@ public final class AboutDialog extends JDialog {
     /**
      * {@link AboutDialog} instance.
      */
-    private static AboutDialog aboutDialog       = null;
+    private static AboutDialog aboutDialog          = null;
     /**
      * {@link JPanel} instance used in about dialog.
      */
-    private JPanel             aboutContentPane  = null;
+    private JPanel             aboutContentPane     = null;
     /**
      * {@link JLabel} instance used in about dialog. It shows current version label.
      */
-    private JLabel             aboutVersionLabel = null;
+    private JLabel             aboutVersionLabel    = null;
+    /**
+     * {@link JTextArea} instance showing about plugins string.
+     */
+    private JTextArea          aboutPluginsTextArea = null;
 
     /**
-     * Default constructor. It initializes only one instance of {@link AboutDialog}. It is called
-     * only from <code>getInstance</code> medthod.
+     * Default constructor. It initializes only one instance of {@link AboutDialog}. It is called only from
+     * <code>getInstance</code> medthod.
      */
     private AboutDialog() {
         super();
     }
 
     /**
-     * Singleton getter. It initializes new {@link AboutDialog} instance only in case, it is not
-     * already defined.
-     * 
+     * Singleton getter. It initializes new {@link AboutDialog} instance only in case, it is not already defined.
+     *
      * @return instance of {@link AboutDialog}
      */
     public static AboutDialog getInstance() {
@@ -45,7 +51,6 @@ public final class AboutDialog extends JDialog {
             aboutDialog = new AboutDialog();
             aboutDialog.setLocationByPlatform(true);
             aboutDialog.setContentPane(aboutDialog.getAboutContentPane());
-            aboutDialog.getContentPane().add(aboutDialog.getAboutVersionLabel());
         }
         return aboutDialog;
     }
@@ -53,22 +58,22 @@ public final class AboutDialog extends JDialog {
     /**
      * Getter for <code>aboutContentPane</code>. In case it is not initialized, it creates new
      * <code>aboutContentPane</code> instance.
-     * 
+     *
      * @return instance of <code>aboutContentPane</code>.
      */
     private JPanel getAboutContentPane() {
         if (this.aboutContentPane == null) {
             this.aboutContentPane = new JPanel();
             this.aboutContentPane.setLayout(new BorderLayout());
-            this.aboutContentPane.add(getAboutVersionLabel(), BorderLayout.CENTER);
+            this.aboutContentPane.add(getAboutVersionLabel(), BorderLayout.NORTH);
+            this.aboutContentPane.add(getAboutPluginsTextArea(), BorderLayout.CENTER);
         }
         return this.aboutContentPane;
     }
 
     /**
-     * Getter for <code>aboutVersionLabel</code>. In case it is not initialized, it creates new
-     * instance.
-     * 
+     * Getter for <code>aboutVersionLabel</code>. In case it is not initialized, it creates new instance.
+     *
      * @return instance of <code>aboutVersionLabel</code>.
      */
     private JLabel getAboutVersionLabel() {
@@ -79,5 +84,25 @@ public final class AboutDialog extends JDialog {
             this.aboutVersionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         }
         return this.aboutVersionLabel;
+    }
+
+    /**
+     * Getter for <code>aboutPluginsTextArea</code>. In case it is not initialized, it creates new instance.
+     *
+     * @return instance of <code>aboutPluginsTextArea</code>.
+     */
+    private JTextArea getAboutPluginsTextArea() {
+        if (this.aboutPluginsTextArea == null) {
+            this.aboutPluginsTextArea = new JTextArea();
+
+            String buf = "";
+            for (Properties properties : Structures.getLoadedPluginProperties()) {
+                buf += properties.getProperty("name") + "\n" + "\t-" + properties.getProperty("description") + "\n";
+            }
+
+            this.aboutPluginsTextArea.setText("Currently used plugins:\n\n" + buf);
+            this.aboutPluginsTextArea.setEditable(false);
+        }
+        return this.aboutPluginsTextArea;
     }
 }

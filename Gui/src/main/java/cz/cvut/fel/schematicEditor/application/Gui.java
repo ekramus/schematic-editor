@@ -2,10 +2,13 @@ package cz.cvut.fel.schematicEditor.application;
 
 import java.awt.BorderLayout;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collection;
+import java.util.InvalidPropertiesFormatException;
+import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JApplet;
@@ -22,6 +25,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.PropertiesToolBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Plugin;
+import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
@@ -35,8 +39,13 @@ public class Gui extends JApplet {
      */
     private static final long serialVersionUID  = 1L;
 
+    /**
+     * Logger instance for logging purposes.
+     */
     private static Logger     logger;
-
+    /**
+     * Content pane for application.
+     */
     private JPanel            jContentPane      = null;
     /**
      * Main frame.
@@ -142,9 +151,19 @@ public class Gui extends JApplet {
                 URLClassLoader urlClassLoader = URLClassLoader.newInstance(new URL[] { new File(pluginPath).toURI()
                         .toURL() });
                 try {
-                    Class<?> clazz = urlClassLoader
-                            .loadClass("cz.cvut.fel.schematicEditor.core.plugins.elementsCount.ElementsCount");
-                    Plugin plugin = (Plugin) clazz.newInstance();
+                    // create and load plugin properties
+                    Properties pluginProperties = new Properties();
+                    pluginProperties.loadFromXML(urlClassLoader.getResourceAsStream("plugin.xml"));
+
+                    // instantiate plugin object based on information in plugin xml
+                    Class<?> pluginClass = urlClassLoader.loadClass(pluginProperties.getProperty("classpath") + "."
+                            + pluginProperties.getProperty("classname"));
+                    Plugin plugin = (Plugin) pluginClass.newInstance();
+
+                    // register plugin via its properties
+                    Structures.getLoadedPluginProperties().add(pluginProperties);
+
+                    // activate plugin
                     plugin.activate(pluginsMenu, drawingToolBar, sceneGraph);
 
                     logger.trace("plugin loaded");
@@ -153,6 +172,10 @@ public class Gui extends JApplet {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InvalidPropertiesFormatException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
