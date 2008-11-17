@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.core;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
@@ -20,13 +19,6 @@ public interface Plugin {
      * @return <code>true</code>, if plugin provides menu item, <code>false</code> else.
      */
     boolean providesMenuItem();
-
-    /**
-     * Getter for menu item provided by plugin.
-     *
-     * @return {@link JMenuItem} instance provided by plugin.
-     */
-    JMenuItem getMenuItem();
 
     /**
      * Indicates, whether plugin provides drawing button, or not.
