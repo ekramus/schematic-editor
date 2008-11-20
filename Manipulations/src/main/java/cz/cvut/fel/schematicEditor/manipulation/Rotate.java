@@ -126,10 +126,22 @@ public class Rotate extends Manipulation {
         // UnitPoint first = new UnitPoint(getX().get(1), getY().get(1));
         // UnitPoint last = new UnitPoint(getX().get(2), getY().get(2));
 
-        double angle = Math.PI;
+        double angle = Math.PI / 4;
 
+        // move to zero coordinates
+        double x = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getX().firstElement()
+                .doubleValue();
+        double y = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getY().firstElement()
+                .doubleValue();
+        Transformation initialTransformation = Transformation.getShift(x, y);
+        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
+
+        // rotate
         Transformation rotate = Transformation.getRotation(angle);
         getManipulatedGroup().add(new TransformationNode(rotate));
+
+        // // move back
+        // getManipulatedGroup().add(new TransformationNode(initialTransformation));
     }
 
     /**
