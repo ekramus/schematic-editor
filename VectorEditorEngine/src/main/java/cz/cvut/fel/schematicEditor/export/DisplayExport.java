@@ -10,7 +10,6 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Ellipse2D;
@@ -30,7 +29,6 @@ import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
-import cz.cvut.fel.schematicEditor.element.element.shape.Line;
 import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
@@ -41,7 +39,9 @@ import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -140,6 +140,8 @@ public class DisplayExport implements Export {
         BufferedImage nodeImg = new BufferedImage((int) bounds.getWidth(), (int) bounds.getHeight(),
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D nodeG2D = (Graphics2D) nodeImg.getGraphics();
+        Vector<UnitPoint> coordinates = transformCoordinates(transformationNode.getTransformation(), elementNode
+                .getElement().getX(), elementNode.getElement().getY());
 
         if (isDebuged()) {
             nodeG2D.setColor(Color.ORANGE);
@@ -149,7 +151,8 @@ public class DisplayExport implements Export {
         BasicStroke basicStroke = new BasicStroke(parameterNode.getWidth().floatValue());
         nodeG2D.setStroke(basicStroke);
 
-        nodeG2D.translate(-bounds.getX(), -bounds.getY());
+        // this will be not necessary, as all elements will be drawn using correct set of coordinates
+        // nodeG2D.translate(-bounds.getX(), -bounds.getY());
 
         if (isAntialiased()) {
             nodeG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -161,9 +164,9 @@ public class DisplayExport implements Export {
 
         switch (elementNode.getElement().getElementType()) {
             case T_LINE:
-                Line l = (Line) elementNode.getElement();
-                Line2D.Double l2d = new Line2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue(), l
-                        .getX().get(1).doubleValue(), l.getY().get(1).doubleValue());
+                // Line l = (Line) elementNode.getElement();
+                Line2D.Double l2d = new Line2D.Double(coordinates.get(0).getX(), coordinates.get(0).getY(), coordinates
+                        .get(1).getX(), coordinates.get(1).getY());
 
                 drawShape(nodeG2D, l2d, parameterNode.getColor(), parameterNode.getLineStyle(), null, parameterNode
                         .getFillStyle());
@@ -327,10 +330,32 @@ public class DisplayExport implements Export {
 
         Graphics2D g2d = (Graphics2D) bufferedImage.getGraphics();
 
-        g2d.setTransform(new AffineTransform(m[0][0], m[1][0], m[0][1], m[1][1], m[0][2], m[1][2]));
+        // commented out, as it caused rotate malfunction (graphics degradation). Transformations have to be reflected
+        // directly to coordinates.
+        // g2d.setTransform(new AffineTransform(m[0][0], m[1][0], m[0][1], m[1][1], m[0][2], m[1][2]));
         g2d.translate(bounds.getX(), bounds.getY());
         g2d.drawImage(nodeImg, 0, 0, null);
 
+    }
+
+    /**
+     * Transforms original element coordinates into corrected coordinates with all transformations applied.
+     *
+     * @param t {@link Transformation} to apply.
+     * @param x {@link Vector} of <code>x</code> coordinates.
+     * @param y {@link Vector} of <code>y</code> coordinates.
+     * @return {@link Vector} of corrected coordinates.
+     */
+    private Vector<UnitPoint> transformCoordinates(Transformation t, Vector<Unit> x, Vector<Unit> y) {
+        Vector<UnitPoint> result = new Vector<UnitPoint>();
+
+        for (int i = 0; i < x.size(); i++) {
+            UnitPoint up = new UnitPoint(x.get(i), y.get(i));
+            up = Transformation.multiply(t, up);
+            result.add(up);
+        }
+
+        return result;
     }
 
     /**
