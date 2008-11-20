@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -126,15 +128,19 @@ public class Rotate extends Manipulation {
         // UnitPoint first = new UnitPoint(getX().get(1), getY().get(1));
         // UnitPoint last = new UnitPoint(getX().get(2), getY().get(2));
 
-        double angle = Math.PI / 4;
+        double angle = -45;
 
-        // move to zero coordinates
+        // get reference coordinate
         double x = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getX().firstElement()
                 .doubleValue();
         double y = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getY().firstElement()
                 .doubleValue();
+
+        // move so that reference is in point 0,0
         Transformation initialTransformation = Transformation.getShift(x, y);
         getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
+
+        JOptionPane.showMessageDialog(null, "bua");
 
         // rotate
         Transformation rotate = Transformation.getRotation(angle);

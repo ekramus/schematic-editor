@@ -3,6 +3,8 @@ package cz.cvut.fel.schematicEditor.support;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
+
 /**
  * This class represents transformation.
  *
@@ -24,8 +26,7 @@ public class Transformation {
     /**
      * This is constructor.
      *
-     * @param t
-     *            transformation matrix.
+     * @param t transformation matrix.
      */
     public Transformation(Transformation t) {
         this.matrix = t.matrix;
@@ -47,16 +48,18 @@ public class Transformation {
     /**
      * This method generates rotation.
      *
-     * @param angle
-     *            angle of rotation.
+     * @param angle angle of rotation in degrees.
      * @return Rotation transformation.
      */
-    public static Transformation getRotation(double angle) {
+    public static Transformation getRotation(final double angle) {
+        // convert given angle from degrees to radians
+        double a = angle / 180 * Math.PI;
+
         Transformation t = new Transformation();
-        t.matrix[0][0] = Math.cos(angle);
-        t.matrix[0][1] = -Math.sin(angle);
-        t.matrix[1][0] = Math.sin(angle);
-        t.matrix[1][1] = Math.cos(angle);
+        t.matrix[0][0] = Math.cos(a);
+        t.matrix[0][1] = -Math.sin(a);
+        t.matrix[1][0] = Math.sin(a);
+        t.matrix[1][1] = Math.cos(a);
         t.matrix[2][2] = 1;
         return t;
     }
@@ -64,10 +67,8 @@ public class Transformation {
     /**
      * This method generates shift.
      *
-     * @param x
-     *            x shift.
-     * @param y
-     *            y shift.
+     * @param x x shift.
+     * @param y y shift.
      * @return Shift transformation.
      */
     public static Transformation getShift(double x, double y) {
@@ -83,10 +84,8 @@ public class Transformation {
     /**
      * This method generates scale.
      *
-     * @param x
-     *            x scale.
-     * @param y
-     *            y scale.
+     * @param x x scale.
+     * @param y y scale.
      * @return Scale transformation.
      */
     public static Transformation getScale(double x, double y) {
@@ -110,8 +109,7 @@ public class Transformation {
         Point2D.Double p = new Point2D.Double(rectangle.getX(), rectangle.getY());
 
         p = multiply(this, p);
-        result = new Rectangle2D.Double(p.getX(), p.getY(), rectangle.getWidth(),
-                rectangle.getHeight());
+        result = new Rectangle2D.Double(p.getX(), p.getY(), rectangle.getWidth(), rectangle.getHeight());
 
         return result;
     }
@@ -121,8 +119,7 @@ public class Transformation {
         Point2D.Double p = new Point2D.Double(rectangle.getX(), rectangle.getY());
 
         p = multiply(this.getInverse(), p);
-        result = new Rectangle2D.Double(p.getX(), p.getY(), rectangle.getWidth(),
-                rectangle.getHeight());
+        result = new Rectangle2D.Double(p.getX(), p.getY(), rectangle.getWidth(), rectangle.getHeight());
 
         return result;
     }
@@ -134,7 +131,6 @@ public class Transformation {
      * | a11 a12 a13 |-1             |   a33a22-a32a23  -(a33a12-a32a13)   a23a12-a22a13  |
      * | a21 a22 a23 |    =  1/DET * | -(a33a21-a31a23)   a33a11-a31a13  -(a23a11-a21a13) |
      * | a31 a32 a33 |               |   a32a21-a31a22  -(a32a11-a31a12)   a22a11-a21a12  |
-     *
      * with DET  =  a11(a33a22-a32a23)-a21(a33a12-a32a13)+a31(a23a12-a22a13)
      * </pre>
      *
@@ -178,8 +174,7 @@ public class Transformation {
      * DET = a11(a33a22 - a32a23) - a21(a33a12 - a32a13) + a31(a23a12 - a22a13)
      * </pre>
      *
-     * @param t
-     *            Transformation, to which determinant is needed.
+     * @param t Transformation, to which determinant is needed.
      * @return Value of determinant of given {@link Transformation}.
      */
     private double determinant(Transformation t) {
@@ -200,10 +195,17 @@ public class Transformation {
     }
 
     private String print() {
-        return String.valueOf("[ " + this.matrix[0][0]) + ", " + String.valueOf(this.matrix[0][1])
-               + ", " + String.valueOf(this.matrix[0][2]) + " ] [ "
-               + String.valueOf(this.matrix[1][0]) + ", " + String.valueOf(this.matrix[1][1])
-               + ", " + String.valueOf(this.matrix[1][2]) + " ]";
+        return String.valueOf("[ " + this.matrix[0][0]) + ", "
+                + String.valueOf(this.matrix[0][1])
+                + ", "
+                + String.valueOf(this.matrix[0][2])
+                + " ] [ "
+                + String.valueOf(this.matrix[1][0])
+                + ", "
+                + String.valueOf(this.matrix[1][1])
+                + ", "
+                + String.valueOf(this.matrix[1][2])
+                + " ]";
     }
 
     public boolean isIdentity() {
@@ -234,10 +236,8 @@ public class Transformation {
     /**
      * This method multiplies transformations.
      *
-     * @param a
-     *            1st transformation.
-     * @param b
-     *            2nd transformation.
+     * @param a 1st transformation.
+     * @param b 2nd transformation.
      * @return Multiplied tranformation.
      */
     public static Transformation multiply(Transformation a, Transformation b) {
@@ -255,10 +255,24 @@ public class Transformation {
     /**
      * This method multiplies transformations.
      *
-     * @param t
-     *            {@link Transformation}.
-     * @param p
-     *            {@link Point2D}.
+     * @param t {@link Transformation}.
+     * @param p {@link UnitPoint}.
+     * @return Multiplied transformation.
+     */
+    public static UnitPoint multiply(Transformation t, UnitPoint p) {
+        UnitPoint result = new UnitPoint();
+
+        result.setX(t.matrix[0][0] * p.getX() + t.matrix[0][1] * p.getY() + t.matrix[0][2]);
+        result.setY(t.matrix[1][0] * p.getX() + t.matrix[1][1] * p.getY() + t.matrix[1][2]);
+
+        return result;
+    }
+
+    /**
+     * This method multiplies transformations.
+     *
+     * @param t {@link Transformation}.
+     * @param p {@link Point2D.Double}.
      * @return Multiplied transformation.
      */
     public static Point2D.Double multiply(Transformation t, Point2D.Double p) {
@@ -273,10 +287,8 @@ public class Transformation {
     /**
      * This method multiplies transformations.
      *
-     * @param t
-     *            {@link Transformation}.
-     * @param d
-     *            {@link Double}.
+     * @param t {@link Transformation}.
+     * @param d {@link Double}.
      * @return Multiplied transformation.
      */
     public static Transformation multiply(Transformation t, Double d) {
@@ -304,7 +316,7 @@ public class Transformation {
     }
 
     private double[][] getMatrix() {
-        return matrix;
+        return this.matrix;
     }
 
     private void setMatrix(double[][] matrix) {
