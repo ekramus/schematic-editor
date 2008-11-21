@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Color;
-import java.awt.geom.Rectangle2D.Double;
+import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -68,7 +68,7 @@ public class PartNode extends ElementNode {
      * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
-    protected boolean isHit(Double point) {
+    protected boolean isHit(Rectangle2D point) {
         return getPartGroupNode().isHit(point);
     }
 

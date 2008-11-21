@@ -87,10 +87,10 @@ public class Part extends Element {
     }
 
     /**
-     * @see Element#isHit(java.awt.geom.Rectangle2D.Double)
+     * @see Element#isHit(java.awt.geom.Rectangle2D)
      */
     @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         // part cannot be hit
         return false;
     }

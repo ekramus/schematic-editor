@@ -59,10 +59,10 @@ public class Wire extends Element {
     }
 
     /**
-     * @see Element#isHit(Rectangle2D.Double)
+     * @see Element#isHit(Rectangle2D)
      */
     @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         Iterator<Unit> itX = this.getX().iterator();
         Iterator<Unit> itY = this.getY().iterator();
 

@@ -39,7 +39,7 @@ public class Ellipse extends Shape {
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         // check, whether is not within limit
         Ellipse2D e2d = new Ellipse2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight());
 

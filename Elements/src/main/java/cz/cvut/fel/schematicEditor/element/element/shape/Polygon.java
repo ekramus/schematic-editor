@@ -40,7 +40,7 @@ public class Polygon extends Polyline {
      * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#isHit(java.awt.geom.Rectangle2D.Double)
      */
     @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         java.awt.Polygon p = new java.awt.Polygon();
 
         Vector<Unit> xPg = getX();

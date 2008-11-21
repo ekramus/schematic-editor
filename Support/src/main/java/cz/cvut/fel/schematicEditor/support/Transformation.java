@@ -114,6 +114,7 @@ public class Transformation {
         return result;
     }
 
+    @Deprecated
     public Rectangle2D.Double shiftInverse(Rectangle2D rectangle) {
         Rectangle2D.Double result = null;
         Point2D.Double p = new Point2D.Double(rectangle.getX(), rectangle.getY());

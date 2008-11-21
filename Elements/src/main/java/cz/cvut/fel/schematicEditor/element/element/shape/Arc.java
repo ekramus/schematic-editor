@@ -132,7 +132,7 @@ public class Arc extends Ellipse {
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         Arc2D.Double a2d = new Arc2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight(), getStartAngle(),
                 getArcAngle(), Arc2D.PIE);
         if (a2d.intersects(rectangle) || a2d.contains(rectangle)) {
