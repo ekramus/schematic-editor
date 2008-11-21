@@ -589,8 +589,12 @@ public class GroupNode extends Node {
         // Change it!
         Element element = getChildrenElementList().getFirst().getElement();
 
-        element.setX(new Vector<Unit>(x));
-        element.setY(new Vector<Unit>(y));
+        Vector<UnitPoint> coordinates = new Vector<UnitPoint>();
+        for (int i = 0; i < x.size(); i++) {
+            UnitPoint up = new UnitPoint(x.get(i), y.get(i));
+            coordinates.add(up);
+        }
+        element.setTransformedCoordinates(coordinates, getTransformation());
     }
 
     public ElementType getElementType() {

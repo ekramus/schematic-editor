@@ -161,9 +161,8 @@ public class DisplayExport implements Export {
             logger.debug("AA OFF");
         }
 
-        Vector<UnitPoint> tc = elementNode.getElement().getTransformedCoordinates(
-                                                                                  transformationNode
-                                                                                          .getTransformation());
+        Transformation t = transformationNode.getTransformation();
+        Vector<UnitPoint> tc = elementNode.getElement().getTransformedCoordinates(t);
 
         switch (elementNode.getElement().getElementType()) {
             case T_LINE:
@@ -182,8 +181,8 @@ public class DisplayExport implements Export {
                 Rectangle rectangle = (Rectangle) elementNode.getElement();
                 // Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(), rectangle
                 // .getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
-                Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(), rectangle
-                        .getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
+                Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeft(t).getX(), rectangle
+                        .getTopLeft(t).getY(), rectangle.getDim(t).getX(), rectangle.getDim(t).getY());
 
                 drawShape(nodeG2D, rectangle2d, parameterNode.getColor(), parameterNode.getLineStyle(), parameterNode
                         .getFill(), parameterNode.getFillStyle());

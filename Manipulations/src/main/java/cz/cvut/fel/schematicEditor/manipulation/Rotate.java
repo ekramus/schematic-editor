@@ -4,8 +4,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
-
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -14,6 +12,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionE
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements <em>rotate</em> manipulation. <br/>
@@ -128,26 +127,22 @@ public class Rotate extends Manipulation {
         // UnitPoint first = new UnitPoint(getX().get(1), getY().get(1));
         // UnitPoint last = new UnitPoint(getX().get(2), getY().get(2));
 
-        double angle = -45;
+        double angle = -90;
 
         // get reference coordinate
-        double x = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getX().firstElement()
-                .doubleValue();
-        double y = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getY().firstElement()
-                .doubleValue();
+        UnitPoint reference = getManipulatedGroup().getChildrenElementList().getFirst().getElement()
+                .getTransformedCoordinates(getManipulatedGroup().getTransformation()).get(0);
 
         // move so that reference is in point 0,0
-        Transformation initialTransformation = Transformation.getShift(x, y);
-        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
-
-        JOptionPane.showMessageDialog(null, "bua");
+        Transformation initialTransformation = Transformation.getShift(reference.getX(), reference.getY());
+        getManipulatedGroup().add(new TransformationNode(initialTransformation));
 
         // rotate
         Transformation rotate = Transformation.getRotation(angle);
         getManipulatedGroup().add(new TransformationNode(rotate));
 
-        // // move back
-        // getManipulatedGroup().add(new TransformationNode(initialTransformation));
+        // move back
+        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
     }
 
     /**
