@@ -82,6 +82,22 @@ public class Transformation {
     }
 
     /**
+     * This method generates shift.
+     *
+     * @param p point of shift.
+     * @return Shift transformation.
+     */
+    public static Transformation getShift(UnitPoint p) {
+        Transformation t = new Transformation();
+        t.matrix[0][0] = 1;
+        t.matrix[1][1] = 1;
+        t.matrix[2][2] = 1;
+        t.matrix[0][2] = p.getX();
+        t.matrix[1][2] = p.getY();
+        return t;
+    }
+
+    /**
      * This method generates scale.
      *
      * @param x x scale.

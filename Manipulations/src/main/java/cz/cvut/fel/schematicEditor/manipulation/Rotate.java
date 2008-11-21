@@ -12,6 +12,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionE
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements <em>rotate</em> manipulation. <br/>
@@ -129,13 +130,10 @@ public class Rotate extends Manipulation {
         double angle = -90;
 
         // get reference coordinate
-        double x = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getX().firstElement()
-                .doubleValue();
-        double y = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getY().firstElement()
-                .doubleValue();
+        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
 
         // move so that reference is in point 0,0
-        Transformation initialTransformation = Transformation.getShift(x, y);
+        Transformation initialTransformation = Transformation.getShift(rc);
         getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
 
         // rotate
