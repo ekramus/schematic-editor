@@ -3,7 +3,6 @@ package cz.cvut.fel.schematicEditor.manipulation;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
@@ -161,14 +160,11 @@ public class Edit extends Manipulation {
 
         if (e != null) {
             int i = e.getEditedCoordinateIndex();
-            Vector<UnitPoint> tc = e.getTransformedCoordinates(getManipulatedGroup().getTransformation());
             if (i != -1) {
-                Pixel x = new Pixel(tc.get(i).getX() + getDelta().getX());
-                Pixel y = new Pixel(tc.get(i).getY() + getDelta().getY());
-
-                tc.set(i, new UnitPoint(x, y));
-
-                e.setTransformedCoordinates(tc, getManipulatedGroup().getTransformation());
+                Pixel x = new Pixel(e.getX().get(i).doubleValue() + getDelta().getX());
+                Pixel y = new Pixel(e.getY().get(i).doubleValue() + getDelta().getY());
+                e.getX().set(i, x);
+                e.getY().set(i, y);
             }
         }
     }
@@ -182,14 +178,11 @@ public class Edit extends Manipulation {
 
         if (e != null) {
             int i = e.getEditedCoordinateIndex();
-            Vector<UnitPoint> tc = e.getTransformedCoordinates(getManipulatedGroup().getTransformation());
             if (i != -1) {
-                Pixel x = new Pixel(tc.get(i).getX() - getDelta().getX());
-                Pixel y = new Pixel(tc.get(i).getY() - getDelta().getY());
-
-                tc.set(i, new UnitPoint(x, y));
-
-                e.setTransformedCoordinates(tc, getManipulatedGroup().getTransformation());
+                Pixel x = new Pixel(e.getX().get(i).doubleValue() - getDelta().getX());
+                Pixel y = new Pixel(e.getY().get(i).doubleValue() - getDelta().getY());
+                e.getX().set(i, x);
+                e.getY().set(i, y);
             }
         }
     }

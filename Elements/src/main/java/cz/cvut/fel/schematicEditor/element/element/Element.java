@@ -90,7 +90,7 @@ public abstract class Element {
      *
      * @return the {@link Vector} of <code>x</code> coordinates.
      */
-    protected Vector<Unit> getX() {
+    public Vector<Unit> getX() {
         return this.x;
     }
 
@@ -99,25 +99,8 @@ public abstract class Element {
      *
      * @return the {@link Vector} of <code>y</code> coordinates.
      */
-    protected Vector<Unit> getY() {
+    public Vector<Unit> getY() {
         return this.y;
-    }
-
-    /**
-     * Getter for {@link Vector} of <code>transformedCoordinates</code> of {@link Element}. It can be used e.g. for
-     * correct drawing of instance of {@link Element}.
-     *
-     * @param t {@link Transformation} to apply to coordinates of {@link Element}.
-     * @return Transformed {@link Vector} of coordinates.
-     */
-    public Vector<UnitPoint> getTransformedCoordinates(Transformation t) {
-        Vector<UnitPoint> result = new Vector<UnitPoint>();
-
-        for (int i = 0; i < getX().size(); i++) {
-            result.add(transformCoordinate(t, getX().get(i), getY().get(i)));
-        }
-
-        return result;
     }
 
     /**
@@ -125,7 +108,7 @@ public abstract class Element {
      *
      * @param x {@link Vector} of <code>c</code> coordinates.
      */
-    protected void setX(Vector<Unit> x) {
+    public void setX(Vector<Unit> x) {
         this.x = x;
     }
 
@@ -134,31 +117,8 @@ public abstract class Element {
      *
      * @param y {@link Vector} of <code>c</code> coordinates.
      */
-    protected void setY(Vector<Unit> y) {
+    public void setY(Vector<Unit> y) {
         this.y = y;
-    }
-
-    /**
-     * Setter for <code>tranformedCoordinates</code>. These coordinates are transformed with inverse transformation to
-     * given transformation, so the coordinates in element remain unaffected by transformation.
-     *
-     * @param coordinates transformed coordinates to set.
-     * @param t {@link Transformation} to use to get inverse one.
-     */
-    public void setTransformedCoordinates(Vector<UnitPoint> coordinates, Transformation t) {
-        Vector<Unit> x = new Vector<Unit>();
-        Vector<Unit> y = new Vector<Unit>();
-
-        for (int i = 0; i < coordinates.size(); i++) {
-            UnitPoint up = coordinates.get(i);
-            up = Transformation.multiply(t.getInverse(), up);
-
-            x.add(up.getUnitX());
-            y.add(up.getUnitY());
-        }
-
-        setX(x);
-        setY(y);
     }
 
     /**
@@ -174,7 +134,7 @@ public abstract class Element {
      * @param r2d hit rectangle to check.
      * @return Status of hit.
      */
-    public abstract boolean isHit(Rectangle2D.Double r2d);
+    public abstract boolean isHit(Rectangle2D r2d);
 
     /**
      * Checks, whether given rectangle is in edit zone or not. In case it is, this <code>element</code> is returned.
@@ -182,7 +142,7 @@ public abstract class Element {
      * @param r2d hit rectangle to check.
      * @return Pointer to <em>this</em>, if hit, otherwise <em>null</em>.
      */
-    public Element startEdit(Rectangle2D.Double r2d) {
+    public Element startEdit(Rectangle2D r2d) {
         for (int i = 0; i < getX().size(); i++) {
             Point2D.Double p = new Point2D.Double(getX().elementAt(i).doubleValue(), getY().elementAt(i).doubleValue());
             if (r2d.contains(p)) {

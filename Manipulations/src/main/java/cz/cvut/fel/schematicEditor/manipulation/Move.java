@@ -30,6 +30,10 @@ public class Move extends Manipulation {
      * Manipulation delta.
      */
     private Point2D.Double delta;
+    /**
+     * Applied {@link Transformation}.
+     */
+    private Transformation appliedTransformation;
 
     /**
      * Default {@link Move} constructor. It initializes this {@link Manipulation}.
@@ -38,6 +42,8 @@ public class Move extends Manipulation {
      */
     protected Move(GroupNode topNode) {
         super(topNode);
+
+        setAppliedTransformation(Transformation.getIdentity());
 
         logger = Logger.getLogger(this.getClass().getName());
     }
@@ -59,10 +65,12 @@ public class Move extends Manipulation {
      * @param delta shift parameter.
      */
     private void switchLastTransformation(Point2D.Double delta) {
-        Transformation t = Transformation.getShift(delta.getX(), delta.getY());
+        Transformation tNew = Transformation.getShift(delta.getX(), delta.getY());
+        Transformation t = Transformation.multiply(getAppliedTransformation().getInverse(), tNew);
+        setAppliedTransformation(tNew);
+
         TransformationNode tn = new TransformationNode(t);
 
-        getManipulatedGroup().removeLastTransformation();
         getManipulatedGroup().add(tn);
     }
 
@@ -215,6 +223,23 @@ public class Move extends Manipulation {
      */
     @Override
     protected void unexecute() throws ManipulationExecutionException {
-        getManipulatedGroup().removeLastTransformation();
+        Transformation t = Transformation.getShift(getDelta().getX(), getDelta().getY());
+        TransformationNode tn = new TransformationNode(t.getInverse());
+
+        getManipulatedGroup().add(tn);
+    }
+
+    /**
+     * @param appliedTransformation the appliedTransformation to set
+     */
+    private void setAppliedTransformation(Transformation appliedTransformation) {
+        this.appliedTransformation = appliedTransformation;
+    }
+
+    /**
+     * @return the appliedTransformation
+     */
+    private Transformation getAppliedTransformation() {
+        return this.appliedTransformation;
     }
 }

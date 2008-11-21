@@ -12,7 +12,6 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionE
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
-import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements <em>rotate</em> manipulation. <br/>
@@ -130,21 +129,21 @@ public class Rotate extends Manipulation {
         double angle = -90;
 
         // get reference coordinate
-        UnitPoint reference = getManipulatedGroup().getChildrenElementList().getFirst().getElement()
-                .getTransformedCoordinates(getManipulatedGroup().getTransformation()).get(0);
-        // set reference as original point without being transformed
-        reference = Transformation.multiply(getManipulatedGroup().getTransformation().getInverse(), reference);
+        double x = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getX().firstElement()
+                .doubleValue();
+        double y = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getY().firstElement()
+                .doubleValue();
 
         // move so that reference is in point 0,0
-        Transformation initialTransformation = Transformation.getShift(reference.getX(), reference.getY());
-        getManipulatedGroup().add(new TransformationNode(initialTransformation));
+        Transformation initialTransformation = Transformation.getShift(x, y);
+        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
 
         // rotate
         Transformation rotate = Transformation.getRotation(angle);
         getManipulatedGroup().add(new TransformationNode(rotate));
 
         // move back
-        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
+        getManipulatedGroup().add(new TransformationNode(initialTransformation));
     }
 
     /**

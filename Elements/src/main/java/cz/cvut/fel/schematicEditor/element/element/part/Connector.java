@@ -46,10 +46,10 @@ public class Connector extends Element {
     }
 
     /**
-     * @see Element#isHit(Rectangle2D.Double)
+     * @see Element#isHit(Rectangle2D)
      */
     @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         double x = getX().firstElement().doubleValue();
         double y = getY().firstElement().doubleValue();
 

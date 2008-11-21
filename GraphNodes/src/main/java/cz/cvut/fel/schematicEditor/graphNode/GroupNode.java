@@ -3,7 +3,6 @@ package cz.cvut.fel.schematicEditor.graphNode;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -39,6 +38,7 @@ public class GroupNode extends Node {
     /**
      * This field represents list of all transformation nodes
      */
+    @Deprecated
     private LinkedList<TransformationNode> childrenTransformationList;
     /**
      * This field represents parameters node
@@ -77,7 +77,11 @@ public class GroupNode extends Node {
         } else if (child instanceof TransformationNode) {
             logger.trace("Adding transformation node: " + child.toString());
             logger.trace("List of transformation nodes: " + child);
-            this.childrenTransformationList.add((TransformationNode) child);
+
+            addSpecificTransformation(((TransformationNode) child).getTransformation());
+
+            // to be removed (obsolete)
+            // this.childrenTransformationList.add((TransformationNode) child);
         } else if (child instanceof ParameterNode) {
             this.chidrenParameterNode = (ParameterNode) child;
         } else {
@@ -86,11 +90,22 @@ public class GroupNode extends Node {
         child.setParent(this);
     }
 
+    private void addSpecificTransformation(Transformation t) {
+        for (ElementNode elementNode : getChildrenElementList()) {
+            elementNode.modifyCoordinates(t);
+        }
+
+        for (GroupNode groupNode : getChildrenGroupList()) {
+            groupNode.addSpecificTransformation(t);
+        }
+    }
+
     /**
      * Returns transformation applied on this {@link GroupNode}.
      *
      * @return Transformation made as matrix multiplication of all contained transformations.
      */
+    @Deprecated
     public Transformation getTransformation() {
         Transformation t = new Transformation(Transformation.getIdentity());
         for (Node child : this.childrenTransformationList) {
@@ -113,8 +128,8 @@ public class GroupNode extends Node {
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isHit(getTransformation().shiftInverse(rectangle))) {
-                logger.debug("element HIT: " + child + " transformation: " + getTransformation());
+            if (child.isHit(rectangle)) {
+                logger.trace("element HIT: " + child);
                 return true;
             }
         }
@@ -361,17 +376,6 @@ public class GroupNode extends Node {
     }
 
     /**
-     *
-     */
-    public void removeLastTransformation() {
-        try {
-            this.childrenTransformationList.removeLast();
-        } catch (NoSuchElementException nsee) {
-            logger.debug("no transformation to remove");
-        }
-    }
-
-    /**
      * Detects, whether given rectangle is in edit zone. If it is, it means, edit should be invoked.
      *
      * @param r2d rectangle around pointer.
@@ -589,12 +593,8 @@ public class GroupNode extends Node {
         // Change it!
         Element element = getChildrenElementList().getFirst().getElement();
 
-        Vector<UnitPoint> coordinates = new Vector<UnitPoint>();
-        for (int i = 0; i < x.size(); i++) {
-            UnitPoint up = new UnitPoint(x.get(i), y.get(i));
-            coordinates.add(up);
-        }
-        element.setTransformedCoordinates(coordinates, getTransformation());
+        element.setX(new Vector<Unit>(x));
+        element.setY(new Vector<Unit>(y));
     }
 
     public ElementType getElementType() {
@@ -632,7 +632,9 @@ public class GroupNode extends Node {
                 case T_CONNECTOR:
                 case T_WIRE:
                     Element element = childNode.getElement();
-                    result = element.getTransformedCoordinates(getTransformation());
+                    for (int i = 0; i < element.getX().size(); i++) {
+                        result.add(new UnitPoint(element.getX().get(i), element.getY().get(i)));
+                    }
                     break;
                 case T_PART:
                     PartNode partNode = (PartNode) childNode;

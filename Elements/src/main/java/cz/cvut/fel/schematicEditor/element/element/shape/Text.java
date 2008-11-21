@@ -93,7 +93,7 @@ public class Text extends Shape {
      * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
      */
     @Override
-    public boolean isHit(Rectangle2D.Double rectangle) {
+    public boolean isHit(Rectangle2D rectangle) {
         // TODO Auto-generated method stub
         return false;
     }

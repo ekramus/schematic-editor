@@ -15,6 +15,7 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.element.shape.Triangle;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
@@ -129,7 +130,7 @@ public class ElementNode extends Node {
         return this.element;
     }
 
-    protected boolean isHit(Rectangle2D.Double point) {
+    protected boolean isHit(Rectangle2D point) {
         if (isDisabled()) {
             return false;
         }
@@ -192,5 +193,22 @@ public class ElementNode extends Node {
      */
     private void setElementType(ElementType elementType) {
         this.elementType = elementType;
+    }
+
+    /**
+     * Modifies coordinates according to given {@link Transformation}.
+     *
+     * @param t {@link Transformation} to apply.
+     */
+    public void modifyCoordinates(Transformation t) {
+        Element element = getElement();
+
+        for (int i = 0; i < element.getX().size(); i++) {
+            UnitPoint up = new UnitPoint(element.getX().get(i), element.getY().get(i));
+            up = Transformation.multiply(t, up);
+
+            element.getX().set(i, up.getUnitX());
+            element.getY().set(i, up.getUnitY());
+        }
     }
 }
