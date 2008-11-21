@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -125,5 +126,13 @@ public class PartNode extends ElementNode {
     @Override
     public String toString() {
         return "[PartNode]";
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#modifyCoordinates(cz.cvut.fel.schematicEditor.support.Transformation)
+     */
+    @Override
+    public void modifyCoordinates(Transformation t) {
+        getPartGroupNode().add(new TransformationNode(t));
     }
 }

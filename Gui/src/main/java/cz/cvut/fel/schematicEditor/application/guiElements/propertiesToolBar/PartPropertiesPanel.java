@@ -2,16 +2,19 @@ package cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar;
 
 import java.awt.FlowLayout;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.Gui;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.listeners.PartRotationCenterButtonActionListener;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
+import cz.cvut.fel.schematicEditor.element.ElementType;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.properties.PartType;
 
 /**
@@ -27,16 +30,24 @@ public class PartPropertiesPanel extends JPanel {
     /**
      * Singleton instance of {@link PartPropertiesPanel}.
      */
-    private static PartPropertiesPanel partPropertiesPanel = null;
+    private static PartPropertiesPanel partPropertiesPanel      = null;
 
     /**
      * Line width {@link JComboBox} instance.
      */
-    private JComboBox                  partTypeComboBox    = null;
+    private JComboBox                  partTypeComboBox         = null;
     /**
      * Contour {@link JCheckBox} instance.
      */
-    private JCheckBox                  editingPartCheckBox = null;
+    private JCheckBox                  editingPartCheckBox      = null;
+    /**
+     * {@link JButton} for setting part rotation center.
+     */
+    private JButton                    partRotationCenterButton = null;
+    /**
+     * {@link JLabel} displaying part rotation center.
+     */
+    private JLabel                     partRotationCenterLabel  = null;
 
     /**
      * Default constructor. It is private for {@link PartPropertiesPanel} singleton instance.
@@ -60,6 +71,8 @@ public class PartPropertiesPanel extends JPanel {
             // add elements
             partPropertiesPanel.add(partPropertiesPanel.getEditingPartCheckBox());
             partPropertiesPanel.add(partPropertiesPanel.getPartTypeComboBox());
+            partPropertiesPanel.add(partPropertiesPanel.getPartRotationCenterButton());
+            partPropertiesPanel.add(partPropertiesPanel.getPartRotationCenterLabel());
         }
         return partPropertiesPanel;
     }
@@ -68,20 +81,11 @@ public class PartPropertiesPanel extends JPanel {
      * Refresh {@link PartPropertiesPanel} according to scene or selected element properties.
      */
     public static void refresh() {
-        ElementProperties ep;
-
-        if (Structures.getSceneProperties().getSelectedElementProperties() == null) {
-            ep = Structures.getSceneProperties().getSceneElementProperties();
-        } else {
-            ep = Structures.getSceneProperties().getSelectedElementProperties();
+        if (Structures.getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
+            Part part = (Part) Structures.getActiveManipulation().getManipulatedGroup().getChildrenElementList()
+                    .getFirst().getElement();
+            getInstance().getPartRotationCenterLabel().setText(part.getRotationCenter().toString());
         }
-
-        partPropertiesPanel.getPartTypeComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
-        partPropertiesPanel.getEditingPartCheckBox().setSelected(
-                                                                 ep.getContourStyle() == ElementStyle.NONE ? false
-                                                                         : true);
-
-        logger.debug("Contour style: " + ep.getContourStyle());
     }
 
     public JCheckBox getEditingPartCheckBox() {
@@ -105,4 +109,24 @@ public class PartPropertiesPanel extends JPanel {
         return this.partTypeComboBox;
     }
 
+    /**
+     * @return the partRotationCenterButton
+     */
+    private JButton getPartRotationCenterButton() {
+        if (this.partRotationCenterButton == null) {
+            this.partRotationCenterButton = new JButton("Rotation Center");
+            this.partRotationCenterButton.addActionListener(new PartRotationCenterButtonActionListener());
+        }
+        return this.partRotationCenterButton;
+    }
+
+    /**
+     * @return the partRotationCenterLabel
+     */
+    private JLabel getPartRotationCenterLabel() {
+        if (this.partRotationCenterLabel == null) {
+            this.partRotationCenterLabel = new JLabel();
+        }
+        return this.partRotationCenterLabel;
+    }
 }

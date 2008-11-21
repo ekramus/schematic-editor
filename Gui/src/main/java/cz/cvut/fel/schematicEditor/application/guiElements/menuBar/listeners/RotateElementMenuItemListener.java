@@ -26,6 +26,7 @@ public class RotateElementMenuItemListener implements ActionListener {
     /**
      * This method instantiates new instance.
      *
+     * @param orientation orientation of rotation.
      */
     public RotateElementMenuItemListener(UnitPoint orientation) {
         super();
@@ -45,6 +46,8 @@ public class RotateElementMenuItemListener implements ActionListener {
                     m.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                     m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY());
                     Structures.getManipulationQueue().execute(m);
+
+                    ScenePanel.getInstance().schemeInvalidate(null);
                 } catch (UnknownManipulationException ume) {
                     ume.printStackTrace();
                 }

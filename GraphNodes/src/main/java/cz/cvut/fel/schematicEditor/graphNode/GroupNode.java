@@ -79,9 +79,6 @@ public class GroupNode extends Node {
             logger.trace("List of transformation nodes: " + child);
 
             addSpecificTransformation(((TransformationNode) child).getTransformation());
-
-            // to be removed (obsolete)
-            // this.childrenTransformationList.add((TransformationNode) child);
         } else if (child instanceof ParameterNode) {
             this.chidrenParameterNode = (ParameterNode) child;
         } else {

@@ -149,4 +149,12 @@ public class UnitPoint extends Point2D {
     public final void setY(final double y) {
         setUnitY(new Pixel(y));
     }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "[" + getUnitX() + "," + getUnitY() + "]";
+    }
 }
