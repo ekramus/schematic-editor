@@ -29,6 +29,7 @@ import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
+import cz.cvut.fel.schematicEditor.element.element.shape.Line;
 import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
@@ -40,7 +41,6 @@ import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.support.Transformation;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -141,8 +141,6 @@ public class DisplayExport implements Export {
         BufferedImage nodeImg = new BufferedImage((int) bounds.getWidth(), (int) bounds.getHeight(),
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D nodeG2D = (Graphics2D) nodeImg.getGraphics();
-        Vector<UnitPoint> coordinates = transformCoordinates(transformationNode.getTransformation(), elementNode
-                .getElement().getX(), elementNode.getElement().getY());
 
         if (isDebuged()) {
             nodeG2D.setColor(Color.ORANGE);
@@ -163,13 +161,17 @@ public class DisplayExport implements Export {
             logger.debug("AA OFF");
         }
 
+        Vector<UnitPoint> tc = elementNode.getElement().getTransformedCoordinates(
+                                                                                  transformationNode
+                                                                                          .getTransformation());
+
         switch (elementNode.getElement().getElementType()) {
             case T_LINE:
-                // Line l = (Line) elementNode.getElement();
+                Line l = (Line) elementNode.getElement();
                 // Line2D.Double l2d = new Line2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue(),
                 // l.getX().get(1).doubleValue(), l.getY().get(1).doubleValue());
-                Line2D.Double l2d = new Line2D.Double(coordinates.get(0).getX(), coordinates.get(0).getY(), coordinates
-                        .get(1).getX(), coordinates.get(1).getY());
+                Line2D.Double l2d = new Line2D.Double(tc.get(0).getX(), tc.get(0).getY(), tc.get(1).getX(), tc.get(1)
+                        .getY());
 
                 drawShape(nodeG2D, l2d, parameterNode.getColor(), parameterNode.getLineStyle(), null, parameterNode
                         .getFillStyle());
@@ -178,6 +180,8 @@ public class DisplayExport implements Export {
 
             case T_RECTANGLE:
                 Rectangle rectangle = (Rectangle) elementNode.getElement();
+                // Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(), rectangle
+                // .getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
                 Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(), rectangle
                         .getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
 
@@ -217,11 +221,8 @@ public class DisplayExport implements Export {
                 Polyline pg = (Polyline) elementNode.getElement();
                 Polygon p = new Polygon();
 
-                Vector<Unit> xPg = pg.getX();
-                Vector<Unit> yPg = pg.getY();
-
-                for (int i = 0; i < xPg.size(); i++) {
-                    p.addPoint(xPg.get(i).intValue(), yPg.get(i).intValue());
+                for (int i = 0; i < tc.size(); i++) {
+                    p.addPoint((int) tc.get(i).getX(), (int) tc.get(i).getY());
                 }
                 drawShape(nodeG2D, p, parameterNode.getColor(), parameterNode.getLineStyle(), parameterNode.getFill(),
                           parameterNode.getFillStyle());
@@ -230,12 +231,9 @@ public class DisplayExport implements Export {
             case T_POLYLINE:
                 Polyline poly = (Polyline) elementNode.getElement();
 
-                Vector<Unit> xPo = poly.getX();
-                Vector<Unit> yPo = poly.getY();
-
-                for (int i = 0; i < xPo.size() - 1; i++) {
-                    Line2D.Double line2d = new Line2D.Double(xPo.get(i).doubleValue(), yPo.get(i).doubleValue(), xPo
-                            .get(i + 1).doubleValue(), yPo.get(i + 1).doubleValue());
+                for (int i = 0; i < tc.size() - 1; i++) {
+                    Line2D.Double line2d = new Line2D.Double(tc.get(i).getX(), tc.get(i).getY(), tc.get(i + 1).getX(),
+                            tc.get(i + 1).getY());
                     drawShape(nodeG2D, line2d, parameterNode.getColor(), parameterNode.getLineStyle(), null,
                               parameterNode.getFillStyle());
                 }
@@ -263,8 +261,8 @@ public class DisplayExport implements Export {
                 TextLayout layout = new TextLayout(text.getText(), font, frc);
 
                 Rectangle2D rec = layout.getBounds();
-                bounds = new UnitRectangle(rec.getX() + text.getX().get(0).doubleValue(), rec.getY() + text.getY()
-                        .get(0).doubleValue(), rec.getWidth(), rec.getHeight());
+                bounds = new UnitRectangle(rec.getX() + tc.get(0).getX(), rec.getY() + tc.get(0).getY(),
+                        rec.getWidth(), rec.getHeight());
                 nodeImg = new BufferedImage((int) rec.getWidth(), (int) rec.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
                 nodeG2D = (Graphics2D) nodeImg.getGraphics();
@@ -274,18 +272,15 @@ public class DisplayExport implements Export {
                     nodeG2D.setColor(parameterNode.getColor());
                 }
 
-                layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
+                layout.draw(nodeG2D, (float) tc.get(0).getX(), (float) tc.get(0).getY());
                 break;
 
             case T_WIRE:
                 Wire wire = (Wire) elementNode.getElement();
 
-                Vector<Unit> xWi = wire.getX();
-                Vector<Unit> yWi = wire.getY();
-
-                for (int i = 0; i < xWi.size() - 1; i++) {
-                    Line2D.Double line2d = new Line2D.Double(xWi.get(i).doubleValue(), yWi.get(i).doubleValue(), xWi
-                            .get(i + 1).doubleValue(), yWi.get(i + 1).doubleValue());
+                for (int i = 0; i < tc.size() - 1; i++) {
+                    Line2D.Double line2d = new Line2D.Double(tc.get(i).getX(), tc.get(i).getY(), tc.get(i + 1).getX(),
+                            tc.get(i + 1).getY());
                     drawShape(nodeG2D, line2d, parameterNode.getColor(), ElementStyle.DOTTED, null, parameterNode
                             .getFillStyle());
                 }
@@ -294,8 +289,8 @@ public class DisplayExport implements Export {
             case T_CONNECTOR:
                 Connector connector = (Connector) elementNode.getElement();
 
-                Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2,
-                        connector.getY().firstElement().doubleValue() - 2, 5, 5);
+                Ellipse2D.Double e2d = new Ellipse2D.Double(tc.firstElement().getX() - 2, tc.firstElement().getY() - 2,
+                        5, 5);
                 drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode
                         .getFillStyle());
 
@@ -315,8 +310,8 @@ public class DisplayExport implements Export {
                     Element e = gNode.getChildrenElementList().getFirst().getElement();
                     if (e.getElementType() == ElementType.T_CONNECTOR) {
                         nodeG2D.setColor(Color.BLACK);
-                        nodeG2D.drawString(connectorNames.get(i), e.getX().firstElement().floatValue() - 10, e.getY()
-                                .firstElement().floatValue() - 10);
+                        nodeG2D.drawString(connectorNames.get(i), (int) tc.firstElement().getX() - 10, (int) tc
+                                .firstElement().getY() - 10);
                         i++;
                     }
                 }
@@ -403,25 +398,5 @@ public class DisplayExport implements Export {
      */
     private void setZoomFactor(double zoomFactor) {
         this.zoomFactor = zoomFactor;
-    }
-
-    /**
-     * Transforms original element coordinates into corrected coordinates with all transformations applied.
-     *
-     * @param t {@link Transformation} to apply.
-     * @param x {@link Vector} of <code>x</code> coordinates.
-     * @param y {@link Vector} of <code>y</code> coordinates.
-     * @return {@link Vector} of corrected coordinates.
-     */
-    private Vector<UnitPoint> transformCoordinates(Transformation t, Vector<Unit> x, Vector<Unit> y) {
-        Vector<UnitPoint> result = new Vector<UnitPoint>();
-
-        for (int i = 0; i < x.size(); i++) {
-            UnitPoint up = new UnitPoint(x.get(i), y.get(i));
-            up = Transformation.multiply(t, up);
-            result.add(up);
-        }
-
-        return result;
     }
 }

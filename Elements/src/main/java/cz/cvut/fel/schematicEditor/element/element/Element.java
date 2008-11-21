@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.ElementType;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -89,7 +90,7 @@ public abstract class Element {
      *
      * @return the {@link Vector} of <code>x</code> coordinates.
      */
-    public Vector<Unit> getX() {
+    protected Vector<Unit> getX() {
         return this.x;
     }
 
@@ -98,8 +99,25 @@ public abstract class Element {
      *
      * @return the {@link Vector} of <code>y</code> coordinates.
      */
-    public Vector<Unit> getY() {
+    protected Vector<Unit> getY() {
         return this.y;
+    }
+
+    /**
+     * Getter for {@link Vector} of <code>transformedCoordinates</code> of {@link Element}. It can be used e.g. for
+     * correct drawing of instance of {@link Element}.
+     *
+     * @param t {@link Transformation} to apply to coordinates of {@link Element}.
+     * @return Transformed {@link Vector} of coordinates.
+     */
+    public Vector<UnitPoint> getTransformedCoordinates(Transformation t) {
+        Vector<UnitPoint> result = new Vector<UnitPoint>();
+
+        for (int i = 0; i < getX().size(); i++) {
+            result.add(transformCoordinate(t, getX().get(i), getY().get(i)));
+        }
+
+        return result;
     }
 
     /**
@@ -258,5 +276,22 @@ public abstract class Element {
             getX().add(new Pixel(element.getX().get(i).doubleValue()));
             getY().add(new Pixel(element.getY().get(i).doubleValue()));
         }
+    }
+
+    /**
+     * Transforms original element coordinate into corrected coordinate with all transformations applied.
+     *
+     * @param t {@link Transformation} to apply.
+     * @param x <code>x</code> coordinate.
+     * @param y <code>y</code> coordinate.
+     * @return Corrected coordinate.
+     */
+    private UnitPoint transformCoordinate(Transformation t, Unit x, Unit y) {
+        UnitPoint result = new UnitPoint();
+
+        result = new UnitPoint(x, y);
+        result = Transformation.multiply(t, result);
+
+        return result;
     }
 }
