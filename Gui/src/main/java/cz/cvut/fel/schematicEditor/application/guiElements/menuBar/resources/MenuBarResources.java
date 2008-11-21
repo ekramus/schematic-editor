@@ -118,13 +118,21 @@ public enum MenuBarResources {
      */
     VIEW_PART_PROPERTIES_MENU_ITEM("View part properties.."),
     /**
-     * Rotate left menu item string.
+     * Rotate anticlockwise menu item string.
      */
     ROTATE_ANTICLOCKWISE_MENU_ITEM("Rotate Anticlockwise"),
     /**
-     * Rotate right menu item string.
+     * Rotate clockwise menu item string.
      */
-    ROTATE_CLOCKWISE_MENU_ITEM("Rotate Clockwise");
+    ROTATE_CLOCKWISE_MENU_ITEM("Rotate Clockwise"),
+    /**
+     * Mirror horizontal menu item string.
+     */
+    MIRROR_HORIZONTAL_MENU_ITEM("Horizontal mirror"),
+    /**
+     * Mirror vertical menu item string.
+     */
+    MIRROR_VERTICAL_MENU_ITEM("Vertical mirror");
 
     /**
      * String value of item.

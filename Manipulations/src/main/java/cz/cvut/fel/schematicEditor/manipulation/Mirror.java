@@ -15,31 +15,22 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
- * This class implements <em>rotate</em> manipulation. <br/>
- * For now, there is only one coordinate. It can have following values:
- * <dl>
- * <dt>[1, 0]</dt>
- * <dd>rotation is anticlockwise 90 degrees</dd>
- * <dt>[-1, 0]</dt>
- * <dd>rotation is clockwise 90 degrees</dd>
- * <dt>anything else</dt>
- * <dd>rotation is 0 degrees</dd>
- * </dl>
+ * This class implements <em>mirror</em> manipulation.
  *
  * @author Urban Kravjansky
  */
-public class Rotate extends Manipulation {
+public class Mirror extends Manipulation {
     /**
      * {@link Logger} instance for logging purposes.
      */
     private static Logger logger;
 
     /**
-     * Default constructor. It initializes this {@link Rotate} {@link Manipulation}.
+     * Default constructor. It initializes this {@link Mirror} {@link Manipulation}.
      *
      * @param topNode top node of scene graph.
      */
-    protected Rotate(GroupNode topNode) {
+    protected Mirror(GroupNode topNode) {
         super(topNode);
         setManipulatedGroup(null);
 
@@ -51,7 +42,7 @@ public class Rotate extends Manipulation {
      */
     @Override
     public ManipulationType getManipulationType() {
-        return ManipulationType.ROTATE;
+        return ManipulationType.MIRROR;
     }
 
     /**
@@ -73,7 +64,7 @@ public class Rotate extends Manipulation {
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
-            logger.trace("object ROTATED");
+            logger.trace("object MIRRORED");
         }
         return this;
     }
@@ -83,12 +74,12 @@ public class Rotate extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Rotate r = new Rotate(getTopNode());
+        Mirror m = new Mirror(getTopNode());
 
-        r.setManipulatedGroup(getManipulatedGroup());
-        r.setManipulationCoordinates(new Vector<Unit>(getX()), new Vector<Unit>(getY()));
+        m.setManipulatedGroup(getManipulatedGroup());
+        m.setManipulationCoordinates(new Vector<Unit>(getX()), new Vector<Unit>(getY()));
 
-        return r;
+        return m;
     }
 
     /**
@@ -114,8 +105,6 @@ public class Rotate extends Manipulation {
      */
     @Override
     protected void execute() throws ManipulationExecutionException {
-        double angle = assesAngle();
-
         // get reference coordinate
         UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
 
@@ -123,9 +112,10 @@ public class Rotate extends Manipulation {
         Transformation initialTransformation = Transformation.getShift(rc);
         getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
 
-        // rotate
-        Transformation rotate = Transformation.getRotation(angle);
-        getManipulatedGroup().add(new TransformationNode(rotate));
+        // mirror
+        Transformation mirror = Transformation.getScale(getX().firstElement().doubleValue(), getY().firstElement()
+                .doubleValue());
+        getManipulatedGroup().add(new TransformationNode(mirror));
 
         // move back
         getManipulatedGroup().add(new TransformationNode(initialTransformation));
@@ -144,21 +134,7 @@ public class Rotate extends Manipulation {
      */
     @Override
     protected void unexecute() throws ManipulationExecutionException {
-        double angle = assesAngle();
-
-        // get reference coordinate
-        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
-
-        // move so that reference is in point 0,0
-        Transformation initialTransformation = Transformation.getShift(rc);
-        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
-
-        // rotate back
-        Transformation rotate = Transformation.getRotation(angle).getInverse();
-        getManipulatedGroup().add(new TransformationNode(rotate));
-
-        // move back
-        getManipulatedGroup().add(new TransformationNode(initialTransformation));
+        execute();
     }
 
     /**
@@ -176,27 +152,5 @@ public class Rotate extends Manipulation {
     @Override
     public void replaceLastManipulationCoordinates(Unit x, Unit y) {
         super.replaceLastManipulationCoordinates(x, y);
-    }
-
-    /**
-     * Assesses angle of rotation based on manipulation coordinates. In case manipulation coordinate is [1,0], than +90
-     * degrees will be returned. If it is equal [-1, 0], -90 degrees will be returned. Otherwise 0 will be returned.
-     *
-     * @return angle of rotation.
-     */
-    private double assesAngle() {
-        double x = getX().firstElement().doubleValue();
-        double y = getY().firstElement().doubleValue();
-
-        if (y != 0) {
-            return 0;
-        }
-        if (x == 1) {
-            return 90;
-        }
-        if (x == -1) {
-            return -90;
-        }
-        return 0;
     }
 }
