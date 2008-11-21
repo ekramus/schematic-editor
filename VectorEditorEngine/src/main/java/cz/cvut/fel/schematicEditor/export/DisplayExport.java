@@ -10,7 +10,6 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Ellipse2D;
@@ -336,7 +335,7 @@ public class DisplayExport implements Export {
 
         // commented out, as it caused rotate malfunction (graphics degradation). Transformations have to be reflected
         // directly to coordinates.
-        g2d.setTransform(new AffineTransform(m[0][0], m[1][0], m[0][1], m[1][1], m[0][2], m[1][2]));
+        // g2d.setTransform(new AffineTransform(m[0][0], m[1][0], m[0][1], m[1][1], m[0][2], m[1][2]));
         g2d.translate(bounds.getX(), bounds.getY());
         g2d.drawImage(nodeImg, 0, 0, null);
 
