@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.unit.twoDimesional;
 
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -34,6 +35,27 @@ public class UnitRectangle extends Rectangle2D {
      * @param r2d {@link Rectangle2D} to duplicate.
      */
     public UnitRectangle(final Rectangle2D r2d) {
+        setTopLeft(new UnitPoint(r2d.getX(), r2d.getY()));
+        setDim(new UnitPoint(r2d.getWidth(), r2d.getHeight()));
+    }
+
+    /**
+     * Constructor with given 4 {@link UnitPoint}s. It initializes new {@link UnitRectangle} with {@link Rectangle2D}
+     * containing these 4 points.
+     *
+     * @param a 1st point.
+     * @param b 2nd point.
+     * @param c 3rd point.
+     * @param d 4th point.
+     */
+    public UnitRectangle(final UnitPoint a, final UnitPoint b, final UnitPoint c, final UnitPoint d) {
+        Rectangle2D.Double r2d = new Rectangle2D.Double();
+
+        r2d.add(new Point2D.Double(a.getX(), a.getY()));
+        r2d.add(new Point2D.Double(b.getX(), b.getY()));
+        r2d.add(new Point2D.Double(c.getX(), c.getY()));
+        r2d.add(new Point2D.Double(d.getX(), d.getY()));
+
         setTopLeft(new UnitPoint(r2d.getX(), r2d.getY()));
         setDim(new UnitPoint(r2d.getWidth(), r2d.getHeight()));
     }
@@ -174,6 +196,33 @@ public class UnitRectangle extends Rectangle2D {
      */
     public final UnitPoint getTopLeft() {
         return this.topLeft;
+    }
+
+    /**
+     * Getter for <code>topRight</code> {@link UnitRectangle} coordinate.
+     *
+     * @return the topRight
+     */
+    public final UnitPoint getTopRight() {
+        return new UnitPoint(getTopLeft().getX() + getWidth(), getTopLeft().getY());
+    }
+
+    /**
+     * Getter for <code>bottomLeft</code> {@link UnitRectangle} coordinate.
+     *
+     * @return the bottomLeft
+     */
+    public final UnitPoint getBottomLeft() {
+        return new UnitPoint(getTopLeft().getX(), getTopLeft().getY() + getHeight());
+    }
+
+    /**
+     * Getter for <code>bottomRight</code> {@link UnitRectangle} coordinate.
+     *
+     * @return the bottomRight
+     */
+    public final UnitPoint getBottomRight() {
+        return new UnitPoint(getTopLeft().getX() + getWidth(), getTopLeft().getY() + getHeight());
     }
 
     /**
