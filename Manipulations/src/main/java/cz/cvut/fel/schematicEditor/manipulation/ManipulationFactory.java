@@ -36,6 +36,8 @@ public class ManipulationFactory {
                 return new Edit(topNode);
             case ROTATE:
                 return new Rotate(topNode);
+            case MIRROR:
+                return new Mirror(topNode);
             case COPY:
                 return new Copy(topNode);
             case CUT:

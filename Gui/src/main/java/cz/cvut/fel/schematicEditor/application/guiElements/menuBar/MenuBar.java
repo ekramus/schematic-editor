@@ -17,6 +17,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.Deb
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.ExitMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.GridMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.ImportMenuItemListener;
+import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.MirrorElementMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.OpenMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.RotateElementMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.SaveAsMenuItemListener;
@@ -120,6 +121,14 @@ public final class MenuBar extends JMenuBar {
      * Plugins menu instance.
      */
     private JMenu             pluginsMenu                 = null;
+    /**
+     * Mirror vertical menu item instance.
+     */
+    private JMenuItem         mirrorVerticalMenuItem      = null;
+    /**
+     * Mirror horizontal menu item instance.
+     */
+    private JMenuItem         mirrorHorizontalMenuItem    = null;
     /**
      * Rotate anticlockwise menu item instance.
      */
@@ -283,6 +292,8 @@ public final class MenuBar extends JMenuBar {
             this.editMenu.add(new JSeparator());
             this.editMenu.add(getRotateAnticlockwiseMenuItem());
             this.editMenu.add(getRotateClockwiseMenuItem());
+            this.editMenu.add(getMirrorHorizontalMenuItem());
+            this.editMenu.add(getMirrorVerticalMenuItem());
             this.editMenu.add(new JSeparator());
             this.editMenu.add(getSnapToGridCheckBoxMenuItem());
             this.editMenu.add(getGridMenuItem());
@@ -410,6 +421,34 @@ public final class MenuBar extends JMenuBar {
             this.rotateAnticlockwiseMenuItem.addActionListener(new RotateElementMenuItemListener(new UnitPoint(-1, 0)));
         }
         return this.rotateAnticlockwiseMenuItem;
+    }
+
+    /**
+     * Getter for <code>mirrorHorizontalMenuItem</code>.
+     *
+     * @return <code>mirrorHorizontalMenuItem</code> instance.
+     */
+    private JMenuItem getMirrorHorizontalMenuItem() {
+        if (this.mirrorHorizontalMenuItem == null) {
+            this.mirrorHorizontalMenuItem = new JMenuItem();
+            this.mirrorHorizontalMenuItem.setText(MenuBarResources.MIRROR_HORIZONTAL_MENU_ITEM.getText());
+            this.mirrorHorizontalMenuItem.addActionListener(new MirrorElementMenuItemListener(new UnitPoint(-1, 1)));
+        }
+        return this.mirrorHorizontalMenuItem;
+    }
+
+    /**
+     * Getter for <code>mirrorVerticalMenuItem</code>.
+     *
+     * @return <code>mirrorVerticalMenuItem</code> instance.
+     */
+    private JMenuItem getMirrorVerticalMenuItem() {
+        if (this.mirrorVerticalMenuItem == null) {
+            this.mirrorVerticalMenuItem = new JMenuItem();
+            this.mirrorVerticalMenuItem.setText(MenuBarResources.MIRROR_VERTICAL_MENU_ITEM.getText());
+            this.mirrorVerticalMenuItem.addActionListener(new MirrorElementMenuItemListener(new UnitPoint(1, -1)));
+        }
+        return this.mirrorVerticalMenuItem;
     }
 
     /**

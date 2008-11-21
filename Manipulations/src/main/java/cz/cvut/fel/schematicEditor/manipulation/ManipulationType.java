@@ -42,4 +42,8 @@ public enum ManipulationType {
      * Rotate manipulation.
      */
     ROTATE,
+    /**
+     * Mirror manipulation.
+     */
+    MIRROR,
 }
