@@ -61,15 +61,7 @@ public class Rotate extends Manipulation {
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
             boolean isMouseClicked) throws UnknownManipulationException {
-        // check, whether rotate is possible or not
-        if (isActive()) {
-            // add identity transformation, so it can be later changed
-            getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
-        }
-        // rotate is not possible - fall back to Select manipulation
-        else {
-            // nothing to do
-        }
+
         return this;
     }
 
@@ -122,12 +114,7 @@ public class Rotate extends Manipulation {
      */
     @Override
     protected void execute() throws ManipulationExecutionException {
-        // TODO finalize
-        // UnitPoint center = new UnitPoint(getX().get(0), getY().get(0));
-        // UnitPoint first = new UnitPoint(getX().get(1), getY().get(1));
-        // UnitPoint last = new UnitPoint(getX().get(2), getY().get(2));
-
-        double angle = -90;
+        double angle = assesAngle();
 
         // get reference coordinate
         UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
@@ -157,14 +144,21 @@ public class Rotate extends Manipulation {
      */
     @Override
     protected void unexecute() throws ManipulationExecutionException {
-        // TODO finalize
-        // UnitPoint center = new UnitPoint(getX().get(0), getY().get(0));
-        // UnitPoint first = new UnitPoint(getX().get(1), getY().get(1));
-        // UnitPoint last = new UnitPoint(getX().get(2), getY().get(2));
+        double angle = assesAngle();
 
-        double angle = -Math.PI;
+        // get reference coordinate
+        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
 
-        Transformation rotate = Transformation.getRotation(angle);
+        // move so that reference is in point 0,0
+        Transformation initialTransformation = Transformation.getShift(rc);
+        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
+
+        // rotate back
+        Transformation rotate = Transformation.getRotation(angle).getInverse();
+        getManipulatedGroup().add(new TransformationNode(rotate));
+
+        // move back
+        getManipulatedGroup().add(new TransformationNode(initialTransformation));
     }
 
     /**
@@ -182,5 +176,27 @@ public class Rotate extends Manipulation {
     @Override
     public void replaceLastManipulationCoordinates(Unit x, Unit y) {
         super.replaceLastManipulationCoordinates(x, y);
+    }
+
+    /**
+     * Assesses angle of rotation based on manipulation coordinates. In case manipulation coordinate is [1,0], than +90
+     * degrees will be returned. If it is equal [-1, 0], -90 degrees will be returned. Otherwise 0 will be returned.
+     *
+     * @return angle of rotation.
+     */
+    private double assesAngle() {
+        double x = getX().firstElement().doubleValue();
+        double y = getY().firstElement().doubleValue();
+
+        if (y != 0) {
+            return 0;
+        }
+        if (x == 1) {
+            return 90;
+        }
+        if (x == -1) {
+            return -90;
+        }
+        return 0;
     }
 }

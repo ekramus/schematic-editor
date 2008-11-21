@@ -120,11 +120,11 @@ public enum MenuBarResources {
     /**
      * Rotate left menu item string.
      */
-    ROTATE_LEFT_MENU_ITEM("Rotate Left"),
+    ROTATE_ANTICLOCKWISE_MENU_ITEM("Rotate Anticlockwise"),
     /**
      * Rotate right menu item string.
      */
-    ROTATE_RIGHT_MENU_ITEM("Rotate Right");
+    ROTATE_CLOCKWISE_MENU_ITEM("Rotate Clockwise");
 
     /**
      * String value of item.

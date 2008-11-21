@@ -28,6 +28,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.Sna
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners.ViewPartPropertiesMenuItemListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.resources.MenuBarResources;
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements menu bar. It is used for all menu based operations.
@@ -120,13 +121,13 @@ public final class MenuBar extends JMenuBar {
      */
     private JMenu             pluginsMenu                 = null;
     /**
-     * Rotate left menu item instance.
+     * Rotate anticlockwise menu item instance.
      */
-    private JMenuItem         rotateLeftMenuItem          = null;
+    private JMenuItem         rotateAnticlockwiseMenuItem = null;
     /**
-     * Rotate right menu item instance.
+     * Rotate clockwise menu item instance.
      */
-    private JMenuItem         rotateRightMenuItem         = null;
+    private JMenuItem         rotateClockwiseMenuItem     = null;
     /**
      * Save as menu item instance.
      */
@@ -280,8 +281,8 @@ public final class MenuBar extends JMenuBar {
             this.editMenu.add(getCopyMenuItem());
             this.editMenu.add(getPasteMenuItem());
             this.editMenu.add(new JSeparator());
-            this.editMenu.add(getRotateLeftMenuItem());
-            this.editMenu.add(getRotateRightMenuItem());
+            this.editMenu.add(getRotateAnticlockwiseMenuItem());
+            this.editMenu.add(getRotateClockwiseMenuItem());
             this.editMenu.add(new JSeparator());
             this.editMenu.add(getSnapToGridCheckBoxMenuItem());
             this.editMenu.add(getGridMenuItem());
@@ -398,31 +399,31 @@ public final class MenuBar extends JMenuBar {
     }
 
     /**
-     * Getter for <code>rotateLeftMenuItem</code>.
+     * Getter for <code>rotateAnticlockwiseMenuItem</code>.
      *
-     * @return <code>rotateLeftMenuItem</code> instance.
+     * @return <code>rotateAnticlockwiseMenuItem</code> instance.
      */
-    private JMenuItem getRotateLeftMenuItem() {
-        if (this.rotateLeftMenuItem == null) {
-            this.rotateLeftMenuItem = new JMenuItem();
-            this.rotateLeftMenuItem.setText(MenuBarResources.ROTATE_LEFT_MENU_ITEM.getText());
-            this.rotateLeftMenuItem.addActionListener(new RotateElementMenuItemListener());
+    private JMenuItem getRotateAnticlockwiseMenuItem() {
+        if (this.rotateAnticlockwiseMenuItem == null) {
+            this.rotateAnticlockwiseMenuItem = new JMenuItem();
+            this.rotateAnticlockwiseMenuItem.setText(MenuBarResources.ROTATE_ANTICLOCKWISE_MENU_ITEM.getText());
+            this.rotateAnticlockwiseMenuItem.addActionListener(new RotateElementMenuItemListener(new UnitPoint(-1, 0)));
         }
-        return this.rotateLeftMenuItem;
+        return this.rotateAnticlockwiseMenuItem;
     }
 
     /**
-     * Getter for <code>rotateRightMenuItem</code>.
+     * Getter for <code>rotateClockwiseMenuItem</code>.
      *
-     * @return <code>rotateRightMenuItem</code> instance.
+     * @return <code>rotateClockwiseMenuItem</code> instance.
      */
-    private JMenuItem getRotateRightMenuItem() {
-        if (this.rotateRightMenuItem == null) {
-            this.rotateRightMenuItem = new JMenuItem();
-            this.rotateRightMenuItem.setText(MenuBarResources.ROTATE_RIGHT_MENU_ITEM.getText());
-            this.rotateRightMenuItem.addActionListener(new RotateElementMenuItemListener());
+    private JMenuItem getRotateClockwiseMenuItem() {
+        if (this.rotateClockwiseMenuItem == null) {
+            this.rotateClockwiseMenuItem = new JMenuItem();
+            this.rotateClockwiseMenuItem.setText(MenuBarResources.ROTATE_CLOCKWISE_MENU_ITEM.getText());
+            this.rotateClockwiseMenuItem.addActionListener(new RotateElementMenuItemListener(new UnitPoint(1, 0)));
         }
-        return this.rotateRightMenuItem;
+        return this.rotateClockwiseMenuItem;
     }
 
     /**
