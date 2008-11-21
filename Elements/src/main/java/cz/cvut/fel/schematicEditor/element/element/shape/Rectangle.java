@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D.Double;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
@@ -45,9 +46,46 @@ public class Rectangle extends Polygon {
     }
 
     /**
+     * Computes top left point after {@link Transformation} is applied.
      *
+     * @param t {@link Transformation} to apply.
+     * @return Transformed top left coordinate.
      */
-    public double getTopLeftX() {
+    public UnitPoint getTopLeft(Transformation t) {
+        double resultX;
+        double resultY;
+
+        UnitPoint a = new UnitPoint(getX().get(0).doubleValue(), getY().get(0).doubleValue());
+        UnitPoint b = new UnitPoint(getX().get(1).doubleValue(), getY().get(1).doubleValue());
+
+        a = Transformation.multiply(t, a);
+        b = Transformation.multiply(t, b);
+
+        // a is in right half
+        if (a.getX() < b.getX()) {
+            resultX = a.getX();
+        }
+        // a is in left half
+        else {
+            resultX = b.getX();
+        }
+
+        // a is in upper half
+        if (a.getY() < b.getY()) {
+            resultY = a.getY();
+        }
+        // a is in lower half
+        else {
+            resultY = b.getY();
+        }
+
+        return new UnitPoint(resultX, resultY);
+    }
+
+    /**
+    *
+    */
+    private double getTopLeftX() {
         // x is in right half
         if (getX().get(1).doubleValue() - getX().get(0).doubleValue() > 0) {
             return getX().get(0).doubleValue();
@@ -57,9 +95,9 @@ public class Rectangle extends Polygon {
     }
 
     /**
-     *
-     */
-    public double getTopLeftY() {
+    *
+    */
+    private double getTopLeftY() {
         // y is in bottom half
         if (getY().get(1).doubleValue() - getY().get(0).doubleValue() > 0) {
             return getY().get(0).doubleValue();
@@ -71,7 +109,7 @@ public class Rectangle extends Polygon {
     /**
      *
      */
-    public double getWidth() {
+    private double getWidth() {
         double w = Math.abs(getX().get(1).doubleValue() - getX().get(0).doubleValue());
         double h = Math.abs(getY().get(1).doubleValue() - getY().get(0).doubleValue());
 
@@ -84,9 +122,23 @@ public class Rectangle extends Polygon {
     }
 
     /**
+    *
+    */
+    public UnitPoint getDim(Transformation t) {
+        double w = getWidth();
+        double h = getHeight();
+
+        // convert by given tranformation
+        UnitPoint result = new UnitPoint(w, h);
+        // result = Transformation.multiply(t, result);
+
+        return result;
+    }
+
+    /**
      *
      */
-    public double getHeight() {
+    private double getHeight() {
         double w = Math.abs(getX().get(1).doubleValue() - getX().get(0).doubleValue());
         double h = Math.abs(getY().get(1).doubleValue() - getY().get(0).doubleValue());
 

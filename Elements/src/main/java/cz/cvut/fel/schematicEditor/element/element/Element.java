@@ -125,7 +125,7 @@ public abstract class Element {
      *
      * @param x {@link Vector} of <code>c</code> coordinates.
      */
-    public void setX(Vector<Unit> x) {
+    protected void setX(Vector<Unit> x) {
         this.x = x;
     }
 
@@ -134,8 +134,31 @@ public abstract class Element {
      *
      * @param y {@link Vector} of <code>c</code> coordinates.
      */
-    public void setY(Vector<Unit> y) {
+    protected void setY(Vector<Unit> y) {
         this.y = y;
+    }
+
+    /**
+     * Setter for <code>tranformedCoordinates</code>. These coordinates are transformed with inverse transformation to
+     * given transformation, so the coordinates in element remain unaffected by transformation.
+     *
+     * @param coordinates transformed coordinates to set.
+     * @param t {@link Transformation} to use to get inverse one.
+     */
+    public void setTransformedCoordinates(Vector<UnitPoint> coordinates, Transformation t) {
+        Vector<Unit> x = new Vector<Unit>();
+        Vector<Unit> y = new Vector<Unit>();
+
+        for (int i = 0; i < coordinates.size(); i++) {
+            UnitPoint up = coordinates.get(i);
+            up = Transformation.multiply(t.getInverse(), up);
+
+            x.add(up.getUnitX());
+            y.add(up.getUnitY());
+        }
+
+        setX(x);
+        setY(y);
     }
 
     /**
@@ -294,4 +317,5 @@ public abstract class Element {
 
         return result;
     }
+
 }
