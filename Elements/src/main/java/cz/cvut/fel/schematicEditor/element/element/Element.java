@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.ElementType;
-import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -262,20 +261,22 @@ public abstract class Element {
     }
 
     /**
-     * Transforms original element coordinate into corrected coordinate with all transformations applied.
+     * Getter for center of rotation transformation. For shapes it is geometry center of shape, for parts it can be user
+     * defined.
      *
-     * @param t {@link Transformation} to apply.
-     * @param x <code>x</code> coordinate.
-     * @param y <code>y</code> coordinate.
-     * @return Corrected coordinate.
+     * @return Center of {@link Element} for rotation manipulation.
      */
-    private UnitPoint transformCoordinate(Transformation t, Unit x, Unit y) {
-        UnitPoint result = new UnitPoint();
+    public UnitPoint getRotationCenter() {
+        double x = 0;
+        double y = 0;
 
-        result = new UnitPoint(x, y);
-        result = Transformation.multiply(t, result);
+        // iterative calculation of average
+        double size = getX().size();
+        for (int i = 0; i < size; i++) {
+            x += getX().get(i).doubleValue() / size;
+            y += getY().get(i).doubleValue() / size;
+        }
 
-        return result;
+        return new UnitPoint(x, y);
     }
-
 }
