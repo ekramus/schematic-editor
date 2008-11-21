@@ -132,6 +132,8 @@ public class Rotate extends Manipulation {
         // get reference coordinate
         UnitPoint reference = getManipulatedGroup().getChildrenElementList().getFirst().getElement()
                 .getTransformedCoordinates(getManipulatedGroup().getTransformation()).get(0);
+        // set reference as original point without being transformed
+        reference = Transformation.multiply(getManipulatedGroup().getTransformation().getInverse(), reference);
 
         // move so that reference is in point 0,0
         Transformation initialTransformation = Transformation.getShift(reference.getX(), reference.getY());
