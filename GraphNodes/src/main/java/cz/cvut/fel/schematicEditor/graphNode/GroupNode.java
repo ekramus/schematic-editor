@@ -628,9 +628,7 @@ public class GroupNode extends Node {
                 case T_CONNECTOR:
                 case T_WIRE:
                     Element element = childNode.getElement();
-                    for (int i = 0; i < element.getX().size(); i++) {
-                        result.add(new UnitPoint(element.getX().get(i), element.getY().get(i)));
-                    }
+                    result = element.getTransformedCoordinates(getTransformation());
                     break;
                 case T_PART:
                     PartNode partNode = (PartNode) childNode;
