@@ -44,6 +44,8 @@ public class MirrorElementMenuItemListener implements ActionListener {
                     m.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                     m.addManipulationCoordinates(getMirrorAxe().getUnitX(), getMirrorAxe().getUnitY());
                     Structures.getManipulationQueue().execute(m);
+
+                    ScenePanel.getInstance().schemeInvalidate(null);
                 } catch (UnknownManipulationException ume) {
                     ume.printStackTrace();
                 }

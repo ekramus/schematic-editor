@@ -24,6 +24,10 @@ public class Part extends Element {
      * Field containing part properties.
      */
     private PartProperties    partProperties;
+    /**
+     * Field containing part rotation center.
+     */
+    private UnitPoint         rotationCenter;
 
     /**
      * Default constructor. It initializes {@link Part} element.
@@ -35,6 +39,7 @@ public class Part extends Element {
 
         setConnectorVector(new Vector<UnitPoint>());
         setPartProperties(partProperties);
+        setRotationCenter(new UnitPoint());
     }
 
     /**
@@ -107,5 +112,20 @@ public class Part extends Element {
      */
     private void setConnectorVector(Vector<UnitPoint> connectorVector) {
         this.connectorVector = connectorVector;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.element.Element#getRotationCenter()
+     */
+    @Override
+    public UnitPoint getRotationCenter() {
+        return this.rotationCenter;
+    }
+
+    /**
+     * @param rotationCenter the rotationCenter to set
+     */
+    public void setRotationCenter(UnitPoint rotationCenter) {
+        this.rotationCenter = rotationCenter;
     }
 }

@@ -45,6 +45,8 @@ public class ManipulationFactory {
                 throw new UnknownManipulationException(type);
             case PASTE:
                 return new Paste(topNode);
+            case SELECT_ROTATION_CENTER:
+                return new SelectRotationCenter(topNode);
             default:
                 throw new UnknownManipulationException(type);
         }

@@ -46,4 +46,8 @@ public enum ManipulationType {
      * Mirror manipulation.
      */
     MIRROR,
+    /**
+     * Select rotation center manipulation.
+     */
+    SELECT_ROTATION_CENTER,
 }
