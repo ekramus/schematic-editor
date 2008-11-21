@@ -318,6 +318,13 @@ public class DisplayExport implements Export {
                     }
                 }
 
+                // draw partRotationCenter, if different from [0,0]
+                UnitPoint rotationCenter = partNode.getElement().getRotationCenter();
+                if ((rotationCenter.getX() != 0) && (rotationCenter.getY() != 0)) {
+                    nodeG2D.setColor(Color.RED);
+                    nodeG2D.drawOval((int) rotationCenter.getX() - 2, (int) rotationCenter.getY() - 2, 4, 4);
+                }
+
                 // TODO draw all necessary info
 
                 break;
@@ -326,7 +333,7 @@ public class DisplayExport implements Export {
                 break;
         }
 
-        double m[][] = transformationNode.getTransformation().getTransformationMatrix();
+        // double m[][] = transformationNode.getTransformation().getTransformationMatrix();
 
         Graphics2D g2d = (Graphics2D) bufferedImage.getGraphics();
 
