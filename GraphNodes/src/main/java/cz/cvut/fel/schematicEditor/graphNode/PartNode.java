@@ -134,5 +134,8 @@ public class PartNode extends ElementNode {
     @Override
     public void modifyCoordinates(Transformation t) {
         getPartGroupNode().add(new TransformationNode(t));
+
+        Part part = (Part) getElement();
+        part.setRotationCenter(Transformation.multiply(t, part.getRotationCenter()));
     }
 }
