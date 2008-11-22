@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
@@ -38,17 +39,17 @@ public class SVGExport implements Export {
     /**
      * This field represents monochromatic status.
      */
-    private final boolean isMonochromaticColor = false;
+    private boolean     monochromaticColor;
     /**
-     * This field reperesents output PrintStream for SVG output.
+     * Represents output {@link PrintStream} for SVG output.
      */
-    PrintStream           out;
+    private PrintStream out;
 
     /**
      * Starts exporting into SVG
      *
      * @param sg actual SceneGraph instance.
-     * @param output output file name.
+     * @param output output {@link File} object.
      */
     public void export(SceneGraph sg, Object output) {
         File file = (File) output;
@@ -65,7 +66,7 @@ public class SVGExport implements Export {
         }
 
         // print header
-        printHead(500, 500, 500, 500);
+        print(getHead(500, 500, 500, 500));
         //
         search(sg.getTopNode());
         // print footer
@@ -75,10 +76,10 @@ public class SVGExport implements Export {
     }
 
     /**
-     * This method creates style string for given ParameterNode.
+     * Creates style string for given {@link ParameterNode}.
      *
-     * @param pn given ParameterNode.
-     * @return String representing style attribute
+     * @param pn given {@link ParameterNode}.
+     * @return String representing style attribute.
      */
     private String createStyleString(ParameterNode pn) {
         String styleString;
@@ -95,7 +96,7 @@ public class SVGExport implements Export {
         }
 
         // stroking color
-        if (this.isMonochromaticColor) { // if export has to be monochromatic
+        if (this.monochromaticColor) { // if export has to be monochromatic
             col = Color.BLACK;
         } else {
             col = pn.getColor();
@@ -337,6 +338,11 @@ public class SVGExport implements Export {
                 drawText(tx, new Point2D.Double(tx.getX().get(0).doubleValue(), tx.getY().get(0).doubleValue()), pn, tn);
                 break;
 
+            case T_WIRE:
+                Wire w = (Wire) en.getElement();
+                drawPoly(false, w.getX(), w.getY(), pn, tn);
+                break;
+
             default:
                 System.out.println(en.getElement().getElementType());
                 break;
@@ -383,8 +389,8 @@ public class SVGExport implements Export {
         this.out.print(buf);
     }
 
-    /*
-     * Draw rectangle.
+    /**
+     * Draws rectangle.
      */
     private void drawRectangle(Point2D.Double start, double width, double height, ParameterNode pn, Transformation tn) {
         this.out.println("<rect x=\"" + start.getX()
@@ -432,6 +438,29 @@ public class SVGExport implements Export {
     }
 
     /**
+     * @return the out
+     */
+    private final PrintStream getOut() {
+        return this.out;
+    }
+
+    /**
+     * @return the monochromaticColor
+     */
+    private boolean isMonochromaticColor() {
+        return this.monochromaticColor;
+    }
+
+    /**
+     * Prints given {@link String} into <code>output</code>.
+     *
+     * @param s {@link String} to print.
+     */
+    private final void print(final String s) {
+        getOut().print(s);
+    }
+
+    /**
      * Print <i>svg</i> tag to end of document
      */
     private void printFooter() {
@@ -439,13 +468,21 @@ public class SVGExport implements Export {
     }
 
     /**
-     * Prints head of SVG document with neccesary information
+     * Prints head of SVG document with necessary information.
+     *
+     * @param width
+     * @param height
+     * @param viewBoxWidth
+     * @param viewBoxHeight
+     * @return
      */
-    private void printHead(int width, int height, int viewBoxWidth, int viewBoxHeight) {
-        this.out.println("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\" ?>");
-        this.out
-                .println("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">");
-        this.out.println("<svg width=\"" + width
+    private String getHead(int width, int height, int viewBoxWidth, int viewBoxHeight) {
+        StringBuilder result = new StringBuilder();
+
+        result.append("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\" ?>\n");
+        result
+                .append("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
+        result.append("<svg width=\"" + width
                 + "px\" height=\""
                 + height
                 + "px\" viewBox=\"0 0 "
@@ -453,12 +490,16 @@ public class SVGExport implements Export {
                 + " "
                 + viewBoxHeight
                 + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">");
+
+        return result.toString();
     }
 
+    // TODO modify this to use same approach as <code>DisplayExport</code>.
     /**
      * Depth-first search of Node tree
      */
-    private void search(GroupNode gN) {
+    private String search(GroupNode gN) {
+        StringBuilder result = new StringBuilder();
 
         Transformation t = gN.getTransformation();
         ParameterNode p = gN.getChildrenParameterNode();
@@ -482,14 +523,14 @@ public class SVGExport implements Export {
                     drawNode(child, null, null);
                 }
             } else if (child instanceof PartNode) {
-                // nothing to do yet
+                search(((PartNode) child).getPartGroupNode());
             } else if (child instanceof WireNode) {
-                // nothing to do yet
+                drawNode(child, p, t);
             }
         }
 
         for (GroupNode child : gN.getChildrenGroupList()) {
-            this.search(child);
+            search(child);
 
         }
 
@@ -497,6 +538,20 @@ public class SVGExport implements Export {
             this.out.println("</g>");
         }
 
+        return result.toString();
     }
 
+    /**
+     * @param monochromaticColor the monochromaticColor to set
+     */
+    private void setMonochromaticColor(boolean monochromaticColor) {
+        this.monochromaticColor = monochromaticColor;
+    }
+
+    /**
+     * @param out the out to set
+     */
+    private final void setOut(final PrintStream out) {
+        this.out = out;
+    }
 }
