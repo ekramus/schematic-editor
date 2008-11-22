@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
@@ -108,6 +109,10 @@ public class PSExport implements Export {
                 drawText(t.getText(), t.getSize(), new Point2D.Double(t.getX().get(0).doubleValue(), t.getY().get(0)
                         .doubleValue()), pn, tn.getTransformation());
                 break;
+            case T_WIRE:
+                Wire w = (Wire) en.getElement();
+                drawPoly(false, w.getX(), w.getY(), pn, tn.getTransformation());
+                break;
 
             default:
                 break;
@@ -173,6 +178,8 @@ public class PSExport implements Export {
 
         if (closedPath) {
             this.out.println(" closepath");
+        } else {
+            this.out.println();
         }
 
         printFill(pn.getColor(), pn.getFill());
