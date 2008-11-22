@@ -23,6 +23,7 @@ import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
+import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -83,6 +84,7 @@ public class SVGExport implements Export {
         String styleString;
         Color col;
         String colorString;
+        String opacity;
         String fillString;
         String widthString;
         int width;
@@ -116,6 +118,9 @@ public class SVGExport implements Export {
             fillString = "fill:none";
         }
 
+        // fill opacity
+        opacity = " opacity=\"" + ((double) col.getAlpha() / 255) + "\"";
+
         // stroking width
         width = pn.getWidth().intValue();
         if (width > 0) {
@@ -124,7 +129,7 @@ public class SVGExport implements Export {
             widthString = "stroke-width:1";
         }
 
-        styleString = " style=\"" + fillString + ";" + colorString + ";" + widthString + "\"";
+        styleString = opacity + " style=\"" + fillString + ";" + colorString + ";" + widthString + "\"";
 
         return styleString;
     }
@@ -340,35 +345,42 @@ public class SVGExport implements Export {
     }
 
     /**
-     * This method draw polyline or polygon
+     * Draws either polyline or polygon. Decision is based on parameter <code>closedPath</code>.
      *
-     * @param closedPath true for polygon, false for polyline
-     * @param x
-     * @param y
-     * @param pn
-     * @param tn
+     * @param closedPath true for polygon, false for polyline.
+     * @param x {@link Vector} of <code>x</code> coordinates.
+     * @param y {@link Vector} of <code>y</code> coordinates.
+     * @param pn Instance of {@link ParameterNode} for this shape.
+     * @param tn Instance of {@link TransformationNode} for this shape.
      */
-
     private void drawPoly(boolean closedPath, Vector<Unit> x, Vector<Unit> y, ParameterNode pn, Transformation tn) {
+        StringBuilder buf = new StringBuilder();
+        int size = x.size();
 
-        int size;
-
+        // select either polyline or polygon
         if (closedPath) {
-            this.out.print("<polygon points=\"");
-            size = x.size() - 1;
+            buf.append("<polygon points=\"");
+            // this.out.print("<polygon points=\"");
+            // last element (which is same as first), will not be included
+            size -= 1;
         } else {
-            this.out.print("<polyline points=\"");
-            size = x.size();
+            buf.append("<polyline points=\"");
         }
 
+        // iterate through all coordinates
         for (int i = 0; i < size; i++) {
-            this.out.print(x.get(i) + "," + y.get(i) + " ");
+            buf.append(x.get(i).doubleValue() + "," + y.get(i).doubleValue() + " ");
         }
+        buf.deleteCharAt(buf.length() - 1);
 
-        this.out.print("\" ");
+        // finish quote
+        buf.append("\" ");
 
-        this.out.print(createTransformString(tn) + "" + createStyleString(pn) + "/>");
+        // append transform string
+        buf.append(createTransformString(tn) + "" + createStyleString(pn) + "/>");
 
+        // output string
+        this.out.print(buf);
     }
 
     /*
