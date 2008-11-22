@@ -28,8 +28,8 @@ public class PSExport implements Export {
 
     private final boolean monochromaticColor = false;
 
-    PrintStream     out;
-    File            file;
+    PrintStream           out;
+    File                  file;
 
     public void export(SceneGraph sg, Object output) {
 
@@ -47,7 +47,7 @@ public class PSExport implements Export {
 
         this.out = new PrintStream(fos);
 
-        printHead(new Point2D.Float(0, 0), new Point2D.Float(1000, 1000));
+        printHead(new Point2D.Float(0, 0), new Point2D.Float(500, 500));
 
         for (Node node : sg) {
             if (node instanceof TransformationNode) {
@@ -166,13 +166,13 @@ public class PSExport implements Export {
 
         for (int i = 0; i < size; i++) {
             if (i == 0) {
-                this.out.print(" " + x.get(i) + " " + y.get(i) + " moveto");
+                this.out.print(" " + x.get(i).doubleValue() + " " + y.get(i).doubleValue() + " moveto");
             }
-            this.out.print(" " + x.get(i) + " " + y.get(i) + " lineto");
+            this.out.print(" " + x.get(i).doubleValue() + " " + y.get(i).doubleValue() + " lineto");
         }
 
         if (closedPath) {
-            this.out.print(" closepath");
+            this.out.println(" closepath");
         }
 
         printFill(pn.getColor(), pn.getFill());
@@ -229,7 +229,7 @@ public class PSExport implements Export {
 
         this.out.print(" newpath");
         this.out.print(" " + finish.getX() + " " + finish.getY() + " moveto");
-        this.out.print(" " + start.getX() + " " + start.getY() + " lineto");
+        this.out.println(" " + start.getX() + " " + start.getY() + " lineto");
 
         printFill(pn.getColor(), pn.getFill());
 
