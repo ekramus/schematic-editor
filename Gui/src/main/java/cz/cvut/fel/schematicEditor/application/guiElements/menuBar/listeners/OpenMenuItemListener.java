@@ -56,8 +56,8 @@ public final class OpenMenuItemListener implements ActionListener {
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             env.setLastOpenFolder(file.getParent());
-            SceneGraph sg = deserialize(ScenePanel.getInstance().getSchemeSG().getClass(), file);
-            ScenePanel.getInstance().setSchemeSG(sg);
+            SceneGraph.initialize(deserialize(ScenePanel.getInstance().getSchemeSG().getClass(), file));
+            // ScenePanel.getInstance().setSchemeSG(sg);
 
             ScenePanel.getInstance().schemeInvalidate(null);
         }

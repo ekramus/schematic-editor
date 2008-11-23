@@ -43,6 +43,7 @@ public class InductorProperties extends PartProperties {
      * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectors()
      */
     @Override
+    @Deprecated
     public Vector<String> getPartConnectors() {
         Vector<String> result = new Vector<String>();
 
@@ -52,9 +53,7 @@ public class InductorProperties extends PartProperties {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
+    /**
      * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartType()
      */
     @Override

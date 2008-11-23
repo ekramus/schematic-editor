@@ -6,7 +6,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.core.Plugin;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.plugins.elementsCount.listeners.ElementsCountActionListener;
 
 /**
@@ -22,11 +21,10 @@ public class ElementsCount implements Plugin {
     private static JMenuItem elementsCountMenuItem = null;
 
     /**
-     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(javax.swing.JMenu, javax.swing.JToolBar,
-     *      cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph)
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(JMenu, JToolBar)
      */
-    public boolean activate(JMenu pluginsMenu, JToolBar drawingBar, SceneGraph sceneGraph) {
-        pluginsMenu.add(getMenuItem(sceneGraph));
+    public boolean activate(JMenu pluginsMenu, JToolBar drawingBar) {
+        pluginsMenu.add(getMenuItem());
         return true;
     }
 
@@ -40,14 +38,13 @@ public class ElementsCount implements Plugin {
     /**
      * Getter for {@link JMenuItem}.
      *
-     * @param sceneGraph global {@link SceneGraph} to be used.
      * @return {@link JMenuItem} instance.
      *
      */
-    private JMenuItem getMenuItem(SceneGraph sceneGraph) {
+    private JMenuItem getMenuItem() {
         if (ElementsCount.elementsCountMenuItem == null) {
             ElementsCount.elementsCountMenuItem = new JMenuItem("Elements count");
-            ElementsCount.elementsCountMenuItem.addActionListener(new ElementsCountActionListener(sceneGraph));
+            ElementsCount.elementsCountMenuItem.addActionListener(new ElementsCountActionListener());
         }
         return ElementsCount.elementsCountMenuItem;
     }

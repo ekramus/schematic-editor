@@ -4,8 +4,6 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JToolBar;
 
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-
 /**
  * This interface describes methods, that should be provided by any plugin to be able to work with
  * <em>SchematicEditor</em> data structures and user interface.
@@ -39,8 +37,7 @@ public interface Plugin {
      *
      * @param pluginsMenu menu, so custom menu items can be added as its children.
      * @param drawingToolBar drawing bar, so custom drawing buttons can be added.
-     * @param sceneGraph scene graph, so data in scene can be manipulated.
      * @return <code>true</code>, if plugin was activated successfully, <code>false</code> else.
      */
-    boolean activate(JMenu pluginsMenu, JToolBar drawingToolBar, SceneGraph sceneGraph);
+    boolean activate(JMenu pluginsMenu, JToolBar drawingToolBar);
 }

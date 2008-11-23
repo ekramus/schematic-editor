@@ -19,6 +19,7 @@ public class Part extends Element {
     /**
      * Vector of connectors.
      */
+    @Deprecated
     private Vector<UnitPoint> connectorVector;
     /**
      * Field containing part properties.
@@ -63,6 +64,7 @@ public class Part extends Element {
     /**
      * @return the connectorVector
      */
+    @Deprecated
     public Vector<UnitPoint> getConnectorVector() {
         return this.connectorVector;
     }
@@ -110,6 +112,7 @@ public class Part extends Element {
     /**
      * @param connectorVector the connectorVector to set
      */
+    @Deprecated
     private void setConnectorVector(Vector<UnitPoint> connectorVector) {
         this.connectorVector = connectorVector;
     }

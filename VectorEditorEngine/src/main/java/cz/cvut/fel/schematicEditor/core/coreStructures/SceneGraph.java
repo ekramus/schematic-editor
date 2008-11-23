@@ -46,11 +46,32 @@ public class SceneGraph implements Iterable<Node> {
      * This field represents edited node of <em>SceneGraph</em>.
      */
     private GroupNode          editNode;
+    /**
+     * Singleton {@link SceneGraph} instance.
+     */
+    private static SceneGraph  instance = null;
+
+    /**
+     * @return the instance
+     */
+    public static SceneGraph getInstance() {
+        if (instance == null) {
+            instance = new SceneGraph();
+        }
+        return instance;
+    }
+
+    /**
+     * Initializes scene graph with new instance.
+     */
+    public static void initialize(SceneGraph sceneGraph) {
+        instance = sceneGraph;
+    }
 
     /**
      * This is the default constructor.
      */
-    public SceneGraph() {
+    private SceneGraph() {
         // TODO add some stuff later
         this.editNode = null;
     }

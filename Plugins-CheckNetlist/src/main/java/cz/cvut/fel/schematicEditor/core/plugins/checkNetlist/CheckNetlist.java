@@ -6,7 +6,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.core.Plugin;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.plugins.checkNetlist.listeners.CheckNetlistActionListener;
 
 /**
@@ -22,11 +21,10 @@ public class CheckNetlist implements Plugin {
     private static JMenuItem elementsCountMenuItem = null;
 
     /**
-     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(javax.swing.JMenu, javax.swing.JToolBar,
-     *      cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph)
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(JMenu, JToolBar)
      */
-    public boolean activate(JMenu pluginsMenu, JToolBar drawingBar, SceneGraph sceneGraph) {
-        pluginsMenu.add(getMenuItem(sceneGraph));
+    public boolean activate(JMenu pluginsMenu, JToolBar drawingBar) {
+        pluginsMenu.add(getMenuItem());
         return true;
     }
 
@@ -40,14 +38,12 @@ public class CheckNetlist implements Plugin {
     /**
      * Getter for {@link JMenuItem}.
      *
-     * @param sceneGraph global {@link SceneGraph} to be used.
      * @return {@link JMenuItem} instance.
-     *
      */
-    private JMenuItem getMenuItem(SceneGraph sceneGraph) {
+    private JMenuItem getMenuItem() {
         if (CheckNetlist.elementsCountMenuItem == null) {
-            CheckNetlist.elementsCountMenuItem = new JMenuItem("Elements count");
-            CheckNetlist.elementsCountMenuItem.addActionListener(new CheckNetlistActionListener(sceneGraph));
+            CheckNetlist.elementsCountMenuItem = new JMenuItem("Check netlist");
+            CheckNetlist.elementsCountMenuItem.addActionListener(new CheckNetlistActionListener());
         }
         return CheckNetlist.elementsCountMenuItem;
     }

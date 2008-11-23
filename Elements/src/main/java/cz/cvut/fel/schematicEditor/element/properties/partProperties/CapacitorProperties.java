@@ -43,6 +43,7 @@ public class CapacitorProperties extends PartProperties {
      * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectors()
      */
     @Override
+    @Deprecated
     public Vector<String> getPartConnectors() {
         Vector<String> result = new Vector<String>();
 

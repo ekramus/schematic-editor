@@ -42,6 +42,7 @@ public class VoltageSourceProperties extends PartProperties {
     /**
      * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectors()
      */
+    @Deprecated
     @Override
     public Vector<String> getPartConnectors() {
         Vector<String> result = new Vector<String>();
