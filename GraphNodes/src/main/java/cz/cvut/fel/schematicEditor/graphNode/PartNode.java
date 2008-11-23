@@ -2,12 +2,14 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.Collection;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Connector;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -174,5 +176,21 @@ public class PartNode extends ElementNode {
      */
     public Vector<ConnectorNode> getPartConnectors() {
         return this.partConnectors;
+    }
+
+    /**
+     * @return
+     */
+    public Collection<? extends UnitPoint> getPartConnectorsCoordinates() {
+        Vector<UnitPoint> result = new Vector<UnitPoint>();
+
+        for (ConnectorNode connectorNode : getPartConnectors()) {
+            Connector c = (Connector) connectorNode.getElement();
+            for (int i = 0; i < c.getX().size(); i++) {
+                result.add(new UnitPoint(c.getX().get(i).doubleValue(), c.getY().get(i).doubleValue()));
+            }
+        }
+
+        return result;
     }
 }
