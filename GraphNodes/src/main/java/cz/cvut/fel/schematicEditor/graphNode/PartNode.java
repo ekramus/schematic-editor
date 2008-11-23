@@ -187,7 +187,7 @@ public class PartNode extends ElementNode {
         for (ConnectorNode connectorNode : getPartConnectors()) {
             Connector c = (Connector) connectorNode.getElement();
             for (int i = 0; i < c.getX().size(); i++) {
-                result.add(new UnitPoint(c.getX().get(i).doubleValue(), c.getY().get(i).doubleValue()));
+                result.add(new UnitPoint(c.getX().get(i), c.getY().get(i)));
             }
         }
 

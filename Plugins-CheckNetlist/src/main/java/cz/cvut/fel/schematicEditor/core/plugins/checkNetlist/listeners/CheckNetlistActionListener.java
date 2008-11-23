@@ -7,11 +7,14 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Connector;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
+import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements action listener for Elements count plugin menu item.
@@ -67,7 +70,7 @@ public class CheckNetlistActionListener implements ActionListener {
             result.append(" -part: " + part.getPartProperties().getProperty("name") + "\n");
             result.append("  -connectors: " + partConnectors + "\n");
 
-            checkPartNetlist(partNode, wireVector);
+            result.append("  -not connected connectors: " + checkPart(partNode, partNodeVector, wireVector) + "\n");
         }
 
         // if there was no part found, inform about it
@@ -82,10 +85,82 @@ public class CheckNetlistActionListener implements ActionListener {
         return result.toString();
     }
 
-    private final int checkPartNetlist(final PartNode partNode, final Vector<Wire> wireVector) {
+    /**
+     * Checks part, how is it connected.
+     *
+     * @param partNode
+     * @param wireVector
+     * @return Number of not connected part connectors.
+     */
+    private final int checkPart(final PartNode partNode, final Vector<PartNode> partNodeVector,
+            final Vector<Wire> wireVector) {
         int notConnectedConnectors = 0;
+
+        for (ConnectorNode connectorNode : partNode.getPartConnectors()) {
+            Connector c = (Connector) connectorNode.getElement();
+            Wire wire = getWireForConnector(c, wireVector);
+            // wire was found, now we can validate all connectors on that wire
+            if (wire != null) {
+                getConnectorsForConnectorAndWire(c, wire, partNodeVector);
+            }
+            // wire was not found
+            else {
+                notConnectedConnectors++;
+            }
+        }
 
         return notConnectedConnectors;
     }
 
+    /**
+     * @param c
+     * @param wire
+     */
+    private Vector<Connector> getConnectorsForConnectorAndWire(Connector connector, Wire wire,
+            Vector<PartNode> partNodeVector) {
+        Vector<Connector> result = new Vector<Connector>();
+
+        UnitPoint cup = new UnitPoint(connector.getX().firstElement(), connector.getY().firstElement());
+        for (int i = 0; i < wire.getX().size(); i++) {
+            UnitPoint wup = new UnitPoint(wire.getX().get(i), wire.getY().get(i));
+            // cup is not wup, so there can be another part attached (I suggest only one part is attached to connector,
+            // which can be wrong, but will be messy anyway)
+            if (!wup.equals(cup)) {
+                Connector c = getConnectorForUnitPoint(wup, partNodeVector);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * @param wup
+     * @param partNodeVector
+     * @return
+     */
+    private Connector getConnectorForUnitPoint(UnitPoint wup, Vector<PartNode> partNodeVector) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * Retrieves {@link Wire} attached to given {@link Connector}.
+     *
+     * @param connector
+     * @param wireVector
+     * @return
+     */
+    private final Wire getWireForConnector(Connector connector, Vector<Wire> wireVector) {
+        UnitPoint cup = new UnitPoint(connector.getX().firstElement(), connector.getY().firstElement());
+        for (Wire wire : wireVector) {
+            for (int i = 0; i < wire.getX().size(); i++) {
+                UnitPoint wup = new UnitPoint(wire.getX().get(i), wire.getY().get(i));
+                if (wup.equals(cup)) {
+                    return wire;
+                }
+            }
+        }
+
+        return null;
+    }
 }

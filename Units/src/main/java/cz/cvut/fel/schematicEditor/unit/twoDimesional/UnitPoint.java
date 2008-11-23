@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
  * @author Urban Kravjansky
  *
  */
-public class UnitPoint extends Point2D {
+public class UnitPoint extends Point2D implements Comparable<UnitPoint> {
     /**
      * Point {@link Unit} x coordinate.
      */
@@ -156,5 +156,29 @@ public class UnitPoint extends Point2D {
     @Override
     public String toString() {
         return "[" + getUnitX() + "," + getUnitY() + "]";
+    }
+
+    /**
+     * @param up
+     * @return
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(UnitPoint up) {
+        // first compare in X axis
+        if (getUnitX().compareTo(up.getUnitX()) < 0) {
+            return -1;
+        } else if (getUnitX().compareTo(up.getUnitX()) > 0) {
+            return 1;
+        }
+        // now compare in Y axis
+        else if (getUnitY().compareTo(up.getUnitY()) < 0) {
+            return -1;
+        } else if (getUnitY().compareTo(up.getUnitY()) > 0) {
+            return 1;
+        }
+        // both unit points are the same
+        else {
+            return 0;
+        }
     }
 }
