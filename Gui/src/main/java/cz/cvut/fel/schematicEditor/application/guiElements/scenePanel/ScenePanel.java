@@ -95,11 +95,6 @@ public class ScenePanel extends JPanel {
      * This field represents scheme.
      */
     private BufferedImage scheme;
-
-    /**
-     * Graph of whole scene.
-     */
-    private SceneGraph    schemeSG;
     /**
      * This field represents validity of scheme.
      */
@@ -187,8 +182,9 @@ public class ScenePanel extends JPanel {
         // create new manipulated element
         BufferedImage manipulatedGroup = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        // create SceneGraph
-        SceneGraph sg = new SceneGraph();
+        // retrieve SceneGraph instance, save original top node
+        SceneGraph sg = SceneGraph.getInstance();
+        GroupNode originalTopNode = sg.getTopNode();
 
         // get manipulated group
         Manipulation manipulation = Structures.getActiveManipulation();
@@ -198,6 +194,9 @@ public class ScenePanel extends JPanel {
         // try to draw elements using DisplayExport
         DisplayExport de = DisplayExport.getInstance();
         de.export(sg, manipulatedGroup);
+
+        // restore original top node
+        sg.setTopNode(originalTopNode);
 
         return manipulatedGroup;
     }
@@ -292,7 +291,7 @@ public class ScenePanel extends JPanel {
         DisplayExport de = DisplayExport.getInstance();
         de.setAntialiased(configuration.isSchemeAntialiased());
         de.setDebugged(configuration.isSchemeDebugged());
-        de.export(this.schemeSG, scheme);
+        de.export(SceneGraph.getInstance(), scheme);
 
         // TODO process sceneGraph elements in foreach loop and transform them using DisplayExport.
 
@@ -369,7 +368,7 @@ public class ScenePanel extends JPanel {
      * @return the schemeSG
      */
     public SceneGraph getSchemeSG() {
-        return this.schemeSG;
+        return SceneGraph.getInstance();
     }
 
     /**
@@ -387,8 +386,7 @@ public class ScenePanel extends JPanel {
         // initialize images
         this.grid = null;
         this.scheme = null;
-        this.schemeSG = new SceneGraph();
-        this.schemeSG.manualCreateSceneGraph();
+        SceneGraph.getInstance().manualCreateSceneGraph();
     }
 
     /**
@@ -476,12 +474,5 @@ public class ScenePanel extends JPanel {
         else {
             logger.trace("Waiting for manipulation end");
         }
-    }
-
-    /**
-     * @param schemeSG the schemeSG to set
-     */
-    public void setSchemeSG(SceneGraph schemeSG) {
-        this.schemeSG = schemeSG;
     }
 }

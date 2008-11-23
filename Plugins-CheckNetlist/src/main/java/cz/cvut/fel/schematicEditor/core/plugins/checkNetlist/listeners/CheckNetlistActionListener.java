@@ -2,12 +2,16 @@ package cz.cvut.fel.schematicEditor.core.plugins.checkNetlist.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.WireNode;
 
 /**
  * This class implements action listener for Elements count plugin menu item.
@@ -17,47 +21,71 @@ import cz.cvut.fel.schematicEditor.graphNode.Node;
  */
 public class CheckNetlistActionListener implements ActionListener {
     /**
-     * Link to global {@link SceneGraph} instance.
-     */
-    private SceneGraph sceneGraph = null;
-
-    /**
      * This method instantiates new instance.
-     *
-     * @param sceneGraph {@link SceneGraph} instance of application.
-     *
      */
-    public CheckNetlistActionListener(SceneGraph sceneGraph) {
+    public CheckNetlistActionListener() {
         super();
-
-        setSceneGraph(sceneGraph);
     }
 
     /**
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        int elementCount = 0;
+        String status;
 
-        for (Node node : getSceneGraph().getSceneGraphArray()) {
-            if (node instanceof ElementNode) {
-                elementCount++;
+        status = checkNetlist();
+
+        JOptionPane.showMessageDialog(null, "Netlist status:\n" + status);
+    }
+
+    /**
+     * Checks netlist, whether are parts correctly connected.
+     *
+     * @return
+     */
+    private final String checkNetlist() {
+        Vector<PartNode> partNodeVector = new Vector<PartNode>();
+        Vector<Wire> wireVector = new Vector<Wire>();
+        StringBuilder result = new StringBuilder();
+        int partsFound = 0;
+
+        // build wire and part vectors for checking purposes
+        for (Node node : SceneGraph.getInstance().getSceneGraphArray()) {
+            if (node instanceof PartNode) {
+                partNodeVector.add((PartNode) node);
+                partsFound++;
+            } else if (node instanceof WireNode) {
+                wireVector.add((Wire) ((WireNode) node).getElement());
             }
         }
-        JOptionPane.showMessageDialog(null, "Number of element Nodes: " + elementCount);
+
+        // go through part vector and check one part after another
+        for (PartNode partNode : partNodeVector) {
+            Part part = (Part) partNode.getElement();
+            Vector<String> partConnectors = part.getPartProperties().getPartConnectors();
+
+            result.append(" -part: " + part.getPartProperties().getProperty("name") + "\n");
+            result.append("  -connectors: " + partConnectors + "\n");
+
+            checkPartNetlist(partNode, wireVector);
+        }
+
+        // if there was no part found, inform about it
+        if (partsFound == 0) {
+            result.append("\t-no part found!");
+        }
+        // at least one part was found
+        else {
+            result.append("\t-parts processed: " + partsFound);
+        }
+
+        return result.toString();
     }
 
-    /**
-     * @return the sceneGraph
-     */
-    private SceneGraph getSceneGraph() {
-        return this.sceneGraph;
+    private final int checkPartNetlist(final PartNode partNode, final Vector<Wire> wireVector) {
+        int notConnectedConnectors = 0;
+
+        return notConnectedConnectors;
     }
 
-    /**
-     * @param sceneGraph the sceneGraph to set
-     */
-    private void setSceneGraph(SceneGraph sceneGraph) {
-        this.sceneGraph = sceneGraph;
-    }
 }

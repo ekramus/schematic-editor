@@ -359,6 +359,10 @@ public class GroupNode extends Node {
     public UnitRectangle getBounds() {
         UnitRectangle result = null;
 
+        if (isDisabled()) {
+            return result;
+        }
+
         // get bounds from child elements
         Unit width = getChildrenParameterNode().getWidth();
         for (ElementNode child : getChildrenElementList()) {
@@ -646,6 +650,41 @@ public class GroupNode extends Node {
 
         for (GroupNode groupNode : getChildrenGroupList()) {
             result.addAll(groupNode.getPartsCoordinates());
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves {@link Vector} of connector nodes and removes them from group node, so they do not duplicate.
+     *
+     * @return
+     */
+    public Vector<ConnectorNode> getAndRemoveConnectorNodes() {
+        Vector<ConnectorNode> result = new Vector<ConnectorNode>();
+
+        if (isDisabled()) {
+            return result;
+        }
+
+        for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
+            ElementNode childNode = getChildrenElementList().get(i);
+            switch (childNode.getElement().getElementType()) {
+                case T_CONNECTOR:
+                    result.add((ConnectorNode) childNode.duplicate());
+                    getChildrenElementList().remove(i);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        for (GroupNode groupNode : getChildrenGroupList()) {
+            result.addAll(groupNode.getAndRemoveConnectorNodes());
+        }
+
+        if (getChildrenElementList().isEmpty() && getChildrenGroupList().isEmpty()) {
+            setDisabled(true);
         }
 
         return result;

@@ -82,6 +82,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
      *
      * @return the partConnectors
      */
+    @Deprecated
     public abstract Vector<String> getPartConnectors();
 
     /**

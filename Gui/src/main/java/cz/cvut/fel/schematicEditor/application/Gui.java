@@ -26,7 +26,6 @@ import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.Pro
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 
 /**
  * This class represents GUI of schematic editor.
@@ -98,8 +97,7 @@ public class Gui extends JApplet {
             this.jFrame.setContentPane(getSceneJContentPane());
             this.jFrame.setTitle("Application");
 
-            initializePlugins(MenuBar.getInstance().getPluginsMenu(), DrawingToolBar.getInstance(), ScenePanel
-                    .getInstance().getSchemeSG());
+            initializePlugins(MenuBar.getInstance().getPluginsMenu(), DrawingToolBar.getInstance());
         }
         return this.jFrame;
     }
@@ -143,7 +141,7 @@ public class Gui extends JApplet {
      * @param drawingToolBar tool bar for drawing buttons.
      * @param sceneGraph scene graph for access to scene elements.
      */
-    private void initializePlugins(JMenu pluginsMenu, JToolBar drawingToolBar, SceneGraph sceneGraph) {
+    private void initializePlugins(JMenu pluginsMenu, JToolBar drawingToolBar) {
         Collection<String> pluginsCollection = findPlugins("plugins");
 
         for (String pluginPath : pluginsCollection) {
@@ -164,7 +162,7 @@ public class Gui extends JApplet {
                     Structures.getLoadedPluginProperties().add(pluginProperties);
 
                     // activate plugin
-                    plugin.activate(pluginsMenu, drawingToolBar, sceneGraph);
+                    plugin.activate(pluginsMenu, drawingToolBar);
 
                     logger.trace("plugin loaded");
                 } catch (InstantiationException e) {

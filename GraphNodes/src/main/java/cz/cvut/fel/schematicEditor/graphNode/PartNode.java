@@ -2,7 +2,9 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.Vector;
 
+import cz.cvut.fel.schematicEditor.element.element.part.Connector;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -17,11 +19,15 @@ public class PartNode extends ElementNode {
     /**
      * GroupNode containing graphic representation of part shape.
      */
-    private GroupNode     partGroupNode;
+    private GroupNode             partGroupNode;
     /**
      * {@link ParameterNode} containing parameters of part shape.
      */
-    private ParameterNode partParameterNode;
+    private ParameterNode         partParameterNode;
+    /**
+     * {@link Vector} of part connectors.
+     */
+    private Vector<ConnectorNode> partConnectors;
 
     /**
      * Constructor with default set of parameters. It instantiates new {@link PartNode}.
@@ -62,11 +68,12 @@ public class PartNode extends ElementNode {
             partGroupNode.add(pn);
         }
 
-        setPartGroupNode(partGroupNode);
+        setPartConnectors(partGroupNode.getAndRemoveConnectorNodes());
+        setPartGroupNode(partGroupNode.getEnabledOnly());
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#isHit(java.awt.geom.Rectangle2D.Double)
+     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#isHit(java.awt.geom.Rectangle2D)
      */
     @Override
     protected boolean isHit(Rectangle2D point) {
@@ -81,12 +88,21 @@ public class PartNode extends ElementNode {
      */
     @Override
     public UnitRectangle getBounds(Unit boundModifier) {
+        UnitRectangle result;
+
         double x = getPartGroupNode().getBounds().getX() - 50 * boundModifier.doubleValue();
         double y = getPartGroupNode().getBounds().getY() - 50 * boundModifier.doubleValue();
         double w = getPartGroupNode().getBounds().getWidth() + 2 * 50 * boundModifier.doubleValue();
         double h = getPartGroupNode().getBounds().getHeight() + 2 * 50 * boundModifier.doubleValue();
 
-        return new UnitRectangle(x, y, w, h);
+        result = new UnitRectangle(x, y, w, h);
+
+        for (ConnectorNode cn : getPartConnectors()) {
+            Connector c = (Connector) cn.getElement();
+            result = (UnitRectangle) result.createUnion(c.getBounds());
+        }
+
+        return result;
     }
 
     /**
@@ -137,5 +153,19 @@ public class PartNode extends ElementNode {
 
         Part part = (Part) getElement();
         part.setRotationCenter(Transformation.multiply(t, part.getRotationCenter()));
+    }
+
+    /**
+     * @param partConnectors the partConnectors to set
+     */
+    public void setPartConnectors(Vector<ConnectorNode> partConnectors) {
+        this.partConnectors = partConnectors;
+    }
+
+    /**
+     * @return the partConnectors
+     */
+    public Vector<ConnectorNode> getPartConnectors() {
+        return this.partConnectors;
     }
 }

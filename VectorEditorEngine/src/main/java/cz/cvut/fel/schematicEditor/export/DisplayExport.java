@@ -21,8 +21,6 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.ElementType;
-import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Connector;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
@@ -34,8 +32,8 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
+import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
@@ -306,16 +304,14 @@ public class DisplayExport implements Export {
                 // for now, connectors are in fixed order as are they returned by getPartConnectors() method.
 
                 Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectors();
+                // search for connectors and display their names
                 int i = 0;
-                // search for connectors
-                for (GroupNode gNode : partNode.getPartGroupNode().getChildrenGroupList()) {
-                    Element e = gNode.getChildrenElementList().getFirst().getElement();
-                    if (e.getElementType() == ElementType.T_CONNECTOR) {
-                        nodeG2D.setColor(Color.BLACK);
-                        nodeG2D.drawString(connectorNames.get(i), e.getX().firstElement().floatValue() - 10, e.getY()
-                                .firstElement().floatValue() - 10);
-                        i++;
-                    }
+                for (ConnectorNode cn : partNode.getPartConnectors()) {
+                    Connector c = (Connector) cn.getElement();
+                    nodeG2D.setColor(Color.BLACK);
+                    nodeG2D.drawString(connectorNames.get(i), c.getX().firstElement().floatValue() - 10, c.getY()
+                            .firstElement().floatValue() - 10);
+                    i++;
                 }
 
                 // draw partRotationCenter, if different from [0,0]

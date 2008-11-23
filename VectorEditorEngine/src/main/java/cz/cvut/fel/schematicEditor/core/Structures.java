@@ -3,6 +3,7 @@ package cz.cvut.fel.schematicEditor.core;
 import java.util.Properties;
 import java.util.Vector;
 
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
@@ -29,7 +30,6 @@ public class Structures {
      * {@link Vector} of loaded plugin properties.
      */
     private static Vector<Properties> loadedPluginProperties = null;
-
     /**
      * Getter for <code>activeManipulation</code> instance.
      *
