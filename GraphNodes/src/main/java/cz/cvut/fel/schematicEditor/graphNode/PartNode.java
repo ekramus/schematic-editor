@@ -149,8 +149,15 @@ public class PartNode extends ElementNode {
      */
     @Override
     public void modifyCoordinates(Transformation t) {
+        // modify coordinates of graphic representation of part
         getPartGroupNode().add(new TransformationNode(t));
 
+        // modify coordinates of part connectors
+        for (ConnectorNode connectorNode : getPartConnectors()) {
+            connectorNode.modifyCoordinates(t);
+        }
+
+        // modify coordinates of rotation center
         Part part = (Part) getElement();
         part.setRotationCenter(Transformation.multiply(t, part.getRotationCenter()));
     }

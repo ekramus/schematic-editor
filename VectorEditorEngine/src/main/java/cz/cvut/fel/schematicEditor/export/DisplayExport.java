@@ -288,12 +288,7 @@ public class DisplayExport implements Export {
 
             case T_CONNECTOR:
                 Connector connector = (Connector) elementNode.getElement();
-
-                Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2,
-                        connector.getY().firstElement().doubleValue() - 2, 5, 5);
-                drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode
-                        .getFillStyle());
-
+                drawConnector(connector, parameterNode, nodeG2D);
                 break;
 
             case T_PART:
@@ -304,10 +299,11 @@ public class DisplayExport implements Export {
                 // for now, connectors are in fixed order as are they returned by getPartConnectors() method.
 
                 Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectors();
-                // search for connectors and display their names
+                // search for connectors, draw them and display their names
                 int i = 0;
                 for (ConnectorNode cn : partNode.getPartConnectors()) {
                     Connector c = (Connector) cn.getElement();
+                    drawConnector(c, parameterNode, nodeG2D);
                     nodeG2D.setColor(Color.BLACK);
                     nodeG2D.drawString(connectorNames.get(i), c.getX().firstElement().floatValue() - 10, c.getY()
                             .firstElement().floatValue() - 10);
@@ -403,5 +399,16 @@ public class DisplayExport implements Export {
      */
     private void setZoomFactor(double zoomFactor) {
         this.zoomFactor = zoomFactor;
+    }
+
+    /**
+     * Draws connector.
+     *
+     * @param connector
+     */
+    private void drawConnector(final Connector connector, ParameterNode parameterNode, Graphics2D nodeG2D) {
+        Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2, connector.getY()
+                .firstElement().doubleValue() - 2, 5, 5);
+        drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode.getFillStyle());
     }
 }
