@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
   <entry key="name">Check netlist</entry>
-  <entry key="description">This plugin adds one menu item and on invocation shows dialog box with status of netlist model.</entry>
+  <entry key="description">This plugin adds one menu item and on invocation shows dialog box with netlist status.</entry>
   <entry key="classpath">cz.cvut.fel.schematicEditor.core.plugins.checkNetlist</entry>
   <entry key="classname">CheckNetlist</entry>
 </properties>
