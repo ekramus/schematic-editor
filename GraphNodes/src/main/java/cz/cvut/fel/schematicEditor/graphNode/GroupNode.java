@@ -640,7 +640,11 @@ public class GroupNode extends Node {
                     break;
                 case T_PART:
                     PartNode partNode = (PartNode) childNode;
+                    // add all parts coordinates from part group node
                     result.addAll(partNode.getPartGroupNode().getPartsCoordinates());
+
+                    // add all part connector coordinates
+                    result.addAll(partNode.getPartConnectorsCoordinates());
                     break;
                 default:
                     break;

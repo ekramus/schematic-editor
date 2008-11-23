@@ -304,9 +304,7 @@ public class DisplayExport implements Export {
                 for (ConnectorNode cn : partNode.getPartConnectors()) {
                     Connector c = (Connector) cn.getElement();
                     drawConnector(c, parameterNode, nodeG2D);
-                    nodeG2D.setColor(Color.BLACK);
-                    nodeG2D.drawString(connectorNames.get(i), c.getX().firstElement().floatValue() - 10, c.getY()
-                            .firstElement().floatValue() - 10);
+                    drawConnectorText(c, connectorNames.get(i), nodeG2D);
                     i++;
                 }
 
@@ -410,5 +408,11 @@ public class DisplayExport implements Export {
         Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2, connector.getY()
                 .firstElement().doubleValue() - 2, 5, 5);
         drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode.getFillStyle());
+    }
+
+    private void drawConnectorText(Connector connector, String connectorName, Graphics2D nodeG2D) {
+        nodeG2D.setColor(Color.BLACK);
+        nodeG2D.drawString(connectorName, connector.getX().firstElement().floatValue() - 10, connector.getY()
+                .firstElement().floatValue() - 10);
     }
 }
