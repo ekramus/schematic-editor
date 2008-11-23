@@ -17,5 +17,6 @@
 		<module>Configuration</module>
 		<module>Units</module>
 		<module>Plugins-ElementsCount</module>
+		<module>Plugins-CheckNetlist</module>
 	</modules>
 </project>

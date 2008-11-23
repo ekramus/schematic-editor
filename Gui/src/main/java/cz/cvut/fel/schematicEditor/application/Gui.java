@@ -153,7 +153,7 @@ public class Gui extends JApplet {
                 try {
                     // create and load plugin properties
                     Properties pluginProperties = new Properties();
-                    pluginProperties.loadFromXML(urlClassLoader.getResourceAsStream("plugin.xml"));
+                    pluginProperties.loadFromXML(urlClassLoader.getResourceAsStream("META-INF/plugin.xml"));
 
                     // instantiate plugin object based on information in plugin xml
                     Class<?> pluginClass = urlClassLoader.loadClass(pluginProperties.getProperty("classpath") + "."
