@@ -65,7 +65,7 @@ public class CheckNetlistActionListener implements ActionListener {
         // go through part vector and check one part after another
         for (PartNode partNode : partNodeVector) {
             Part part = (Part) partNode.getElement();
-            Vector<String> partConnectors = part.getPartProperties().getPartConnectors();
+            Vector<String> partConnectors = part.getPartProperties().getPartConnectorNames();
 
             result.append(" -part: " + part.getPartProperties().getProperty("name") + "\n");
             result.append("  -connectors: " + partConnectors + "\n");
@@ -92,21 +92,36 @@ public class CheckNetlistActionListener implements ActionListener {
      * @param wireVector
      * @return Number of not connected part connectors.
      */
-    private final int checkPart(final PartNode partNode, final Vector<PartNode> partNodeVector,
-            final Vector<Wire> wireVector) {
+    private final int checkPart(final PartNode partNode, final Vector<PartNode> partNodes, final Vector<Wire> wireVector) {
         int notConnectedConnectors = 0;
+        Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectorNames();
 
+        int i = 0;
         for (ConnectorNode connectorNode : partNode.getPartConnectors()) {
-            Connector c = (Connector) connectorNode.getElement();
-            Wire wire = getWireForConnector(c, wireVector);
+            Connector connector = (Connector) connectorNode.getElement();
+            Wire wire = getWireForConnector(connector, wireVector);
             // wire was found, now we can validate all connectors on that wire
             if (wire != null) {
-                getConnectorsForConnectorAndWire(c, wire, partNodeVector);
+                Vector<String> matchedConnectorNames = getConnectorNamesForConnectorAndWire(connector, wire, partNodes);
+                // compare all retrieved connectors (names) with name of connector
+                if (!matchedConnectorNames.isEmpty()) {
+                    for (String matchedConnectorName : matchedConnectorNames) {
+                        if (!matchedConnectorName.equals(connectorNames.get(i))) {
+                            System.err.println("Connector " + connectorNames.get(i)
+                                    + " does not match its conterpart "
+                                    + matchedConnectorName);
+                        }
+                    }
+                } else {
+                    System.err.println("Connector " + connectorNames.get(i) + " is not connected anywhere");
+                }
             }
             // wire was not found
             else {
                 notConnectedConnectors++;
             }
+
+            i++;
         }
 
         return notConnectedConnectors;
@@ -116,9 +131,9 @@ public class CheckNetlistActionListener implements ActionListener {
      * @param c
      * @param wire
      */
-    private Vector<Connector> getConnectorsForConnectorAndWire(Connector connector, Wire wire,
-            Vector<PartNode> partNodeVector) {
-        Vector<Connector> result = new Vector<Connector>();
+    private Vector<String> getConnectorNamesForConnectorAndWire(Connector connector, Wire wire,
+            Vector<PartNode> partNodes) {
+        Vector<String> result = new Vector<String>();
 
         UnitPoint cup = new UnitPoint(connector.getX().firstElement(), connector.getY().firstElement());
         for (int i = 0; i < wire.getX().size(); i++) {
@@ -126,7 +141,10 @@ public class CheckNetlistActionListener implements ActionListener {
             // cup is not wup, so there can be another part attached (I suggest only one part is attached to connector,
             // which can be wrong, but will be messy anyway)
             if (!wup.equals(cup)) {
-                Connector c = getConnectorForUnitPoint(wup, partNodeVector);
+                String s = getConnectorNameForUnitPoint(wup, partNodes);
+                if (s != null) {
+                    result.add(s);
+                }
             }
         }
 
@@ -134,12 +152,29 @@ public class CheckNetlistActionListener implements ActionListener {
     }
 
     /**
+     * Searches for connector in all part nodes from partNodeVector.
+     *
      * @param wup
-     * @param partNodeVector
+     * @param partNodes
      * @return
      */
-    private Connector getConnectorForUnitPoint(UnitPoint wup, Vector<PartNode> partNodeVector) {
-        // TODO Auto-generated method stub
+    private String getConnectorNameForUnitPoint(UnitPoint wup, Vector<PartNode> partNodes) {
+        for (PartNode partNode : partNodes) {
+            Vector<ConnectorNode> cnv = partNode.getPartConnectors();
+            Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectorNames();
+            int i = 0;
+            // search for connector name
+            for (ConnectorNode cn : cnv) {
+                Connector c = (Connector) cn.getElement();
+                UnitPoint cup = new UnitPoint(c.getX().firstElement(), c.getY().firstElement());
+                if (cup.equals(wup)) {
+                    return connectorNames.get(i);
+                }
+                i++;
+            }
+        }
+
+        // nothing found
         return null;
     }
 

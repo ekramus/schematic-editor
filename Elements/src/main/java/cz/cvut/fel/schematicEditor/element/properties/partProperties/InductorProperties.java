@@ -40,11 +40,11 @@ public class InductorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectors()
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectorNames()
      */
     @Override
     @Deprecated
-    public Vector<String> getPartConnectors() {
+    public Vector<String> getPartConnectorNames() {
         Vector<String> result = new Vector<String>();
 
         result.add(getProperty(InductorPropertiesEnum.CONNECTOR_P.getKey()).getValue());
