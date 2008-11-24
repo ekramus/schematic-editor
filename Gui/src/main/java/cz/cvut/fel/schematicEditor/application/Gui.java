@@ -165,6 +165,8 @@ public class Gui extends JApplet {
                     plugin.activate(pluginsMenu, drawingToolBar);
 
                     logger.trace("plugin loaded");
+                } catch (NullPointerException npe) {
+                    logger.error("plugin " + pluginPath + " was not loaded!");
                 } catch (InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
@@ -199,8 +201,11 @@ public class Gui extends JApplet {
                 logger.trace("folder " + fileName + " will be examined");
                 result.addAll(findPlugins(directory + File.separator + fileName));
             } else if (file.isFile()) {
-                logger.trace("plugin " + fileName + " added");
-                result.add(directory + File.separator + fileName);
+                String pfn = file.getName();
+                if (pfn.substring(pfn.length() - 3, pfn.length()).equalsIgnoreCase("jar")) {
+                    logger.trace("plugin " + fileName + " added");
+                    result.add(directory + File.separator + fileName);
+                }
             }
         }
 
