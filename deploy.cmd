@@ -1,5 +1,6 @@
-rem @echo off
+@echo off
 
+rem set variables
 set DEPLOY=deploy
 set LIB=%DEPLOY%\lib
 set JAR=%DEPLOY%\jar
@@ -7,6 +8,7 @@ set CONF=%DEPLOY%\config
 set PLUGIN=%DEPLOY%\plugins
 set M2_REPO="%USERPROFILE%\.m2\repository"
 
+rem start deploy batch
 del /Q %LIB%
 del /Q %JAR%
 del /Q %PLUGIN%
@@ -37,3 +39,4 @@ copy Launchers\log4j.xml %DEPLOY%
 
 rem copy plugins
 copy Plugins-ElementsCount\target\Plugins-ElementsCount-1.0-SNAPSHOT.jar %PLUGIN% 
+copy Plugins-CheckNetlist\target\Plugins-CheckNetlist-1.0-SNAPSHOT.jar %PLUGIN%
