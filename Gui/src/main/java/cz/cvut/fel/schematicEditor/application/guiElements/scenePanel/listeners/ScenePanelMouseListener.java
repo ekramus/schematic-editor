@@ -123,10 +123,14 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                             .getPointerRectangle());
 
             Manipulation m = Structures.getActiveManipulation();
-            if (!m.isActive() || (m.getManipulationType() == ManipulationType.SELECT)) {
-                // start manipulation and set result as active manipulation
-                Structures.setActiveManipulation(m.manipulationStart(e, r2d, Structures.getManipulationQueue(),
-                                                                     isMouseClicked()));
+            try {
+                if (!m.isActive() || (m.getManipulationType() == ManipulationType.SELECT)) {
+                    // start manipulation and set result as active manipulation
+                    Structures.setActiveManipulation(m.manipulationStart(e, r2d, Structures.getManipulationQueue(),
+                                                                         isMouseClicked()));
+                }
+            } catch (NullPointerException npe) {
+                logger.warn("No manipulation");
             }
 
         } catch (UnknownManipulationException ume) {
@@ -157,37 +161,41 @@ public class ScenePanelMouseListener implements MouseListener {
                 logger.debug("Mouse CLICKED");
 
                 Manipulation manipulation = Structures.getActiveManipulation();
-                ManipulationType mt = manipulation.getManipulationType();
+                try {
+                    ManipulationType mt = manipulation.getManipulationType();
 
-                switch (mt) {
-                    case CREATE:
-                        Create create = (Create) manipulation;
-                        // right mouse button is clicked
-                        if (e.getButton() == MouseEvent.BUTTON3) {
-                            // element has infinite coordinates
-                            if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
-                                JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
-                                logger.trace("Show right-click popup");
-                            } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
-                                JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
-                                logger.trace("Show right-click popup");
+                    switch (mt) {
+                        case CREATE:
+                            Create create = (Create) manipulation;
+                            // right mouse button is clicked
+                            if (e.getButton() == MouseEvent.BUTTON3) {
+                                // element has infinite coordinates
+                                if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
+                                    JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                                    popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                                    logger.trace("Show right-click popup");
+                                } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
+                                    JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                                    popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                                    logger.trace("Show right-click popup");
+                                }
                             }
-                        }
-                        // left mouse button is clicked
-                        else if (e.getButton() == MouseEvent.BUTTON1) {
+                            // left mouse button is clicked
+                            else if (e.getButton() == MouseEvent.BUTTON1) {
+                                ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
+                            }
+                            break;
+                        case SELECT:
+                        case DELETE:
+                        case EDIT:
+                        case MOVE:
                             ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
-                        }
-                        break;
-                    case SELECT:
-                    case DELETE:
-                    case EDIT:
-                    case MOVE:
-                        ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
-                        break;
-                    default:
-                        break;
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (NullPointerException npe) {
+                    logger.warn("No manipulation.");
                 }
             }
             // mouse button was just released after drag
