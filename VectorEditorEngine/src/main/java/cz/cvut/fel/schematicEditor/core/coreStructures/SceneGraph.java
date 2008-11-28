@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
 import cz.cvut.fel.schematicEditor.element.element.shape.Line;
@@ -34,6 +36,10 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
  * @author Urban Kravjansky
  */
 public class SceneGraph implements Iterable<Node> {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger      logger;
     /**
      * This field represents <code>SceneGraph</code> iterator.
      */
@@ -72,6 +78,8 @@ public class SceneGraph implements Iterable<Node> {
      * This is the default constructor.
      */
     private SceneGraph() {
+        logger = Logger.getLogger(this.getClass().getName());
+
         // TODO add some stuff later
         this.editNode = null;
     }
@@ -89,6 +97,8 @@ public class SceneGraph implements Iterable<Node> {
      * @return <code>ArrayList</code> of this <code>SceneGraph</code>.
      */
     public ArrayList<Node> getSceneGraphArray() {
+        logger.trace("top node: " + this.topNode);
+        logger.trace("node array: " + this.topNode.getNodeArray(null, null));
         return this.topNode.getNodeArray(null, null);
     }
 

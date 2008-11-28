@@ -193,11 +193,14 @@ public class ScenePanel extends JPanel {
 
         // try to draw elements using DisplayExport
         DisplayExport de = DisplayExport.getInstance();
-        de.export(sg, manipulatedGroup);
-
-        // restore original top node
-        sg.setTopNode(originalTopNode);
-
+        try {
+            de.export(sg, manipulatedGroup);
+        } catch (NullPointerException npe) {
+            logger.error("No active manipulation");
+        } finally {
+            // restore original top node
+            sg.setTopNode(originalTopNode);
+        }
         return manipulatedGroup;
     }
 
@@ -458,6 +461,8 @@ public class ScenePanel extends JPanel {
                         PartPropertiesPanel.getInstance().setPartProperties(part.getPartProperties());
                     } catch (ClassCastException cce) {
                         MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(false);
+                    } catch (NullPointerException npe) {
+                        logger.warn("No object selected.");
                     }
                     break;
                 default:
