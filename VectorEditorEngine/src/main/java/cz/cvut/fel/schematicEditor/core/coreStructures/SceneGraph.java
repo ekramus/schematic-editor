@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
+import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
 import cz.cvut.fel.schematicEditor.element.element.shape.Line;
@@ -39,23 +41,27 @@ public class SceneGraph implements Iterable<Node> {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger      logger;
+    private static Logger                    logger;
     /**
      * This field represents <code>SceneGraph</code> iterator.
      */
-    private SceneGraphIterator sgi;
+    private SceneGraphIterator               sgi;
     /**
      * This field represents top node of <em>Scene Graph</em>.
      */
-    private GroupNode          topNode;
+    private GroupNode                        topNode;
     /**
      * This field represents edited node of <em>SceneGraph</em>.
      */
-    private GroupNode          editNode;
+    private GroupNode                        editNode;
     /**
      * Singleton {@link SceneGraph} instance.
      */
-    private static SceneGraph  instance = null;
+    private static SceneGraph                instance = null;
+    /**
+     * {@link Vector} of {@link SceneGraphUpdateListener}s for monitoring update events.
+     */
+    private Vector<SceneGraphUpdateListener> listeners;
 
     /**
      * @return the instance
@@ -82,6 +88,8 @@ public class SceneGraph implements Iterable<Node> {
 
         // TODO add some stuff later
         this.editNode = null;
+
+        setListeners(new Vector<SceneGraphUpdateListener>());
     }
 
     /**
@@ -305,7 +313,7 @@ public class SceneGraph implements Iterable<Node> {
     }
 
     /**
-     * @deprecated This method returns list of Boundig Boxes of each group. It should be not used, as it does not
+     * @deprecated This method returns list of bounding Boxes of each group. It should be not used, as it does not
      *             provide direct link to Elements , which Bounding Box is linked to which element.
      * @return
      */
@@ -347,5 +355,48 @@ public class SceneGraph implements Iterable<Node> {
         }
 
         return result;
+    }
+
+    /**
+     * @param listeners the listeners to set
+     */
+    private void setListeners(Vector<SceneGraphUpdateListener> listeners) {
+        this.listeners = listeners;
+    }
+
+    /**
+     * @return the listeners
+     */
+    private Vector<SceneGraphUpdateListener> getListeners() {
+        return this.listeners;
+    }
+
+    /**
+     * Register class, which implements {@link SceneGraphUpdateListener}.
+     *
+     * @param sceneGraphUpdateListener implementation to register.
+     */
+    public void addSceneGraphUpdateListener(SceneGraphUpdateListener sceneGraphUpdateListener) {
+        getListeners().add(sceneGraphUpdateListener);
+    }
+
+    /**
+     * Unregister {@link SceneGraphUpdateListener}.
+     *
+     * @param sceneGraphUpdateListener implementation to unregister.
+     */
+    // removes the listener
+    public void removeSceneGraphUpdateListener(SceneGraphUpdateListener sceneGraphUpdateListener) {
+        getListeners().remove(sceneGraphUpdateListener);
+    }
+
+    /**
+     * Dispatch event to all registered {@link SceneGraphUpdateListener} instances.
+     */
+    private void dispatchEvent() {
+        for (SceneGraphUpdateListener sceneGraphUpdateListener : getListeners()) {
+            SceneGraphUpdateEvent sceneGraphUpdateEvent = new SceneGraphUpdateEvent(this);
+            sceneGraphUpdateListener.sceneGraphUpdateOccured(sceneGraphUpdateEvent);
+        }
     }
 }
