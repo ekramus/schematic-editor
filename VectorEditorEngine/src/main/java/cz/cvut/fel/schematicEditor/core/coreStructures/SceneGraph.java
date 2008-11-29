@@ -264,6 +264,7 @@ public class SceneGraph implements Iterable<Node> {
     /**
      * This method creates static predefined working SceneGraph. For development purposes only.
      */
+    @Deprecated
     public void manualCreateSceneGraph2() {
         this.topNode = new GroupNode();
 
@@ -303,6 +304,7 @@ public class SceneGraph implements Iterable<Node> {
      */
     public void setEditNode(Rectangle2D.Double rectangle) {
         this.editNode = this.topNode.findHit(rectangle);
+        fireSceneGraphUpdateEvent();
     }
 
     /**
@@ -310,6 +312,7 @@ public class SceneGraph implements Iterable<Node> {
      */
     public void setTopNode(GroupNode topNode) {
         this.topNode = topNode;
+        fireSceneGraphUpdateEvent();
     }
 
     /**
@@ -391,9 +394,9 @@ public class SceneGraph implements Iterable<Node> {
     }
 
     /**
-     * Dispatch event to all registered {@link SceneGraphUpdateListener} instances.
+     * Fire and dispatch event to all registered {@link SceneGraphUpdateListener} instances.
      */
-    private void dispatchEvent() {
+    public void fireSceneGraphUpdateEvent() {
         for (SceneGraphUpdateListener sceneGraphUpdateListener : getListeners()) {
             SceneGraphUpdateEvent sceneGraphUpdateEvent = new SceneGraphUpdateEvent(this);
             sceneGraphUpdateListener.sceneGraphUpdateOccured(sceneGraphUpdateEvent);
