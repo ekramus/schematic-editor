@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.partProperties.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.GeneralPropertiesPanel;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.listeners.ScenePanelKeyListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.listeners.ScenePanelMouseListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.listeners.ScenePanelMouseMotionListener;
@@ -458,7 +459,12 @@ public class ScenePanel extends JPanel {
                         Part part = (Part) select.getManipulatedGroup().getChildrenElementList().getFirst()
                                 .getElement();
                         MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(true);
+
+                        // set part properties panel
                         PartPropertiesPanel.getInstance().setPartProperties(part.getPartProperties());
+
+                        // refresh general properties panel
+                        GeneralPropertiesPanel.refresh();
                     } catch (ClassCastException cce) {
                         MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(false);
                     } catch (NullPointerException npe) {
