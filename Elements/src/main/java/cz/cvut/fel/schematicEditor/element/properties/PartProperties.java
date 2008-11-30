@@ -78,12 +78,19 @@ public abstract class PartProperties implements Iterable<Property<String, String
     }
 
     /**
-     * Retrieves part connector values, so they can be used for connector matching.
+     * Retrieves part pin names, so they can be used for connector matching.
      *
-     * @return the partConnectors
+     * @return the partPinNames
      */
     @Deprecated
-    public abstract Vector<String> getPartConnectorNames();
+    public abstract Vector<String> getPartPinNames();
+
+    /**
+     * Sets part pin names.
+     *
+     * @param partPinNames {@link Vector} of part pin names.
+     */
+    public abstract void setPartPinNames(Vector<String> partPinNames);
 
     /**
      * Returns map of all properties. Each property contains:

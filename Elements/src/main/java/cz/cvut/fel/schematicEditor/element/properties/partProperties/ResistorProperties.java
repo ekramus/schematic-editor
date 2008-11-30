@@ -40,17 +40,26 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectorNames()
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartPinNames()
      */
     @Override
     @Deprecated
-    public Vector<String> getPartConnectorNames() {
+    public Vector<String> getPartPinNames() {
         Vector<String> result = new Vector<String>();
 
-        result.add(getProperty(ResistorPropertiesEnum.CONNECTOR_P.getKey()).getValue());
         result.add(getProperty(ResistorPropertiesEnum.CONNECTOR_M.getKey()).getValue());
+        result.add(getProperty(ResistorPropertiesEnum.CONNECTOR_P.getKey()).getValue());
 
         return result;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#setPartPinNames(java.util.Vector)
+     */
+    @Override
+    public void setPartPinNames(Vector<String> partPinNames) {
+        setProperty(ResistorPropertiesEnum.CONNECTOR_M.getKey(), partPinNames.get(0));
+        setProperty(ResistorPropertiesEnum.CONNECTOR_P.getKey(), partPinNames.get(1));
     }
 
     /**

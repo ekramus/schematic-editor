@@ -298,7 +298,7 @@ public class DisplayExport implements Export {
                 // TODO retrieve connectors and match them to correct names
                 // for now, connectors are in fixed order as are they returned by getPartConnectors() method.
 
-                Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectorNames();
+                Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
                 // search for connectors, draw them and display their names
                 int i = 0;
                 for (ConnectorNode cn : partNode.getPartConnectors()) {

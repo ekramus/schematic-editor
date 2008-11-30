@@ -3,11 +3,10 @@ package cz.cvut.fel.schematicEditor.application.guiElements.menuBar.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 
@@ -18,7 +17,9 @@ import cz.cvut.fel.schematicEditor.application.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.application.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
@@ -60,6 +61,7 @@ public final class AddPartMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastImportFolder(file.getParent());
 
+            // prepare PartNode, GroupNode and ParameterNode
             PartNode partNode = deserialize(PartNode.class, file);
             GroupNode groupNode = new GroupNode();
             ParameterNode parameterNode = new ParameterNode();
@@ -67,6 +69,25 @@ public final class AddPartMenuItemListener implements ActionListener {
             groupNode.add(partNode);
             groupNode.add(parameterNode);
 
+            // do automatic part naming
+            int i = Structures.getLastPartNumber();
+            PartProperties pp = ((Part) partNode.getElement()).getPartProperties();
+            String name = pp.getProperty("name").getValue();
+            if (name.equals("")) {
+                pp.setProperty("name", "part_" + i);
+            }
+
+            // do automatic part connector naming
+            Vector<String> pinNames = pp.getPartPinNames();
+            for (int j = 0; j < pinNames.size(); j++) {
+                String pinName = pinNames.get(j);
+                if (pinName.equals("")) {
+                    pinNames.set(j, "part_" + i + "_" + j);
+                }
+            }
+            pp.setPartPinNames(pinNames);
+
+            // finally add to SceneGraph
             ScenePanel.getInstance().getSchemeSG().getTopNode().add(groupNode);
             ScenePanel.getInstance().schemeInvalidate(null);
         }

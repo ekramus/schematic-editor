@@ -40,17 +40,26 @@ public class CurrentSourceProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectorNames()
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartPinNames()
      */
     @Override
     @Deprecated
-    public Vector<String> getPartConnectorNames() {
+    public Vector<String> getPartPinNames() {
         Vector<String> result = new Vector<String>();
 
         result.add(getProperty(CurrentSourcePropertiesEnum.CONNECTOR_P.getKey()).getValue());
         result.add(getProperty(CurrentSourcePropertiesEnum.CONNECTOR_M.getKey()).getValue());
 
         return result;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#setPartPinNames(java.util.Vector)
+     */
+    @Override
+    public void setPartPinNames(Vector<String> partPinNames) {
+        setProperty(CurrentSourcePropertiesEnum.CONNECTOR_M.getKey(), partPinNames.get(0));
+        setProperty(CurrentSourcePropertiesEnum.CONNECTOR_P.getKey(), partPinNames.get(1));
     }
 
     /**
