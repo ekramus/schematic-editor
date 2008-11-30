@@ -104,6 +104,8 @@ public class ParameterNode extends Node {
             result.setFill(getFill());
         }
 
+        result.setWidth(getWidth());
+
         return result;
     }
 
@@ -150,15 +152,15 @@ public class ParameterNode extends Node {
      */
     @Override
     public String toString() {
-        return id + " [ParameterNode]";
+        return this.id + " [ParameterNode]";
     }
 
     public ElementStyle getFillStyle() {
-        return fillStyle;
+        return this.fillStyle;
     }
 
     public ElementStyle getLineStyle() {
-        return lineStyle;
+        return this.lineStyle;
     }
 
     public void setFillStyle(ElementStyle fillStyle) {
