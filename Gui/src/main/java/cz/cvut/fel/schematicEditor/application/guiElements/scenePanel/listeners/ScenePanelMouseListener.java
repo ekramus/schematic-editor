@@ -13,9 +13,9 @@ import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
@@ -154,8 +154,6 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                     GuiConfiguration.getInstance()
                                                                             .getPointerRectangle());
 
-            GroupNode topNode = ScenePanel.getInstance().getSchemeSG().getTopNode();
-
             // mouse was clicked
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
@@ -194,6 +192,9 @@ public class ScenePanelMouseListener implements MouseListener {
                         default:
                             break;
                     }
+
+                    // fire scene graph update
+                    SceneGraph.getInstance().fireSceneGraphUpdateEvent();
                 } catch (NullPointerException npe) {
                     logger.warn("No manipulation.");
                 }
