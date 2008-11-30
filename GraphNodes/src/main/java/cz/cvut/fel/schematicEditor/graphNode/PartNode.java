@@ -114,6 +114,12 @@ public class PartNode extends ElementNode {
     public Node duplicate() {
         PartNode result = new PartNode((Part) getElement(), (GroupNode) getPartGroupNode().duplicate());
 
+        Vector<ConnectorNode> partConnectors = new Vector<ConnectorNode>();
+        for (ConnectorNode connectorNode : getPartConnectors()) {
+            partConnectors.add((ConnectorNode) connectorNode.duplicate());
+        }
+        result.setPartConnectors(partConnectors);
+
         return result;
     }
 
