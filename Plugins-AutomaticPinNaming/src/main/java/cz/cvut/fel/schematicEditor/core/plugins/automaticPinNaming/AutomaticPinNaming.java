@@ -67,7 +67,9 @@ public class AutomaticPinNaming implements Plugin, SceneGraphUpdateListener {
         for (Node node : nal) {
             if (node instanceof PartNode) {
                 Part p = (Part) ((PartNode) node).getElement();
-                System.err.println("here we are, automatic PIN names");
+                if (p.getPartProperties().getProperty("name") == null) {
+                    System.err.println("Part has no name");
+                }
             }
         }
     }
