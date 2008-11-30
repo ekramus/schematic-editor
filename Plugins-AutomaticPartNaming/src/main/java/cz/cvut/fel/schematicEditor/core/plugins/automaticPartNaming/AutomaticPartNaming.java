@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.core.plugins.automaticPinNaming;
+package cz.cvut.fel.schematicEditor.core.plugins.automaticPartNaming;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -22,13 +22,13 @@ import cz.cvut.fel.schematicEditor.graphNode.PartNode;
  *
  * @author Urban Kravjansky
  */
-public class AutomaticPinNaming implements Plugin, SceneGraphUpdateListener {
+public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
 
     /**
      * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(javax.swing.JMenu, javax.swing.JToolBar)
      */
     public boolean activate(JMenu pluginsMenu, JToolBar drawingToolBar) {
-        return false;
+        return true;
     }
 
     /**

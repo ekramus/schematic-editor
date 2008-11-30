@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-  <entry key="name">Automaptic PIN naming</entry>
-  <entry key="description">This plugin adds automatic PIN naming.</entry>
-  <entry key="classpath">cz.cvut.fel.schematicEditor.core.plugins.automaticPinNaming</entry>
-  <entry key="classname">AutomaticPinNaming</entry>
-</properties>

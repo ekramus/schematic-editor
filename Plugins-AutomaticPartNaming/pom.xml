@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cz.cvut.fel.schematicEditor
   </groupId>
-  <artifactId>Plugins-AutomaticPinNaming</artifactId>
+  <artifactId>Plugins-AutomaticPartNaming</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Plugin - Automatic PIN Naming</name>
+  <name>Plugin - Automatic Part Naming</name>
   <packaging>jar</packaging>
   <build>
     <plugins>
