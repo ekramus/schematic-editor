@@ -10,7 +10,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
-import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListenerInterface;
+import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
 import cz.cvut.fel.schematicEditor.element.element.shape.Line;
@@ -59,9 +59,9 @@ public class SceneGraph implements Iterable<Node> {
      */
     private static SceneGraph                instance = null;
     /**
-     * {@link Vector} of {@link SceneGraphUpdateListenerInterface}s for monitoring update events.
+     * {@link Vector} of {@link SceneGraphUpdateListener}s for monitoring update events.
      */
-    private Vector<SceneGraphUpdateListenerInterface> listeners;
+    private Vector<SceneGraphUpdateListener> listeners;
 
     /**
      * @return the instance
@@ -89,7 +89,7 @@ public class SceneGraph implements Iterable<Node> {
         // TODO add some stuff later
         this.editNode = null;
 
-        setListeners(new Vector<SceneGraphUpdateListenerInterface>());
+        setListeners(new Vector<SceneGraphUpdateListener>());
     }
 
     /**
@@ -363,43 +363,43 @@ public class SceneGraph implements Iterable<Node> {
     /**
      * @param listeners the listeners to set
      */
-    private void setListeners(Vector<SceneGraphUpdateListenerInterface> listeners) {
+    private void setListeners(Vector<SceneGraphUpdateListener> listeners) {
         this.listeners = listeners;
     }
 
     /**
      * @return the listeners
      */
-    private Vector<SceneGraphUpdateListenerInterface> getListeners() {
+    private Vector<SceneGraphUpdateListener> getListeners() {
         return this.listeners;
     }
 
     /**
-     * Register class, which implements {@link SceneGraphUpdateListenerInterface}.
+     * Register class, which implements {@link SceneGraphUpdateListener}.
      *
-     * @param sceneGraphUpdateListenerInterface implementation to register.
+     * @param sceneGraphUpdateListener implementation to register.
      */
-    public void addSceneGraphUpdateListener(SceneGraphUpdateListenerInterface sceneGraphUpdateListenerInterface) {
-        getListeners().add(sceneGraphUpdateListenerInterface);
+    public void addSceneGraphUpdateListener(SceneGraphUpdateListener sceneGraphUpdateListener) {
+        getListeners().add(sceneGraphUpdateListener);
     }
 
     /**
-     * Unregister {@link SceneGraphUpdateListenerInterface}.
+     * Unregister {@link SceneGraphUpdateListener}.
      *
-     * @param sceneGraphUpdateListenerInterface implementation to unregister.
+     * @param sceneGraphUpdateListener implementation to unregister.
      */
     // removes the listener
-    public void removeSceneGraphUpdateListener(SceneGraphUpdateListenerInterface sceneGraphUpdateListenerInterface) {
-        getListeners().remove(sceneGraphUpdateListenerInterface);
+    public void removeSceneGraphUpdateListener(SceneGraphUpdateListener sceneGraphUpdateListener) {
+        getListeners().remove(sceneGraphUpdateListener);
     }
 
     /**
-     * Fire and dispatch event to all registered {@link SceneGraphUpdateListenerInterface} instances.
+     * Fire and dispatch event to all registered {@link SceneGraphUpdateListener} instances.
      */
     public void fireSceneGraphUpdateEvent() {
-        for (SceneGraphUpdateListenerInterface sceneGraphUpdateListenerInterface : getListeners()) {
+        for (SceneGraphUpdateListener sceneGraphUpdateListener : getListeners()) {
             SceneGraphUpdateEvent sceneGraphUpdateEvent = new SceneGraphUpdateEvent(this);
-            sceneGraphUpdateListenerInterface.sceneGraphUpdateOccured(sceneGraphUpdateEvent);
+            sceneGraphUpdateListener.sceneGraphUpdateOccured(sceneGraphUpdateEvent);
         }
     }
 }
