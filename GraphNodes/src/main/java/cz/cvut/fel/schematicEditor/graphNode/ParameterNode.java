@@ -104,7 +104,13 @@ public class ParameterNode extends Node {
             result.setFill(getFill());
         }
 
+        // TODO make proper combining
         result.setWidth(getWidth());
+        result.setFillStyle(getFillStyle());
+        result.setLineStyle(getLineStyle());
+        result.setProperties(getProperties());
+
+        result.setDisabled(isDisabled());
 
         return result;
     }
