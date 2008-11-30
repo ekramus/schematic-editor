@@ -61,4 +61,11 @@ public class CheckNetlist implements Plugin {
     public boolean providesMenuItem() {
         return true;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#implementsSceneGraphUpdateListener()
+     */
+    public boolean implementsSceneGraphUpdateListener() {
+        return false;
+    }
 }

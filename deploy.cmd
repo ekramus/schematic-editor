@@ -40,3 +40,4 @@ copy Launchers\log4j.xml %DEPLOY%
 rem copy plugins
 copy Plugins-ElementsCount\target\Plugins-ElementsCount-1.0-SNAPSHOT.jar %PLUGIN% 
 copy Plugins-CheckNetlist\target\Plugins-CheckNetlist-1.0-SNAPSHOT.jar %PLUGIN%
+copy Plugins-AutomaticPinNaming\target\Plugins\AutomaticPinNaming-1.0-SNAPSHOT.jar %PLUGIN%

@@ -26,6 +26,8 @@ import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.Pro
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 
 /**
  * This class represents GUI of schematic editor.
@@ -163,6 +165,10 @@ public class Gui extends JApplet {
 
                     // activate plugin
                     plugin.activate(pluginsMenu, drawingToolBar);
+
+                    if (plugin.implementsSceneGraphUpdateListener()) {
+                        SceneGraph.getInstance().addSceneGraphUpdateListener((SceneGraphUpdateListener) plugin);
+                    }
 
                     logger.trace("plugin loaded");
                 } catch (NullPointerException npe) {

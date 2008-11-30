@@ -16,6 +16,7 @@
 		<module>Support</module>
 		<module>Configuration</module>
 		<module>Units</module>
+		<module>Plugins-AutomaticPinNaming</module>
 		<module>Plugins-ElementsCount</module>
 		<module>Plugins-CheckNetlist</module>
 	</modules>
