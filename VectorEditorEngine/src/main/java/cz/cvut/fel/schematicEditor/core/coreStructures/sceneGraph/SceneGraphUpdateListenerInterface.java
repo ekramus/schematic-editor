@@ -10,7 +10,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
  *
  * @author Urban Kravjansky
  */
-public interface SceneGraphUpdateListener extends EventListener {
+public interface SceneGraphUpdateListenerInterface extends EventListener {
     /**
      * When {@link SceneGraph} update occurs, this method is invoked.
      *
