@@ -65,7 +65,7 @@ public class CheckNetlistActionListener implements ActionListener {
         // go through part vector and check one part after another
         for (PartNode partNode : partNodeVector) {
             Part part = (Part) partNode.getElement();
-            Vector<String> partConnectors = part.getPartProperties().getPartConnectorNames();
+            Vector<String> partConnectors = part.getPartProperties().getPartPinNames();
 
             result.append(" -part: " + part.getPartProperties().getProperty("name") + "\n");
             result.append("  -connectors: " + partConnectors + "\n");
@@ -94,7 +94,7 @@ public class CheckNetlistActionListener implements ActionListener {
      */
     private final int checkPart(final PartNode partNode, final Vector<PartNode> partNodes, final Vector<Wire> wireVector) {
         int notConnectedConnectors = 0;
-        Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectorNames();
+        Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
 
         int i = 0;
         for (ConnectorNode connectorNode : partNode.getPartConnectors()) {
@@ -161,7 +161,7 @@ public class CheckNetlistActionListener implements ActionListener {
     private String getConnectorNameForUnitPoint(UnitPoint wup, Vector<PartNode> partNodes) {
         for (PartNode partNode : partNodes) {
             Vector<ConnectorNode> cnv = partNode.getPartConnectors();
-            Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartConnectorNames();
+            Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
             int i = 0;
             // search for connector name
             for (ConnectorNode cn : cnv) {

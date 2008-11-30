@@ -40,22 +40,29 @@ public class VoltageSourceProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartConnectorNames()
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartPinNames()
      */
     @Deprecated
     @Override
-    public Vector<String> getPartConnectorNames() {
+    public Vector<String> getPartPinNames() {
         Vector<String> result = new Vector<String>();
 
-        result.add(getProperty(VoltageSourcePropertiesEnum.CONNECTOR_P.getKey()).getValue());
         result.add(getProperty(VoltageSourcePropertiesEnum.CONNECTOR_M.getKey()).getValue());
+        result.add(getProperty(VoltageSourcePropertiesEnum.CONNECTOR_P.getKey()).getValue());
 
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#setPartPinNames(java.util.Vector)
+     */
+    @Override
+    public void setPartPinNames(Vector<String> partPinNames) {
+        setProperty(VoltageSourcePropertiesEnum.CONNECTOR_M.getKey(), partPinNames.get(0));
+        setProperty(VoltageSourcePropertiesEnum.CONNECTOR_P.getKey(), partPinNames.get(1));
+    }
+
+    /**
      * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartType()
      */
     @Override

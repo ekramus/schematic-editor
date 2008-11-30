@@ -13,7 +13,7 @@ import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorPro
  */
 public class PartPropertiesTest {
     /**
-     * Test method for {@link PartProperties#getPartConnectorNames()}.
+     * Test method for {@link PartProperties#getPartPinNames()}.
      */
     @Test
     public void getPartConnectors() {
@@ -23,6 +23,6 @@ public class PartPropertiesTest {
         pc.add("A, A");
         pc.add("B, BBa");
 
-        pp.getPartConnectorNames();
+        pp.getPartPinNames();
     }
 }

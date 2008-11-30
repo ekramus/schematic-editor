@@ -3,7 +3,6 @@ package cz.cvut.fel.schematicEditor.core;
 import java.util.Properties;
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
@@ -30,6 +29,11 @@ public class Structures {
      * {@link Vector} of loaded plugin properties.
      */
     private static Vector<Properties> loadedPluginProperties = null;
+    /**
+     * Counter of last part number for automatic Part and PIN naming.
+     */
+    private static int                lastPartNumber         = 0;
+
     /**
      * Getter for <code>activeManipulation</code> instance.
      *
@@ -82,5 +86,19 @@ public class Structures {
             loadedPluginProperties = new Vector<Properties>();
         }
         return loadedPluginProperties;
+    }
+
+    /**
+     * @return the lastPartNumber
+     */
+    public static int getLastPartNumber() {
+        return ++lastPartNumber;
+    }
+
+    /**
+     * @param lastPartNumber the lastPartNumber to set
+     */
+    public static void setLastPartNumber(int lastPartNumber) {
+        Structures.lastPartNumber = lastPartNumber;
     }
 }
