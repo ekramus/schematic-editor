@@ -92,7 +92,7 @@ public class Structures {
      * @return the lastPartNumber
      */
     public static int getLastPartNumber() {
-        return ++lastPartNumber;
+        return lastPartNumber;
     }
 
     /**
