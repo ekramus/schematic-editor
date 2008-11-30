@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Arc2D;
@@ -148,6 +147,7 @@ public class DisplayExport implements Export {
 
         BasicStroke basicStroke = new BasicStroke(parameterNode.getWidth().floatValue());
         nodeG2D.setStroke(basicStroke);
+        logger.trace("Stroke width: " + basicStroke.getLineWidth());
 
         // this will be not necessary, as all elements will be drawn using correct set of coordinates
         nodeG2D.translate(-bounds.getX(), -bounds.getY());
@@ -323,13 +323,8 @@ public class DisplayExport implements Export {
                 break;
         }
 
-        // double m[][] = transformationNode.getTransformation().getTransformationMatrix();
-
         Graphics2D g2d = (Graphics2D) bufferedImage.getGraphics();
 
-        // commented out, as it caused rotate malfunction (graphics degradation). Transformations have to be reflected
-        // directly to coordinates.
-        // g2d.setTransform(new AffineTransform(m[0][0], m[1][0], m[0][1], m[1][1], m[0][2], m[1][2]));
         g2d.translate(bounds.getX(), bounds.getY());
         g2d.drawImage(nodeImg, 0, 0, null);
 
@@ -371,8 +366,7 @@ public class DisplayExport implements Export {
             g2d.setColor(strokeColor);
             if (strokeStyle == ElementStyle.DOTTED) {
                 float[] dots = { 1, 2 };
-                Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1, dots, 0);
-                g2d.setStroke(stroke);
+                g2d.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1, dots, 0));
             }
             g2d.draw(shape);
         }

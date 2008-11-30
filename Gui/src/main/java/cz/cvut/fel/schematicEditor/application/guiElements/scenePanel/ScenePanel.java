@@ -455,6 +455,16 @@ public class ScenePanel extends JPanel {
             switch (Structures.getActiveManipulation().getManipulationType()) {
                 case SELECT:
                     Select select = (Select) Structures.getActiveManipulation();
+
+                    // set selected element properties to selected element
+                    GroupNode gn = select.getManipulatedGroup();
+                    Structures.getSceneProperties().setSelectedElementProperties(
+                                                                                 gn.getChildrenParameterNode()
+                                                                                         .getProperties());
+                    // refresh general properties panel
+                    GeneralPropertiesPanel.refresh();
+
+                    // partPropertiesPanel
                     try {
                         Part part = (Part) select.getManipulatedGroup().getChildrenElementList().getFirst()
                                 .getElement();
@@ -462,9 +472,6 @@ public class ScenePanel extends JPanel {
 
                         // set part properties panel
                         PartPropertiesPanel.getInstance().setPartProperties(part.getPartProperties());
-
-                        // refresh general properties panel
-                        GeneralPropertiesPanel.refresh();
                     } catch (ClassCastException cce) {
                         MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(false);
                     } catch (NullPointerException npe) {
