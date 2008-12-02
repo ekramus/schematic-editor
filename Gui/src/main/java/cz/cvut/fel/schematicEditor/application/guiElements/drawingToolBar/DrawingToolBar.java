@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.drawingToolBar.listen
 import cz.cvut.fel.schematicEditor.application.guiElements.drawingToolBar.listeners.DrawCircuitPartButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.drawingToolBar.listeners.DrawShapeButtonListener;
 import cz.cvut.fel.schematicEditor.application.guiElements.drawingToolBar.listeners.SelectButtonListener;
-import cz.cvut.fel.schematicEditor.element.element.part.Connector;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment;
@@ -67,9 +67,9 @@ public final class DrawingToolBar extends JToolBar {
      */
     private static final String   DELETE_BTN       = "delete";
     /**
-     * Connector button caption.
+     * Pin button caption.
      */
-    private static final String   CONNECTOR_BTN    = "connector";
+    private static final String   PIN_BTN          = "pin";
     /**
      * Wire button caption.
      */
@@ -106,7 +106,7 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(drawingToolBar.getArcButton());
             drawingToolBar.add(drawingToolBar.getArcSegmentButton());
             drawingToolBar.add(drawingToolBar.getRectButton());
-            drawingToolBar.add(drawingToolBar.getConnectorButton());
+            drawingToolBar.add(drawingToolBar.getPinButton());
             drawingToolBar.add(drawingToolBar.getWireButton());
             drawingToolBar.add(drawingToolBar.getTextButton());
         }
@@ -154,9 +154,9 @@ public final class DrawingToolBar extends JToolBar {
      */
     private JButton deleteButton     = null;
     /**
-     * Connector {@link JButton} instance.
+     * Pin {@link JButton} instance.
      */
-    private JButton connectorButton  = null;
+    private JButton pinButton  = null;
     /**
      * Wire {@link JButton} instance.
      */
@@ -217,17 +217,17 @@ public final class DrawingToolBar extends JToolBar {
     }
 
     /**
-     * <code>connectorButton</code> getter.
+     * <code>pinButton</code> getter.
      *
-     * @return <code>connectorButton</code> instance.
+     * @return <code>pinButton</code> instance.
      */
-    private JButton getConnectorButton() {
-        if (this.connectorButton == null) {
-            this.connectorButton = new JButton();
-            this.connectorButton.setText(CONNECTOR_BTN);
-            this.connectorButton.addActionListener(new DrawCircuitPartButtonListener(new Connector()));
+    private JButton getPinButton() {
+        if (this.pinButton == null) {
+            this.pinButton = new JButton();
+            this.pinButton.setText(PIN_BTN);
+            this.pinButton.addActionListener(new DrawCircuitPartButtonListener(new Pin()));
         }
-        return this.connectorButton;
+        return this.pinButton;
     }
 
     /**

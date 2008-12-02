@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.element.element.part.Connector;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -100,7 +100,7 @@ public class PartNode extends ElementNode {
         result = new UnitRectangle(x, y, w, h);
 
         for (ConnectorNode cn : getPartConnectors()) {
-            Connector c = (Connector) cn.getElement();
+            Pin c = (Pin) cn.getElement();
             result = (UnitRectangle) result.createUnion(c.getBounds());
         }
 
@@ -191,7 +191,7 @@ public class PartNode extends ElementNode {
         Vector<UnitPoint> result = new Vector<UnitPoint>();
 
         for (ConnectorNode connectorNode : getPartConnectors()) {
-            Connector c = (Connector) connectorNode.getElement();
+            Pin c = (Pin) connectorNode.getElement();
             for (int i = 0; i < c.getX().size(); i++) {
                 result.add(new UnitPoint(c.getX().get(i), c.getY().get(i)));
             }

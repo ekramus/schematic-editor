@@ -10,27 +10,27 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class encapsulates connector part. Connector serves as bridge between {@link Wire} and {@link Part}. It is
- * visible in application, exported is invisible.
+ * This class encapsulates pin part. Pin serves as bridge between {@link Wire} and {@link Part}. It is visible in
+ * application, exported is invisible.
  *
  * @author Urban Kravjansky
  */
-public class Connector extends Element {
+public class Pin extends Element {
 
     /**
-     * Default {@link Connector} constructor.
+     * Default {@link Pin} constructor.
      */
-    public Connector() {
+    public Pin() {
         super();
     }
 
     /**
-     * {@link Connector} constructor with coordinate vector.
+     * {@link Pin} constructor with coordinate vector.
      *
      * @param x {@link Vector} of <code>x</code> coordinates.
      * @param y {@link Vector} of <code>y</code> coordinates.
      */
-    public Connector(Vector<Unit> x, Vector<Unit> y) {
+    public Pin(Vector<Unit> x, Vector<Unit> y) {
         super(x, y);
     }
 
@@ -79,11 +79,11 @@ public class Connector extends Element {
      */
     @Override
     public Element duplicate() {
-        Connector connector = new Connector();
+        Pin pin = new Pin();
 
-        connector.duplicateCoordinates(this);
+        pin.duplicateCoordinates(this);
 
-        return connector;
+        return pin;
     }
 
     /**
@@ -91,6 +91,6 @@ public class Connector extends Element {
      */
     @Override
     public String toString() {
-        return "CONNECTOR";
+        return "PIN";
     }
 }
