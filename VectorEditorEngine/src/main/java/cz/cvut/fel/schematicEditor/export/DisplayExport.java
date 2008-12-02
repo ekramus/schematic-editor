@@ -399,6 +399,9 @@ public class DisplayExport implements Export {
      * @param connector
      */
     private void drawConnector(final Connector connector, ParameterNode parameterNode, Graphics2D nodeG2D) {
+        logger.trace("drawing connector at coordinates: " + new UnitPoint(connector.getX().firstElement(), connector
+                .getY().firstElement()));
+
         Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2, connector.getY()
                 .firstElement().doubleValue() - 2, 5, 5);
         drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode.getFillStyle());

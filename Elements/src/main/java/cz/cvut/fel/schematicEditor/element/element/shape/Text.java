@@ -21,7 +21,7 @@ public class Text extends Shape {
 
     @Override
     public UnitRectangle getBounds() {
-        return new UnitRectangle(0, 0, 1, 1);
+        return new UnitRectangle(getX().firstElement().doubleValue(), getY().firstElement().doubleValue(), 100, 100);
     }
 
     public Text(UnitPoint start, String text, int size) {
