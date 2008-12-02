@@ -2,13 +2,10 @@ package cz.cvut.fel.schematicEditor.export;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.Arc2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Ellipse2D;
@@ -249,27 +246,30 @@ public class DisplayExport implements Export {
                 break;
 
             case T_TEXT:
-
+                // Text text = (Text) elementNode.getElement();
+                //
+                // Font font = new Font(text.getFontName(), text.getStyle(), text.getSize());
+                // FontRenderContext frc = nodeG2D.getFontRenderContext();
+                //
+                // TextLayout layout = new TextLayout(text.getText(), font, frc);
+                //
+                // Rectangle2D rec = layout.getBounds();
+                // bounds = new UnitRectangle(rec.getX() + text.getX().get(0).doubleValue(), rec.getY() + text.getY()
+                // .get(0).doubleValue(), rec.getWidth(), rec.getHeight());
+                // nodeImg = new BufferedImage((int) rec.getWidth(), (int) rec.getHeight(),
+                // BufferedImage.TYPE_INT_ARGB);
+                //
+                // nodeG2D = (Graphics2D) nodeImg.getGraphics();
+                // nodeG2D.translate(-bounds.getX(), -bounds.getY());
+                //
+                // if (parameterNode.getColor() != null) {
+                // nodeG2D.setColor(parameterNode.getColor());
+                // }
+                //
+                // layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
+                // break;
                 Text text = (Text) elementNode.getElement();
-
-                Font font = new Font(text.getFontName(), text.getStyle(), text.getSize());
-                FontRenderContext frc = nodeG2D.getFontRenderContext();
-
-                TextLayout layout = new TextLayout(text.getText(), font, frc);
-
-                Rectangle2D rec = layout.getBounds();
-                bounds = new UnitRectangle(rec.getX() + text.getX().get(0).doubleValue(), rec.getY() + text.getY()
-                        .get(0).doubleValue(), rec.getWidth(), rec.getHeight());
-                nodeImg = new BufferedImage((int) rec.getWidth(), (int) rec.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-                nodeG2D = (Graphics2D) nodeImg.getGraphics();
-                nodeG2D.translate(-bounds.getX(), -bounds.getY());
-
-                if (parameterNode.getColor() != null) {
-                    nodeG2D.setColor(parameterNode.getColor());
-                }
-
-                layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
+                drawText(text.getText(), new UnitPoint(text.getX().firstElement(), text.getY().firstElement()), nodeG2D);
                 break;
 
             case T_WIRE:
@@ -402,6 +402,13 @@ public class DisplayExport implements Export {
         Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2, connector.getY()
                 .firstElement().doubleValue() - 2, 5, 5);
         drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode.getFillStyle());
+    }
+
+    private void drawText(String text, UnitPoint coordinates, Graphics2D nodeG2D) {
+        logger.trace("drawing text <" + text + "> at coordinates: " + coordinates);
+
+        nodeG2D.setColor(Color.BLACK);
+        nodeG2D.drawString(text, coordinates.getUnitX().floatValue(), coordinates.getUnitY().floatValue());
     }
 
     private void drawConnectorText(Connector connector, String connectorName, Graphics2D nodeG2D) {

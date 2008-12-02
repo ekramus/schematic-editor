@@ -21,6 +21,7 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Line;
 import cz.cvut.fel.schematicEditor.element.element.shape.Polygon;
 import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 
 /**
  * This class implements drawing tool bar. It is used for drawing tool selection.
@@ -73,6 +74,10 @@ public final class DrawingToolBar extends JToolBar {
      * Wire button caption.
      */
     private static final String   WIRE_BTN         = "wire";
+    /**
+     * Text button caption.
+     */
+    private static final String   TEXT_BTN         = "text";
 
     /**
      * {@link DrawingToolBar} instance.
@@ -103,6 +108,7 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(drawingToolBar.getRectButton());
             drawingToolBar.add(drawingToolBar.getConnectorButton());
             drawingToolBar.add(drawingToolBar.getWireButton());
+            drawingToolBar.add(drawingToolBar.getTextButton());
         }
         return drawingToolBar;
     }
@@ -155,6 +161,10 @@ public final class DrawingToolBar extends JToolBar {
      * Wire {@link JButton} instance.
      */
     private JButton wireButton       = null;
+    /**
+     * Text {@link JButton} instance.
+     */
+    private JButton textButton       = null;
 
     /**
      * Default constructor. It calls default constructor of super class. It is private, because {@link DrawingToolBar}
@@ -190,6 +200,20 @@ public final class DrawingToolBar extends JToolBar {
             this.arcSegmentButton.addActionListener(new DrawShapeButtonListener(new ArcSegment()));
         }
         return this.arcSegmentButton;
+    }
+
+    /**
+     * <code>arcSegmentButton</code> getter.
+     *
+     * @return <code>arcSegmentButton</code> instance.
+     */
+    private JButton getTextButton() {
+        if (this.textButton == null) {
+            this.textButton = new JButton();
+            this.textButton.setText(TEXT_BTN);
+            this.textButton.addActionListener(new DrawShapeButtonListener(new Text()));
+        }
+        return this.textButton;
     }
 
     /**
