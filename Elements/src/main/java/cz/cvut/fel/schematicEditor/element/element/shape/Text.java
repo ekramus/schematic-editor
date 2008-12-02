@@ -52,7 +52,7 @@ public class Text extends Shape {
      *
      */
     public Text() {
-        // TODO Auto-generated constructor stub
+        setText("empty_string");
     }
 
     public void setText(String textValue) {
