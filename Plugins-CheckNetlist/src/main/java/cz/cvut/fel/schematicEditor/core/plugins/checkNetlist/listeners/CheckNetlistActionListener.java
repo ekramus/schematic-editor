@@ -7,7 +7,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.element.part.Connector;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
@@ -98,22 +98,22 @@ public class CheckNetlistActionListener implements ActionListener {
 
         int i = 0;
         for (ConnectorNode connectorNode : partNode.getPartConnectors()) {
-            Connector connector = (Connector) connectorNode.getElement();
-            Wire wire = getWireForConnector(connector, wireVector);
+            Pin pin = (Pin) connectorNode.getElement();
+            Wire wire = getWireForConnector(pin, wireVector);
             // wire was found, now we can validate all connectors on that wire
             if (wire != null) {
-                Vector<String> matchedConnectorNames = getConnectorNamesForConnectorAndWire(connector, wire, partNodes);
+                Vector<String> matchedConnectorNames = getConnectorNamesForConnectorAndWire(pin, wire, partNodes);
                 // compare all retrieved connectors (names) with name of connector
                 if (!matchedConnectorNames.isEmpty()) {
                     for (String matchedConnectorName : matchedConnectorNames) {
                         if (!matchedConnectorName.equals(connectorNames.get(i))) {
-                            System.err.println("Connector " + connectorNames.get(i)
+                            System.err.println("Pin " + connectorNames.get(i)
                                     + " does not match its conterpart "
                                     + matchedConnectorName);
                         }
                     }
                 } else {
-                    System.err.println("Connector " + connectorNames.get(i) + " is not connected anywhere");
+                    System.err.println("Pin " + connectorNames.get(i) + " is not connected anywhere");
                 }
             }
             // wire was not found
@@ -131,11 +131,11 @@ public class CheckNetlistActionListener implements ActionListener {
      * @param c
      * @param wire
      */
-    private Vector<String> getConnectorNamesForConnectorAndWire(Connector connector, Wire wire,
+    private Vector<String> getConnectorNamesForConnectorAndWire(Pin pin, Wire wire,
             Vector<PartNode> partNodes) {
         Vector<String> result = new Vector<String>();
 
-        UnitPoint cup = new UnitPoint(connector.getX().firstElement(), connector.getY().firstElement());
+        UnitPoint cup = new UnitPoint(pin.getX().firstElement(), pin.getY().firstElement());
         for (int i = 0; i < wire.getX().size(); i++) {
             UnitPoint wup = new UnitPoint(wire.getX().get(i), wire.getY().get(i));
             // cup is not wup, so there can be another part attached (I suggest only one part is attached to connector,
@@ -165,7 +165,7 @@ public class CheckNetlistActionListener implements ActionListener {
             int i = 0;
             // search for connector name
             for (ConnectorNode cn : cnv) {
-                Connector c = (Connector) cn.getElement();
+                Pin c = (Pin) cn.getElement();
                 UnitPoint cup = new UnitPoint(c.getX().firstElement(), c.getY().firstElement());
                 if (cup.equals(wup)) {
                     return connectorNames.get(i);
@@ -179,14 +179,14 @@ public class CheckNetlistActionListener implements ActionListener {
     }
 
     /**
-     * Retrieves {@link Wire} attached to given {@link Connector}.
+     * Retrieves {@link Wire} attached to given {@link Pin}.
      *
-     * @param connector
+     * @param pin
      * @param wireVector
      * @return
      */
-    private final Wire getWireForConnector(Connector connector, Vector<Wire> wireVector) {
-        UnitPoint cup = new UnitPoint(connector.getX().firstElement(), connector.getY().firstElement());
+    private final Wire getWireForConnector(Pin pin, Vector<Wire> wireVector) {
+        UnitPoint cup = new UnitPoint(pin.getX().firstElement(), pin.getY().firstElement());
         for (Wire wire : wireVector) {
             for (int i = 0; i < wire.getX().size(); i++) {
                 UnitPoint wup = new UnitPoint(wire.getX().get(i), wire.getY().get(i));

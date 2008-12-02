@@ -10,7 +10,7 @@ import cz.cvut.fel.schematicEditor.application.guiElements.propertiesToolBar.Par
 import cz.cvut.fel.schematicEditor.application.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.element.element.part.Connector;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
@@ -65,7 +65,7 @@ public class DrawCircuitPartButtonListener implements ActionListener {
 
             switch (getElement().getElementType()) {
                 case T_CONNECTOR:
-                    en = new ConnectorNode((Connector) getElement());
+                    en = new ConnectorNode((Pin) getElement());
                     break;
                 case T_WIRE:
                     en = new WireNode((Wire) getElement());

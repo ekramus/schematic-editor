@@ -17,7 +17,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.element.part.Connector;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
@@ -287,8 +287,8 @@ public class DisplayExport implements Export {
                 break;
 
             case T_CONNECTOR:
-                Connector connector = (Connector) elementNode.getElement();
-                drawConnector(connector, parameterNode, nodeG2D);
+                Pin pin = (Pin) elementNode.getElement();
+                drawConnector(pin, parameterNode, nodeG2D);
                 break;
 
             case T_PART:
@@ -302,7 +302,7 @@ public class DisplayExport implements Export {
                 // search for connectors, draw them and display their names
                 int i = 0;
                 for (ConnectorNode cn : partNode.getPartConnectors()) {
-                    Connector c = (Connector) cn.getElement();
+                    Pin c = (Pin) cn.getElement();
                     drawConnector(c, parameterNode, nodeG2D);
                     drawConnectorText(c, connectorNames.get(i), nodeG2D);
                     i++;
@@ -396,13 +396,13 @@ public class DisplayExport implements Export {
     /**
      * Draws connector.
      *
-     * @param connector
+     * @param pin
      */
-    private void drawConnector(final Connector connector, ParameterNode parameterNode, Graphics2D nodeG2D) {
-        logger.trace("drawing connector at coordinates: " + new UnitPoint(connector.getX().firstElement(), connector
+    private void drawConnector(final Pin pin, ParameterNode parameterNode, Graphics2D nodeG2D) {
+        logger.trace("drawing connector at coordinates: " + new UnitPoint(pin.getX().firstElement(), pin
                 .getY().firstElement()));
 
-        Ellipse2D.Double e2d = new Ellipse2D.Double(connector.getX().firstElement().doubleValue() - 2, connector.getY()
+        Ellipse2D.Double e2d = new Ellipse2D.Double(pin.getX().firstElement().doubleValue() - 2, pin.getY()
                 .firstElement().doubleValue() - 2, 5, 5);
         drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode.getFillStyle());
     }
@@ -414,9 +414,9 @@ public class DisplayExport implements Export {
         nodeG2D.drawString(text, coordinates.getUnitX().floatValue(), coordinates.getUnitY().floatValue());
     }
 
-    private void drawConnectorText(Connector connector, String connectorName, Graphics2D nodeG2D) {
+    private void drawConnectorText(Pin pin, String connectorName, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
-        nodeG2D.drawString(connectorName, connector.getX().firstElement().floatValue() - 10, connector.getY()
+        nodeG2D.drawString(connectorName, pin.getX().firstElement().floatValue() - 10, pin.getY()
                 .firstElement().floatValue() - 10);
     }
 }

@@ -200,7 +200,7 @@
           <cz.cvut.fel.schematicEditor.graphNode.ConnectorNode>
             <id>1224351127431</id>
             <disabled>false</disabled>
-            <element class="cz.cvut.fel.schematicEditor.element.element.part.Connector">
+            <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
               <editedPointIndex>0</editedPointIndex>
               <x>
                 <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
@@ -257,7 +257,7 @@
           <cz.cvut.fel.schematicEditor.graphNode.ConnectorNode>
             <id>1224351127431</id>
             <disabled>false</disabled>
-            <element class="cz.cvut.fel.schematicEditor.element.element.part.Connector">
+            <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
               <editedPointIndex>0</editedPointIndex>
               <x>
                 <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
