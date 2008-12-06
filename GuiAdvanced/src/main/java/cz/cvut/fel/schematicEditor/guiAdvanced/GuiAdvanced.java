@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
@@ -128,12 +129,17 @@ public class GuiAdvanced extends JApplet {
         container.setSize(800, 600);
         container.setLayout(new BorderLayout());
 
+        // prepare scene tabbed pane
+        JTabbedPane sceneTabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        sceneTabbedPane.add(getSceneRootPanel(), "scheme");
+        sceneTabbedPane.add(new JPanel(), "part");
+
         // add components
         container.add(MenuBar.getInstance(), BorderLayout.NORTH);
         container.add(DrawingToolBar.getInstance(), BorderLayout.WEST);
         container.add(PropertiesToolBar.getInstance(), BorderLayout.EAST);
         container.add(StatusBar.getInstance(), BorderLayout.SOUTH);
-        container.add(getSceneRootPanel(), BorderLayout.CENTER);
+        container.add(sceneTabbedPane, BorderLayout.CENTER);
     }
 
     /**
