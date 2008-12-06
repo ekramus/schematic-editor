@@ -20,6 +20,6 @@ public class Standalone {
         Configuration.getInstance();
         Launcher.setUI();
 
-        gui.getJFrame().setVisible(true);
+        gui.getApplicationFrame().setVisible(true);
     }
 }
