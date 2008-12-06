@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
 
@@ -126,13 +128,13 @@ public class GuiAdvanced extends JApplet {
      */
     private void initRootComponent(Container container) {
         // set container parameters
-        container.setSize(800, 600);
+        container.setMinimumSize(new Dimension(1000, 800));
         container.setLayout(new BorderLayout());
 
         // prepare scene tabbed pane
-        JTabbedPane sceneTabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-        sceneTabbedPane.add(getSceneRootPanel(), "scheme");
-        sceneTabbedPane.add(new JPanel(), "part");
+        JTabbedPane sceneTabbedPane = new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        sceneTabbedPane.addTab("scheme", getSceneRootPanel());
+        sceneTabbedPane.addTab("part", new JPanel());
 
         // add components
         container.add(MenuBar.getInstance(), BorderLayout.NORTH);
