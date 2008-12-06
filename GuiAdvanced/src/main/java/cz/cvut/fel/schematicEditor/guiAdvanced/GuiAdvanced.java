@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -45,13 +46,13 @@ public class GuiAdvanced extends JApplet {
      */
     private static Logger     logger;
     /**
-     * Content pane for application.
+     * {@link JPanel} for applet.
      */
-    private JPanel            jContentPane     = null;
+    private JPanel            appletPanel      = null;
     /**
      * Main frame.
      */
-    private JFrame            jFrame           = null;
+    private JFrame            applicationFrame = null;
     /**
      * JPanel containing scene.
      */
@@ -69,45 +70,16 @@ public class GuiAdvanced extends JApplet {
     }
 
     /**
-     * This method initializes jContentPane. This method is implemented for the purpose of applet launching.
+     * This method initializes appletPanel. This method is implemented for the purpose of applet launching.
      *
      * @return javax.swing.JPanel
      */
-    public JPanel getJContentPane() {
-        if (this.jContentPane == null) {
-            this.jContentPane = new JPanel();
-            this.jContentPane.setLayout(new BorderLayout());
+    public JPanel getAppletPanel() {
+        if (this.appletPanel == null) {
+            this.appletPanel = new JPanel();
 
-            GuiAdvanced application = new GuiAdvanced();
-            application.getJFrame().setVisible(true);
-            this.jContentPane.add(application);
-        }
-        return this.jContentPane;
-    }
-
-    /**
-     * This method initializes jFrame
-     *
-     * @return javax.swing.JFrame
-     */
-    public JFrame getJFrame() {
-        if (this.jFrame == null) {
-            this.jFrame = new JFrame();
-
-            // set parameters of JFrame
-            this.jFrame.setTitle("Application");
-            this.jFrame.setSize(800, 600);
-            this.jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.jFrame.setLayout(new BorderLayout());
-
-            // set menu bar
-            this.jFrame.setJMenuBar(MenuBar.getInstance());
-
-            // add components
-            this.jFrame.add(getSceneRootPanel(), BorderLayout.CENTER);
-            this.jFrame.add(DrawingToolBar.getInstance(), BorderLayout.WEST);
-            this.jFrame.add(PropertiesToolBar.getInstance(), BorderLayout.EAST);
-            this.jFrame.add(StatusBar.getInstance(), BorderLayout.SOUTH);
+            // finalize appletPanel initialization
+            initRootComponent(this.appletPanel);
 
             // initialize plugins
             try {
@@ -116,7 +88,52 @@ public class GuiAdvanced extends JApplet {
                 logger.error("Error while loading plugins");
             }
         }
-        return this.jFrame;
+        return this.appletPanel;
+    }
+
+    /**
+     * Initializes main application {@link JFrame}.
+     *
+     * @return javax.swing.JFrame
+     */
+    public JFrame getApplicationFrame() {
+        if (this.applicationFrame == null) {
+            this.applicationFrame = new JFrame();
+
+            // set parameters of JFrame
+            this.applicationFrame.setTitle("Application");
+            this.applicationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            // finalize jFrame initialization
+            initRootComponent(this.applicationFrame);
+
+            // initialize plugins
+            try {
+                initializePlugins(MenuBar.getInstance().getPluginsMenu(), DrawingToolBar.getInstance());
+            } catch (NullPointerException npe) {
+                logger.error("Error while loading plugins");
+            }
+        }
+        return this.applicationFrame;
+    }
+
+    /**
+     * Initializes container with prepared components, so both jFrame for standalone application and appletPanel for
+     * applet application looks same.
+     *
+     * @param container root container for specified application.
+     */
+    private void initRootComponent(Container container) {
+        // set container parameters
+        container.setSize(800, 600);
+        container.setLayout(new BorderLayout());
+
+        // add components
+        container.add(MenuBar.getInstance(), BorderLayout.NORTH);
+        container.add(DrawingToolBar.getInstance(), BorderLayout.WEST);
+        container.add(PropertiesToolBar.getInstance(), BorderLayout.EAST);
+        container.add(StatusBar.getInstance(), BorderLayout.SOUTH);
+        container.add(getSceneRootPanel(), BorderLayout.CENTER);
     }
 
     /**
@@ -152,7 +169,6 @@ public class GuiAdvanced extends JApplet {
      *
      * @param pluginsMenu plugins menu used for displaying plugin menu items.
      * @param drawingToolBar tool bar for drawing buttons.
-     * @param sceneGraph scene graph for access to scene elements.
      */
     private void initializePlugins(JMenu pluginsMenu, JToolBar drawingToolBar) {
         Collection<String> pluginsCollection = findPlugins("plugins");
