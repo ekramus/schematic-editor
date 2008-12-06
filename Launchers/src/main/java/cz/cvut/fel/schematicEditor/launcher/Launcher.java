@@ -9,7 +9,7 @@ import com.jgoodies.plaf.plastic.PlasticXPLookAndFeel;
 
 /**
  * This class implements methods used in all {@link Launcher} classes. This methods are mainly used for configuration.
- * 
+ *
  * @author Urban Kravjanský
  */
 public abstract class Launcher {
