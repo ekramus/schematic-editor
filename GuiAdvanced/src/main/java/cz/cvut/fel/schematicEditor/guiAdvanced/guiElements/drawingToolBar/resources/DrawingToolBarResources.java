@@ -76,15 +76,6 @@ public enum DrawingToolBarResources {
     private String resource;
 
     /**
-     * Constructor sets string value of enum item.
-     *
-     * @param text String value of item.
-     */
-    private DrawingToolBarResources(String text) {
-        setText(text);
-    }
-
-    /**
      * Constructor sets string value and resource path of enum item.
      *
      * @param text String value of item.
