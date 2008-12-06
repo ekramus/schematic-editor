@@ -22,7 +22,6 @@ public class Applet extends JApplet {
         Configuration.getInstance();
         Launcher.setUI();
 
-        this.setSize(800, 600);
         this.setContentPane(gui.getAppletPanel());
     }
 }
