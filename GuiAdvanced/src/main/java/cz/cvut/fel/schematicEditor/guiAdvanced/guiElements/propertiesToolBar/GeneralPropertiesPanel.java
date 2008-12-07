@@ -37,7 +37,7 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger            logger;
+    private static Logger                 logger;
     /**
      * Singleton instance of {@link GeneralPropertiesPanel}.
      */
@@ -46,15 +46,15 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * Line width {@link JComboBox} instance.
      */
-    private JComboBox                lineWidthComboBox       = null;
+    private JComboBox                     lineWidthComboBox       = null;
     /**
      * Line width {@link JPanel} instance.
      */
-    private JPanel                   lineWidthPanel          = null;
+    private JPanel                        lineWidthPanel          = null;
     /**
      * Line width predefined values.
      */
-    private static final String[]    LINE_WIDTH              = { "1 px",
+    private static final String[]         LINE_WIDTH              = { "1 px",
             "2 px",
             "3 px",
             "4 px",
@@ -63,51 +63,51 @@ public class GeneralPropertiesPanel extends JPanel {
             "7 px",
             "8 px",
             "9 px",
-            "10 px"                                         };
+            "10 px"                                              };
     /**
      * Value for maximum alpha value (minimal transparency).
      */
-    private static final int         ALPHA_MAX               = 255;
+    private static final int              ALPHA_MAX               = 255;
     /**
      * Value for minimum alpha value (maximal transparency).
      */
-    private static final int         ALPHA_MIN               = 0;
+    private static final int              ALPHA_MIN               = 0;
 
     /**
      * Contour {@link JCheckBox} instance.
      */
-    private JCheckBox                contourCheckBox         = null;
+    private JCheckBox                     contourCheckBox         = null;
 
     /**
      * Contour color {@link JButton} instance.
      */
-    private JButton                  contourColorButton      = null;
+    private JButton                       contourColorButton      = null;
     /**
      * Contour color alpha {@link JSlider} instance.
      */
-    private JSlider                  contourColorAlphaSlider = null;
+    private JSlider                       contourColorAlphaSlider = null;
     /**
      * Contour color {@link JPanel} instance.
      */
-    private JPanel                   contourColorPanel       = null;
+    private JPanel                        contourColorPanel       = null;
 
     /**
      * Fill {@link JCheckBox} instance.
      */
-    private JCheckBox                fillCheckBox            = null;
+    private JCheckBox                     fillCheckBox            = null;
 
     /**
      * Fill color {@link JButton} instance.
      */
-    private JButton                  fillColorButton         = null;
+    private JButton                       fillColorButton         = null;
     /**
      * Fill color alpha {@link JSlider} instance.
      */
-    private JSlider                  fillColorAlphaSlider    = null;
+    private JSlider                       fillColorAlphaSlider    = null;
     /**
      * Fill color {@link JPanel} instance.
      */
-    private JPanel                   fillColorPanel          = null;
+    private JPanel                        fillColorPanel          = null;
 
     /**
      * Default constructor. It is private for {@link GeneralPropertiesPanel} singleton instance.
@@ -141,7 +141,7 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * Refresh {@link GeneralPropertiesPanel} according to scene or selected element properties.
      */
-    public static void refresh() {
+    public void update() {
         ElementProperties ep;
 
         if (Structures.getSceneProperties().getSelectedElementProperties() == null) {
@@ -150,14 +150,13 @@ public class GeneralPropertiesPanel extends JPanel {
             ep = Structures.getSceneProperties().getSelectedElementProperties();
         }
 
-        propertiesToolBar.getLineWidthComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
-        propertiesToolBar.getContourCheckBox().setSelected(ep.getContourStyle() == ElementStyle.NONE ? false : true);
-        propertiesToolBar.getFillCheckBox().setSelected(ep.getFillStyle() == ElementStyle.NONE ? false : true);
-        propertiesToolBar.getContourColorButton()
-                .setIcon(getColorIcon(ep.getContourColor(), ep.getContourColorAlpha()));
-        propertiesToolBar.getFillColorButton().setIcon(getColorIcon(ep.getFillColor(), ep.getFillColorAlpha()));
-        propertiesToolBar.getContourColorAlphaSlider().setValue(ep.getContourColorAlpha());
-        propertiesToolBar.getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
+        getLineWidthComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
+        getContourCheckBox().setSelected(ep.getContourStyle() == ElementStyle.NONE ? false : true);
+        getFillCheckBox().setSelected(ep.getFillStyle() == ElementStyle.NONE ? false : true);
+        getContourColorButton().setIcon(getColorIcon(ep.getContourColor(), ep.getContourColorAlpha()));
+        getFillColorButton().setIcon(getColorIcon(ep.getFillColor(), ep.getFillColorAlpha()));
+        getContourColorAlphaSlider().setValue(ep.getContourColorAlpha());
+        getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
 
         logger.debug("Contour style: " + ep.getContourStyle());
     }

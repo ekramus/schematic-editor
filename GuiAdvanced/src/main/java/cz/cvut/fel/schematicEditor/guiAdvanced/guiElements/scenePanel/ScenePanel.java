@@ -462,7 +462,7 @@ public class ScenePanel extends JPanel {
                                                                                  gn.getChildrenParameterNode()
                                                                                          .getProperties());
                     // refresh general properties panel
-                    GeneralPropertiesPanel.refresh();
+                    GeneralPropertiesPanel.getInstance().update();
 
                     // partPropertiesPanel
                     try {

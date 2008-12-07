@@ -44,7 +44,7 @@ public abstract class PropertiesToolBarListener {
     protected final void updateProperties(final ElementProperties elementProperties)
             throws UnknownManipulationException {
         // refresh all elements on properties toolbar
-        PartPropertiesPanel.refresh();
+        PartPropertiesPanel.getInstance().update();
 
         Manipulation m = Structures.getActiveManipulation();
 

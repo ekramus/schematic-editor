@@ -78,13 +78,17 @@ public class PartPropertiesPanel extends JPanel {
     }
 
     /**
-     * Refresh {@link PartPropertiesPanel} according to scene or selected element properties.
+     * Updates {@link PartPropertiesPanel} according to scene or selected element properties.
      */
-    public static void refresh() {
-        if (Structures.getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
-            Part part = (Part) Structures.getActiveManipulation().getManipulatedGroup().getChildrenElementList()
-                    .getFirst().getElement();
-            getInstance().getPartRotationCenterLabel().setText(part.getRotationCenter().toString());
+    public void update() {
+        try {
+            if (Structures.getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
+                Part part = (Part) Structures.getActiveManipulation().getManipulatedGroup().getChildrenElementList()
+                        .getFirst().getElement();
+                getInstance().getPartRotationCenterLabel().setText(part.getRotationCenter().toString());
+            }
+        } catch (NullPointerException npe) {
+            logger.error("Probably no manipulation.");
         }
     }
 

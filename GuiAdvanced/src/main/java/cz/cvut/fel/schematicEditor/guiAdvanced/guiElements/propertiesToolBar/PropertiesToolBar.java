@@ -75,8 +75,10 @@ public class PropertiesToolBar extends JToolBar {
 
         switch (PropertiesSelectorToolBar.getSelectedButton()) {
             case PropertiesSelectorToolBar.GENERAL_PROPERTIES:
+                add(GeneralPropertiesPanel.getInstance(), BorderLayout.CENTER);
                 break;
             case PropertiesSelectorToolBar.PART_PROPERTIES:
+                add(PartPropertiesPanel.getInstance(), BorderLayout.CENTER);
                 break;
             case PropertiesSelectorToolBar.NONE:
             default:
@@ -88,6 +90,7 @@ public class PropertiesToolBar extends JToolBar {
         add(PropertiesSelectorToolBar.getInstance(), BorderLayout.EAST);
 
         // repaint
+        validate();
         repaint();
     }
 }

@@ -94,7 +94,7 @@ public class DrawCircuitPartButtonListener implements ActionListener {
             // set selected element properties to null
             Structures.getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
-            PartPropertiesPanel.refresh();
+            PartPropertiesPanel.getInstance().update();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {

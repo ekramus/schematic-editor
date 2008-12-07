@@ -165,5 +165,7 @@ public class PropertiesSelectorToolBar extends JToolBar {
                 getPartPropertiesButton().setSelected(false);
                 break;
         }
+
+        repaint();
     }
 }
