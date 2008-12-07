@@ -1,13 +1,8 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
@@ -49,26 +44,8 @@ public class PropertiesToolBar extends JToolBar {
             propertiesToolBar.setLayout(new BorderLayout());
             propertiesToolBar.setPreferredSize(new Dimension(225, 400));
 
-            // create ToolBar
-            JToolBar tb = new JToolBar(VERTICAL);
-            JButton b = new JButton();
-
-            BufferedImage bi = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = (Graphics2D) bi.getGraphics();
-
-            g2d.setColor(Color.RED);
-            g2d.rotate(Math.PI / 2.0);
-            g2d.drawString("pokus", 10, -50);
-            g2d.setColor(Color.BLUE);
-            g2d.rotate(Math.PI);
-            g2d.drawString("pokus", -50, 30);
-            b.setIcon(new ImageIcon(bi));
-
-            tb.add(b);
-
-            // add elements
-            propertiesToolBar.add(propertiesToolBar.getTabbedPane(), BorderLayout.CENTER);
-            propertiesToolBar.add(tb, BorderLayout.EAST);
+            // add elements by updating properties tool bar
+            propertiesToolBar.update();
         }
         return propertiesToolBar;
     }
@@ -87,5 +64,30 @@ public class PropertiesToolBar extends JToolBar {
             this.tabbedPane.addTab("part properties", PartPropertiesPanel.getInstance());
         }
         return this.tabbedPane;
+    }
+
+    /**
+     * Updates {@link PropertiesToolBar}.
+     */
+    public void update() {
+        // clear panel
+        removeAll();
+
+        switch (PropertiesSelectorToolBar.getSelectedButton()) {
+            case PropertiesSelectorToolBar.GENERAL_PROPERTIES:
+                break;
+            case PropertiesSelectorToolBar.PART_PROPERTIES:
+                break;
+            case PropertiesSelectorToolBar.NONE:
+            default:
+                break;
+        }
+
+        // update and add properties selector tool bar
+        PropertiesSelectorToolBar.getInstance().update();
+        add(PropertiesSelectorToolBar.getInstance(), BorderLayout.EAST);
+
+        // repaint
+        repaint();
     }
 }
