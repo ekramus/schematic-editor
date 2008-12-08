@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -67,6 +68,7 @@ public class PartPropertiesPanel extends JPanel {
         if (partPropertiesPanel == null) {
             partPropertiesPanel = new PartPropertiesPanel();
             partPropertiesPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 25));
+            partPropertiesPanel.setPreferredSize(new Dimension(200, 600));
 
             // add elements
             partPropertiesPanel.add(partPropertiesPanel.getEditingPartCheckBox());

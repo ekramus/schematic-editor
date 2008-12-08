@@ -127,6 +127,7 @@ public class GeneralPropertiesPanel extends JPanel {
         if (propertiesToolBar == null) {
             propertiesToolBar = new GeneralPropertiesPanel();
             propertiesToolBar.setLayout(new BoxLayout(propertiesToolBar, BoxLayout.Y_AXIS));
+            propertiesToolBar.setPreferredSize(new Dimension(200, 600));
 
             // add elements
             propertiesToolBar.add(propertiesToolBar.getLineWidthPanel());
