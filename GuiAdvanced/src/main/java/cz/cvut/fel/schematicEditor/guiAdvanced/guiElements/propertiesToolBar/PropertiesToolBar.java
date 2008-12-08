@@ -1,7 +1,6 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
@@ -42,7 +41,7 @@ public class PropertiesToolBar extends JToolBar {
         if (propertiesToolBar == null) {
             propertiesToolBar = new PropertiesToolBar();
             propertiesToolBar.setLayout(new BorderLayout());
-            propertiesToolBar.setPreferredSize(new Dimension(225, 400));
+            // propertiesToolBar.setPreferredSize(new Dimension(225, 400));
 
             // add elements by updating properties tool bar
             propertiesToolBar.update();
