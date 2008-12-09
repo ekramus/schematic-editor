@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.li
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PartPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.manipulation.Select;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
- * This abstract class implements listener model for {@link PropertiesToolBar} other listeners.
+ * This abstract class implements listener model for {@link PropertiesPanel} other listeners.
  *
  * @author Urban Kravjansky
  */

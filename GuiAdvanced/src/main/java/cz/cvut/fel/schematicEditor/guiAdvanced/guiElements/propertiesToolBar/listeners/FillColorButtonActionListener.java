@@ -12,12 +12,12 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.GeneralPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
- * This class implements listener for {@link PropertiesToolBar} fillColorButton.
+ * This class implements listener for {@link PropertiesPanel} fillColorButton.
  *
  * @author Urban Kravjansky
  */
