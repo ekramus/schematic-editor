@@ -42,34 +42,44 @@ public class GuiAdvanced extends JApplet {
     /**
      * This field contains class UID for serialization.
      */
-    private static final long serialVersionUID = 1L;
-
+    private static final long  serialVersionUID = 1L;
+    /**
+     * Singleton instance field.
+     */
+    private static GuiAdvanced instance         = null;
     /**
      * Logger instance for logging purposes.
      */
-    private static Logger     logger;
+    private static Logger      logger;
     /**
      * {@link JPanel} for applet.
      */
-    private JPanel            appletPanel      = null;
+    private JPanel             appletPanel      = null;
     /**
      * Main frame.
      */
-    private JFrame            applicationFrame = null;
+    private JFrame             applicationFrame = null;
     /**
      * JPanel containing scene.
      */
-    private JPanel            sceneRootPanel   = null;
+    private JPanel             sceneRootPanel   = null;
     /**
      *
      */
-    private JScrollPane       sceneJScrollPane = null;
+    private JScrollPane        sceneJScrollPane = null;
 
     /**
      * Default singleton constructor.
      */
-    public GuiAdvanced() {
+    private GuiAdvanced() {
         logger = Logger.getLogger(this.getClass());
+    }
+
+    public static GuiAdvanced getInstance() {
+        if (instance == null) {
+            instance = new GuiAdvanced();
+        }
+        return instance;
     }
 
     /**

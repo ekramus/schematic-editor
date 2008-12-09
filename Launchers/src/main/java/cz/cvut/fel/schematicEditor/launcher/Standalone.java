@@ -14,7 +14,7 @@ public class Standalone {
      * @param args
      */
     public static void main(String[] args) {
-        GuiAdvanced gui = new GuiAdvanced();
+        GuiAdvanced gui = GuiAdvanced.getInstance();
 
         Launcher.loadLog4JProperties();
         Configuration.getInstance();
