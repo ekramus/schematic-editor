@@ -7,6 +7,8 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+
 /**
  * This class implements properties tool bar.
  *
@@ -75,9 +77,13 @@ public class PropertiesToolBar extends JToolBar {
         switch (PropertiesSelectorToolBar.getSelectedButton()) {
             case PropertiesSelectorToolBar.GENERAL_PROPERTIES:
                 add(GeneralPropertiesPanel.getInstance(), BorderLayout.CENTER);
+                // GeneralPropertiesPanel.getInstance().validate();
+                // GeneralPropertiesPanel.getInstance().repaint();
                 break;
             case PropertiesSelectorToolBar.PART_PROPERTIES:
                 add(PartPropertiesPanel.getInstance(), BorderLayout.CENTER);
+                // PartPropertiesPanel.getInstance().validate();
+                // PartPropertiesPanel.getInstance().repaint();
                 break;
             case PropertiesSelectorToolBar.NONE:
             default:
@@ -89,6 +95,7 @@ public class PropertiesToolBar extends JToolBar {
         add(PropertiesSelectorToolBar.getInstance(), BorderLayout.EAST);
 
         // repaint
+        GuiAdvanced.getInstance().validate();
         validate();
         repaint();
     }

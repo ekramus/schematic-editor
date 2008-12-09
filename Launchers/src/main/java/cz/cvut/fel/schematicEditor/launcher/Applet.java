@@ -16,7 +16,7 @@ public class Applet extends JApplet {
      */
     @Override
     public void init() {
-        GuiAdvanced gui = new GuiAdvanced();
+        GuiAdvanced gui = GuiAdvanced.getInstance();
 
         Launcher.loadLog4JProperties();
         Configuration.getInstance();
