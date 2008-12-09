@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesSelectorToolBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesToolBar;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesPanel;
 
 /**
  * {@link ActionListener} for part properties button.
@@ -51,7 +51,7 @@ public class PropertiesSelectorToolBarButtonActionListener implements ActionList
             PropertiesSelectorToolBar.setSelectedButton(PropertiesSelectorToolBar.NONE);
         }
 
-        PropertiesToolBar.getInstance().update();
+        PropertiesPanel.getInstance().update();
     }
 
 }
