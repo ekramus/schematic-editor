@@ -24,7 +24,7 @@ public enum DrawingToolBarResources {
     /**
      * Bezier curve button caption.
      */
-    BEZIER_CURVE_BUTTON("Bezier", "resources/line_32.png"),
+    BEZIER_CURVE_BUTTON("Bezier", "resources/bezier_32.png"),
     /**
      * Line button caption.
      */
@@ -32,11 +32,11 @@ public enum DrawingToolBarResources {
     /**
      * Polygon button caption.
      */
-    POLYGON_BUTTON("Polygon", "resources/line_32.png"),
+    POLYGON_BUTTON("Polygon", "resources/polygon_32.png"),
     /**
      * Polyline button caption.
      */
-    POLYLINE_BUTTON("Polyline", "resources/line_32.png"),
+    POLYLINE_BUTTON("Polyline", "resources/polyline_32.png"),
     /**
      * Rectangle button caption.
      */
