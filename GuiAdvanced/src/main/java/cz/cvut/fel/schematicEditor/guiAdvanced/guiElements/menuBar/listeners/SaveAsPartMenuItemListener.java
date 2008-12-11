@@ -26,7 +26,7 @@ import cz.cvut.fel.schematicEditor.element.properties.partProperties.VoltageSour
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 
 /**

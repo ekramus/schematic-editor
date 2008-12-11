@@ -1,10 +1,10 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesSelectorToolBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesSelectorToolBar;
 
 /**
  * {@link ActionListener} for part properties button.

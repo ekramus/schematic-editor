@@ -1,9 +1,9 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PartPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;

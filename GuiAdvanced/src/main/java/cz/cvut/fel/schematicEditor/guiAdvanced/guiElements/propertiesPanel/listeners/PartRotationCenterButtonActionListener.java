@@ -1,10 +1,10 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;

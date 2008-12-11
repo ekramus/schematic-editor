@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;

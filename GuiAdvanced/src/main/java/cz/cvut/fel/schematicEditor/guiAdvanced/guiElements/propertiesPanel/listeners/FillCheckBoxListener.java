@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +19,7 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  *
  * @author Urban Kravjansky
  */
+@Deprecated
 public class FillCheckBoxListener extends PropertiesToolBarListener implements ActionListener {
     /**
      * {@link Logger} instance for logging purposes.

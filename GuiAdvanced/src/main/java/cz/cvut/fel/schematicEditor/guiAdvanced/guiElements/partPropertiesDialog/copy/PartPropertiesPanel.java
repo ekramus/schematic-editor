@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partProperties;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.copy;
 
 import java.awt.Dimension;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partProperties;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

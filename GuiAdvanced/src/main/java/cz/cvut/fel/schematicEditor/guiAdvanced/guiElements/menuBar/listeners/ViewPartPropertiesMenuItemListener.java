@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partProperties.PartPropertiesDialog;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partProperties.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialog;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesPanel;
 
 /**
  * This class implements {@link ActionListener} for <code>viewPartPropertiesMenuItem</code> in {@link MenuBar}.

@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.GeneralPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.PropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.GeneralPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
