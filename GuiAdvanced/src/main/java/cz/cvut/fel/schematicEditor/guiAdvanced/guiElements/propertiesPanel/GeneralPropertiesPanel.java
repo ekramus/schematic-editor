@@ -45,6 +45,10 @@ public class GeneralPropertiesPanel extends JPanel {
      * Singleton instance of {@link GeneralPropertiesPanel}.
      */
     private static GeneralPropertiesPanel propertiesToolBar       = null;
+    /**
+     * Size of subpanels.
+     */
+    private static final Dimension        DIM                     = new Dimension(200, 40);
 
     /**
      * Line width {@link JComboBox} instance.
@@ -136,9 +140,9 @@ public class GeneralPropertiesPanel extends JPanel {
             propertiesToolBar.add(Box.createVerticalStrut(20));
             propertiesToolBar.add(propertiesToolBar.getNamePanel());
             propertiesToolBar.add(propertiesToolBar.getLineWidthPanel());
-            // propertiesToolBar.add(propertiesToolBar.getContourCheckBox());
+            propertiesToolBar.add(propertiesToolBar.getContourCheckBox());
             propertiesToolBar.add(propertiesToolBar.getContourColorPanel());
-            // propertiesToolBar.add(propertiesToolBar.getFillCheckBox());
+            propertiesToolBar.add(propertiesToolBar.getFillCheckBox());
             propertiesToolBar.add(propertiesToolBar.getFillColorPanel());
             propertiesToolBar.add(propertiesToolBar.getFillStylePanel());
         }
@@ -151,7 +155,7 @@ public class GeneralPropertiesPanel extends JPanel {
     private Component getFillStylePanel() {
         JPanel result = new JPanel();
 
-        result.setMaximumSize(new Dimension(200, 25));
+        result.setMaximumSize(DIM);
         result.setBackground(Color.RED);
 
         return result;
@@ -166,7 +170,7 @@ public class GeneralPropertiesPanel extends JPanel {
         JLabel label = new JLabel("Name: ");
         result.add(label);
         result.setBackground(Color.RED);
-        result.setMaximumSize(new Dimension(200, 25));
+        result.setMaximumSize(DIM);
 
         return result;
     }
@@ -209,7 +213,7 @@ public class GeneralPropertiesPanel extends JPanel {
             // add lineWidthComboBox into lineWidthPanel
             this.lineWidthPanel.add(getLineWidthComboBox());
 
-            this.lineWidthPanel.setMaximumSize(new Dimension(200, 25));
+            this.lineWidthPanel.setMaximumSize(DIM);
             this.lineWidthPanel.setBackground(Color.BLUE);
         }
         return this.lineWidthPanel;
@@ -220,12 +224,13 @@ public class GeneralPropertiesPanel extends JPanel {
      *
      * @return <code>contourCheckBox</code> instance.
      */
-    @Deprecated
     private JCheckBox getContourCheckBox() {
         if (this.contourCheckBox == null) {
             this.contourCheckBox = new JCheckBox(PropertiesToolBarResources.CONTOUR_CHECK_BOX.getText());
             this.contourCheckBox.setSelected(true);
             this.contourCheckBox.addActionListener(new ContourCheckBoxListener(this.contourCheckBox));
+
+            this.contourCheckBox.setMaximumSize(DIM);
         }
         return this.contourCheckBox;
     }
@@ -246,7 +251,7 @@ public class GeneralPropertiesPanel extends JPanel {
             this.contourColorPanel.add(getContourColorButton());
             this.contourColorPanel.add(getContourColorAlphaSlider());
 
-            this.contourColorPanel.setMaximumSize(new Dimension(200, 25));
+            this.contourColorPanel.setMaximumSize(DIM);
             this.contourColorPanel.setBackground(Color.RED);
         }
         return this.contourColorPanel;
@@ -273,12 +278,13 @@ public class GeneralPropertiesPanel extends JPanel {
      *
      * @return <code>fillCheckBox</code> instance.
      */
-    @Deprecated
     private JCheckBox getFillCheckBox() {
         if (this.fillCheckBox == null) {
             this.fillCheckBox = new JCheckBox(PropertiesToolBarResources.FILL_CHECK_BOX.getText());
             this.fillCheckBox.setSelected(true);
             this.fillCheckBox.addActionListener(new FillCheckBoxListener(this.fillCheckBox));
+
+            this.fillCheckBox.setMaximumSize(DIM);
         }
         return this.fillCheckBox;
     }
@@ -315,7 +321,7 @@ public class GeneralPropertiesPanel extends JPanel {
             this.fillColorPanel.add(getFillColorButton());
             this.fillColorPanel.add(getFillColorAlphaSlider());
 
-            this.fillColorPanel.setMaximumSize(new Dimension(200, 25));
+            this.fillColorPanel.setMaximumSize(DIM);
             this.fillColorPanel.setBackground(Color.BLUE);
         }
         return this.fillColorPanel;
