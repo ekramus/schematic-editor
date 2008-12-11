@@ -1,15 +1,18 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
@@ -19,14 +22,14 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.ContourCheckBoxListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.ContourColorAlphaSliderChangeListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.ContourColorButtonActionListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.FillCheckBoxListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.FillColorAlphaSliderChangeListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.FillColorButtonActionListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.LineWidthComboBoxActionListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.resources.PropertiesToolBarResources;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.ContourCheckBoxListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.ContourColorAlphaSliderChangeListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.ContourColorButtonActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillCheckBoxListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorAlphaSliderChangeListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorButtonActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.LineWidthComboBoxActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.resources.PropertiesToolBarResources;
 
 /**
  * This class implements properties tool bar.
@@ -126,17 +129,46 @@ public class GeneralPropertiesPanel extends JPanel {
     public static GeneralPropertiesPanel getInstance() {
         if (propertiesToolBar == null) {
             propertiesToolBar = new GeneralPropertiesPanel();
-            propertiesToolBar.setLayout(new BoxLayout(propertiesToolBar, BoxLayout.Y_AXIS));
-            propertiesToolBar.setPreferredSize(new Dimension(200, 600));
+            propertiesToolBar.setLayout(new BoxLayout(propertiesToolBar, BoxLayout.PAGE_AXIS));
+            propertiesToolBar.setPreferredSize(new Dimension(200, 0));
 
             // add elements
+            propertiesToolBar.add(Box.createVerticalStrut(20));
+            propertiesToolBar.add(propertiesToolBar.getNamePanel());
             propertiesToolBar.add(propertiesToolBar.getLineWidthPanel());
-            propertiesToolBar.add(propertiesToolBar.getContourCheckBox());
+            // propertiesToolBar.add(propertiesToolBar.getContourCheckBox());
             propertiesToolBar.add(propertiesToolBar.getContourColorPanel());
-            propertiesToolBar.add(propertiesToolBar.getFillCheckBox());
+            // propertiesToolBar.add(propertiesToolBar.getFillCheckBox());
             propertiesToolBar.add(propertiesToolBar.getFillColorPanel());
+            propertiesToolBar.add(propertiesToolBar.getFillStylePanel());
         }
         return propertiesToolBar;
+    }
+
+    /**
+     * @return
+     */
+    private Component getFillStylePanel() {
+        JPanel result = new JPanel();
+
+        result.setMaximumSize(new Dimension(200, 25));
+        result.setBackground(Color.RED);
+
+        return result;
+    }
+
+    /**
+     * @return
+     */
+    private JPanel getNamePanel() {
+        JPanel result = new JPanel();
+
+        JLabel label = new JLabel("Name: ");
+        result.add(label);
+        result.setBackground(Color.RED);
+        result.setMaximumSize(new Dimension(200, 25));
+
+        return result;
     }
 
     /**
@@ -176,10 +208,19 @@ public class GeneralPropertiesPanel extends JPanel {
 
             // add lineWidthComboBox into lineWidthPanel
             this.lineWidthPanel.add(getLineWidthComboBox());
+
+            this.lineWidthPanel.setMaximumSize(new Dimension(200, 25));
+            this.lineWidthPanel.setBackground(Color.BLUE);
         }
         return this.lineWidthPanel;
     }
 
+    /**
+     * Getter for <code>contourCheckBox</code>.
+     *
+     * @return <code>contourCheckBox</code> instance.
+     */
+    @Deprecated
     private JCheckBox getContourCheckBox() {
         if (this.contourCheckBox == null) {
             this.contourCheckBox = new JCheckBox(PropertiesToolBarResources.CONTOUR_CHECK_BOX.getText());
@@ -204,6 +245,9 @@ public class GeneralPropertiesPanel extends JPanel {
             // add all into contourColorPanel
             this.contourColorPanel.add(getContourColorButton());
             this.contourColorPanel.add(getContourColorAlphaSlider());
+
+            this.contourColorPanel.setMaximumSize(new Dimension(200, 25));
+            this.contourColorPanel.setBackground(Color.RED);
         }
         return this.contourColorPanel;
     }
@@ -224,6 +268,12 @@ public class GeneralPropertiesPanel extends JPanel {
         return this.contourColorAlphaSlider;
     }
 
+    /**
+     * Getter for <code>fillCheckBox</code> instance.
+     *
+     * @return <code>fillCheckBox</code> instance.
+     */
+    @Deprecated
     private JCheckBox getFillCheckBox() {
         if (this.fillCheckBox == null) {
             this.fillCheckBox = new JCheckBox(PropertiesToolBarResources.FILL_CHECK_BOX.getText());
@@ -264,6 +314,9 @@ public class GeneralPropertiesPanel extends JPanel {
             // add all into JPanel
             this.fillColorPanel.add(getFillColorButton());
             this.fillColorPanel.add(getFillColorAlphaSlider());
+
+            this.fillColorPanel.setMaximumSize(new Dimension(200, 25));
+            this.fillColorPanel.setBackground(Color.BLUE);
         }
         return this.fillColorPanel;
     }

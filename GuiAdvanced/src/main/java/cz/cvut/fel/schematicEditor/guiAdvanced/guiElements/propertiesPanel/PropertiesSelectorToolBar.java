@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.PropertiesSelectorToolBarButtonActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PropertiesSelectorToolBarButtonActionListener;
 
 /**
  * Implements selector toolbar for properties panels.

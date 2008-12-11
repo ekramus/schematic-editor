@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.resources;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.resources;
 
 /**
  * @author Urban Kravjansky

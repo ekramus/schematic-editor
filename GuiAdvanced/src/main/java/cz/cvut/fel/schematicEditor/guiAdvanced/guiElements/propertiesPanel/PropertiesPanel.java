@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
 import java.awt.BorderLayout;
 

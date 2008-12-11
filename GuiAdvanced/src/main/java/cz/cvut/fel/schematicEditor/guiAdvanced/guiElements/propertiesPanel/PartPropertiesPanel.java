@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,7 +16,7 @@ import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.properties.PartType;
 import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesToolBar.listeners.PartRotationCenterButtonActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartRotationCenterButtonActionListener;
 
 /**
  * This class implements properties tool bar.
