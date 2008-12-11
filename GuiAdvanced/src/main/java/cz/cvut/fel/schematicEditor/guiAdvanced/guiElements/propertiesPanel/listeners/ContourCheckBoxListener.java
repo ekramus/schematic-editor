@@ -19,7 +19,6 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  *
  * @author Urban Kravjansky
  */
-@Deprecated
 public class ContourCheckBoxListener extends PropertiesToolBarListener implements ActionListener {
     /**
      * {@link Logger} instance for logging purposes.
@@ -31,11 +30,9 @@ public class ContourCheckBoxListener extends PropertiesToolBarListener implement
     private JCheckBox     contourCheckBox = null;
 
     /**
-     * {@link ContourCheckBoxListener} constructor. It initializes <code>contourCheckBox</code>
-     * field.
+     * {@link ContourCheckBoxListener} constructor. It initializes <code>contourCheckBox</code> field.
      *
-     * @param contourCheckBox
-     *            contour style {@link JCheckBox} parameter.
+     * @param contourCheckBox contour style {@link JCheckBox} parameter.
      */
     public ContourCheckBoxListener(JCheckBox contourCheckBox) {
         logger = Logger.getLogger(GuiAdvanced.class.getName());
@@ -43,19 +40,16 @@ public class ContourCheckBoxListener extends PropertiesToolBarListener implement
     }
 
     /**
-     * Method is invoked as a result to an action. It sets proper contour state and updates
-     * properties.
+     * Method is invoked as a result to an action. It sets proper contour state and updates properties.
      *
      * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-     * @param ae
-     *            {@link ChangeEvent} parameter. This parameter is only for implementing purposes,
-     *            it is not used nor needed.
+     * @param ae {@link ChangeEvent} parameter. This parameter is only for implementing purposes, it is not used nor
+     *            needed.
      */
     public void actionPerformed(ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        ep.setContourStyle(getContourCheckBox().isSelected() ? ElementStyle.NORMAL
-                                                            : ElementStyle.NONE);
+        ep.setContourStyle(getContourCheckBox().isSelected() ? ElementStyle.NORMAL : ElementStyle.NONE);
 
         // update properties
         try {
@@ -68,8 +62,7 @@ public class ContourCheckBoxListener extends PropertiesToolBarListener implement
     /**
      * Setter for <code>contourCheckBox</code>.
      *
-     * @param contourCheckBox
-     *            the <code>contourCheckBox</code> to set.
+     * @param contourCheckBox the <code>contourCheckBox</code> to set.
      */
     private void setContourCheckBox(JCheckBox contourCheckBox) {
         this.contourCheckBox = contourCheckBox;

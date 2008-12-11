@@ -19,7 +19,6 @@ import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationExc
  *
  * @author Urban Kravjansky
  */
-@Deprecated
 public class FillCheckBoxListener extends PropertiesToolBarListener implements ActionListener {
     /**
      * {@link Logger} instance for logging purposes.
@@ -33,8 +32,7 @@ public class FillCheckBoxListener extends PropertiesToolBarListener implements A
     /**
      * {@link FillCheckBoxListener} constructor. It initializes <code>fillCheckBox</code> field.
      *
-     * @param fillCheckBox
-     *            fill style {@link JCheckBox} parameter.
+     * @param fillCheckBox fill style {@link JCheckBox} parameter.
      */
     public FillCheckBoxListener(JCheckBox fillCheckBox) {
         logger = Logger.getLogger(GuiAdvanced.class.getName());
@@ -45,9 +43,8 @@ public class FillCheckBoxListener extends PropertiesToolBarListener implements A
      * Method is invoked as a result to an action. It sets proper fill state and updates properties.
      *
      * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-     * @param ae
-     *            {@link ChangeEvent} parameter. This parameter is only for implementing purposes,
-     *            it is not used nor needed.
+     * @param ae {@link ChangeEvent} parameter. This parameter is only for implementing purposes, it is not used nor
+     *            needed.
      */
     public void actionPerformed(ActionEvent ae) {
         ElementProperties ep = getElementProperties();
@@ -65,8 +62,7 @@ public class FillCheckBoxListener extends PropertiesToolBarListener implements A
     /**
      * Setter for <code>fillCheckBox</code>.
      *
-     * @param fillCheckBox
-     *            the <code>fillCheckBox</code> to set.
+     * @param fillCheckBox the <code>fillCheckBox</code> to set.
      */
     private void setFillCheckBox(JCheckBox fillCheckBox) {
         this.fillCheckBox = fillCheckBox;
