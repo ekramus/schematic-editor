@@ -75,6 +75,11 @@ public class GuiAdvanced extends JApplet {
         logger = Logger.getLogger(this.getClass());
     }
 
+    /**
+     * Singleton getter for {@link GuiAdvanced} instance.
+     *
+     * @return Instance of {@link GuiAdvanced}.
+     */
     public static GuiAdvanced getInstance() {
         if (instance == null) {
             instance = new GuiAdvanced();
@@ -116,6 +121,7 @@ public class GuiAdvanced extends JApplet {
             // set parameters of JFrame
             this.applicationFrame.setTitle("Application");
             this.applicationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.applicationFrame.setSize(new Dimension(800, 600));
 
             // finalize jFrame initialization
             initRootComponent(this.applicationFrame);
