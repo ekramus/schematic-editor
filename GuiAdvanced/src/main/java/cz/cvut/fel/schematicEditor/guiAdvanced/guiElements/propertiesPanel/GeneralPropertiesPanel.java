@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
@@ -115,6 +116,10 @@ public class GeneralPropertiesPanel extends JPanel {
      * Fill color {@link JPanel} instance.
      */
     private JPanel                        fillColorPanel          = null;
+    /**
+     * Name panel text field instance.
+     */
+    private JTextField                    namePanelTextField      = null;
 
     /**
      * Default constructor. It is private for {@link GeneralPropertiesPanel} singleton instance.
@@ -168,11 +173,29 @@ public class GeneralPropertiesPanel extends JPanel {
         JPanel result = new JPanel();
 
         JLabel label = new JLabel("Name: ");
+
+        // add components
         result.add(label);
+        result.add(getNamePanelTextField());
+
         result.setBackground(Color.RED);
         result.setMaximumSize(DIM);
 
         return result;
+    }
+
+    /**
+     * Getter for text filed on name panel.
+     *
+     * @return
+     */
+    private JTextField getNamePanelTextField() {
+        if (this.namePanelTextField == null) {
+            this.namePanelTextField = new JTextField();
+            this.namePanelTextField.setEditable(false);
+            this.namePanelTextField.setPreferredSize(new Dimension(100, 20));
+        }
+        return this.namePanelTextField;
     }
 
     /**
@@ -194,6 +217,7 @@ public class GeneralPropertiesPanel extends JPanel {
         getFillColorButton().setIcon(getColorIcon(ep.getFillColor(), ep.getFillColorAlpha()));
         getContourColorAlphaSlider().setValue(ep.getContourColorAlpha());
         getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
+        getNamePanelTextField().setText(Structures.getActiveManipulation().getManipulatedGroup().getId());
 
         logger.debug("Contour style: " + ep.getContourStyle());
     }
