@@ -71,7 +71,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 Structures.getManipulationQueue().unexecute();
 
                 // invalidate scheme
-                ScenePanel.getInstance().schemeInvalidate(null);
+                GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
 
                 // add manipulation before unexecuted manipulation as activeManipulation
                 Structures.setActiveManipulation(ManipulationFactory.createNext(Structures.getManipulationQueue()
@@ -87,7 +87,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 Structures.getManipulationQueue().reexecute();
 
                 // invalidate scheme
-                ScenePanel.getInstance().schemeInvalidate(null);
+                GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
 
                 // add reexecuted manipulation as activeManipulation
                 Structures.setActiveManipulation(ManipulationFactory.createNext(Structures.getManipulationQueue()
@@ -100,7 +100,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 logger.trace("COPYing...");
 
                 // set active manipulation
-                Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, ScenePanel.getInstance()
+                Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, GuiAdvanced.getActiveScenePanel()
                         .getSchemeSG().getTopNode());
                 // set manipulated group from select manipulation
                 copy.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
@@ -110,31 +110,33 @@ public class ScenePanelKeyListener implements KeyListener {
                 Structures.setActiveManipulation(copy);
 
                 // try finish manipulation
-                ScenePanel.getInstance().tryFinishManipulation(null, null, Structures.getManipulationQueue(), false);
+                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(null, null, Structures.getManipulationQueue(),
+                                                                        false);
             }
             // CTRL + V - paste
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_V)) {
                 logger.trace("PASTEing...");
 
                 // set active manipulation
-                Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, ScenePanel.getInstance()
-                        .getSchemeSG().getTopNode());
+                Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, GuiAdvanced
+                        .getActiveScenePanel().getSchemeSG().getTopNode());
                 paste.manipulationStop(null, null, Structures.getManipulationQueue(), false);
 
                 // set paste as active manipulation
                 Structures.setActiveManipulation(paste);
 
                 // try finish manipulation
-                ScenePanel.getInstance().tryFinishManipulation(null, null, Structures.getManipulationQueue(), false);
+                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(null, null, Structures.getManipulationQueue(),
+                                                                        false);
             }
             // DEL or BACKSPACE
             else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
                 Manipulation manipulation = Structures.getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = manipulation.getManipulatedGroup();
-                    if (ScenePanel.getInstance().getSchemeSG().getTopNode().delete(selected)) {
-                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, ScenePanel
-                                .getInstance().getSchemeSG().getTopNode());
+                    if (GuiAdvanced.getActiveScenePanel().getSchemeSG().getTopNode().delete(selected)) {
+                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, GuiAdvanced
+                                .getActiveScenePanel().getSchemeSG().getTopNode());
                         delete.setActive(true);
                         Structures.getActiveManipulation();
                         // ScenePanel.getInstance().processFinalManipulationStep();

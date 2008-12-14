@@ -18,8 +18,8 @@ import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 
 /**
  * This class implements {@link ActionListener} for <code>importMenuItem</code> in {@link MenuBar}.
@@ -52,7 +52,7 @@ public final class AddPartMenuItemListener implements ActionListener {
         fileChooser.setDialogTitle("Choose part to add");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.PRT, ExportFileFilter.PRTDESC));
 
-        int retValue = fileChooser.showOpenDialog(ScenePanel.getInstance());
+        int retValue = fileChooser.showOpenDialog(GuiAdvanced.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
@@ -67,9 +67,9 @@ public final class AddPartMenuItemListener implements ActionListener {
             groupNode.add(parameterNode);
 
             // finally add to SceneGraph
-            ScenePanel.getInstance().getSchemeSG().getTopNode().add(groupNode);
+            GuiAdvanced.getActiveScenePanel().getSchemeSG().getTopNode().add(groupNode);
             SceneGraph.getInstance().fireSceneGraphUpdateEvent();
-            ScenePanel.getInstance().schemeInvalidate(null);
+            GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
         }
     }
 

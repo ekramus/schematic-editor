@@ -57,7 +57,7 @@ public class EndElementMenuItemListener implements ActionListener {
         try {
             Create create = (Create) Structures.getActiveManipulation();
             create.setFinished(true);
-            ScenePanel.getInstance().tryFinishManipulation(getE(), getR2d(), Structures.getManipulationQueue(), false);
+            GuiAdvanced.getActiveScenePanel().tryFinishManipulation(getE(), getR2d(), Structures.getManipulationQueue(), false);
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
         }

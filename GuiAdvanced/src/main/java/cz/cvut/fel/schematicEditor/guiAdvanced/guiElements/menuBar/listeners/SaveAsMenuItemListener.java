@@ -10,8 +10,8 @@ import cz.cvut.fel.schematicEditor.export.NetListExport;
 import cz.cvut.fel.schematicEditor.export.PSExport;
 import cz.cvut.fel.schematicEditor.export.SVGExport;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 
 /**
  * This class implements {@link ActionListener} for <code>saveAsMenuItem</code> in {@link MenuBar}.
@@ -45,18 +45,18 @@ public final class SaveAsMenuItemListener implements ActionListener {
                 .addChoosableFileFilter(new ExportFileFilter(ExportFileFilter.POSTSCRIPT, ExportFileFilter.POSTDESC));
         fileChooser.addChoosableFileFilter(new ExportFileFilter(ExportFileFilter.NET, ExportFileFilter.NETDESC));
 
-        int retValue = fileChooser.showSaveDialog(ScenePanel.getInstance());
+        int retValue = fileChooser.showSaveDialog(GuiAdvanced.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (ExportFileFilter.getExtension(file).equalsIgnoreCase("svg")) {
-                new SVGExport().export(ScenePanel.getInstance().getSchemeSG(), file);
+                new SVGExport().export(GuiAdvanced.getActiveScenePanel().getSchemeSG(), file);
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("eps")) {
-                new PSExport().export(ScenePanel.getInstance().getSchemeSG(), file);
+                new PSExport().export(GuiAdvanced.getActiveScenePanel().getSchemeSG(), file);
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("net")) {
-                new NetListExport().export(ScenePanel.getInstance().getSchemeSG(), file);
+                new NetListExport().export(GuiAdvanced.getActiveScenePanel().getSchemeSG(), file);
 
             } else {
                 System.out.println("Failed to export");

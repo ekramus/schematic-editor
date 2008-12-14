@@ -57,7 +57,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     public final void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(ScenePanel.getInstance(), FILL_COLOR_TITLE, ep.getFillColor());
+        Color c = JColorChooser.showDialog(GuiAdvanced.getActiveScenePanel(), FILL_COLOR_TITLE, ep.getFillColor());
         if (c != null) {
             ep.setFillColor(c);
             getFillColorButton().setIcon(GeneralPropertiesPanel.getColorIcon(c, ep.getFillColorAlpha()));

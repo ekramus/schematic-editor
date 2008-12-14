@@ -2,9 +2,9 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.list
 
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
@@ -53,7 +53,7 @@ public abstract class PropertiesToolBarListener {
             if (select.getManipulatedGroup() != null) {
                 select.getManipulatedGroup().getChildrenParameterNode().setProperties(elementProperties);
 
-                ScenePanel.getInstance().schemeInvalidate(select.getManipulatedGroup().getBounds());
+                GuiAdvanced.getActiveScenePanel().schemeInvalidate(select.getManipulatedGroup().getBounds());
             }
         }
     }

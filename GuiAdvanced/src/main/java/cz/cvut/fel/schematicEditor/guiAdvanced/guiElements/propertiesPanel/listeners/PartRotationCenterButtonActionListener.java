@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
@@ -25,8 +25,8 @@ public class PartRotationCenterButtonActionListener implements ActionListener {
         if (Structures.getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
             if (Structures.getActiveManipulation().getManipulatedGroup() != null) {
                 try {
-                    Manipulation m = ManipulationFactory.create(ManipulationType.SELECT_ROTATION_CENTER, ScenePanel
-                            .getInstance().getSchemeSG().getTopNode());
+                    Manipulation m = ManipulationFactory.create(ManipulationType.SELECT_ROTATION_CENTER, GuiAdvanced
+                            .getActiveScenePanel().getSchemeSG().getTopNode());
                     m.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                     m.setActive(true);
 

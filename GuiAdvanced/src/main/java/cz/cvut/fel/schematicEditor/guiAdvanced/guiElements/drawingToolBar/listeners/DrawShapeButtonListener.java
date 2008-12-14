@@ -10,8 +10,8 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
@@ -60,8 +60,8 @@ public class DrawShapeButtonListener implements ActionListener {
             gn.add(sn);
 
             // create active manipulation
-            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, ScenePanel.getInstance().getSchemeSG()
-                    .getTopNode(), gn);
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, GuiAdvanced.getActiveScenePanel()
+                    .getSchemeSG().getTopNode(), gn);
             Structures.setActiveManipulation(m);
             logger.trace(Structures.getActiveManipulation());
 
