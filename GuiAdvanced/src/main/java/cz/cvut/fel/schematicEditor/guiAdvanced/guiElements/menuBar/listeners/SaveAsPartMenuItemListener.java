@@ -25,9 +25,9 @@ import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorPro
 import cz.cvut.fel.schematicEditor.element.properties.partProperties.VoltageSourceProperties;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 
 /**
  * This class implements {@link ActionListener} for <code>saveAsMenuItem</code> in {@link MenuBar}.
@@ -66,7 +66,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
         fileChooser.setDialogTitle("Choose file to save part");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.PRT, ExportFileFilter.PRTDESC));
 
-        int retValue = fileChooser.showSaveDialog(ScenePanel.getInstance());
+        int retValue = fileChooser.showSaveDialog(GuiAdvanced.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
@@ -96,7 +96,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
 
             Part p = new Part(pp);
 
-            PartNode pn = new PartNode(p, ScenePanel.getInstance().getSchemeSG().getTopNode().getEnabledOnly());
+            PartNode pn = new PartNode(p, GuiAdvanced.getActiveScenePanel().getSchemeSG().getTopNode().getEnabledOnly());
             serialize(pn, file);
         }
     }

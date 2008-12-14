@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.core.Structures;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
@@ -41,13 +41,13 @@ public class RotateElementMenuItemListener implements ActionListener {
         if (Structures.getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
             if (Structures.getActiveManipulation().getManipulatedGroup() != null) {
                 try {
-                    Manipulation m = ManipulationFactory.create(ManipulationType.ROTATE, ScenePanel.getInstance()
+                    Manipulation m = ManipulationFactory.create(ManipulationType.ROTATE, GuiAdvanced.getActiveScenePanel()
                             .getSchemeSG().getTopNode());
                     m.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                     m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY());
                     Structures.getManipulationQueue().execute(m);
 
-                    ScenePanel.getInstance().schemeInvalidate(null);
+                    GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
                 } catch (UnknownManipulationException ume) {
                     ume.printStackTrace();
                 }

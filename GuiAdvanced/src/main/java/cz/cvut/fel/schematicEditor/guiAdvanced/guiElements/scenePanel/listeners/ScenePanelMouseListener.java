@@ -14,6 +14,7 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
@@ -96,7 +97,7 @@ public class ScenePanelMouseListener implements MouseListener {
         logger.trace("mouse entered");
 
         // request focus for ScenePanel
-        ScenePanel.getInstance().requestFocusInWindow();
+        GuiAdvanced.getActiveScenePanel().requestFocusInWindow();
     }
 
     /**
@@ -170,24 +171,24 @@ public class ScenePanelMouseListener implements MouseListener {
                                 // element has infinite coordinates
                                 if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
                                     JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                    popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                                    popup.show(GuiAdvanced.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup");
                                 } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
                                     JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                    popup.show(ScenePanel.getInstance(), e.getX(), e.getY());
+                                    popup.show(GuiAdvanced.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup");
                                 }
                             }
                             // left mouse button is clicked
                             else if (e.getButton() == MouseEvent.BUTTON1) {
-                                ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
+                                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
                             }
                             break;
                         case SELECT:
                         case DELETE:
                         case EDIT:
                         case MOVE:
-                            ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, true);
+                            GuiAdvanced.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
                             break;
                         default:
                             break;
@@ -201,7 +202,7 @@ public class ScenePanelMouseListener implements MouseListener {
             }
             // mouse button was just released after drag
             else {
-                ScenePanel.getInstance().tryFinishManipulation(e, r2d, mq, false);
+                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, false);
             }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());

@@ -57,7 +57,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
     public void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(ScenePanel.getInstance(), CONTOUR_COLOR_TITLE, ep.getContourColor());
+        Color c = JColorChooser.showDialog(GuiAdvanced.getActiveScenePanel(), CONTOUR_COLOR_TITLE, ep.getContourColor());
         if (c != null) {
             ep.setContourColor(c);
             getContourColorButton().setIcon(GeneralPropertiesPanel.getColorIcon(c, ep.getContourColorAlpha()));

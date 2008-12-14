@@ -67,6 +67,26 @@ public class GuiAdvanced extends JApplet {
      *
      */
     private JScrollPane        sceneJScrollPane = null;
+    /**
+     * JPanel containing part.
+     */
+    private JPanel             partRootPanel    = null;
+    /**
+     * Scroll panle containing part scheme.
+     */
+    private JScrollPane        partJScrollPane  = null;
+    /**
+     * Scene {@link ScenePanel} instance.
+     */
+    private static ScenePanel  sceneScenePanel  = null;
+    /**
+     * Part {@link ScenePanel} instance.
+     */
+    private static ScenePanel  partScenePanel   = null;
+    /**
+     * Scene {@link JTabbedPane} instance.
+     */
+    private JTabbedPane        sceneTabbedPane  = null;
 
     /**
      * Default singleton constructor.
@@ -147,17 +167,38 @@ public class GuiAdvanced extends JApplet {
         container.setMinimumSize(new Dimension(1000, 800));
         container.setLayout(new BorderLayout());
 
-        // prepare scene tabbed pane
-        JTabbedPane sceneTabbedPane = new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-        sceneTabbedPane.addTab("scheme", getSceneRootPanel());
-        sceneTabbedPane.addTab("part", new JPanel());
-
         // add components
         container.add(MenuBar.getInstance(), BorderLayout.NORTH);
         container.add(DrawingToolBar.getInstance(), BorderLayout.WEST);
         container.add(PropertiesPanel.getInstance(), BorderLayout.EAST);
         container.add(StatusBar.getInstance(), BorderLayout.SOUTH);
-        container.add(sceneTabbedPane, BorderLayout.CENTER);
+        container.add(getSceneTabbedPane(), BorderLayout.CENTER);
+    }
+
+    /**
+     * @return the sceneTabbedPane
+     */
+    private JTabbedPane getSceneTabbedPane() {
+        if (this.sceneTabbedPane == null) {
+            this.sceneTabbedPane = new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+            this.sceneTabbedPane.addTab("scheme", getSceneRootPanel());
+            this.sceneTabbedPane.addTab("part", getPartRootPanel());
+        }
+        return this.sceneTabbedPane;
+    }
+
+    /**
+     * This method initializes partRootPanel
+     *
+     * @return javax.swing.JPanel
+     */
+    private JPanel getPartRootPanel() {
+        if (this.partRootPanel == null) {
+            this.partRootPanel = new JPanel();
+            this.partRootPanel.setLayout(new BorderLayout());
+            this.partRootPanel.add(getPartJScrollPane(), BorderLayout.CENTER);
+        }
+        return this.partRootPanel;
     }
 
     /**
@@ -175,6 +216,20 @@ public class GuiAdvanced extends JApplet {
     }
 
     /**
+     * This method initializes panelJScrollPane
+     *
+     * @return javax.swing.JScrollPane
+     */
+    private JScrollPane getPartJScrollPane() {
+        if (this.partJScrollPane == null) {
+            this.partJScrollPane = new JScrollPane();
+
+            this.partJScrollPane.setViewportView(getPartScenePanel());
+        }
+        return this.partJScrollPane;
+    }
+
+    /**
      * This method initializes sceneJScrollPane
      *
      * @return javax.swing.JScrollPane
@@ -183,9 +238,30 @@ public class GuiAdvanced extends JApplet {
         if (this.sceneJScrollPane == null) {
             this.sceneJScrollPane = new JScrollPane();
 
-            this.sceneJScrollPane.setViewportView(ScenePanel.getInstance());
+            this.sceneJScrollPane.setViewportView(getSceneScenePanel());
         }
         return this.sceneJScrollPane;
+    }
+
+    private ScenePanel getSceneScenePanel() {
+        if (sceneScenePanel == null) {
+            sceneScenePanel = new ScenePanel();
+        }
+        return sceneScenePanel;
+    }
+
+    private ScenePanel getPartScenePanel() {
+        if (partScenePanel == null) {
+            partScenePanel = new ScenePanel();
+        }
+        return partScenePanel;
+    }
+
+    public static ScenePanel getActiveScenePanel() {
+        if (getInstance().getSceneTabbedPane().getSelectedIndex() == 0) {
+            return getInstance().getSceneScenePanel();
+        }
+        return getInstance().getPartScenePanel();
     }
 
     /**

@@ -15,8 +15,8 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
@@ -82,11 +82,11 @@ public class DrawCircuitPartButtonListener implements ActionListener {
 
             // get all coordinates for snapping
             Vector<UnitPoint> snapCoordinates = new Vector<UnitPoint>();
-            snapCoordinates = ScenePanel.getInstance().getSchemeSG().getTopNode().getPartsCoordinates();
+            snapCoordinates = GuiAdvanced.getActiveScenePanel().getSchemeSG().getTopNode().getPartsCoordinates();
 
             // create active manipulation
-            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, ScenePanel.getInstance().getSchemeSG()
-                    .getTopNode(), gn);
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, GuiAdvanced.getActiveScenePanel()
+                    .getSchemeSG().getTopNode(), gn);
             m.setSnapCoordinates(snapCoordinates);
             Structures.setActiveManipulation(m);
             logger.trace(Structures.getActiveManipulation());

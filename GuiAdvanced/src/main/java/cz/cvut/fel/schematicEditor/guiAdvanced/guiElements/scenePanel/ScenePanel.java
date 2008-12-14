@@ -45,53 +45,16 @@ public class ScenePanel extends JPanel {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger     logger;
-    /**
-     * Singleton {@link ScenePanel} instance.
-     */
-    private static ScenePanel sceneJPanel = null;
-
-    /**
-     * This method instantiates one instance of <code>SceneJPanel</code>.
-     *
-     * @return <code>SceneJPanel</code> instance to use.
-     */
-    public static ScenePanel getInstance() {
-        if (getSceneJPanel() == null) {
-            setSceneJPanel(new ScenePanel());
-            // enable mouse actions
-            getSceneJPanel().addMouseListener(new ScenePanelMouseListener());
-            getSceneJPanel().addMouseMotionListener(new ScenePanelMouseMotionListener());
-            // enable key actions
-            getSceneJPanel().addKeyListener(new ScenePanelKeyListener());
-            getSceneJPanel().setFocusable(true);
-        }
-        return getSceneJPanel();
-    }
-
-    /**
-     * @return the sceneJPanel
-     */
-    private static final ScenePanel getSceneJPanel() {
-        return sceneJPanel;
-    }
-
-    /**
-     * @param sceneJPanel the sceneJPanel to set
-     */
-    private static final void setSceneJPanel(ScenePanel sceneJPanel) {
-        ScenePanel.sceneJPanel = sceneJPanel;
-    }
-
+    private static Logger logger;
     /**
      * This field represents grid.
      */
     private BufferedImage grid;
+
     /**
      * This field represents grid validity.
      */
     private boolean       gridValid;
-
     /**
      * This field represents scheme.
      */
@@ -100,6 +63,7 @@ public class ScenePanel extends JPanel {
      * This field represents validity of scheme.
      */
     private boolean       schemeValid;
+
     /**
      * This field represents invalid rectangle of scheme.
      */
@@ -109,12 +73,97 @@ public class ScenePanel extends JPanel {
     /**
      * This is the default constructor
      */
-    private ScenePanel() {
+    public ScenePanel() {
         super();
 
         logger = Logger.getLogger(this.getClass().getName());
 
         init();
+    }
+
+    /**
+     * @return the schemeSG
+     */
+    public SceneGraph getSchemeSG() {
+        return SceneGraph.getInstance();
+    }
+
+    /**
+     * This method invalidates <code>scheme</code>.
+     *
+     * @param bounds bounds of invalid region.
+     */
+    public void schemeInvalidate(UnitRectangle bounds) {
+        this.schemeValid = false;
+        this.schemeInvalidRect = bounds;
+        this.repaint();
+    }
+
+    /**
+     * @param gridValid the gridValid to set
+     */
+    public void setGridValid(boolean gridValid) {
+        this.gridValid = gridValid;
+    }
+
+    /**
+     * Tries to finish currently active manipulation.
+     *
+     * @param e {@link MouseEvent} with coordinates.
+     * @param r2d Pointer rectangle.
+     * @param manipulationQueue Instance of {@link ManipulationQueue} containing all {@link Manipulation} instances.
+     * @param isMouseClicked Indicates, whether mouse clicked or just released.
+     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
+     */
+    public void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
+            boolean isMouseClicked) throws UnknownManipulationException {
+        // try to finish manipulation
+        Manipulation m = Structures.getActiveManipulation().manipulationStop(e, r2d, manipulationQueue, isMouseClicked);
+        if (m != null) {
+            // execute manipulation
+            manipulationQueue.execute(Structures.getActiveManipulation());
+
+            // process manipulation dependent actions
+            switch (Structures.getActiveManipulation().getManipulationType()) {
+                case SELECT:
+                    Select select = (Select) Structures.getActiveManipulation();
+
+                    // set selected element properties to selected element
+                    GroupNode gn = select.getManipulatedGroup();
+                    Structures.getSceneProperties().setSelectedElementProperties(
+                                                                                 gn.getChildrenParameterNode()
+                                                                                         .getProperties());
+                    // refresh general properties panel
+                    GeneralPropertiesPanel.getInstance().update();
+
+                    // partPropertiesPanel
+                    try {
+                        Part part = (Part) select.getManipulatedGroup().getChildrenElementList().getFirst()
+                                .getElement();
+                        MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(true);
+
+                        // set part properties panel
+                        PartPropertiesPanel.getInstance().setPartProperties(part.getPartProperties());
+                    } catch (ClassCastException cce) {
+                        MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(false);
+                    } catch (NullPointerException npe) {
+                        logger.warn("No object selected.");
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            // redraw scheme
+            schemeInvalidate(null);
+
+            // create new manipulation based on previous
+            Structures.setActiveManipulation(ManipulationFactory.createNext(Structures.getActiveManipulation()));
+        }
+        // manipulation is not finished yet
+        else {
+            logger.trace("Waiting for manipulation end");
+        }
     }
 
     /**
@@ -369,13 +418,6 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * @return the schemeSG
-     */
-    public SceneGraph getSchemeSG() {
-        return SceneGraph.getInstance();
-    }
-
-    /**
      * This method initializes this.
      */
     private void init() {
@@ -391,6 +433,13 @@ public class ScenePanel extends JPanel {
         this.grid = null;
         this.scheme = null;
         SceneGraph.getInstance().manualCreateSceneGraph();
+
+        // enable mouse actions
+        addMouseListener(new ScenePanelMouseListener());
+        addMouseMotionListener(new ScenePanelMouseMotionListener());
+        // enable key actions
+        addKeyListener(new ScenePanelKeyListener());
+        setFocusable(true);
     }
 
     /**
@@ -413,84 +462,6 @@ public class ScenePanel extends JPanel {
             drawScene(g);
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
-        }
-    }
-
-    /**
-     * This method invalidates <code>scheme</code>.
-     *
-     * @param bounds bounds of invalid region.
-     */
-    public void schemeInvalidate(UnitRectangle bounds) {
-        this.schemeValid = false;
-        this.schemeInvalidRect = bounds;
-        this.repaint();
-    }
-
-    /**
-     * @param gridValid the gridValid to set
-     */
-    public void setGridValid(boolean gridValid) {
-        this.gridValid = gridValid;
-    }
-
-    /**
-     * Tries to finish currently active manipulation.
-     *
-     * @param e {@link MouseEvent} with coordinates.
-     * @param r2d Pointer rectangle.
-     * @param manipulationQueue Instance of {@link ManipulationQueue} containing all {@link Manipulation} instances.
-     * @param isMouseClicked Indicates, whether mouse clicked or just released.
-     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
-     */
-    public void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
-        // try to finish manipulation
-        Manipulation m = Structures.getActiveManipulation().manipulationStop(e, r2d, manipulationQueue, isMouseClicked);
-        if (m != null) {
-            // execute manipulation
-            manipulationQueue.execute(Structures.getActiveManipulation());
-
-            // process manipulation dependent actions
-            switch (Structures.getActiveManipulation().getManipulationType()) {
-                case SELECT:
-                    Select select = (Select) Structures.getActiveManipulation();
-
-                    // set selected element properties to selected element
-                    GroupNode gn = select.getManipulatedGroup();
-                    Structures.getSceneProperties().setSelectedElementProperties(
-                                                                                 gn.getChildrenParameterNode()
-                                                                                         .getProperties());
-                    // refresh general properties panel
-                    GeneralPropertiesPanel.getInstance().update();
-
-                    // partPropertiesPanel
-                    try {
-                        Part part = (Part) select.getManipulatedGroup().getChildrenElementList().getFirst()
-                                .getElement();
-                        MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(true);
-
-                        // set part properties panel
-                        PartPropertiesPanel.getInstance().setPartProperties(part.getPartProperties());
-                    } catch (ClassCastException cce) {
-                        MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(false);
-                    } catch (NullPointerException npe) {
-                        logger.warn("No object selected.");
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            // redraw scheme
-            ScenePanel.getInstance().schemeInvalidate(null);
-
-            // create new manipulation based on previous
-            Structures.setActiveManipulation(ManipulationFactory.createNext(Structures.getActiveManipulation()));
-        }
-        // manipulation is not finished yet
-        else {
-            logger.trace("Waiting for manipulation end");
         }
     }
 }

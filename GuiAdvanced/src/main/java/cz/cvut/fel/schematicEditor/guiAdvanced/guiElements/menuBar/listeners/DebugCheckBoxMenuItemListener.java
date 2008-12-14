@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 
 /**
  * This class implements {@link ActionListener} for <code>debugCheckBoxMenuItem</code> in {@link MenuBar}.
- * 
+ *
  * @author Urban Kravjansky
  */
 public class DebugCheckBoxMenuItemListener implements ActionListener {
@@ -24,7 +24,7 @@ public class DebugCheckBoxMenuItemListener implements ActionListener {
 
     /**
      * Method invoked as result to an action. It sets global debugging status.
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * @param ae {@link ActionEvent} parameter. This parameter is only for implementing purposes, it is not used nor
      *            needed.
@@ -33,6 +33,6 @@ public class DebugCheckBoxMenuItemListener implements ActionListener {
         GuiConfiguration config = GuiConfiguration.getInstance();
 
         config.setSchemeDebugged(((JCheckBoxMenuItem) ae.getSource()).isSelected());
-        ScenePanel.getInstance().repaint();
+        GuiAdvanced.getActiveScenePanel().repaint();
     }
 }
