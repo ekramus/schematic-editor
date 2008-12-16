@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
@@ -195,7 +194,7 @@ public class ScenePanelMouseListener implements MouseListener {
                     }
 
                     // fire scene graph update
-                    SceneGraph.getInstance().fireSceneGraphUpdateEvent();
+                    GuiAdvanced.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
                 } catch (NullPointerException npe) {
                     logger.warn("No manipulation.");
                 }

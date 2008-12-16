@@ -96,7 +96,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
 
             Part p = new Part(pp);
 
-            PartNode pn = new PartNode(p, GuiAdvanced.getActiveScenePanel().getSchemeSG().getTopNode().getEnabledOnly());
+            PartNode pn = new PartNode(p, GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().getEnabledOnly());
             serialize(pn, file);
         }
     }

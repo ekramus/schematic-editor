@@ -23,11 +23,16 @@ import cz.cvut.fel.schematicEditor.graphNode.PartNode;
  * @author Urban Kravjansky
  */
 public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
+    /**
+     * {@link SceneGraph} instance.
+     */
+    SceneGraph sceneGraph;
 
     /**
      * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(javax.swing.JMenu, javax.swing.JToolBar)
      */
-    public boolean activate(JMenu pluginsMenu, JToolBar drawingToolBar) {
+    public boolean activate(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingToolBar) {
+        setSceneGraph(sg);
         return true;
     }
 
@@ -91,4 +96,17 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
         }
     }
 
+    /**
+     * @param sceneGraph the sceneGraph to set
+     */
+    private void setSceneGraph(SceneGraph sceneGraph) {
+        this.sceneGraph = sceneGraph;
+    }
+
+    /**
+     * @return the sceneGraph
+     */
+    private SceneGraph getSceneGraph() {
+        return this.sceneGraph;
+    }
 }

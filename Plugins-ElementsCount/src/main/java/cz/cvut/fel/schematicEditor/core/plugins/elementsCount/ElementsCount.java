@@ -6,6 +6,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.core.Plugin;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.plugins.elementsCount.listeners.ElementsCountActionListener;
 
 /**
@@ -19,12 +20,17 @@ public class ElementsCount implements Plugin {
      * Menu item for elements count.
      */
     private static JMenuItem elementsCountMenuItem = null;
+    /**
+     * {@link SceneGraph} instance.
+     */
+    private SceneGraph       sceneGraph;
 
     /**
      * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(JMenu, JToolBar)
      */
-    public boolean activate(JMenu pluginsMenu, JToolBar drawingBar) {
+    public boolean activate(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingBar) {
         pluginsMenu.add(getMenuItem());
+        setSceneGraph(sg);
         return true;
     }
 
@@ -44,7 +50,7 @@ public class ElementsCount implements Plugin {
     private JMenuItem getMenuItem() {
         if (ElementsCount.elementsCountMenuItem == null) {
             ElementsCount.elementsCountMenuItem = new JMenuItem("Elements count");
-            ElementsCount.elementsCountMenuItem.addActionListener(new ElementsCountActionListener());
+            ElementsCount.elementsCountMenuItem.addActionListener(new ElementsCountActionListener(getSceneGraph()));
         }
         return ElementsCount.elementsCountMenuItem;
     }
@@ -68,5 +74,19 @@ public class ElementsCount implements Plugin {
      */
     public boolean implementsSceneGraphUpdateListener() {
         return false;
+    }
+
+    /**
+     * @param sceneGraph the sceneGraph to set
+     */
+    private void setSceneGraph(SceneGraph sceneGraph) {
+        this.sceneGraph = sceneGraph;
+    }
+
+    /**
+     * @return the sceneGraph
+     */
+    private SceneGraph getSceneGraph() {
+        return this.sceneGraph;
     }
 }

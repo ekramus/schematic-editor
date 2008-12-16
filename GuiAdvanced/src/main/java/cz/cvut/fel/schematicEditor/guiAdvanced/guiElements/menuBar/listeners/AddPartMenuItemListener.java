@@ -13,7 +13,6 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
@@ -67,8 +66,8 @@ public final class AddPartMenuItemListener implements ActionListener {
             groupNode.add(parameterNode);
 
             // finally add to SceneGraph
-            GuiAdvanced.getActiveScenePanel().getSchemeSG().getTopNode().add(groupNode);
-            SceneGraph.getInstance().fireSceneGraphUpdateEvent();
+            GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().add(groupNode);
+            GuiAdvanced.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
             GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
         }
     }

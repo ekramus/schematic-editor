@@ -63,6 +63,22 @@ public class ScenePanel extends JPanel {
      * This field represents validity of scheme.
      */
     private boolean       schemeValid;
+    /**
+     * {@link SceneGraph} instance used for this instance of {@link ScenePanel}.
+     */
+    private SceneGraph    sceneGraph = null;
+
+    /**
+     * Getter for <code>sceneGraph</code>.
+     *
+     * @return the sceneGraph
+     */
+    public SceneGraph getSceneGraph() {
+        if (this.sceneGraph == null) {
+            this.sceneGraph = new SceneGraph();
+        }
+        return this.sceneGraph;
+    }
 
     /**
      * This field represents invalid rectangle of scheme.
@@ -79,13 +95,6 @@ public class ScenePanel extends JPanel {
         logger = Logger.getLogger(this.getClass().getName());
 
         init();
-    }
-
-    /**
-     * @return the schemeSG
-     */
-    public SceneGraph getSchemeSG() {
-        return SceneGraph.getInstance();
     }
 
     /**
@@ -233,23 +242,22 @@ public class ScenePanel extends JPanel {
         BufferedImage manipulatedGroup = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         // retrieve SceneGraph instance, save original top node
-        SceneGraph sg = SceneGraph.getInstance();
-        GroupNode originalTopNode = sg.getTopNode();
+        GroupNode originalTopNode = getSceneGraph().getTopNode();
 
         // get manipulated group
         Manipulation manipulation = Structures.getActiveManipulation();
         GroupNode g = manipulation.getManipulatedGroup();
-        sg.setTopNode(g);
+        getSceneGraph().setTopNode(g);
 
         // try to draw elements using DisplayExport
         DisplayExport de = DisplayExport.getInstance();
         try {
-            de.export(sg, manipulatedGroup);
+            de.export(getSceneGraph(), manipulatedGroup);
         } catch (NullPointerException npe) {
             logger.error("No active manipulation");
         } finally {
             // restore original top node
-            sg.setTopNode(originalTopNode);
+            getSceneGraph().setTopNode(originalTopNode);
         }
         return manipulatedGroup;
     }
@@ -344,7 +352,7 @@ public class ScenePanel extends JPanel {
         DisplayExport de = DisplayExport.getInstance();
         de.setAntialiased(configuration.isSchemeAntialiased());
         de.setDebugged(configuration.isSchemeDebugged());
-        de.export(SceneGraph.getInstance(), scheme);
+        de.export(getSceneGraph(), scheme);
 
         // TODO process sceneGraph elements in foreach loop and transform them using DisplayExport.
 
@@ -432,7 +440,7 @@ public class ScenePanel extends JPanel {
         // initialize images
         this.grid = null;
         this.scheme = null;
-        SceneGraph.getInstance().manualCreateSceneGraph();
+        getSceneGraph().manualCreateSceneGraph();
 
         // enable mouse actions
         addMouseListener(new ScenePanelMouseListener());

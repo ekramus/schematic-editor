@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JToolBar;
 
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 
 /**
@@ -30,8 +31,7 @@ public interface Plugin {
     /**
      * Indicates, whether plugin implements {@link SceneGraphUpdateListener}
      *
-     * @return <code>true</code>, if plugin implements {@link SceneGraphUpdateListener}, <code>false</code>
-     *         else.
+     * @return <code>true</code>, if plugin implements {@link SceneGraphUpdateListener}, <code>false</code> else.
      */
     boolean implementsSceneGraphUpdateListener();
 
@@ -49,5 +49,5 @@ public interface Plugin {
      * @param drawingToolBar drawing bar, so custom drawing buttons can be added.
      * @return <code>true</code>, if plugin was activated successfully, <code>false</code> else.
      */
-    boolean activate(JMenu pluginsMenu, JToolBar drawingToolBar);
+    boolean activate(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingToolBar);
 }

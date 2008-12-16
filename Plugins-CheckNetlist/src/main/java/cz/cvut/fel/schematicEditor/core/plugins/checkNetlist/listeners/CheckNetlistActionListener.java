@@ -7,8 +7,8 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
@@ -24,10 +24,17 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
  */
 public class CheckNetlistActionListener implements ActionListener {
     /**
+     * {@link SceneGraph} instance.
+     */
+    SceneGraph sceneGraph;
+
+    /**
      * This method instantiates new instance.
      */
-    public CheckNetlistActionListener() {
+    public CheckNetlistActionListener(SceneGraph sceneGraph) {
         super();
+
+        setSceneGraph(sceneGraph);
     }
 
     /**
@@ -53,7 +60,7 @@ public class CheckNetlistActionListener implements ActionListener {
         int partsFound = 0;
 
         // build wire and part vectors for checking purposes
-        for (Node node : SceneGraph.getInstance().getSceneGraphArray()) {
+        for (Node node : getSceneGraph().getSceneGraphArray()) {
             if (node instanceof PartNode) {
                 partNodeVector.add((PartNode) node);
                 partsFound++;
@@ -131,8 +138,7 @@ public class CheckNetlistActionListener implements ActionListener {
      * @param c
      * @param wire
      */
-    private Vector<String> getConnectorNamesForConnectorAndWire(Pin pin, Wire wire,
-            Vector<PartNode> partNodes) {
+    private Vector<String> getConnectorNamesForConnectorAndWire(Pin pin, Wire wire, Vector<PartNode> partNodes) {
         Vector<String> result = new Vector<String>();
 
         UnitPoint cup = new UnitPoint(pin.getX().firstElement(), pin.getY().firstElement());
@@ -197,5 +203,19 @@ public class CheckNetlistActionListener implements ActionListener {
         }
 
         return null;
+    }
+
+    /**
+     * @param sceneGraph the sceneGraph to set
+     */
+    private void setSceneGraph(SceneGraph sceneGraph) {
+        this.sceneGraph = sceneGraph;
+    }
+
+    /**
+     * @return the sceneGraph
+     */
+    private SceneGraph getSceneGraph() {
+        return this.sceneGraph;
     }
 }
