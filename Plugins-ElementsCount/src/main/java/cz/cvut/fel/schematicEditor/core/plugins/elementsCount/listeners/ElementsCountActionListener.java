@@ -17,13 +17,20 @@ import cz.cvut.fel.schematicEditor.graphNode.Node;
  */
 public class ElementsCountActionListener implements ActionListener {
     /**
+     * {@link SceneGraph} instance.
+     */
+    private SceneGraph sceneGraph;
+
+    /**
      * This method instantiates new instance.
      *
      * @param sceneGraph {@link SceneGraph} instance of application.
      *
      */
-    public ElementsCountActionListener() {
+    public ElementsCountActionListener(SceneGraph sceneGraph) {
         super();
+
+        setSceneGraph(sceneGraph);
     }
 
     /**
@@ -32,11 +39,25 @@ public class ElementsCountActionListener implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
         int elementCount = 0;
 
-        for (Node node : SceneGraph.getInstance().getSceneGraphArray()) {
+        for (Node node : getSceneGraph().getSceneGraphArray()) {
             if (node instanceof ElementNode) {
                 elementCount++;
             }
         }
         JOptionPane.showMessageDialog(null, "Number of element Nodes: " + elementCount);
+    }
+
+    /**
+     * @param sceneGraph the sceneGraph to set
+     */
+    private void setSceneGraph(SceneGraph sceneGraph) {
+        this.sceneGraph = sceneGraph;
+    }
+
+    /**
+     * @return the sceneGraph
+     */
+    private SceneGraph getSceneGraph() {
+        return this.sceneGraph;
     }
 }

@@ -26,7 +26,7 @@ public class PartRotationCenterButtonActionListener implements ActionListener {
             if (Structures.getActiveManipulation().getManipulatedGroup() != null) {
                 try {
                     Manipulation m = ManipulationFactory.create(ManipulationType.SELECT_ROTATION_CENTER, GuiAdvanced
-                            .getActiveScenePanel().getSchemeSG().getTopNode());
+                            .getActiveScenePanel().getSceneGraph().getTopNode());
                     m.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                     m.setActive(true);
 

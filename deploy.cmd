@@ -26,7 +26,7 @@ copy %M2_REPO%\jgoodies\looks\1.2.2\looks-1.2.2.jar %LIB%
 copy %M2_REPO%\com\thoughtworks\xstream\xstream\1.3\xstream-1.3.jar %LIB%
 
 copy Launchers\target\Launchers-1.0-SNAPSHOT.jar %JAR%
-copy Gui\target\Gui-1.0-SNAPSHOT.jar %JAR%
+copy GuiAdvanced\target\GuiAdvanced-1.0-SNAPSHOT.jar %JAR%
 copy VectorEditorEngine\target\VectorEditorEngine-1.0-SNAPSHOT.jar %JAR%
 copy Manipulations\target\Manipulations-1.0-SNAPSHOT.jar %JAR%
 copy GraphNodes\target\GraphNodes-1.0-SNAPSHOT.jar %JAR%

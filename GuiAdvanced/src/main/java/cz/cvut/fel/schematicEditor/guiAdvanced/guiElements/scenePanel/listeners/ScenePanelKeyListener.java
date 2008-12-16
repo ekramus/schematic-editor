@@ -101,7 +101,7 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 // set active manipulation
                 Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, GuiAdvanced.getActiveScenePanel()
-                        .getSchemeSG().getTopNode());
+                        .getSceneGraph().getTopNode());
                 // set manipulated group from select manipulation
                 copy.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                 copy.manipulationStop(null, null, Structures.getManipulationQueue(), false);
@@ -119,7 +119,7 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 // set active manipulation
                 Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, GuiAdvanced
-                        .getActiveScenePanel().getSchemeSG().getTopNode());
+                        .getActiveScenePanel().getSceneGraph().getTopNode());
                 paste.manipulationStop(null, null, Structures.getManipulationQueue(), false);
 
                 // set paste as active manipulation
@@ -134,9 +134,9 @@ public class ScenePanelKeyListener implements KeyListener {
                 Manipulation manipulation = Structures.getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = manipulation.getManipulatedGroup();
-                    if (GuiAdvanced.getActiveScenePanel().getSchemeSG().getTopNode().delete(selected)) {
+                    if (GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().delete(selected)) {
                         Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, GuiAdvanced
-                                .getActiveScenePanel().getSchemeSG().getTopNode());
+                                .getActiveScenePanel().getSceneGraph().getTopNode());
                         delete.setActive(true);
                         Structures.getActiveManipulation();
                         // ScenePanel.getInstance().processFinalManipulationStep();

@@ -55,7 +55,7 @@ public final class SaveMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastSaveFolder(file.getParent());
 
-            serialize(GuiAdvanced.getActiveScenePanel().getSchemeSG(), file);
+            serialize(GuiAdvanced.getActiveScenePanel().getSceneGraph(), file);
         }
     }
 

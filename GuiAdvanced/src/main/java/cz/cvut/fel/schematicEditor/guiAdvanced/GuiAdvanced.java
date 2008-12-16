@@ -121,7 +121,8 @@ public class GuiAdvanced extends JApplet {
 
             // initialize plugins
             try {
-                initializePlugins(MenuBar.getInstance().getPluginsMenu(), DrawingToolBar.getInstance());
+                initializePlugins(getActiveScenePanel().getSceneGraph(), MenuBar.getInstance().getPluginsMenu(),
+                                  DrawingToolBar.getInstance());
             } catch (NullPointerException npe) {
                 logger.error("Error while loading plugins");
             }
@@ -148,7 +149,8 @@ public class GuiAdvanced extends JApplet {
 
             // initialize plugins
             try {
-                initializePlugins(MenuBar.getInstance().getPluginsMenu(), DrawingToolBar.getInstance());
+                initializePlugins(getActiveScenePanel().getSceneGraph(), MenuBar.getInstance().getPluginsMenu(),
+                                  DrawingToolBar.getInstance());
             } catch (NullPointerException npe) {
                 logger.error("Error while loading plugins");
             }
@@ -270,7 +272,7 @@ public class GuiAdvanced extends JApplet {
      * @param pluginsMenu plugins menu used for displaying plugin menu items.
      * @param drawingToolBar tool bar for drawing buttons.
      */
-    private void initializePlugins(JMenu pluginsMenu, JToolBar drawingToolBar) {
+    private void initializePlugins(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingToolBar) {
         Collection<String> pluginsCollection = findPlugins("plugins");
 
         for (String pluginPath : pluginsCollection) {
@@ -291,10 +293,11 @@ public class GuiAdvanced extends JApplet {
                     Structures.getLoadedPluginProperties().add(pluginProperties);
 
                     // activate plugin
-                    plugin.activate(pluginsMenu, drawingToolBar);
+                    plugin.activate(sg, pluginsMenu, drawingToolBar);
 
                     if (plugin.implementsSceneGraphUpdateListener()) {
-                        SceneGraph.getInstance().addSceneGraphUpdateListener((SceneGraphUpdateListener) plugin);
+                        getActiveScenePanel().getSceneGraph()
+                                .addSceneGraphUpdateListener((SceneGraphUpdateListener) plugin);
                     }
 
                     logger.trace("plugin loaded");

@@ -42,7 +42,7 @@ public class RotateElementMenuItemListener implements ActionListener {
             if (Structures.getActiveManipulation().getManipulatedGroup() != null) {
                 try {
                     Manipulation m = ManipulationFactory.create(ManipulationType.ROTATE, GuiAdvanced.getActiveScenePanel()
-                            .getSchemeSG().getTopNode());
+                            .getSceneGraph().getTopNode());
                     m.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
                     m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY());
                     Structures.getManipulationQueue().execute(m);

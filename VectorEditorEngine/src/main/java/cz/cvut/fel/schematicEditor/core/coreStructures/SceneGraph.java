@@ -64,16 +64,6 @@ public class SceneGraph implements Iterable<Node> {
     private Vector<SceneGraphUpdateListener> listeners;
 
     /**
-     * @return the instance
-     */
-    public static SceneGraph getInstance() {
-        if (instance == null) {
-            instance = new SceneGraph();
-        }
-        return instance;
-    }
-
-    /**
      * Initializes scene graph with new instance.
      */
     public static void initialize(SceneGraph sceneGraph) {
@@ -83,7 +73,7 @@ public class SceneGraph implements Iterable<Node> {
     /**
      * This is the default constructor.
      */
-    private SceneGraph() {
+    public SceneGraph() {
         logger = Logger.getLogger(this.getClass().getName());
 
         // TODO add some stuff later

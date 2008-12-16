@@ -50,13 +50,13 @@ public final class SaveAsMenuItemListener implements ActionListener {
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (ExportFileFilter.getExtension(file).equalsIgnoreCase("svg")) {
-                new SVGExport().export(GuiAdvanced.getActiveScenePanel().getSchemeSG(), file);
+                new SVGExport().export(GuiAdvanced.getActiveScenePanel().getSceneGraph(), file);
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("eps")) {
-                new PSExport().export(GuiAdvanced.getActiveScenePanel().getSchemeSG(), file);
+                new PSExport().export(GuiAdvanced.getActiveScenePanel().getSceneGraph(), file);
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("net")) {
-                new NetListExport().export(GuiAdvanced.getActiveScenePanel().getSchemeSG(), file);
+                new NetListExport().export(GuiAdvanced.getActiveScenePanel().getSceneGraph(), file);
 
             } else {
                 System.out.println("Failed to export");
