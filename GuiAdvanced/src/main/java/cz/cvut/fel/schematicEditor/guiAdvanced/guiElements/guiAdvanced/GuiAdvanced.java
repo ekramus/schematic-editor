@@ -248,6 +248,11 @@ public class GuiAdvanced extends JApplet {
         return this.sceneJScrollPane;
     }
 
+    /**
+     * Getter for <code>sceneScenePanel</code>.
+     *
+     * @return {@link ScenePanel} instance.
+     */
     private ScenePanel getSceneScenePanel() {
         if (sceneScenePanel == null) {
             sceneScenePanel = new ScenePanel();
@@ -255,6 +260,11 @@ public class GuiAdvanced extends JApplet {
         return sceneScenePanel;
     }
 
+    /**
+     * Getter for <code>partScenePanel</code>.
+     *
+     * @return {@link ScenePanel} instance.
+     */
     private ScenePanel getPartScenePanel() {
         if (partScenePanel == null) {
             partScenePanel = new ScenePanel();
@@ -262,11 +272,28 @@ public class GuiAdvanced extends JApplet {
         return partScenePanel;
     }
 
+    /**
+     * Getter for active <code>ScenePanel</code>.
+     *
+     * @return {@link ScenePanel} instance.
+     */
     public static ScenePanel getActiveScenePanel() {
-        if (getInstance().getSceneTabbedPane().getSelectedIndex() == 0) {
+        if (getActiveScenePanelTab() == SceneTabbedPaneTabs.TAB_SCHEME) {
             return getInstance().getSceneScenePanel();
         }
         return getInstance().getPartScenePanel();
+    }
+
+    /**
+     * Getter for active scene tab.
+     *
+     * @return {@link SceneTabbedPaneTabs} value.
+     */
+    public static SceneTabbedPaneTabs getActiveScenePanelTab() {
+        if (getInstance().getSceneTabbedPane().getSelectedIndex() == 0) {
+            return SceneTabbedPaneTabs.TAB_SCHEME;
+        }
+        return SceneTabbedPaneTabs.TAB_PART;
     }
 
     /**

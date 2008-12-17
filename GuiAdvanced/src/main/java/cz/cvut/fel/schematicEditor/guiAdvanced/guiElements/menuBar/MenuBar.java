@@ -11,6 +11,7 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AboutMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AddPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AntialiasedCheckBoxMenuItemListener;
@@ -188,6 +189,40 @@ public final class MenuBar extends JMenuBar {
             this.pluginsMenu.setText(MenuBarResources.PLUGINS_MENU_ITEM.getText());
         }
         return this.pluginsMenu;
+    }
+
+    /**
+     * Getter for <code>viewPartPropertiesMenuItem</code>.
+     *
+     * @return <code>viewPartPropertiesMenuItem</code> instance.
+     */
+    public JMenuItem getViewPartPropertiesMenuItem() {
+        if (this.viewPartPropertiesMenuItem == null) {
+            this.viewPartPropertiesMenuItem = new JMenuItem();
+            this.viewPartPropertiesMenuItem.setText(MenuBarResources.VIEW_PART_PROPERTIES_MENU_ITEM.getText());
+            this.viewPartPropertiesMenuItem.addActionListener(new ViewPartPropertiesMenuItemListener());
+        }
+        return this.viewPartPropertiesMenuItem;
+    }
+
+    /**
+     * Refreshes status of menu items.
+     */
+    public void refresh() {
+        switch (GuiAdvanced.getActiveScenePanelTab()) {
+            case TAB_SCHEME:
+                getAddPartMenuItem().setEnabled(true);
+                getSaveMenuItem().setEnabled(true);
+                getSaveAsPartMenuItem().setEnabled(false);
+                break;
+            case TAB_PART:
+                getAddPartMenuItem().setEnabled(false);
+                getSaveMenuItem().setEnabled(false);
+                getSaveAsPartMenuItem().setEnabled(true);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -381,6 +416,34 @@ public final class MenuBar extends JMenuBar {
     }
 
     /**
+     * Getter for <code>mirrorHorizontalMenuItem</code>.
+     *
+     * @return <code>mirrorHorizontalMenuItem</code> instance.
+     */
+    private JMenuItem getMirrorHorizontalMenuItem() {
+        if (this.mirrorHorizontalMenuItem == null) {
+            this.mirrorHorizontalMenuItem = new JMenuItem();
+            this.mirrorHorizontalMenuItem.setText(MenuBarResources.MIRROR_HORIZONTAL_MENU_ITEM.getText());
+            this.mirrorHorizontalMenuItem.addActionListener(new MirrorElementMenuItemListener(new UnitPoint(-1, 1)));
+        }
+        return this.mirrorHorizontalMenuItem;
+    }
+
+    /**
+     * Getter for <code>mirrorVerticalMenuItem</code>.
+     *
+     * @return <code>mirrorVerticalMenuItem</code> instance.
+     */
+    private JMenuItem getMirrorVerticalMenuItem() {
+        if (this.mirrorVerticalMenuItem == null) {
+            this.mirrorVerticalMenuItem = new JMenuItem();
+            this.mirrorVerticalMenuItem.setText(MenuBarResources.MIRROR_VERTICAL_MENU_ITEM.getText());
+            this.mirrorVerticalMenuItem.addActionListener(new MirrorElementMenuItemListener(new UnitPoint(1, -1)));
+        }
+        return this.mirrorVerticalMenuItem;
+    }
+
+    /**
      * Getter for <code>openMenuItem</code>.
      *
      * @return <code>openMenuItem</code> instance.
@@ -421,34 +484,6 @@ public final class MenuBar extends JMenuBar {
             this.rotateAnticlockwiseMenuItem.addActionListener(new RotateElementMenuItemListener(new UnitPoint(-1, 0)));
         }
         return this.rotateAnticlockwiseMenuItem;
-    }
-
-    /**
-     * Getter for <code>mirrorHorizontalMenuItem</code>.
-     *
-     * @return <code>mirrorHorizontalMenuItem</code> instance.
-     */
-    private JMenuItem getMirrorHorizontalMenuItem() {
-        if (this.mirrorHorizontalMenuItem == null) {
-            this.mirrorHorizontalMenuItem = new JMenuItem();
-            this.mirrorHorizontalMenuItem.setText(MenuBarResources.MIRROR_HORIZONTAL_MENU_ITEM.getText());
-            this.mirrorHorizontalMenuItem.addActionListener(new MirrorElementMenuItemListener(new UnitPoint(-1, 1)));
-        }
-        return this.mirrorHorizontalMenuItem;
-    }
-
-    /**
-     * Getter for <code>mirrorVerticalMenuItem</code>.
-     *
-     * @return <code>mirrorVerticalMenuItem</code> instance.
-     */
-    private JMenuItem getMirrorVerticalMenuItem() {
-        if (this.mirrorVerticalMenuItem == null) {
-            this.mirrorVerticalMenuItem = new JMenuItem();
-            this.mirrorVerticalMenuItem.setText(MenuBarResources.MIRROR_VERTICAL_MENU_ITEM.getText());
-            this.mirrorVerticalMenuItem.addActionListener(new MirrorElementMenuItemListener(new UnitPoint(1, -1)));
-        }
-        return this.mirrorVerticalMenuItem;
     }
 
     /**
@@ -569,19 +604,5 @@ public final class MenuBar extends JMenuBar {
             this.viewMenu.add(getViewPartPropertiesMenuItem());
         }
         return this.viewMenu;
-    }
-
-    /**
-     * Getter for <code>viewPartPropertiesMenuItem</code>.
-     *
-     * @return <code>viewPartPropertiesMenuItem</code> instance.
-     */
-    public JMenuItem getViewPartPropertiesMenuItem() {
-        if (this.viewPartPropertiesMenuItem == null) {
-            this.viewPartPropertiesMenuItem = new JMenuItem();
-            this.viewPartPropertiesMenuItem.setText(MenuBarResources.VIEW_PART_PROPERTIES_MENU_ITEM.getText());
-            this.viewPartPropertiesMenuItem.addActionListener(new ViewPartPropertiesMenuItemListener());
-        }
-        return this.viewPartPropertiesMenuItem;
     }
 }

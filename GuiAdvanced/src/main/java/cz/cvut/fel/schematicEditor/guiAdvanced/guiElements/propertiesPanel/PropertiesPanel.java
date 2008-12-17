@@ -43,15 +43,15 @@ public class PropertiesPanel extends JPanel {
 
             // add elements by updating properties tool bar
             propertiesPanel.add(PropertiesSelectorToolBar.getInstance(), BorderLayout.EAST);
-            propertiesPanel.update();
+            propertiesPanel.refresh();
         }
         return propertiesPanel;
     }
 
     /**
-     * Updates {@link PropertiesPanel}.
+     * Refreshes {@link PropertiesPanel}.
      */
-    public void update() {
+    public void refresh() {
         // set visibility of correct panel only. The panel has to be added, as in CENTER only one panel can exist.
         switch (PropertiesSelectorToolBar.getSelectedButton()) {
             case PropertiesSelectorToolBar.GENERAL_PROPERTIES:
@@ -72,6 +72,6 @@ public class PropertiesPanel extends JPanel {
         }
 
         // update properties selector tool bar
-        PropertiesSelectorToolBar.getInstance().update();
+        PropertiesSelectorToolBar.getInstance().refresh();
     }
 }

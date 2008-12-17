@@ -149,7 +149,7 @@ public class PropertiesSelectorToolBar extends JToolBar {
     /**
      * Updates this properties selector tool bar.
      */
-    public void update() {
+    public void refresh() {
         switch (getSelectedButton()) {
             case GENERAL_PROPERTIES:
                 getGeneralPropertiesButton().setSelected(true);

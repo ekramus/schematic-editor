@@ -81,7 +81,7 @@ public class PartPropertiesPanel extends JPanel {
     /**
      * Updates {@link PartPropertiesPanel} according to scene or selected element properties.
      */
-    public void update() {
+    public void refresh() {
         try {
             if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
                 Part part = (Part) GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()

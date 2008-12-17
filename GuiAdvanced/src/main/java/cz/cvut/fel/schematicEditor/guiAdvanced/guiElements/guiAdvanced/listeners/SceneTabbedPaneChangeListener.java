@@ -3,7 +3,9 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.listener
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.DrawingToolBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
  * This class implements change listener for Scene TabbedPane.
@@ -18,6 +20,8 @@ public class SceneTabbedPaneChangeListener implements ChangeListener {
      */
     public void stateChanged(ChangeEvent e) {
         GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
+        MenuBar.getInstance().refresh();
+        DrawingToolBar.getInstance().refresh();
     }
 
 }
