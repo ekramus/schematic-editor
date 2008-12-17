@@ -5,8 +5,9 @@ import java.net.URL;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
@@ -37,6 +38,22 @@ public final class DrawingToolBar extends JToolBar {
      * {@link DrawingToolBar} instance.
      */
     private static DrawingToolBar drawingToolBar = null;
+    /**
+     * Button group for toolbar buttons.
+     */
+    private ButtonGroup           buttonGroup    = null;
+
+    /**
+     * Getter for <code>buttonGroup</code>.
+     *
+     * @return {@link ButtonGroup} instance.
+     */
+    private ButtonGroup getButtonGroup() {
+        if (this.buttonGroup == null) {
+            this.buttonGroup = new ButtonGroup();
+        }
+        return this.buttonGroup;
+    }
 
     /**
      * {@link DrawingToolBar} is singleton. This method returns the only one instance, that exists. If none exist, one
@@ -53,22 +70,38 @@ public final class DrawingToolBar extends JToolBar {
             BoxLayout bl = new BoxLayout(drawingToolBar, BoxLayout.PAGE_AXIS);
             drawingToolBar.setLayout(bl);
 
-            // add buttons to the tool bar
+            // get button group
+            ButtonGroup bg = drawingToolBar.getButtonGroup();
+
+            // add buttons to the tool bar and button group
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.SELECT_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.DELETE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(Box.createVerticalStrut(20));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.LINE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.BEZIER_CURVE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.POLYLINE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.POLYGON_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.ELLIPSE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.ARC_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.ARC_SEGMENT_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.RECTANGLE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.TEXT_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(Box.createVerticalStrut(20));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PIN_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.WIRE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
         }
         return drawingToolBar;
     }
@@ -105,8 +138,8 @@ public final class DrawingToolBar extends JToolBar {
      * @param buttonType Type of button to generate.
      * @return Generated button.
      */
-    private JButton getButton(DrawingToolBarResources buttonType) {
-        JButton result = new JButton();
+    private JToggleButton getButton(DrawingToolBarResources buttonType) {
+        JToggleButton result = new JToggleButton();
         result.setAlignmentX(CENTER_ALIGNMENT);
 
         // set resources and tooltip
