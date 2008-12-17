@@ -1,8 +1,7 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
@@ -27,10 +26,10 @@ public abstract class PropertiesToolBarListener {
     protected final ElementProperties getElementProperties() {
         ElementProperties ep;
 
-        if (Structures.getSceneProperties().getSelectedElementProperties() == null) {
-            ep = Structures.getSceneProperties().getSceneElementProperties();
+        if (GuiAdvanced.getActiveScenePanel().getSceneProperties().getSelectedElementProperties() == null) {
+            ep = GuiAdvanced.getActiveScenePanel().getSceneProperties().getSceneElementProperties();
         } else {
-            ep = Structures.getSceneProperties().getSelectedElementProperties();
+            ep = GuiAdvanced.getActiveScenePanel().getSceneProperties().getSelectedElementProperties();
         }
         return ep;
     }
@@ -46,7 +45,7 @@ public abstract class PropertiesToolBarListener {
         // refresh all elements on properties toolbar
         PartPropertiesPanel.getInstance().update();
 
-        Manipulation m = Structures.getActiveManipulation();
+        Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
 
         if (m.getManipulationType() == ManipulationType.SELECT) {
             Select select = (Select) m;

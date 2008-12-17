@@ -15,7 +15,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
@@ -88,11 +88,11 @@ public class DrawCircuitPartButtonListener implements ActionListener {
             Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, GuiAdvanced.getActiveScenePanel()
                     .getSceneGraph().getTopNode(), gn);
             m.setSnapCoordinates(snapCoordinates);
-            Structures.setActiveManipulation(m);
-            logger.trace(Structures.getActiveManipulation());
+            GuiAdvanced.getActiveScenePanel().setActiveManipulation(m);
+            logger.trace(GuiAdvanced.getActiveScenePanel().getActiveManipulation());
 
             // set selected element properties to null
-            Structures.getSceneProperties().setSelectedElementProperties(null);
+            GuiAdvanced.getActiveScenePanel().getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
             PartPropertiesPanel.getInstance().update();
         } catch (IllegalArgumentException e) {

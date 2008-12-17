@@ -5,9 +5,8 @@ import java.awt.event.MouseMotionListener;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -41,7 +40,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Manipulation m = Structures.getActiveManipulation();
+            Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
 
             // manipulation is active
             if (m.isActive()) {
@@ -66,7 +65,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Manipulation m = Structures.getActiveManipulation();
+            Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
 
             // manipulation is active
             if (m.isActive()) {

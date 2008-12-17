@@ -3,8 +3,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
@@ -36,14 +35,15 @@ public class MirrorElementMenuItemListener implements ActionListener {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        if (Structures.getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
-            if (Structures.getActiveManipulation().getManipulatedGroup() != null) {
+        if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
+            if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup() != null) {
                 try {
-                    Manipulation m = ManipulationFactory.create(ManipulationType.MIRROR, GuiAdvanced.getActiveScenePanel()
-                            .getSceneGraph().getTopNode());
-                    m.setManipulatedGroup(Structures.getActiveManipulation().getManipulatedGroup());
+                    Manipulation m = ManipulationFactory.create(ManipulationType.MIRROR, GuiAdvanced
+                            .getActiveScenePanel().getSceneGraph().getTopNode());
+                    m.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
+                            .getManipulatedGroup());
                     m.addManipulationCoordinates(getMirrorAxe().getUnitX(), getMirrorAxe().getUnitY());
-                    Structures.getManipulationQueue().execute(m);
+                    GuiAdvanced.getActiveScenePanel().getManipulationQueue().execute(m);
 
                     GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
                 } catch (UnknownManipulationException ume) {

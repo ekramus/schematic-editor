@@ -7,9 +7,8 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
+import quicktime.app.spaces.Listener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -55,9 +54,13 @@ public class EndElementMenuItemListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            Create create = (Create) Structures.getActiveManipulation();
+            Create create = (Create) GuiAdvanced.getActiveScenePanel().getActiveManipulation();
             create.setFinished(true);
-            GuiAdvanced.getActiveScenePanel().tryFinishManipulation(getE(), getR2d(), Structures.getManipulationQueue(), false);
+            GuiAdvanced.getActiveScenePanel().tryFinishManipulation(
+                                                                    getE(),
+                                                                    getR2d(),
+                                                                    GuiAdvanced.getActiveScenePanel()
+                                                                            .getManipulationQueue(), false);
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
         }

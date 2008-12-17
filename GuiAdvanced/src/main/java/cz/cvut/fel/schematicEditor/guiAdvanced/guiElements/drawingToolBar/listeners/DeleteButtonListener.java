@@ -5,8 +5,7 @@ import java.awt.event.ActionListener;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.core.Structures;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
@@ -44,7 +43,7 @@ public final class DeleteButtonListener implements ActionListener {
         try {
             Manipulation m = ManipulationFactory.create(ManipulationType.DELETE, GuiAdvanced.getActiveScenePanel()
                     .getSceneGraph().getTopNode());
-            Structures.setActiveManipulation(m);
+            GuiAdvanced.getActiveScenePanel().setActiveManipulation(m);
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
         }

@@ -19,10 +19,9 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.ContourCheckBoxListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.ContourColorAlphaSliderChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.ContourColorButtonActionListener;
@@ -204,10 +203,10 @@ public class GeneralPropertiesPanel extends JPanel {
     public void update() {
         ElementProperties ep;
 
-        if (Structures.getSceneProperties().getSelectedElementProperties() == null) {
-            ep = Structures.getSceneProperties().getSceneElementProperties();
+        if (GuiAdvanced.getActiveScenePanel().getSceneProperties().getSelectedElementProperties() == null) {
+            ep = GuiAdvanced.getActiveScenePanel().getSceneProperties().getSceneElementProperties();
         } else {
-            ep = Structures.getSceneProperties().getSelectedElementProperties();
+            ep = GuiAdvanced.getActiveScenePanel().getSceneProperties().getSelectedElementProperties();
         }
 
         getLineWidthComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
@@ -217,7 +216,9 @@ public class GeneralPropertiesPanel extends JPanel {
         getFillColorButton().setIcon(getColorIcon(ep.getFillColor(), ep.getFillColorAlpha()));
         getContourColorAlphaSlider().setValue(ep.getContourColorAlpha());
         getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
-        getNamePanelTextField().setText(Structures.getActiveManipulation().getManipulatedGroup().getId());
+        getNamePanelTextField().setText(
+                                        GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
+                                                .getId());
 
         logger.debug("Contour style: " + ep.getContourStyle());
     }
@@ -374,9 +375,9 @@ public class GeneralPropertiesPanel extends JPanel {
         if (this.contourColorButton == null) {
             this.contourColorButton = new JButton();
             this.contourColorButton.setText(PropertiesToolBarResources.CONTOUR_COLOR_BTN.getText());
-            this.contourColorButton.setIcon(getColorIcon(Structures.getSceneProperties().getSceneElementProperties()
-                    .getContourColor(), Structures.getSceneProperties().getSceneElementProperties()
-                    .getContourColorAlpha()));
+            this.contourColorButton.setIcon(getColorIcon(GuiAdvanced.getActiveScenePanel().getSceneProperties()
+                    .getSceneElementProperties().getContourColor(), GuiAdvanced.getActiveScenePanel()
+                    .getSceneProperties().getSceneElementProperties().getContourColorAlpha()));
             this.contourColorButton.addActionListener(new ContourColorButtonActionListener(this.contourColorButton));
         }
         return this.contourColorButton;
@@ -390,8 +391,9 @@ public class GeneralPropertiesPanel extends JPanel {
     private JButton getFillColorButton() {
         if (this.fillColorButton == null) {
             this.fillColorButton = new JButton(PropertiesToolBarResources.FILL_COLOR_BTN.getText());
-            this.fillColorButton.setIcon(getColorIcon(Structures.getSceneProperties().getSceneElementProperties()
-                    .getFillColor(), Structures.getSceneProperties().getSceneElementProperties().getFillColorAlpha()));
+            this.fillColorButton.setIcon(getColorIcon(GuiAdvanced.getActiveScenePanel().getSceneProperties()
+                    .getSceneElementProperties().getFillColor(), GuiAdvanced.getActiveScenePanel().getSceneProperties()
+                    .getSceneElementProperties().getFillColorAlpha()));
             this.fillColorButton.addActionListener(new FillColorButtonActionListener(this.fillColorButton));
         }
         return this.fillColorButton;
