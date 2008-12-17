@@ -44,11 +44,11 @@ public enum DrawingToolBarResources {
     /**
      * Select button caption.
      */
-    SELECT_BUTTON("Select", "resources/line_32.png"),
+    SELECT_BUTTON("Select", "resources/select_32.png"),
     /**
      * Delete button caption.
      */
-    DELETE_BUTTON("Delete", "resources/line_32.png"),
+    DELETE_BUTTON("Delete", "resources/delete_32.png"),
     /**
      * Pin button caption.
      */
