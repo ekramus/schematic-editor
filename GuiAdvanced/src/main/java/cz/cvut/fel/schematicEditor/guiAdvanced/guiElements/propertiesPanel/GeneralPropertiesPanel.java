@@ -200,7 +200,7 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * Refresh {@link GeneralPropertiesPanel} according to scene or selected element properties.
      */
-    public void update() {
+    public void refresh() {
         ElementProperties ep;
 
         if (GuiAdvanced.getActiveScenePanel().getSceneProperties().getSelectedElementProperties() == null) {

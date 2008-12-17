@@ -195,7 +195,7 @@ public class ScenePanel extends JPanel {
                     GroupNode gn = select.getManipulatedGroup();
                     getSceneProperties().setSelectedElementProperties(gn.getChildrenParameterNode().getProperties());
                     // refresh general properties panel
-                    GeneralPropertiesPanel.getInstance().update();
+                    GeneralPropertiesPanel.getInstance().refresh();
 
                     // partPropertiesPanel
                     try {

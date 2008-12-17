@@ -68,7 +68,7 @@ public class DrawShapeButtonListener implements ActionListener {
             // set selected element properties to null
             GuiAdvanced.getActiveScenePanel().getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
-            PartPropertiesPanel.getInstance().update();
+            PartPropertiesPanel.getInstance().refresh();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {

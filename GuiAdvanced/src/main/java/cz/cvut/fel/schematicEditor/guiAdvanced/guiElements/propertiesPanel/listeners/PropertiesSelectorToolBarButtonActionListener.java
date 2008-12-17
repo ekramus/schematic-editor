@@ -51,7 +51,7 @@ public class PropertiesSelectorToolBarButtonActionListener implements ActionList
             PropertiesSelectorToolBar.setSelectedButton(PropertiesSelectorToolBar.NONE);
         }
 
-        PropertiesPanel.getInstance().update();
+        PropertiesPanel.getInstance().refresh();
     }
 
 }

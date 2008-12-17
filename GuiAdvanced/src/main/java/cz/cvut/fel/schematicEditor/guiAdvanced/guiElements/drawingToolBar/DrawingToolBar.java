@@ -25,6 +25,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listen
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.DrawShapeButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.SelectButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.resources.DrawingToolBarResources;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 
 /**
  * This class implements drawing tool bar. It is used for drawing tool selection.
@@ -43,7 +44,7 @@ public final class DrawingToolBar extends JToolBar {
      *
      * @return instance of {@link DrawingToolBar}.
      */
-    public static JToolBar getInstance() {
+    public static DrawingToolBar getInstance() {
         if (drawingToolBar == null) {
             // create drawing tool bar
             drawingToolBar = new DrawingToolBar();
@@ -70,6 +71,24 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.WIRE_BUTTON));
         }
         return drawingToolBar;
+    }
+
+    /**
+     * Refreshes status of menu items.
+     */
+    public void refresh() {
+        switch (GuiAdvanced.getActiveScenePanelTab()) {
+            case TAB_SCHEME:
+                // wire button
+                getComponent(14).setEnabled(true);
+                break;
+            case TAB_PART:
+                // wire button
+                getComponent(14).setEnabled(false);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
