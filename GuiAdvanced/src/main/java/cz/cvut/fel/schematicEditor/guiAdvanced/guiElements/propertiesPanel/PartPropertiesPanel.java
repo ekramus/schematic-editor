@@ -11,11 +11,10 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.properties.PartType;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartRotationCenterButtonActionListener;
 
 /**
@@ -84,9 +83,9 @@ public class PartPropertiesPanel extends JPanel {
      */
     public void update() {
         try {
-            if (Structures.getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
-                Part part = (Part) Structures.getActiveManipulation().getManipulatedGroup().getChildrenElementList()
-                        .getFirst().getElement();
+            if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
+                Part part = (Part) GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
+                        .getChildrenElementList().getFirst().getElement();
                 getInstance().getPartRotationCenterLabel().setText(part.getRotationCenter().toString());
             }
         } catch (NullPointerException npe) {

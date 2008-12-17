@@ -10,7 +10,7 @@ import cz.cvut.fel.schematicEditor.export.NetListExport;
 import cz.cvut.fel.schematicEditor.export.PSExport;
 import cz.cvut.fel.schematicEditor.export.SVGExport;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**

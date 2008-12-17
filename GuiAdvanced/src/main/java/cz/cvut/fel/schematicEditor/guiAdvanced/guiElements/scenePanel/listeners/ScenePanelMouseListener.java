@@ -10,10 +10,9 @@ import javax.swing.JPopupMenu;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
@@ -122,12 +121,15 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                     GuiConfiguration.getInstance()
                                                                             .getPointerRectangle());
 
-            Manipulation m = Structures.getActiveManipulation();
+            Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
             try {
                 if (!m.isActive() || (m.getManipulationType() == ManipulationType.SELECT)) {
                     // start manipulation and set result as active manipulation
-                    Structures.setActiveManipulation(m.manipulationStart(e, r2d, Structures.getManipulationQueue(),
-                                                                         isMouseClicked()));
+                    GuiAdvanced.getActiveScenePanel().setActiveManipulation(
+                                                                            m.manipulationStart(e, r2d, GuiAdvanced
+                                                                                    .getActiveScenePanel()
+                                                                                    .getManipulationQueue(),
+                                                                                                isMouseClicked()));
                 }
             } catch (NullPointerException npe) {
                 logger.warn("No manipulation");
@@ -145,7 +147,7 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public void mouseReleased(MouseEvent e) {
         try {
-            ManipulationQueue mq = Structures.getManipulationQueue();
+            ManipulationQueue mq = GuiAdvanced.getActiveScenePanel().getManipulationQueue();
 
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
 
@@ -158,7 +160,7 @@ public class ScenePanelMouseListener implements MouseListener {
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
 
-                Manipulation manipulation = Structures.getActiveManipulation();
+                Manipulation manipulation = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
                 try {
                     ManipulationType mt = manipulation.getManipulationType();
 

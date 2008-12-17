@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -45,28 +45,82 @@ public class ScenePanel extends JPanel {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger logger;
+    private static Logger     logger;
     /**
      * This field represents grid.
      */
-    private BufferedImage grid;
+    private BufferedImage     grid;
 
     /**
      * This field represents grid validity.
      */
-    private boolean       gridValid;
+    private boolean           gridValid;
     /**
      * This field represents scheme.
      */
-    private BufferedImage scheme;
+    private BufferedImage     scheme;
     /**
      * This field represents validity of scheme.
      */
-    private boolean       schemeValid;
+    private boolean           schemeValid;
     /**
      * {@link SceneGraph} instance used for this instance of {@link ScenePanel}.
      */
-    private SceneGraph    sceneGraph = null;
+    private SceneGraph        sceneGraph         = null;
+    /**
+     * Reference to <code>SceneProperties</code> instance.
+     */
+    private SceneProperties   sceneProperties    = null;
+    /**
+     * Reference to <code>ManipulationQueue</code> instance.
+     */
+    private ManipulationQueue manipulationQueue  = null;
+    /**
+     * Reference to active {@link Manipulation} instance.
+     */
+    private Manipulation      activeManipulation = null;
+
+    /**
+     * Getter for <code>activeManipulation</code> instance.
+     *
+     * @return Instance of <code>activeManipulation</code>.
+     */
+    public Manipulation getActiveManipulation() {
+        return this.activeManipulation;
+    }
+
+    /**
+     * Setter for <code>activeManipulation</code> instance.
+     *
+     * @param activeManipulation instance of <code>activeManipulation</code>.
+     */
+    public void setActiveManipulation(Manipulation activeManipulation) {
+        this.activeManipulation = activeManipulation;
+    }
+
+    /**
+     * Getter for {@link ManipulationQueue}.
+     *
+     * @return the manipulationQueue
+     */
+    public ManipulationQueue getManipulationQueue() {
+        if (this.manipulationQueue == null) {
+            this.manipulationQueue = new ManipulationQueue();
+        }
+        return this.manipulationQueue;
+    }
+
+    /**
+     * Getter for {@link SceneProperties}.
+     *
+     * @return the sceneProperties
+     */
+    public SceneProperties getSceneProperties() {
+        if (this.sceneProperties == null) {
+            this.sceneProperties = new SceneProperties();
+        }
+        return this.sceneProperties;
+    }
 
     /**
      * Getter for <code>sceneGraph</code>.
@@ -127,21 +181,19 @@ public class ScenePanel extends JPanel {
     public void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation
-        Manipulation m = Structures.getActiveManipulation().manipulationStop(e, r2d, manipulationQueue, isMouseClicked);
+        Manipulation m = getActiveManipulation().manipulationStop(e, r2d, manipulationQueue, isMouseClicked);
         if (m != null) {
             // execute manipulation
-            manipulationQueue.execute(Structures.getActiveManipulation());
+            manipulationQueue.execute(getActiveManipulation());
 
             // process manipulation dependent actions
-            switch (Structures.getActiveManipulation().getManipulationType()) {
+            switch (getActiveManipulation().getManipulationType()) {
                 case SELECT:
-                    Select select = (Select) Structures.getActiveManipulation();
+                    Select select = (Select) getActiveManipulation();
 
                     // set selected element properties to selected element
                     GroupNode gn = select.getManipulatedGroup();
-                    Structures.getSceneProperties().setSelectedElementProperties(
-                                                                                 gn.getChildrenParameterNode()
-                                                                                         .getProperties());
+                    getSceneProperties().setSelectedElementProperties(gn.getChildrenParameterNode().getProperties());
                     // refresh general properties panel
                     GeneralPropertiesPanel.getInstance().update();
 
@@ -167,7 +219,7 @@ public class ScenePanel extends JPanel {
             schemeInvalidate(null);
 
             // create new manipulation based on previous
-            Structures.setActiveManipulation(ManipulationFactory.createNext(Structures.getActiveManipulation()));
+            setActiveManipulation(ManipulationFactory.createNext(getActiveManipulation()));
         }
         // manipulation is not finished yet
         else {
@@ -185,7 +237,7 @@ public class ScenePanel extends JPanel {
         // create new edit frame
         BufferedImage editFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        Manipulation m = Structures.getActiveManipulation();
+        Manipulation m = getActiveManipulation();
         GroupNode gn = m.getManipulatedGroup();
         Transformation t = m.getManipulatedGroup().getTransformation();
 
@@ -245,7 +297,7 @@ public class ScenePanel extends JPanel {
         GroupNode originalTopNode = getSceneGraph().getTopNode();
 
         // get manipulated group
-        Manipulation manipulation = Structures.getActiveManipulation();
+        Manipulation manipulation = getActiveManipulation();
         GroupNode g = manipulation.getManipulatedGroup();
         getSceneGraph().setTopNode(g);
 
@@ -302,7 +354,7 @@ public class ScenePanel extends JPanel {
 
             // TODO correct behavior: in case of manipulation progress, it should use active manipulation,
             // TODO else, it should use last processed manipulation
-            Manipulation m = Structures.getActiveManipulation();
+            Manipulation m = getActiveManipulation();
 
             // draw work element or group, if some is being manipulated.
             if (m.isActive()) {
@@ -370,7 +422,7 @@ public class ScenePanel extends JPanel {
         // create new selection frame
         BufferedImage selectionFrame = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        Manipulation m = Structures.getActiveManipulation();
+        Manipulation m = getActiveManipulation();
         GroupNode gn = m.getManipulatedGroup();
         Transformation t = m.getManipulatedGroup().getTransformation();
 
@@ -397,7 +449,7 @@ public class ScenePanel extends JPanel {
         // get configuration
         GuiConfiguration configuration = GuiConfiguration.getInstance();
 
-        Manipulation m = Structures.getActiveManipulation();
+        Manipulation m = getActiveManipulation();
         Transformation t = m.getManipulatedGroup().getTransformation();
         UnitPoint up = m.getLastManipulationCoordinate();
         Vector<UnitPoint> sc = m.getSnapCoordinates();

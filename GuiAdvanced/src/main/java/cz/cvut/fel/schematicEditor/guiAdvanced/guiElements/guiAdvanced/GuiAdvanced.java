@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -28,7 +28,9 @@ import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.DrawingToolBar;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.listeners.SceneTabbedPaneChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
@@ -183,6 +185,7 @@ public class GuiAdvanced extends JApplet {
     private JTabbedPane getSceneTabbedPane() {
         if (this.sceneTabbedPane == null) {
             this.sceneTabbedPane = new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+            this.sceneTabbedPane.addChangeListener(new SceneTabbedPaneChangeListener());
             this.sceneTabbedPane.addTab("scheme", getSceneRootPanel());
             this.sceneTabbedPane.addTab("part", getPartRootPanel());
         }
