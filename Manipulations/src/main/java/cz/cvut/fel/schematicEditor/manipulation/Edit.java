@@ -34,9 +34,10 @@ public class Edit extends Manipulation {
      * Default constructor. It initializes this {@link Edit} {@link Manipulation}.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Edit(GroupNode topNode) {
-        super(topNode);
+    protected Edit(GroupNode topNode, Object source) {
+        super(topNode, source);
         setManipulatedGroup(null);
 
         logger = Logger.getLogger(this.getClass().getName());
@@ -115,7 +116,7 @@ public class Edit extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Edit e = new Edit(getTopNode());
+        Edit e = new Edit(getTopNode(), getSource());
 
         e.setManipulatedGroup(getManipulatedGroup());
         e.setManipulationCoordinates(getX(), getY());
@@ -130,7 +131,7 @@ public class Edit extends Manipulation {
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select(getTopNode());
+        Select s = new Select(getTopNode(), getSource());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());

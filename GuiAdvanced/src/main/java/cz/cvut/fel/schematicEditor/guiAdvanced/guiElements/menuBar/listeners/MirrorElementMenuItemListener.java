@@ -39,7 +39,7 @@ public class MirrorElementMenuItemListener implements ActionListener {
             if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup() != null) {
                 try {
                     Manipulation m = ManipulationFactory.create(ManipulationType.MIRROR, GuiAdvanced
-                            .getActiveScenePanel().getSceneGraph().getTopNode());
+                            .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
                     m.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
                             .getManipulatedGroup());
                     m.addManipulationCoordinates(getMirrorAxe().getUnitX(), getMirrorAxe().getUnitY());

@@ -17,9 +17,10 @@ public class Copy extends Manipulation {
      * This method instantiates new instance.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Copy(GroupNode topNode) {
-        super(topNode);
+    protected Copy(GroupNode topNode, Object source) {
+        super(topNode, source);
     }
 
     /**
@@ -66,7 +67,7 @@ public class Copy extends Manipulation {
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select(getTopNode());
+        Select s = new Select(getTopNode(), getSource());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
@@ -97,7 +98,7 @@ public class Copy extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Copy copy = new Copy(getTopNode());
+        Copy copy = new Copy(getTopNode(), getSource());
 
         copy.setManipulatedGroup(getManipulatedGroup());
         copy.setManipulationQueue(getManipulationQueue());

@@ -39,9 +39,10 @@ public class Move extends Manipulation {
      * Default {@link Move} constructor. It initializes this {@link Manipulation}.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Move(GroupNode topNode) {
-        super(topNode);
+    protected Move(GroupNode topNode, Object source) {
+        super(topNode, source);
 
         setAppliedTransformation(Transformation.getIdentity());
 
@@ -172,7 +173,7 @@ public class Move extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Move m = new Move(getTopNode());
+        Move m = new Move(getTopNode(), getSource());
         // m.setManipulatedGroup((GroupNode) getManipulatedGroup().duplicate());
         m.setManipulatedGroup(getManipulatedGroup());
         m.setManipulationCoordinates(getX(), getY());
@@ -187,7 +188,7 @@ public class Move extends Manipulation {
     @Override
     protected Manipulation createNext() {
         // After move select is next manipulation..
-        Select s = new Select(getTopNode());
+        Select s = new Select(getTopNode(), getSource());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());

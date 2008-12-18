@@ -106,7 +106,7 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 // set active manipulation
                 Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, GuiAdvanced.getActiveScenePanel()
-                        .getSceneGraph().getTopNode());
+                        .getSceneGraph().getTopNode(), e.getSource());
                 // set manipulated group from select manipulation
                 copy.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
                         .getManipulatedGroup());
@@ -128,7 +128,7 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 // set active manipulation
                 Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, GuiAdvanced
-                        .getActiveScenePanel().getSceneGraph().getTopNode());
+                        .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
                 paste.manipulationStop(null, null, GuiAdvanced.getActiveScenePanel().getManipulationQueue(), false);
 
                 // set paste as active manipulation
@@ -148,7 +148,7 @@ public class ScenePanelKeyListener implements KeyListener {
                     GroupNode selected = manipulation.getManipulatedGroup();
                     if (GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().delete(selected)) {
                         Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, GuiAdvanced
-                                .getActiveScenePanel().getSceneGraph().getTopNode());
+                                .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
                         delete.setActive(true);
                         GuiAdvanced.getActiveScenePanel().getActiveManipulation();
                         // ScenePanel.getInstance().processFinalManipulationStep();
