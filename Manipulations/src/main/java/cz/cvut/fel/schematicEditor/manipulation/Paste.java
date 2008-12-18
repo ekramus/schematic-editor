@@ -17,9 +17,10 @@ public class Paste extends Manipulation {
      * This method instantiates new instance.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Paste(GroupNode topNode) {
-        super(topNode);
+    protected Paste(GroupNode topNode, Object source) {
+        super(topNode, source);
     }
 
     /**
@@ -71,7 +72,7 @@ public class Paste extends Manipulation {
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select(getTopNode());
+        Select s = new Select(getTopNode(), getSource());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());
@@ -95,7 +96,7 @@ public class Paste extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Paste paste = new Paste(getTopNode());
+        Paste paste = new Paste(getTopNode(), getSource());
 
         paste.setManipulatedGroup(getManipulatedGroup());
         paste.setManipulationQueue(getManipulationQueue());

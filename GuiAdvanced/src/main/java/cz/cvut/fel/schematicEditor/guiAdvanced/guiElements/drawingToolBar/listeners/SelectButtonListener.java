@@ -42,7 +42,7 @@ public final class SelectButtonListener implements ActionListener {
     public void actionPerformed(final ActionEvent ae) {
         try {
             Manipulation m = ManipulationFactory.create(ManipulationType.SELECT, GuiAdvanced.getActiveScenePanel()
-                    .getSceneGraph().getTopNode());
+                    .getSceneGraph().getTopNode(), ae.getSource());
             GuiAdvanced.getActiveScenePanel().setActiveManipulation(m);
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());

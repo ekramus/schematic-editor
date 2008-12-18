@@ -29,9 +29,10 @@ public class Mirror extends Manipulation {
      * Default constructor. It initializes this {@link Mirror} {@link Manipulation}.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Mirror(GroupNode topNode) {
-        super(topNode);
+    protected Mirror(GroupNode topNode, Object source) {
+        super(topNode, source);
         setManipulatedGroup(null);
 
         logger = Logger.getLogger(this.getClass().getName());
@@ -74,7 +75,7 @@ public class Mirror extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Mirror m = new Mirror(getTopNode());
+        Mirror m = new Mirror(getTopNode(), getSource());
 
         m.setManipulatedGroup(getManipulatedGroup());
         m.setManipulationCoordinates(new Vector<Unit>(getX()), new Vector<Unit>(getY()));
@@ -88,7 +89,7 @@ public class Mirror extends Manipulation {
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select(getTopNode());
+        Select s = new Select(getTopNode(), getSource());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());

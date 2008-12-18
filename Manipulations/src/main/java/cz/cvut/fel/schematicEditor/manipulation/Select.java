@@ -20,10 +20,10 @@ public class Select extends Manipulation {
 
     /**
      * @param topNode top node of scene graph.
-     *
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Select(GroupNode topNode) {
-        super(topNode);
+    protected Select(GroupNode topNode, Object source) {
+        super(topNode, source);
         logger = Logger.getLogger(this.getClass().getName());
         setManipulatedGroup(null);
     }
@@ -41,7 +41,7 @@ public class Select extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Select s = new Select(getTopNode());
+        Select s = new Select(getTopNode(), getSource());
 
         // duplicate parameters
         s.setManipulatedGroup(getManipulatedGroup());
@@ -113,7 +113,7 @@ public class Select extends Manipulation {
             // select is in edit active zone
             if (getManipulatedGroup().startEdit(r2d)) {
                 // create Edit manipulation
-                Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT, getTopNode());
+                Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT, getTopNode(), getSource());
                 edit.setManipulatedGroup(getManipulatedGroup());
                 edit.setActive(true);
 
@@ -132,7 +132,7 @@ public class Select extends Manipulation {
                 logger.trace("creating MOVE manipulation");
 
                 // create Move manipulation
-                Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE, getTopNode());
+                Move move = (Move) ManipulationFactory.create(ManipulationType.MOVE, getTopNode(), getSource());
                 move.setManipulatedGroup(getManipulatedGroup());
                 move.setActive(true);
 

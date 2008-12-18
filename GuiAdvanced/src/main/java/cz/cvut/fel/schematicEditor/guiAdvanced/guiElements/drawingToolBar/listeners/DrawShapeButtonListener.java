@@ -61,7 +61,7 @@ public class DrawShapeButtonListener implements ActionListener {
 
             // create active manipulation
             Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, GuiAdvanced.getActiveScenePanel()
-                    .getSceneGraph().getTopNode(), gn);
+                    .getSceneGraph().getTopNode(), ae.getSource(), gn);
             GuiAdvanced.getActiveScenePanel().setActiveManipulation(m);
             logger.trace(GuiAdvanced.getActiveScenePanel().getActiveManipulation());
 

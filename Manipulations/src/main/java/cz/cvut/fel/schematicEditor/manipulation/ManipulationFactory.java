@@ -21,32 +21,34 @@ public class ManipulationFactory {
      *
      * @param type type of manipulation.
      * @param topNode top node of scene graph.
+     * @param source button, which created manipulation.
      * @return {@link Manipulation} of correct {@link ManipulationType}.
      * @throws UnknownManipulationException In case of unknown manipulation type.
      */
-    public static Manipulation create(ManipulationType type, GroupNode topNode) throws UnknownManipulationException {
+    public static Manipulation create(ManipulationType type, GroupNode topNode, Object source)
+            throws UnknownManipulationException {
         switch (type) {
             case DELETE:
-                return new Delete(topNode);
+                return new Delete(topNode, source);
             case MOVE:
-                return new Move(topNode);
+                return new Move(topNode, source);
             case SELECT:
-                return new Select(topNode);
+                return new Select(topNode, source);
             case EDIT:
-                return new Edit(topNode);
+                return new Edit(topNode, source);
             case ROTATE:
-                return new Rotate(topNode);
+                return new Rotate(topNode, source);
             case MIRROR:
-                return new Mirror(topNode);
+                return new Mirror(topNode, source);
             case COPY:
-                return new Copy(topNode);
+                return new Copy(topNode, source);
             case CUT:
                 // return new Cut(topNode);
                 throw new UnknownManipulationException(type);
             case PASTE:
-                return new Paste(topNode);
+                return new Paste(topNode, source);
             case SELECT_ROTATION_CENTER:
-                return new SelectRotationCenter(topNode);
+                return new SelectRotationCenter(topNode, source);
             default:
                 throw new UnknownManipulationException(type);
         }
@@ -58,14 +60,15 @@ public class ManipulationFactory {
      * @param type type of manipulation.
      * @param topNode top node of scene graph.
      * @param data additional requested data.
+     * @param source button, which created manipulation.
      * @return {@link Manipulation} of correct {@link ManipulationType}.
      * @throws UnknownManipulationException In case of unknown manipulation type.
      */
-    public static Manipulation create(ManipulationType type, GroupNode topNode, Object data)
+    public static Manipulation create(ManipulationType type, GroupNode topNode, Object source, Object data)
             throws UnknownManipulationException {
         switch (type) {
             case CREATE:
-                return new Create(topNode, (GroupNode) data);
+                return new Create(topNode, (GroupNode) data, source);
             default:
                 throw new UnknownManipulationException(type);
         }

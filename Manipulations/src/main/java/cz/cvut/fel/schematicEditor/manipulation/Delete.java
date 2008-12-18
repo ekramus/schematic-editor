@@ -15,9 +15,10 @@ public class Delete extends Manipulation {
      * This method instantiates new instance.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Delete(GroupNode topNode) {
-        super(topNode);
+    protected Delete(GroupNode topNode, Object source) {
+        super(topNode, source);
     }
 
     /**
@@ -33,7 +34,7 @@ public class Delete extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Delete d = new Delete(getTopNode());
+        Delete d = new Delete(getTopNode(), getSource());
 
         return d;
     }

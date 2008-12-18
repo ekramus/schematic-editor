@@ -25,9 +25,10 @@ public class SelectRotationCenter extends Manipulation {
      * Default constructor. It initializes this {@link SelectRotationCenter} {@link Manipulation}.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected SelectRotationCenter(GroupNode topNode) {
-        super(topNode);
+    protected SelectRotationCenter(GroupNode topNode, Object source) {
+        super(topNode, source);
         setManipulatedGroup(null);
 
         logger = Logger.getLogger(this.getClass().getName());
@@ -77,7 +78,7 @@ public class SelectRotationCenter extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        SelectRotationCenter e = new SelectRotationCenter(getTopNode());
+        SelectRotationCenter e = new SelectRotationCenter(getTopNode(), getSource());
 
         e.setManipulatedGroup(getManipulatedGroup());
         e.setManipulationCoordinates(getX(), getY());
@@ -91,7 +92,7 @@ public class SelectRotationCenter extends Manipulation {
     @Override
     protected Manipulation createNext() {
         // create next manipulation after edit.
-        Select s = new Select(getTopNode());
+        Select s = new Select(getTopNode(), getSource());
 
         // we cannot duplicate group, all manipulations are with the one selected
         s.setManipulatedGroup(getManipulatedGroup());

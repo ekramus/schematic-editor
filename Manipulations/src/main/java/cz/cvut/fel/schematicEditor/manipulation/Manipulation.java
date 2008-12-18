@@ -46,15 +46,21 @@ public abstract class Manipulation {
      * {@link Vector} of coordinates used for snap.
      */
     private Vector<UnitPoint> snapCoordinates;
+    /**
+     * Source, which initiated creation of this manipulation.
+     */
+    private Object            source;
 
     /**
-     * Default constructor. It is private because of {@link Manipulation}s are created using {@link ManipulationFactory}
-     * .
+     * Default constructor. It is private, because of {@link Manipulation}s are created using
+     * {@link ManipulationFactory}.
      *
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Manipulation(GroupNode topNode) {
+    protected Manipulation(GroupNode topNode, Object source) {
         setTopNode(topNode);
+        setSource(source);
         setManipulatedGroup(null);
 
         finalizeInit();
@@ -66,9 +72,11 @@ public abstract class Manipulation {
      *
      * @param manipulatedGroup instance of manipulated group.
      * @param topNode top node of scene graph.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Manipulation(GroupNode topNode, GroupNode manipulatedGroup) {
+    protected Manipulation(GroupNode topNode, GroupNode manipulatedGroup, Object source) {
         setTopNode(topNode);
+        setSource(source);
         setManipulatedGroup(manipulatedGroup);
 
         finalizeInit();
@@ -292,5 +300,19 @@ public abstract class Manipulation {
      */
     protected void setTopNode(GroupNode topNode) {
         this.topNode = topNode;
+    }
+
+    /**
+     * @param source the source to set
+     */
+    private void setSource(Object source) {
+        this.source = source;
+    }
+
+    /**
+     * @return the source
+     */
+    public Object getSource() {
+        return this.source;
     }
 }

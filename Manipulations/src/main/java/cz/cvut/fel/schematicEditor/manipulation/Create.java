@@ -63,9 +63,10 @@ public class Create extends Manipulation {
      *
      * @param topNode top node of scene graph.
      * @param manipulatedGroup {@link GroupNode}, which will be created using this {@link Create} manipulation.
+     * @param source object, which initiated creation of this {@link Manipulation}.
      */
-    protected Create(GroupNode topNode, GroupNode manipulatedGroup) {
-        super(topNode, manipulatedGroup);
+    protected Create(GroupNode topNode, GroupNode manipulatedGroup, Object source) {
+        super(topNode, manipulatedGroup, source);
 
         logger = Logger.getLogger(this.getClass().getName());
 
@@ -226,7 +227,7 @@ public class Create extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Create c = new Create(getTopNode(), (GroupNode) getManipulatedGroup().duplicate());
+        Create c = new Create(getTopNode(), (GroupNode) getManipulatedGroup().duplicate(), getSource());
 
         return c;
     }

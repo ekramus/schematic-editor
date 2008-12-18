@@ -3,12 +3,15 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+
+import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
@@ -34,6 +37,10 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanc
  * @author Urban Kravjansky
  */
 public final class DrawingToolBar extends JToolBar {
+    /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger         logger;
     /**
      * {@link DrawingToolBar} instance.
      */
@@ -110,6 +117,16 @@ public final class DrawingToolBar extends JToolBar {
      * Refreshes status of menu items.
      */
     public void refresh() {
+        // tab independent tasks
+        try {
+            ((AbstractButton) GuiAdvanced.getActiveScenePanel().getActiveManipulation().getSource()).setSelected(true);
+        } catch (ClassCastException e) {
+            logger.warn("Source not Abstract button");
+        } catch (NullPointerException e) {
+            logger.warn("Probably no manipulation yet");
+        }
+
+        // tab dependent tasks
         switch (GuiAdvanced.getActiveScenePanelTab()) {
             case TAB_SCHEME:
                 // wire button
@@ -130,6 +147,8 @@ public final class DrawingToolBar extends JToolBar {
      */
     private DrawingToolBar() {
         super();
+
+        logger = Logger.getLogger(this.getClass().getName());
     }
 
     /**
