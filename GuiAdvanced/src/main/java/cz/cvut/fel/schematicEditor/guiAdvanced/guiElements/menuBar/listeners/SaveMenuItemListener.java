@@ -13,7 +13,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
@@ -55,23 +55,23 @@ public final class SaveMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastSaveFolder(file.getParent());
 
-            serialize(GuiAdvanced.getActiveScenePanel().getSceneGraph(), file);
+            serialize(GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode(), file);
         }
     }
 
     /**
-     * Serializes given {@link SceneGraph} into given file.
+     * Serializes given {@link GroupNode} into given file.
      *
-     * @param sceneGraph {@link SceneGraph} file to serialize.
-     * @param file Path to file, where should be {@link SceneGraph} serialized.
+     * @param topNode {@link GroupNode} to serialize.
+     * @param file Path to file, where should be {@link GroupNode} serialized.
      */
-    protected static void serialize(SceneGraph sceneGraph, File file) {
+    protected static void serialize(GroupNode topNode, File file) {
         XStream xstream = new XStream(new DomDriver());
 
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            processAnnotations(xstream, sceneGraph.getClass());
-            xstream.toXML(sceneGraph, bw);
+            processAnnotations(xstream, topNode.getClass());
+            xstream.toXML(topNode, bw);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -82,11 +82,9 @@ public final class SaveMenuItemListener implements ActionListener {
      * Processes all {@link XStream} annotations in entered classes.
      *
      * @param xstream {@link XStream} instance to configure.
-     * @param clazz Class of {@link SceneGraph} object.
+     * @param clazz Class of {@link GroupNode} object.
      */
-    private static void processAnnotations(XStream xstream, Class<? extends SceneGraph> clazz) {
+    private static void processAnnotations(XStream xstream, Class<? extends GroupNode> clazz) {
         xstream.processAnnotations(clazz);
-        // xstream.processAnnotations(Unit.class);
-        // xstream.processAnnotations(Pixel.class);
     }
 }

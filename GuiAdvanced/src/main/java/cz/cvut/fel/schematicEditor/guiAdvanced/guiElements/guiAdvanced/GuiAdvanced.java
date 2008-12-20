@@ -80,11 +80,11 @@ public class GuiAdvanced extends JApplet {
     /**
      * Scene {@link ScenePanel} instance.
      */
-    private static ScenePanel  sceneScenePanel  = null;
+    private ScenePanel         sceneScenePanel  = null;
     /**
      * Part {@link ScenePanel} instance.
      */
-    private static ScenePanel  partScenePanel   = null;
+    private ScenePanel         partScenePanel   = null;
     /**
      * Scene {@link JTabbedPane} instance.
      */
@@ -253,11 +253,11 @@ public class GuiAdvanced extends JApplet {
      *
      * @return {@link ScenePanel} instance.
      */
-    private ScenePanel getSceneScenePanel() {
-        if (sceneScenePanel == null) {
-            sceneScenePanel = new ScenePanel();
+    public ScenePanel getSceneScenePanel() {
+        if (this.sceneScenePanel == null) {
+            this.sceneScenePanel = new ScenePanel();
         }
-        return sceneScenePanel;
+        return this.sceneScenePanel;
     }
 
     /**
@@ -265,11 +265,11 @@ public class GuiAdvanced extends JApplet {
      *
      * @return {@link ScenePanel} instance.
      */
-    private ScenePanel getPartScenePanel() {
-        if (partScenePanel == null) {
-            partScenePanel = new ScenePanel();
+    public ScenePanel getPartScenePanel() {
+        if (this.partScenePanel == null) {
+            this.partScenePanel = new ScenePanel();
         }
-        return partScenePanel;
+        return this.partScenePanel;
     }
 
     /**

@@ -130,6 +130,7 @@ public class ScenePanel extends JPanel {
     public SceneGraph getSceneGraph() {
         if (this.sceneGraph == null) {
             this.sceneGraph = new SceneGraph();
+            this.sceneGraph.initSceneGraph();
         }
         return this.sceneGraph;
     }
@@ -492,7 +493,6 @@ public class ScenePanel extends JPanel {
         // initialize images
         this.grid = null;
         this.scheme = null;
-        getSceneGraph().manualCreateSceneGraph();
 
         // enable mouse actions
         addMouseListener(new ScenePanelMouseListener());

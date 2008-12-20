@@ -20,6 +20,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.Exi
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.GridMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ImportMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.MirrorElementMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.NewSchemeMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.OpenMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.RotateElementMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveAsMenuItemListener;
@@ -170,12 +171,67 @@ public final class MenuBar extends JMenuBar {
      * View part properties menu item instance.
      */
     private JMenuItem         viewPartPropertiesMenuItem  = null;
+    /**
+     * New menu item instance.
+     */
+    private JMenu             newMenu                     = null;
+    /**
+     * New scheme menu item instance.
+     */
+    private JMenuItem         newSchemeMenuItem           = null;
+    /**
+     * New part menu item instance.
+     */
+    private JMenuItem         newPartMenuItem             = null;
 
     /**
      * Default constructor. As {@link MenuBar} is singleton, it is defined as private.
      */
     private MenuBar() {
         super();
+    }
+
+    /**
+     * Getter for <code>newMenu</code>.
+     *
+     * @return <code>newMenu</code> instance.
+     */
+    private JMenu getNewMenu() {
+        if (this.newMenu == null) {
+            this.newMenu = new JMenu();
+            this.newMenu.setText(MenuBarResources.NEW_MENU.getText());
+            this.newMenu.add(getNewSchemeMenuItem());
+            this.newMenu.add(getNewPartMenuItem());
+        }
+        return this.newMenu;
+    }
+
+    /**
+     * Getter for <code>newSchemeMenuItem</code>.
+     *
+     * @return <code>newSchemePropertiesMenuItem</code> instance.
+     */
+    private JMenuItem getNewSchemeMenuItem() {
+        if (this.newSchemeMenuItem == null) {
+            this.newSchemeMenuItem = new JMenuItem();
+            this.newSchemeMenuItem.setText(MenuBarResources.NEW_SCHEME_MENU_ITEM.getText());
+            this.newSchemeMenuItem.addActionListener(new NewSchemeMenuItemListener());
+        }
+        return this.newSchemeMenuItem;
+    }
+
+    /**
+     * Getter for <code>newPartMenuItem</code>.
+     *
+     * @return <code>newPartPropertiesMenuItem</code> instance.
+     */
+    private JMenuItem getNewPartMenuItem() {
+        if (this.newPartMenuItem == null) {
+            this.newPartMenuItem = new JMenuItem();
+            this.newPartMenuItem.setText(MenuBarResources.NEW_PART_MENU_ITEM.getText());
+            this.newPartMenuItem.addActionListener(null);
+        }
+        return this.newPartMenuItem;
     }
 
     /**
@@ -359,6 +415,9 @@ public final class MenuBar extends JMenuBar {
         if (this.fileMenu == null) {
             this.fileMenu = new JMenu();
             this.fileMenu.setText(MenuBarResources.FILE_MENU.getText());
+
+            this.fileMenu.add(getNewMenu());
+            this.fileMenu.addSeparator();
             this.fileMenu.add(getOpenMenuItem());
             this.fileMenu.add(getImportMenuItem());
             this.fileMenu.add(getAddPartMenuItem());
