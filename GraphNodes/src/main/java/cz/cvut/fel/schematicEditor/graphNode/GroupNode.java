@@ -57,10 +57,28 @@ public class GroupNode extends Node {
 
         logger = Logger.getLogger(this.getClass().getName());
 
+        init();
+    }
+
+    /**
+     * Initialize new {@link GroupNode}.
+     */
+    public void init() {
         setChildrenGroupList(new LinkedList<GroupNode>());
         setChildrenElementList(new LinkedList<ElementNode>());
         setChildrenTransformationList(new LinkedList<TransformationNode>());
         setChidrenParameterNode(null);
+        setEditedElement(null);
+    }
+
+    /**
+     * Initialize {@link GroupNode} with given {@link GroupNode}.
+     */
+    public void init(GroupNode topNode) {
+        setChildrenGroupList(topNode.getChildrenGroupList());
+        setChildrenElementList(topNode.getChildrenElementList());
+        setChildrenTransformationList(topNode.getChildrenTransformationList());
+        setChidrenParameterNode(topNode.getChildrenParameterNode());
         setEditedElement(null);
     }
 

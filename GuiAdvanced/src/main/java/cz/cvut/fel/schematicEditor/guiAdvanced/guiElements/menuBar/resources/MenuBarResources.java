@@ -132,7 +132,19 @@ public enum MenuBarResources {
     /**
      * Mirror vertical menu item string.
      */
-    MIRROR_VERTICAL_MENU_ITEM("Vertical mirror");
+    MIRROR_VERTICAL_MENU_ITEM("Vertical mirror"),
+    /**
+     * New menu string.
+     */
+    NEW_MENU("New"),
+    /**
+     * New scheme menu item string.
+     */
+    NEW_SCHEME_MENU_ITEM("New scheme"),
+    /**
+     * New part menu item string.
+     */
+    NEW_PART_MENU_ITEM("New part");
 
     /**
      * String value of item.

@@ -55,20 +55,10 @@ public class SceneGraph implements Iterable<Node> {
      */
     private GroupNode                        editNode;
     /**
-     * Singleton {@link SceneGraph} instance.
-     */
-    private static SceneGraph                instance = null;
-    /**
-     * {@link Vector} of {@link SceneGraphUpdateListener}s for monitoring update events.
+     * {@link Vector} of {@link SceneGraphUpdateListener}s for monitoring update events. They cannot be serialized,
+     * after deserialization instance of {@link SceneGraph} has to be updated with current update listeners.
      */
     private Vector<SceneGraphUpdateListener> listeners;
-
-    /**
-     * Initializes scene graph with new instance.
-     */
-    public static void initialize(SceneGraph sceneGraph) {
-        instance = sceneGraph;
-    }
 
     /**
      * This is the default constructor.
@@ -283,10 +273,25 @@ public class SceneGraph implements Iterable<Node> {
     /**
      * This method creates empty static predefined working SceneGraph.
      */
-    public void manualCreateSceneGraph() {
-        this.topNode = new GroupNode();
+    public void initSceneGraph() {
+        if (this.topNode == null) {
+            this.topNode = new GroupNode();
 
-        this.topNode.add(new ParameterNode());
+            this.topNode.add(new ParameterNode());
+        } else {
+            this.topNode.init();
+        }
+    }
+
+    /**
+     * This method initializes {@link SceneGraph} with given topNode.
+     */
+    public void initSceneGraph(GroupNode topNode) {
+        if (this.topNode == null) {
+            this.topNode = topNode;
+        } else {
+            this.topNode.init(topNode);
+        }
     }
 
     /**
