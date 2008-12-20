@@ -20,6 +20,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.Exi
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.GridMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ImportMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.MirrorElementMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.NewPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.NewSchemeMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.OpenMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.RotateElementMenuItemListener;
@@ -229,7 +230,7 @@ public final class MenuBar extends JMenuBar {
         if (this.newPartMenuItem == null) {
             this.newPartMenuItem = new JMenuItem();
             this.newPartMenuItem.setText(MenuBarResources.NEW_PART_MENU_ITEM.getText());
-            this.newPartMenuItem.addActionListener(null);
+            this.newPartMenuItem.addActionListener(new NewPartMenuItemListener());
         }
         return this.newPartMenuItem;
     }

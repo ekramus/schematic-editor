@@ -72,7 +72,9 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Initialize {@link GroupNode} with given {@link GroupNode}.
+     * Initialize {@link GroupNode} with given {@link GroupNode}. Children elements are not duplicated.
+     *
+     * @param topNode {@link GroupNode} used for initialization of this node.
      */
     public void init(GroupNode topNode) {
         setChildrenGroupList(topNode.getChildrenGroupList());
