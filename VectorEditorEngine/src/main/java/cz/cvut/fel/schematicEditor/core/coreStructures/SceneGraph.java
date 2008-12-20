@@ -285,6 +285,8 @@ public class SceneGraph implements Iterable<Node> {
 
     /**
      * This method initializes {@link SceneGraph} with given topNode.
+     *
+     * @param topNode {@link GroupNode} used for initialization.
      */
     public void initSceneGraph(GroupNode topNode) {
         if (this.topNode == null) {
