@@ -7,7 +7,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
@@ -16,6 +15,8 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.Abo
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AddPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AntialiasedCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.DebugCheckBoxMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.DoneEditPartMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.EditPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ExitMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.GridMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ImportMenuItemListener;
@@ -184,6 +185,14 @@ public final class MenuBar extends JMenuBar {
      * New part menu item instance.
      */
     private JMenuItem         newPartMenuItem             = null;
+    /**
+     * Edit part menu item instance.
+     */
+    private JMenuItem         editPartMenuItem            = null;
+    /**
+     * Edit part menu item instance.
+     */
+    private JMenuItem         doneEditPartMenuItem        = null;
 
     /**
      * Default constructor. As {@link MenuBar} is singleton, it is defined as private.
@@ -260,6 +269,24 @@ public final class MenuBar extends JMenuBar {
             this.viewPartPropertiesMenuItem.addActionListener(new ViewPartPropertiesMenuItemListener());
         }
         return this.viewPartPropertiesMenuItem;
+    }
+
+    /**
+     * Set enable status of edit part menu item.
+     *
+     * @param enabled enable status to set.
+     */
+    public void setEditPartMenuItemEnabled(boolean enabled) {
+        getEditPartMenuItem().setEnabled(enabled);
+    }
+
+    /**
+     * Set enable status of done edit part menu item.
+     *
+     * @param enabled enable status to set.
+     */
+    public void setDoneEditPartMenuItemEnabled(boolean enabled) {
+        getDoneEditPartMenuItem().setEnabled(enabled);
     }
 
     /**
@@ -381,16 +408,48 @@ public final class MenuBar extends JMenuBar {
             this.editMenu.add(getCutMenuItem());
             this.editMenu.add(getCopyMenuItem());
             this.editMenu.add(getPasteMenuItem());
-            this.editMenu.add(new JSeparator());
+            this.editMenu.addSeparator();
+            this.editMenu.add(getEditPartMenuItem());
+            this.editMenu.add(getDoneEditPartMenuItem());
+            this.editMenu.addSeparator();
             this.editMenu.add(getRotateAnticlockwiseMenuItem());
             this.editMenu.add(getRotateClockwiseMenuItem());
             this.editMenu.add(getMirrorHorizontalMenuItem());
             this.editMenu.add(getMirrorVerticalMenuItem());
-            this.editMenu.add(new JSeparator());
+            this.editMenu.addSeparator();
             this.editMenu.add(getSnapToGridCheckBoxMenuItem());
             this.editMenu.add(getGridMenuItem());
         }
         return this.editMenu;
+    }
+
+    /**
+     * Getter for <code>editPartMenuItem</code>.
+     *
+     * @return <code>editPartMenuItem</code> instance.
+     */
+    private JMenuItem getEditPartMenuItem() {
+        if (this.editPartMenuItem == null) {
+            this.editPartMenuItem = new JMenuItem();
+            this.editPartMenuItem.setText(MenuBarResources.EDIT_PART_MENU_ITEM.getText());
+            this.editPartMenuItem.addActionListener(new EditPartMenuItemListener());
+        }
+        return this.editPartMenuItem;
+    }
+
+    /**
+     * Getter for <code>doneEditPartMenuItem</code>.
+     *
+     * @return <code>doneEditPartMenuItem</code> instance.
+     */
+    private JMenuItem getDoneEditPartMenuItem() {
+        if (this.doneEditPartMenuItem == null) {
+            this.doneEditPartMenuItem = new JMenuItem();
+            this.doneEditPartMenuItem.setText(MenuBarResources.DONE_EDIT_PART_MENU_ITEM.getText());
+            this.doneEditPartMenuItem.addActionListener(new DoneEditPartMenuItemListener());
+            this.doneEditPartMenuItem.setEnabled(false);
+        }
+        return this.doneEditPartMenuItem;
     }
 
     /**

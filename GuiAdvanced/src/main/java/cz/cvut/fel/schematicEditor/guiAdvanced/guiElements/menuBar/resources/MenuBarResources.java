@@ -144,7 +144,15 @@ public enum MenuBarResources {
     /**
      * New part menu item string.
      */
-    NEW_PART_MENU_ITEM("New part");
+    NEW_PART_MENU_ITEM("New part"),
+    /**
+     * Edit part menu item string.
+     */
+    EDIT_PART_MENU_ITEM("Edit part"),
+    /**
+     * Done edit part menu item string.
+     */
+    DONE_EDIT_PART_MENU_ITEM("Done edit part");
 
     /**
      * String value of item.
