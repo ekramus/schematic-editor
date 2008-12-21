@@ -79,6 +79,10 @@ public class ScenePanel extends JPanel {
      * Reference to active {@link Manipulation} instance.
      */
     private Manipulation      activeManipulation = null;
+    /**
+     * Indication of part editing status.
+     */
+    private final boolean     partEdited         = false;
 
     /**
      * Getter for <code>activeManipulation</code> instance.
@@ -87,6 +91,13 @@ public class ScenePanel extends JPanel {
      */
     public Manipulation getActiveManipulation() {
         return this.activeManipulation;
+    }
+
+    /**
+     * @return the partEdited
+     */
+    public boolean isPartEdited() {
+        return this.partEdited;
     }
 
     /**
