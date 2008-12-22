@@ -42,7 +42,8 @@ public class MirrorElementMenuItemListener implements ActionListener {
                             .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
                     m.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
                             .getManipulatedGroup());
-                    m.addManipulationCoordinates(getMirrorAxe().getUnitX(), getMirrorAxe().getUnitY());
+                    m.addManipulationCoordinates(getMirrorAxe().getUnitX(), getMirrorAxe().getUnitY(), GuiAdvanced
+                            .getActiveScenePanel().getZoomFactor());
                     GuiAdvanced.getActiveScenePanel().getManipulationQueue().execute(m);
 
                     GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);

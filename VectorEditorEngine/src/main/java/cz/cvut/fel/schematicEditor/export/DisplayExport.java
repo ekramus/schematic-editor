@@ -17,8 +17,8 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -89,11 +89,24 @@ public class DisplayExport implements Export {
         setAntialiased(true);
     }
 
-    public void export(SceneGraph sg, Object output) {
+    /**
+     * @return the zoomFactor
+     */
+    private double getZoomFactor() {
+        return this.zoomFactor;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.export.Export#export(cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph,
+     *      double, java.lang.Object)
+     */
+    public void export(SceneGraph sg, double zoomFactor, Object output) {
         BufferedImage img = (BufferedImage) output;
         TransformationNode tn = null;
         ParameterNode pn = null;
         ElementNode en = null;
+
+        setZoomFactor(zoomFactor);
 
         for (Node node : sg) {
             if (node instanceof TransformationNode) {
@@ -160,8 +173,9 @@ public class DisplayExport implements Export {
         switch (elementNode.getElement().getElementType()) {
             case T_LINE:
                 Line l = (Line) elementNode.getElement();
-                Line2D.Double l2d = new Line2D.Double(l.getX().get(0).doubleValue(), l.getY().get(0).doubleValue(), l
-                        .getX().get(1).doubleValue(), l.getY().get(1).doubleValue());
+                Line2D.Double l2d = new Line2D.Double(l.getX().get(0).doubleValue() * getZoomFactor(), l.getY().get(0)
+                        .doubleValue() * getZoomFactor(), l.getX().get(1).doubleValue() * getZoomFactor(), l.getY()
+                        .get(1).doubleValue() * getZoomFactor());
 
                 drawShape(nodeG2D, l2d, parameterNode.getColor(), parameterNode.getLineStyle(), null, parameterNode
                         .getFillStyle());
@@ -170,8 +184,9 @@ public class DisplayExport implements Export {
 
             case T_RECTANGLE:
                 Rectangle rectangle = (Rectangle) elementNode.getElement();
-                Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX(), rectangle
-                        .getTopLeftY(), rectangle.getWidth(), rectangle.getHeight());
+                Rectangle2D.Double rectangle2d = new Rectangle2D.Double(rectangle.getTopLeftX() * getZoomFactor(),
+                        rectangle.getTopLeftY() * getZoomFactor(), rectangle.getWidth() * getZoomFactor(), rectangle
+                                .getHeight() * getZoomFactor());
 
                 drawShape(nodeG2D, rectangle2d, parameterNode.getColor(), parameterNode.getLineStyle(), parameterNode
                         .getFill(), parameterNode.getFillStyle());
@@ -179,8 +194,9 @@ public class DisplayExport implements Export {
 
             case T_ELLIPSE:
                 Ellipse ellipse = (Ellipse) elementNode.getElement();
-                Ellipse2D.Double ell = new Ellipse2D.Double(ellipse.getTopLeftX(), ellipse.getTopLeftY(), ellipse
-                        .getWidth(), ellipse.getHeight());
+                Ellipse2D.Double ell = new Ellipse2D.Double(ellipse.getTopLeftX() * getZoomFactor(), ellipse
+                        .getTopLeftY() * getZoomFactor(), ellipse.getWidth() * getZoomFactor(),
+                        ellipse.getHeight() * getZoomFactor());
 
                 drawShape(nodeG2D, ell, parameterNode.getColor(), parameterNode.getLineStyle(),
                           parameterNode.getFill(), parameterNode.getFillStyle());
@@ -188,8 +204,9 @@ public class DisplayExport implements Export {
 
             case T_ARC:
                 Arc arc = (Arc) elementNode.getElement();
-                Arc2D.Double arc2d = new Arc2D.Double(arc.getTopLeftX(), arc.getTopLeftY(), arc.getWidth(), arc
-                        .getHeight(), arc.getStartAngle(), arc.getArcAngle(), Arc2D.PIE);
+                Arc2D.Double arc2d = new Arc2D.Double(arc.getTopLeftX() * getZoomFactor(),
+                        arc.getTopLeftY() * getZoomFactor(), arc.getWidth() * getZoomFactor(),
+                        arc.getHeight() * getZoomFactor(), arc.getStartAngle(), arc.getArcAngle(), Arc2D.PIE);
 
                 drawShape(nodeG2D, arc2d, parameterNode.getColor(), parameterNode.getLineStyle(), parameterNode
                         .getFill(), parameterNode.getFillStyle());
@@ -197,8 +214,9 @@ public class DisplayExport implements Export {
 
             case T_ARC_SEGMENT:
                 Arc arcS = (Arc) elementNode.getElement();
-                Arc2D.Double arcS2d = new Arc2D.Double(arcS.getTopLeftX(), arcS.getTopLeftY(), arcS.getWidth(), arcS
-                        .getHeight(), arcS.getStartAngle(), arcS.getArcAngle(), Arc2D.OPEN);
+                Arc2D.Double arcS2d = new Arc2D.Double(arcS.getTopLeftX() * getZoomFactor(),
+                        arcS.getTopLeftY() * getZoomFactor(), arcS.getWidth() * getZoomFactor(),
+                        arcS.getHeight() * getZoomFactor(), arcS.getStartAngle(), arcS.getArcAngle(), Arc2D.OPEN);
 
                 drawShape(nodeG2D, arcS2d, parameterNode.getColor(), parameterNode.getLineStyle(), parameterNode
                         .getFill(), parameterNode.getFillStyle());
@@ -213,7 +231,8 @@ public class DisplayExport implements Export {
                 Vector<Unit> yPg = pg.getY();
 
                 for (int i = 0; i < xPg.size(); i++) {
-                    p.addPoint(xPg.get(i).intValue(), yPg.get(i).intValue());
+                    p.addPoint((int) (xPg.get(i).doubleValue() * getZoomFactor()),
+                               (int) (yPg.get(i).doubleValue() * getZoomFactor()));
                 }
                 drawShape(nodeG2D, p, parameterNode.getColor(), parameterNode.getLineStyle(), parameterNode.getFill(),
                           parameterNode.getFillStyle());
@@ -226,8 +245,9 @@ public class DisplayExport implements Export {
                 Vector<Unit> yPo = poly.getY();
 
                 for (int i = 0; i < xPo.size() - 1; i++) {
-                    Line2D.Double line2d = new Line2D.Double(xPo.get(i).doubleValue(), yPo.get(i).doubleValue(), xPo
-                            .get(i + 1).doubleValue(), yPo.get(i + 1).doubleValue());
+                    Line2D.Double line2d = new Line2D.Double(xPo.get(i).doubleValue() * getZoomFactor(), yPo.get(i)
+                            .doubleValue() * getZoomFactor(), xPo.get(i + 1).doubleValue() * getZoomFactor(), yPo
+                            .get(i + 1).doubleValue() * getZoomFactor());
                     drawShape(nodeG2D, line2d, parameterNode.getColor(), parameterNode.getLineStyle(), null,
                               parameterNode.getFillStyle());
                 }
@@ -236,9 +256,10 @@ public class DisplayExport implements Export {
             case T_BEZIER:
                 BezierCurve bC = (BezierCurve) elementNode.getElement();
 
-                CubicCurve2D.Double quadCurve = new CubicCurve2D.Double(bC.getStart().getX(), bC.getStart().getY(), bC
-                        .getControl1().getX(), bC.getControl1().getY(), bC.getControl2().getX(), bC.getControl2()
-                        .getY(), bC.getEnd().getX(), bC.getEnd().getY());
+                CubicCurve2D.Double quadCurve = new CubicCurve2D.Double(bC.getStart().getX() * getZoomFactor(), bC
+                        .getStart().getY() * getZoomFactor(), bC.getControl1().getX() * getZoomFactor(), bC
+                        .getControl1().getY() * getZoomFactor(), bC.getControl2().getX() * getZoomFactor(), bC
+                        .getControl2().getY(), bC.getEnd().getX(), bC.getEnd().getY() * getZoomFactor());
 
                 drawShape(nodeG2D, quadCurve, parameterNode.getColor(), parameterNode.getLineStyle(), parameterNode
                         .getFill(), parameterNode.getFillStyle());
@@ -279,8 +300,9 @@ public class DisplayExport implements Export {
                 Vector<Unit> yWi = wire.getY();
 
                 for (int i = 0; i < xWi.size() - 1; i++) {
-                    Line2D.Double line2d = new Line2D.Double(xWi.get(i).doubleValue(), yWi.get(i).doubleValue(), xWi
-                            .get(i + 1).doubleValue(), yWi.get(i + 1).doubleValue());
+                    Line2D.Double line2d = new Line2D.Double(xWi.get(i).doubleValue() * getZoomFactor(), yWi.get(i)
+                            .doubleValue() * getZoomFactor(), xWi.get(i + 1).doubleValue() * getZoomFactor(), yWi
+                            .get(i + 1).doubleValue() * getZoomFactor());
                     drawShape(nodeG2D, line2d, parameterNode.getColor(), ElementStyle.DOTTED, null, parameterNode
                             .getFillStyle());
                 }
@@ -312,7 +334,8 @@ public class DisplayExport implements Export {
                 UnitPoint rotationCenter = partNode.getElement().getRotationCenter();
                 if ((rotationCenter.getX() != 0) && (rotationCenter.getY() != 0)) {
                     nodeG2D.setColor(Color.RED);
-                    nodeG2D.drawOval((int) rotationCenter.getX() - 2, (int) rotationCenter.getY() - 2, 4, 4);
+                    nodeG2D.drawOval((int) (rotationCenter.getX() * getZoomFactor()) - 2,
+                                     (int) (rotationCenter.getY() * getZoomFactor()) - 2, 4, 4);
                 }
 
                 // TODO draw all necessary info
@@ -336,10 +359,17 @@ public class DisplayExport implements Export {
      * @return
      */
     private UnitRectangle transformBounds(Transformation transformation, UnitRectangle bounds) {
+        // get transformation modification
         UnitPoint a = Transformation.multiply(transformation, bounds.getTopLeft());
         UnitPoint b = Transformation.multiply(transformation, bounds.getTopRight());
         UnitPoint c = Transformation.multiply(transformation, bounds.getBottomLeft());
         UnitPoint d = Transformation.multiply(transformation, bounds.getBottomRight());
+
+        // get scale modification
+        a = new UnitPoint(a.getX() * getZoomFactor(), a.getY() * getZoomFactor());
+        b = new UnitPoint(b.getX() * getZoomFactor(), b.getY() * getZoomFactor());
+        c = new UnitPoint(c.getX() * getZoomFactor(), c.getY() * getZoomFactor());
+        d = new UnitPoint(d.getX() * getZoomFactor(), d.getY() * getZoomFactor());
 
         return new UnitRectangle(a, b, c, d);
     }
@@ -399,11 +429,11 @@ public class DisplayExport implements Export {
      * @param pin
      */
     private void drawConnector(final Pin pin, ParameterNode parameterNode, Graphics2D nodeG2D) {
-        logger.trace("drawing connector at coordinates: " + new UnitPoint(pin.getX().firstElement(), pin
-                .getY().firstElement()));
+        logger.trace("drawing connector at coordinates: " + new UnitPoint(pin.getX().firstElement(), pin.getY()
+                .firstElement()));
 
-        Ellipse2D.Double e2d = new Ellipse2D.Double(pin.getX().firstElement().doubleValue() - 2, pin.getY()
-                .firstElement().doubleValue() - 2, 5, 5);
+        Ellipse2D.Double e2d = new Ellipse2D.Double((pin.getX().firstElement().doubleValue() * getZoomFactor()) - 2,
+                (pin.getY().firstElement().doubleValue() * getZoomFactor()) - 2, 5, 5);
         drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode.getFillStyle());
     }
 
@@ -416,7 +446,7 @@ public class DisplayExport implements Export {
 
     private void drawConnectorText(Pin pin, String connectorName, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
-        nodeG2D.drawString(connectorName, pin.getX().firstElement().floatValue() - 10, pin.getY()
-                .firstElement().floatValue() - 10);
+        nodeG2D.drawString(connectorName, (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) - 10,
+                           (int) (pin.getY().firstElement().floatValue() * getZoomFactor()) - 10);
     }
 }

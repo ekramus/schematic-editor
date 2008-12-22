@@ -53,21 +53,21 @@ public class Edit extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      java.awt.geom.Rectangle2D, ManipulationQueue, boolean)
+     *      java.awt.geom.Rectangle2D, ManipulationQueue, double, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         // check, whether move is possible or not
-        if (isActive() && (getManipulatedGroup() == getTopNode().findHit(r2d))) {
+        if (isActive() && (getManipulatedGroup() == getTopNode().findHit(r2d, zoomFactor))) {
             // add identity transformation, so it can be later changed
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
             UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
         }
         // edit is not possible - fall back to Select manipulation
         else {
@@ -78,18 +78,18 @@ public class Edit extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, boolean) ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, double, boolean) ManipulationQueue, GroupNode, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.trace("object EDITED");
 
             // replace last manipulation coordinates for delta
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
             UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
-            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
 
             // compute delta
             setDelta(computeDelta());
@@ -199,22 +199,22 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit, Unit, double)
      */
     @Override
-    public void addManipulationCoordinates(Unit x, Unit y) {
-        super.addManipulationCoordinates(x, y);
+    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+        super.addManipulationCoordinates(x, y, zoomFactor);
 
         setDelta(computeDelta());
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
-     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit, double)
      */
     @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
-        super.replaceLastManipulationCoordinates(x, y);
+    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+        super.replaceLastManipulationCoordinates(x, y, zoomFactor);
 
         setDelta(computeDelta());
         getManipulatedGroup().switchEdit(new UnitPoint(getDelta()));

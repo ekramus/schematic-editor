@@ -81,8 +81,8 @@ public class Create extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
      */
     @Override
-    public void addManipulationCoordinates(Unit x, Unit y) {
-        super.addManipulationCoordinates(x, y);
+    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+        super.addManipulationCoordinates(x, y, zoomFactor);
         if (getPointsLeft() > Element.ZERO_COORDINATES) {
             setPointsLeft(getPointsLeft() - 1);
         }
@@ -124,11 +124,11 @@ public class Create extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, boolean)
+     *      ManipulationQueue, double, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation START");
 
         // Create create = (Create) Structures.getManipulationQueue().peek();
@@ -137,19 +137,19 @@ public class Create extends Manipulation {
         // add two pairs of coordinates (each element needs two)
         UnitPoint up = new UnitPoint(e.getX(), e.getY());
         UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
-        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
-        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
 
         return this;
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, boolean)
+     *      ManipulationQueue, double, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation END");
         UnitPoint up;
         UnitPoint snap;
@@ -163,7 +163,7 @@ public class Create extends Manipulation {
                 // add next coordinate
                 up = new UnitPoint(e.getX(), e.getY());
                 snap = Snap.getSnap(up, getSnapCoordinates());
-                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
                 break;
         }
 
@@ -183,11 +183,11 @@ public class Create extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
-     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit, double)
      */
     @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
-        super.replaceLastManipulationCoordinates(x, y);
+    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+        super.replaceLastManipulationCoordinates(x, y, zoomFactor);
 
         // update manipulated group coordinates
         getManipulatedGroup().setXY(getX(), getY());

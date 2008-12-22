@@ -10,6 +10,7 @@ import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
@@ -86,11 +87,12 @@ public abstract class Manipulation {
      * Add given manipulation coordinates.
      *
      * @param x <code>x</code> to add.
-     * @param y <code>y</code> to add
+     * @param y <code>y</code> to add.
+     * @param zoomFactor <code>zoomFactor</code> used for coordinates normalization.
      */
-    public void addManipulationCoordinates(Unit x, Unit y) {
-        this.x.add(x);
-        this.y.add(y);
+    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+        this.x.add(new Pixel(x.doubleValue() / zoomFactor));
+        this.y.add(new Pixel(y.doubleValue() / zoomFactor));
 
         logger.trace("added manipulation coordinates");
     }
@@ -124,12 +126,13 @@ public abstract class Manipulation {
      * @param e {@link MouseEvent}, that invoked this method.
      * @param r2d Rectangle, which contains mouse pointer.
      * @param manipulationQueue used for {@link Manipulation} history and execution.
+     * @param zoomFactor zoom factor in the moment of manipulation start.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
      * @return Pointer to manipulation or <code>null</code>, if manipulation was unsuccessful.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
     public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException;
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException;
 
     /**
      * Finishes everything at the end of manipulation correctly.
@@ -137,25 +140,27 @@ public abstract class Manipulation {
      * @param e {@link MouseEvent}, that invoked this method.
      * @param r2d Rectangle, which contains mouse pointer.
      * @param manipulationQueue used for {@link Manipulation} history and execution.
+     * @param zoomFactor zoom factor in the moment of manipulation start.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
      * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
     public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException;
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException;
 
     /**
      * Replaces last manipulation <code>x</code>, <code>y</code> coordinates with given ones.
      *
      * @param x new <code>x</code> coordinate.
      * @param y new <code>y</code> coordinate.
+     * @param zoomFactor <code>zoomFactor</code> used for coordinates normalization.
      */
-    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
         try {
-            this.x.set(this.x.size() - 1, x);
-            this.y.set(this.y.size() - 1, y);
+            this.x.set(this.x.size() - 1, new Pixel(x.doubleValue() / zoomFactor));
+            this.y.set(this.y.size() - 1, new Pixel(y.doubleValue() / zoomFactor));
         } catch (ArrayIndexOutOfBoundsException e) {
-            addManipulationCoordinates(x, y);
+            addManipulationCoordinates(x, y, zoomFactor);
         }
 
         logger.trace("replacing last manipulation coordinates");

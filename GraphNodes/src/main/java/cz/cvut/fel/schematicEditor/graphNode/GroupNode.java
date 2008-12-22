@@ -349,9 +349,15 @@ public class GroupNode extends Node {
      * @param point
      * @return
      */
-    public GroupNode findHit(Rectangle2D rectangle) {
+    public GroupNode findHit(Rectangle2D rectangle, double zoomFactor) {
         if (isDisabled()) {
             return null;
+        }
+
+        // modify rectangle if zoomFactor != 1
+        if (zoomFactor != 1) {
+            rectangle = new Rectangle2D.Double(rectangle.getX() / zoomFactor, rectangle.getY() / zoomFactor, rectangle
+                    .getWidth(), rectangle.getHeight());
         }
 
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
@@ -362,7 +368,7 @@ public class GroupNode extends Node {
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            GroupNode gn = child.findHit(rectangle);
+            GroupNode gn = child.findHit(rectangle, 1);
             if (gn != null) {
                 return gn;
             }

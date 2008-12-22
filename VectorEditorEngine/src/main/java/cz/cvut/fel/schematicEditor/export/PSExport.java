@@ -32,7 +32,10 @@ public class PSExport implements Export {
     PrintStream           out;
     File                  file;
 
-    public void export(SceneGraph sg, Object output) {
+    /**
+     * @see Export#export(SceneGraph, double, Object)
+     */
+    public void export(SceneGraph sg, double zoomFactor, Object output) {
 
         this.file = (File) output;
         FileOutputStream fos = null;
