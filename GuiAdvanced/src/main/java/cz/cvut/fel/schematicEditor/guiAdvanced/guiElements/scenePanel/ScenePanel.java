@@ -84,6 +84,24 @@ public class ScenePanel extends JPanel {
      * PartNode, which is being edited.
      */
     private PartNode          editedPartNode     = null;
+    /**
+     * Zoom factor of this scene panel.
+     */
+    private double            zoomFactor         = 1.5;
+
+    /**
+     * @return the zoomFactor
+     */
+    public double getZoomFactor() {
+        return this.zoomFactor;
+    }
+
+    /**
+     * @param zoomFactor the zoomFactor to set
+     */
+    public void setZoomFactor(double zoomFactor) {
+        this.zoomFactor = zoomFactor;
+    }
 
     /**
      * Getter for <code>activeManipulation</code> instance.
@@ -201,7 +219,8 @@ public class ScenePanel extends JPanel {
     public void tryFinishManipulation(MouseEvent e, Rectangle2D.Double r2d, ManipulationQueue manipulationQueue,
             boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation
-        Manipulation m = getActiveManipulation().manipulationStop(e, r2d, manipulationQueue, isMouseClicked);
+        Manipulation m = getActiveManipulation().manipulationStop(e, r2d, manipulationQueue, getZoomFactor(),
+                                                                  isMouseClicked);
         if (m != null) {
             // execute manipulation
             manipulationQueue.execute(getActiveManipulation());
@@ -324,7 +343,7 @@ public class ScenePanel extends JPanel {
         // try to draw elements using DisplayExport
         DisplayExport de = DisplayExport.getInstance();
         try {
-            de.export(getSceneGraph(), manipulatedGroup);
+            de.export(getSceneGraph(), getZoomFactor(), manipulatedGroup);
         } catch (NullPointerException npe) {
             logger.error("No active manipulation");
         } finally {
@@ -424,7 +443,7 @@ public class ScenePanel extends JPanel {
         DisplayExport de = DisplayExport.getInstance();
         de.setAntialiased(configuration.isSchemeAntialiased());
         de.setDebugged(configuration.isSchemeDebugged());
-        de.export(getSceneGraph(), scheme);
+        de.export(getSceneGraph(), getZoomFactor(), scheme);
 
         // TODO process sceneGraph elements in foreach loop and transform them using DisplayExport.
 

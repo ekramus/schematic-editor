@@ -44,17 +44,17 @@ public class SelectRotationCenter extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      java.awt.geom.Rectangle2D, ManipulationQueue, boolean)
+     *      java.awt.geom.Rectangle2D, ManipulationQueue, double, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         // check, whether select rotation center is possible or not
         if (isActive()) {
             // add coordinate
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
             UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
         }
         // select rotation center is not possible - fall back to Select manipulation
         else {
@@ -65,11 +65,11 @@ public class SelectRotationCenter extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, boolean) ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, double, boolean) ManipulationQueue, GroupNode, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         return this;
     }
 

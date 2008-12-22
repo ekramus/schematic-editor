@@ -298,9 +298,10 @@ public class SceneGraph implements Iterable<Node> {
 
     /**
      * @param editNode the editNode to set
+     * @param zoomFactor to use.
      */
-    public void setEditNode(Rectangle2D.Double rectangle) {
-        this.editNode = this.topNode.findHit(rectangle);
+    public void setEditNode(Rectangle2D.Double rectangle, double zoomFactor) {
+        this.editNode = this.topNode.findHit(rectangle, zoomFactor);
         fireSceneGraphUpdateEvent();
     }
 

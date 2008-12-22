@@ -110,7 +110,8 @@ public class ScenePanelKeyListener implements KeyListener {
                 // set manipulated group from select manipulation
                 copy.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
                         .getManipulatedGroup());
-                copy.manipulationStop(null, null, GuiAdvanced.getActiveScenePanel().getManipulationQueue(), false);
+                copy.manipulationStop(null, null, GuiAdvanced.getActiveScenePanel().getManipulationQueue(), GuiAdvanced
+                        .getActiveScenePanel().getZoomFactor(), false);
 
                 // set copy as active manipulation
                 GuiAdvanced.getActiveScenePanel().setActiveManipulation(copy);
@@ -129,7 +130,8 @@ public class ScenePanelKeyListener implements KeyListener {
                 // set active manipulation
                 Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, GuiAdvanced
                         .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
-                paste.manipulationStop(null, null, GuiAdvanced.getActiveScenePanel().getManipulationQueue(), false);
+                paste.manipulationStop(null, null, GuiAdvanced.getActiveScenePanel().getManipulationQueue(),
+                                       GuiAdvanced.getActiveScenePanel().getZoomFactor(), false);
 
                 // set paste as active manipulation
                 GuiAdvanced.getActiveScenePanel().setActiveManipulation(paste);

@@ -75,11 +75,11 @@ public class Select extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, boolean)
+     *      ManipulationQueue, double, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         // mouse clicked and hit something
         if (isMouseClicked) {
             // some group is hit
@@ -87,7 +87,7 @@ public class Select extends Manipulation {
                 logger.trace("object for SELECTION hit");
 
                 // set selected group
-                GroupNode gn = getTopNode().findHit(r2d);
+                GroupNode gn = getTopNode().findHit(r2d, zoomFactor);
 
                 setManipulatedGroup(gn);
             }
@@ -101,15 +101,15 @@ public class Select extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, boolean)
+     *      ManipulationQueue, double, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClick) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClick) throws UnknownManipulationException {
         Manipulation result = this;
 
         // select is active AND GroupNode is already selected
-        if ((getManipulatedGroup() != null) && (getTopNode().findHit(r2d) == getManipulatedGroup())) {
+        if ((getManipulatedGroup() != null) && (getTopNode().findHit(r2d, zoomFactor) == getManipulatedGroup())) {
             // select is in edit active zone
             if (getManipulatedGroup().startEdit(r2d)) {
                 // create Edit manipulation
@@ -118,7 +118,7 @@ public class Select extends Manipulation {
                 edit.setActive(true);
 
                 // continue with edit manipulation start
-                edit.manipulationStart(e, r2d, manipulationQueue, isMouseClick);
+                edit.manipulationStart(e, r2d, manipulationQueue, zoomFactor, isMouseClick);
 
                 result = edit;
             }
@@ -137,7 +137,7 @@ public class Select extends Manipulation {
                 move.setActive(true);
 
                 // continue with move manipulation start
-                result = move.manipulationStart(e, r2d, manipulationQueue, isMouseClick);
+                result = move.manipulationStart(e, r2d, manipulationQueue, zoomFactor, isMouseClick);
             }
         }
         return result;

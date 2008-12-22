@@ -46,7 +46,8 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
                 UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates());
-                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), GuiAdvanced
+                        .getActiveScenePanel().getZoomFactor());
 
                 // repaint scene, it is much faster than full scene invalidate
                 GuiAdvanced.getActiveScenePanel().repaint();
@@ -71,7 +72,8 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
                 UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates());
-                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), GuiAdvanced
+                        .getActiveScenePanel().getZoomFactor());
 
                 // repaint scene, it is much faster than full scene invalidate
                 GuiAdvanced.getActiveScenePanel().repaint();

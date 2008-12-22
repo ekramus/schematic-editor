@@ -44,7 +44,8 @@ public class RotateElementMenuItemListener implements ActionListener {
                             .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
                     m.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
                             .getManipulatedGroup());
-                    m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY());
+                    m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY(), GuiAdvanced
+                            .getActiveScenePanel().getZoomFactor());
                     GuiAdvanced.getActiveScenePanel().getManipulationQueue().execute(m);
 
                     GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);

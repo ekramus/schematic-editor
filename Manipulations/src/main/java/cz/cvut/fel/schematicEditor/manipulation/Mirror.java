@@ -48,22 +48,22 @@ public class Mirror extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      java.awt.geom.Rectangle2D, ManipulationQueue, boolean)
+     *      java.awt.geom.Rectangle2D, ManipulationQueue, double, boolean)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
 
         return this;
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, boolean) ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, double, boolean) ManipulationQueue, GroupNode, boolean)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         if (isActive()) {
             logger.trace("object MIRRORED");
         }
@@ -139,19 +139,19 @@ public class Mirror extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit, double)
      */
     @Override
-    public void addManipulationCoordinates(Unit x, Unit y) {
-        super.addManipulationCoordinates(x, y);
+    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+        super.addManipulationCoordinates(x, y, zoomFactor);
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
-     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit, double)
      */
     @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
-        super.replaceLastManipulationCoordinates(x, y);
+    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+        super.replaceLastManipulationCoordinates(x, y, zoomFactor);
     }
 }

@@ -49,9 +49,10 @@ public class SVGExport implements Export {
      * Starts exporting into SVG
      *
      * @param sg actual SceneGraph instance.
+     * @param zoomFactor this field is omitted.
      * @param output output {@link File} object.
      */
-    public void export(SceneGraph sg, Object output) {
+    public void export(SceneGraph sg, double zoomFactor, Object output) {
         File file = (File) output;
         FileOutputStream fos = null;
 
