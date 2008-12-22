@@ -19,6 +19,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.GeneralPropertiesPanel;
@@ -80,9 +81,9 @@ public class ScenePanel extends JPanel {
      */
     private Manipulation      activeManipulation = null;
     /**
-     * Indication of part editing status.
+     * PartNode, which is being edited.
      */
-    private final boolean     partEdited         = false;
+    private PartNode          editedPartNode     = null;
 
     /**
      * Getter for <code>activeManipulation</code> instance.
@@ -94,10 +95,17 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * @return the partEdited
+     * @return the editedPartNode
      */
-    public boolean isPartEdited() {
-        return this.partEdited;
+    public PartNode getEditedPartNode() {
+        return this.editedPartNode;
+    }
+
+    /**
+     * @param editedPartNode the editedPartNode to set
+     */
+    public void setEditedPartNode(PartNode editedPartNode) {
+        this.editedPartNode = editedPartNode;
     }
 
     /**

@@ -5,8 +5,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -61,7 +61,7 @@ public class PartNode extends ElementNode {
      *
      * @param partGroupNode {@link GroupNode} describing shape of {@link Part}.
      */
-    private void initialize(GroupNode partGroupNode) {
+    public void initialize(GroupNode partGroupNode) {
         ParameterNode pn = partGroupNode.getChildrenParameterNode();
         // set parameter node if not set
         if (pn == null) {

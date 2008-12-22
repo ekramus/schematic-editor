@@ -37,30 +37,35 @@ public final class EditPartMenuItemListener implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         Select s;
+        // is select active?
         if (GuiAdvanced.getInstance().getSceneScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
             s = (Select) GuiAdvanced.getInstance().getSceneScenePanel().getActiveManipulation();
         } else {
             return;
         }
 
+        // is part selected?
         if (s.getManipulatedGroup().getChildrenElementList().getFirst().getElement().getElementType() == ElementType.T_PART) {
             GroupNode topNode = new GroupNode();
             topNode.add(new ParameterNode());
 
-            // TODO create GroupNode from partGroupNode
+            // create GroupNode from partGroupNode
             PartNode pn = (PartNode) s.getManipulatedGroup().getChildrenElementList().getFirst();
             GroupNode partGroupNode = (GroupNode) pn.getPartGroupNode().duplicate();
 
+            // add all connectors from part node into group node
             for (ConnectorNode connectorNode : pn.getPartConnectors()) {
                 GroupNode gn = new GroupNode();
                 gn.add(connectorNode.duplicate());
                 gn.add(new ParameterNode());
                 partGroupNode.add(gn);
             }
-            // TODO edit this GroupNode
+            // set top node as root for edit scene panel
             topNode.add(partGroupNode);
             GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph(topNode);
-            // TODO after done edit part, fill partGroupNode with modified GroupNode
+
+            // set edited part node
+            GuiAdvanced.getInstance().getSceneScenePanel().setEditedPartNode(pn);
 
             // set correct state of menu items
             MenuBar.getInstance().setEditPartMenuItemEnabled(false);

@@ -3,6 +3,8 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -28,6 +30,20 @@ public final class DoneEditPartMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(final ActionEvent ae) {
+        PartNode pn = GuiAdvanced.getInstance().getSceneScenePanel().getEditedPartNode();
+        pn.initialize(GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().getTopNode());
+
+        // finish editing part node
+        GuiAdvanced.getInstance().getSceneScenePanel().setEditedPartNode(null);
+
+        // clean up part scene panel
+        GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph();
+        GuiAdvanced.getInstance().getPartScenePanel().schemeInvalidate(null);
+
+        // refresh scene scene panel
+        GuiAdvanced.getInstance().getSceneScenePanel().schemeInvalidate(null);
+
+        // set correct menu bar items
         MenuBar.getInstance().setEditPartMenuItemEnabled(true);
         MenuBar.getInstance().setDoneEditPartMenuItemEnabled(false);
     }
