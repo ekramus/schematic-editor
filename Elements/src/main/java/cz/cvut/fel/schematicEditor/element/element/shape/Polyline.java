@@ -64,7 +64,7 @@ public class Polyline extends Shape {
     }
 
     /**
-     * @see element.Element#isHit(java.awt.geom.Point2D.Double)
+     * @see element.Element#isHit(Rectangle2D.Double)
      */
     @Override
     public boolean isHit(Rectangle2D rectangle) {

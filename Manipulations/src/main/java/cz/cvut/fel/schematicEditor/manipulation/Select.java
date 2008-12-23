@@ -83,7 +83,7 @@ public class Select extends Manipulation {
         // mouse clicked and hit something
         if (isMouseClicked) {
             // some group is hit
-            if (getTopNode().isHit(r2d)) {
+            if (getTopNode().isHit(r2d, zoomFactor)) {
                 logger.trace("object for SELECTION hit");
 
                 // set selected group
@@ -111,7 +111,7 @@ public class Select extends Manipulation {
         // select is active AND GroupNode is already selected
         if ((getManipulatedGroup() != null) && (getTopNode().findHit(r2d, zoomFactor) == getManipulatedGroup())) {
             // select is in edit active zone
-            if (getManipulatedGroup().startEdit(r2d)) {
+            if (getManipulatedGroup().startEdit(r2d, zoomFactor)) {
                 // create Edit manipulation
                 Edit edit = (Edit) ManipulationFactory.create(ManipulationType.EDIT, getTopNode(), getSource());
                 edit.setManipulatedGroup(getManipulatedGroup());
