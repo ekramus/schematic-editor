@@ -130,19 +130,25 @@ public class ElementNode extends Node {
         return this.element;
     }
 
-    protected boolean isHit(Rectangle2D point) {
+    protected boolean isHit(Rectangle2D r2d, double zoomFactor) {
+        Rectangle2D r = new Rectangle2D.Double(r2d.getX() * zoomFactor, r2d.getY() * zoomFactor, r2d.getWidth(), r2d
+                .getHeight());
+
         if (isDisabled()) {
             return false;
         }
-        return this.element.isHit(point);
+        return this.element.isHit(r);
     }
 
-    protected Element startEdit(Rectangle2D.Double point) {
+    protected Element startEdit(Rectangle2D.Double r2d, double zoomFactor) {
+        Rectangle2D r = new Rectangle2D.Double(r2d.getX() * zoomFactor, r2d.getY() * zoomFactor, r2d.getWidth(), r2d
+                .getHeight());
+
         if (isDisabled()) {
             return null;
         }
         setEdited(true);
-        return getElement().startEdit(point);
+        return getElement().startEdit(r);
     }
 
     /**

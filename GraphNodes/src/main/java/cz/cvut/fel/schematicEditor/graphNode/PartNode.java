@@ -75,11 +75,11 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#isHit(java.awt.geom.Rectangle2D)
+     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#isHit(java.awt.geom.Rectangle2D, double)
      */
     @Override
-    protected boolean isHit(Rectangle2D point) {
-        return getPartGroupNode().isHit(point);
+    protected boolean isHit(Rectangle2D point, double zoomFactor) {
+        return getPartGroupNode().isHit(point, zoomFactor);
     }
 
     /**

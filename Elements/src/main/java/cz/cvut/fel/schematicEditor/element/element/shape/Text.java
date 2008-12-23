@@ -87,10 +87,8 @@ public class Text extends Shape {
         return this.style;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
+    /**
+     * @see element.Element#isHit(Rectangle2D.Double, double)
      */
     @Override
     public boolean isHit(Rectangle2D rectangle) {
