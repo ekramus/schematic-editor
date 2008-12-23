@@ -144,7 +144,7 @@ public class GroupNode extends Node {
 
         Rectangle2D r = rectangle;
         if (zoomFactor != 1) {
-            r = new Rectangle2D.Double(rectangle.getX() * zoomFactor, rectangle.getY() * zoomFactor, rectangle
+            r = new Rectangle2D.Double(rectangle.getX() / zoomFactor, rectangle.getY() / zoomFactor, rectangle
                     .getWidth(), rectangle.getHeight());
         }
 
