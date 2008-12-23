@@ -142,22 +142,23 @@ public class GroupNode extends Node {
             return false;
         }
 
+        Rectangle2D r = rectangle;
         if (zoomFactor != 1) {
-            rectangle = new Rectangle2D.Double(rectangle.getX() * zoomFactor, rectangle.getY() * zoomFactor, rectangle
+            r = new Rectangle2D.Double(rectangle.getX() * zoomFactor, rectangle.getY() * zoomFactor, rectangle
                     .getWidth(), rectangle.getHeight());
         }
 
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isHit(rectangle, zoomFactor)) {
+            if (child.isHit(r)) {
                 logger.trace("element HIT: " + child);
                 return true;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            if (child.isHit(rectangle, 1)) {
+            if (child.isHit(r, 1)) {
                 return true;
             }
         }
@@ -208,16 +209,22 @@ public class GroupNode extends Node {
             return false;
         }
 
+        // modify rectangle if zoomFactor != 1
+        if (zoomFactor != 1) {
+            r2d = new Rectangle2D.Double(r2d.getX() / zoomFactor, r2d.getY() / zoomFactor, r2d.getWidth(), r2d
+                    .getHeight());
+        }
+
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isHit(getTransformation().shiftInverse(r2d), zoomFactor)) {
+            if (child.isHit(getTransformation().shiftInverse(r2d))) {
                 getChildrenElementList().remove(i);
                 return true;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            if (child.deleteHit(r2d, zoomFactor)) {
+            if (child.deleteHit(r2d, 1)) {
                 return true;
             }
         }
@@ -361,20 +368,21 @@ public class GroupNode extends Node {
         }
 
         // modify rectangle if zoomFactor != 1
+        Rectangle2D r = rectangle;
         if (zoomFactor != 1) {
-            rectangle = new Rectangle2D.Double(rectangle.getX() / zoomFactor, rectangle.getY() / zoomFactor, rectangle
+            r = new Rectangle2D.Double(rectangle.getX() / zoomFactor, rectangle.getY() / zoomFactor, rectangle
                     .getWidth(), rectangle.getHeight());
         }
 
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isHit(getTransformation().shiftInverse(rectangle), zoomFactor)) {
+            if (child.isHit(getTransformation().shiftInverse(r))) {
                 return this;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            GroupNode gn = child.findHit(rectangle, 1);
+            GroupNode gn = child.findHit(r, 1);
             if (gn != null) {
                 return gn;
             }
@@ -421,10 +429,17 @@ public class GroupNode extends Node {
             return false;
         }
 
+        // modify rectangle if zoomFactor != 1
+        Rectangle2D r = r2d;
+        if (zoomFactor != 1) {
+            r = new Rectangle2D.Double(r2d.getX() / zoomFactor, r2d.getY() / zoomFactor, r2d.getWidth(), r2d
+                    .getHeight());
+        }
+
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            setEditedElement(child.startEdit(getTransformation().shiftInverse(r2d), zoomFactor));
+            setEditedElement(child.startEdit(getTransformation().shiftInverse(r)));
             if (getEditedElement() != null) {
                 logger.debug("element edit zone HIT: " + child + " transformation: " + getTransformation());
                 return true;
@@ -432,7 +447,7 @@ public class GroupNode extends Node {
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            if (child.startEdit(r2d, zoomFactor)) {
+            if (child.startEdit(r, 1)) {
                 return true;
             }
         }

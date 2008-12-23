@@ -130,25 +130,19 @@ public class ElementNode extends Node {
         return this.element;
     }
 
-    protected boolean isHit(Rectangle2D r2d, double zoomFactor) {
-        Rectangle2D r = new Rectangle2D.Double(r2d.getX() * zoomFactor, r2d.getY() * zoomFactor, r2d.getWidth(), r2d
-                .getHeight());
-
+    protected boolean isHit(Rectangle2D r2d) {
         if (isDisabled()) {
             return false;
         }
-        return this.element.isHit(r);
+        return this.element.isHit(r2d);
     }
 
-    protected Element startEdit(Rectangle2D.Double r2d, double zoomFactor) {
-        Rectangle2D r = new Rectangle2D.Double(r2d.getX() * zoomFactor, r2d.getY() * zoomFactor, r2d.getWidth(), r2d
-                .getHeight());
-
+    protected Element startEdit(Rectangle2D.Double r2d) {
         if (isDisabled()) {
             return null;
         }
         setEdited(true);
-        return getElement().startEdit(r);
+        return getElement().startEdit(r2d);
     }
 
     /**
