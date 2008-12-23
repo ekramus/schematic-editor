@@ -87,7 +87,7 @@ public class ScenePanel extends JPanel {
     /**
      * Zoom factor of this scene panel.
      */
-    private double            zoomFactor         = 1.5;
+    private double            zoomFactor         = 0.75;
 
     /**
      * @return the zoomFactor

@@ -92,7 +92,7 @@ public class Edit extends Manipulation {
             replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
 
             // compute delta
-            setDelta(computeDelta(), zoomFactor);
+            setDelta(computeDelta());
         }
         return this;
     }
@@ -107,8 +107,8 @@ public class Edit extends Manipulation {
     /**
      * @param delta the delta to set
      */
-    private void setDelta(Point2D.Double delta, double zoomFactor) {
-        this.delta = new Point2D.Double(delta.getX() / zoomFactor, delta.getY() / zoomFactor);
+    private void setDelta(Point2D.Double delta) {
+        this.delta = delta;
     }
 
     /**
@@ -120,7 +120,7 @@ public class Edit extends Manipulation {
 
         e.setManipulatedGroup(getManipulatedGroup());
         e.setManipulationCoordinates(getX(), getY());
-        e.setDelta(computeDelta(), 1);
+        e.setDelta(computeDelta());
 
         return e;
     }
@@ -205,7 +205,7 @@ public class Edit extends Manipulation {
     public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
         super.addManipulationCoordinates(x, y, zoomFactor);
 
-        setDelta(computeDelta(), zoomFactor);
+        setDelta(computeDelta());
     }
 
     /**
@@ -216,7 +216,7 @@ public class Edit extends Manipulation {
     public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
         super.replaceLastManipulationCoordinates(x, y, zoomFactor);
 
-        setDelta(computeDelta(), zoomFactor);
+        setDelta(computeDelta());
         getManipulatedGroup().switchEdit(new UnitPoint(getDelta()));
     }
 }
