@@ -44,11 +44,11 @@ public class GuiAdvanced extends JApplet {
     /**
      * This field contains class UID for serialization.
      */
-    private static final long  serialVersionUID = 1L;
+    private static final long  serialVersionUID     = 1L;
     /**
      * Singleton instance field.
      */
-    private static GuiAdvanced instance         = null;
+    private static GuiAdvanced instance             = null;
     /**
      * Logger instance for logging purposes.
      */
@@ -56,39 +56,39 @@ public class GuiAdvanced extends JApplet {
     /**
      * {@link JPanel} for applet.
      */
-    private JPanel             appletPanel      = null;
+    private JPanel             appletPanel          = null;
     /**
      * Main frame.
      */
-    private JFrame             applicationFrame = null;
+    private JFrame             applicationFrame     = null;
     /**
      * JPanel containing scene.
      */
-    private JPanel             sceneRootPanel   = null;
+    private JPanel             schemePartRootPanel  = null;
     /**
-     *
+     * Scroll pane containing scheme scene.
      */
-    private JScrollPane        sceneJScrollPane = null;
+    private JScrollPane        schemeJScrollPane    = null;
     /**
      * JPanel containing part.
      */
-    private JPanel             partRootPanel    = null;
+    private JPanel             partRootPanel        = null;
     /**
-     * Scroll panle containing part scheme.
+     * Scroll pane containing part scene.
      */
-    private JScrollPane        partJScrollPane  = null;
+    private JScrollPane        partJScrollPane      = null;
     /**
-     * Scene {@link ScenePanel} instance.
+     * Scheme {@link ScenePanel} instance.
      */
-    private ScenePanel         sceneScenePanel  = null;
+    private ScenePanel         schemeScenePanel     = null;
     /**
      * Part {@link ScenePanel} instance.
      */
-    private ScenePanel         partScenePanel   = null;
+    private ScenePanel         partScenePanel       = null;
     /**
      * Scene {@link JTabbedPane} instance.
      */
-    private JTabbedPane        sceneTabbedPane  = null;
+    private JTabbedPane        schemePartTabbedPane = null;
 
     /**
      * Default singleton constructor.
@@ -150,6 +150,7 @@ public class GuiAdvanced extends JApplet {
             initRootComponent(this.applicationFrame);
 
             // initialize plugins
+            // TODO initialize all ScenePanels
             try {
                 initializePlugins(getActiveScenePanel().getSceneGraph(), MenuBar.getInstance().getPluginsMenu(),
                                   DrawingToolBar.getInstance());
@@ -176,20 +177,20 @@ public class GuiAdvanced extends JApplet {
         container.add(DrawingToolBar.getInstance(), BorderLayout.WEST);
         container.add(PropertiesPanel.getInstance(), BorderLayout.EAST);
         container.add(StatusBar.getInstance(), BorderLayout.SOUTH);
-        container.add(getSceneTabbedPane(), BorderLayout.CENTER);
+        container.add(getSchemePartTabbedPane(), BorderLayout.CENTER);
     }
 
     /**
-     * @return the sceneTabbedPane
+     * @return the schemePartTabbedPane
      */
-    private JTabbedPane getSceneTabbedPane() {
-        if (this.sceneTabbedPane == null) {
-            this.sceneTabbedPane = new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-            this.sceneTabbedPane.addChangeListener(new SceneTabbedPaneChangeListener());
-            this.sceneTabbedPane.addTab("scheme", getSceneRootPanel());
-            this.sceneTabbedPane.addTab("part", getPartRootPanel());
+    private JTabbedPane getSchemePartTabbedPane() {
+        if (this.schemePartTabbedPane == null) {
+            this.schemePartTabbedPane = new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+            this.schemePartTabbedPane.addChangeListener(new SceneTabbedPaneChangeListener());
+            this.schemePartTabbedPane.addTab("scheme", getSchemePartRootPanel());
+            this.schemePartTabbedPane.addTab("part", getPartRootPanel());
         }
-        return this.sceneTabbedPane;
+        return this.schemePartTabbedPane;
     }
 
     /**
@@ -207,17 +208,17 @@ public class GuiAdvanced extends JApplet {
     }
 
     /**
-     * This method initializes sceneRootPanel
+     * This method initializes schemePartRootPanel
      *
      * @return javax.swing.JPanel
      */
-    private JPanel getSceneRootPanel() {
-        if (this.sceneRootPanel == null) {
-            this.sceneRootPanel = new JPanel();
-            this.sceneRootPanel.setLayout(new BorderLayout());
-            this.sceneRootPanel.add(getSceneJScrollPane(), BorderLayout.CENTER);
+    private JPanel getSchemePartRootPanel() {
+        if (this.schemePartRootPanel == null) {
+            this.schemePartRootPanel = new JPanel();
+            this.schemePartRootPanel.setLayout(new BorderLayout());
+            this.schemePartRootPanel.add(getSchemeJScrollPane(), BorderLayout.CENTER);
         }
-        return this.sceneRootPanel;
+        return this.schemePartRootPanel;
     }
 
     /**
@@ -235,29 +236,29 @@ public class GuiAdvanced extends JApplet {
     }
 
     /**
-     * This method initializes sceneJScrollPane
+     * This method initializes schemeJScrollPane
      *
      * @return javax.swing.JScrollPane
      */
-    private JScrollPane getSceneJScrollPane() {
-        if (this.sceneJScrollPane == null) {
-            this.sceneJScrollPane = new JScrollPane();
+    private JScrollPane getSchemeJScrollPane() {
+        if (this.schemeJScrollPane == null) {
+            this.schemeJScrollPane = new JScrollPane();
 
-            this.sceneJScrollPane.setViewportView(getSceneScenePanel());
+            this.schemeJScrollPane.setViewportView(getSchemeScenePanel());
         }
-        return this.sceneJScrollPane;
+        return this.schemeJScrollPane;
     }
 
     /**
-     * Getter for <code>sceneScenePanel</code>.
+     * Getter for <code>schemeScenePanel</code>.
      *
      * @return {@link ScenePanel} instance.
      */
-    public ScenePanel getSceneScenePanel() {
-        if (this.sceneScenePanel == null) {
-            this.sceneScenePanel = new ScenePanel();
+    public ScenePanel getSchemeScenePanel() {
+        if (this.schemeScenePanel == null) {
+            this.schemeScenePanel = new ScenePanel();
         }
-        return this.sceneScenePanel;
+        return this.schemeScenePanel;
     }
 
     /**
@@ -279,7 +280,7 @@ public class GuiAdvanced extends JApplet {
      */
     public static ScenePanel getActiveScenePanel() {
         if (getActiveScenePanelTab() == SceneTabbedPaneTabs.TAB_SCHEME) {
-            return getInstance().getSceneScenePanel();
+            return getInstance().getSchemeScenePanel();
         }
         return getInstance().getPartScenePanel();
     }
@@ -290,7 +291,7 @@ public class GuiAdvanced extends JApplet {
      * @return {@link SceneTabbedPaneTabs} value.
      */
     public static SceneTabbedPaneTabs getActiveScenePanelTab() {
-        if (getInstance().getSceneTabbedPane().getSelectedIndex() == 0) {
+        if (getInstance().getSchemePartTabbedPane().getSelectedIndex() == 0) {
             return SceneTabbedPaneTabs.TAB_SCHEME;
         }
         return SceneTabbedPaneTabs.TAB_PART;
