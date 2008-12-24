@@ -35,8 +35,8 @@ public final class NewSchemeMenuItemListener implements ActionListener {
                                                    "New scheme", JOptionPane.OK_CANCEL_OPTION,
                                                    JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            GuiAdvanced.getInstance().getSceneScenePanel().getSceneGraph().initSceneGraph();
-            GuiAdvanced.getInstance().getSceneScenePanel().schemeInvalidate(null);
+            GuiAdvanced.getInstance().getSchemeScenePanel().getSceneGraph().initSceneGraph();
+            GuiAdvanced.getInstance().getSchemeScenePanel().schemeInvalidate(null);
         }
     }
 }

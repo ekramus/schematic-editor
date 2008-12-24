@@ -38,8 +38,8 @@ public final class EditPartMenuItemListener implements ActionListener {
     public void actionPerformed(final ActionEvent ae) {
         Select s;
         // is select active?
-        if (GuiAdvanced.getInstance().getSceneScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
-            s = (Select) GuiAdvanced.getInstance().getSceneScenePanel().getActiveManipulation();
+        if (GuiAdvanced.getInstance().getSchemeScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
+            s = (Select) GuiAdvanced.getInstance().getSchemeScenePanel().getActiveManipulation();
         } else {
             return;
         }
@@ -65,7 +65,7 @@ public final class EditPartMenuItemListener implements ActionListener {
             GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph(topNode);
 
             // set edited part node
-            GuiAdvanced.getInstance().getSceneScenePanel().setEditedPartNode(pn);
+            GuiAdvanced.getInstance().getSchemeScenePanel().setEditedPartNode(pn);
 
             // set correct state of menu items
             MenuBar.getInstance().setEditPartMenuItemEnabled(false);
