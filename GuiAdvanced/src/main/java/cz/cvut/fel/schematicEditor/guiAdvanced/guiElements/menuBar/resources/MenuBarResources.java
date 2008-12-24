@@ -152,7 +152,11 @@ public enum MenuBarResources {
     /**
      * Done edit part menu item string.
      */
-    DONE_EDIT_PART_MENU_ITEM("Done edit part");
+    DONE_EDIT_PART_MENU_ITEM("Done edit part"),
+    /**
+     * Scale menu item string.
+     */
+    SCALE_MENU_ITEM("Scale..");
 
     /**
      * String value of item.

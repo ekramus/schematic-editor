@@ -29,6 +29,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.Sav
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveAsPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SavePreferencesMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ScaleMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ShowGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SnapToGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ViewPartPropertiesMenuItemListener;
@@ -193,6 +194,10 @@ public final class MenuBar extends JMenuBar {
      * Edit part menu item instance.
      */
     private JMenuItem         doneEditPartMenuItem        = null;
+    /**
+     * Scale menu item instance.
+     */
+    private JMenuItem         scaleMenuItem               = null;
 
     /**
      * Default constructor. As {@link MenuBar} is singleton, it is defined as private.
@@ -214,6 +219,20 @@ public final class MenuBar extends JMenuBar {
             this.newMenu.add(getNewPartMenuItem());
         }
         return this.newMenu;
+    }
+
+    /**
+     * Getter for <code>scaleMenuItem</code>.
+     *
+     * @return <code>scaleMenuItem</code> instance.
+     */
+    private JMenuItem getScaleMenuItem() {
+        if (this.scaleMenuItem == null) {
+            this.scaleMenuItem = new JMenuItem();
+            this.scaleMenuItem.setText(MenuBarResources.SCALE_MENU_ITEM.getText());
+            this.scaleMenuItem.addActionListener(new ScaleMenuItemListener());
+        }
+        return this.scaleMenuItem;
     }
 
     /**
@@ -721,6 +740,8 @@ public final class MenuBar extends JMenuBar {
             this.viewMenu.add(getShowGridCheckBoxMenuItem());
             this.viewMenu.add(getDebugCheckBoxMenuItem());
             this.viewMenu.add(getViewPartPropertiesMenuItem());
+            this.viewMenu.addSeparator();
+            this.viewMenu.add(getScaleMenuItem());
         }
         return this.viewMenu;
     }
