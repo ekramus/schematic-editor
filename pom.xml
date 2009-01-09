@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>Launchers</module>
-		<module>GuiAdvanced</module>
+		<module>Gui</module>
 		<module>VectorEditorEngine</module>
 		<module>Manipulations</module>
 		<module>GraphNodes</module>
