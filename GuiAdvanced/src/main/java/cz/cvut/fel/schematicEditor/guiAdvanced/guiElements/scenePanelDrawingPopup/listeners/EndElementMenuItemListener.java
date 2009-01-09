@@ -7,7 +7,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
-import quicktime.app.spaces.Listener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
