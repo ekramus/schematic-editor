@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;

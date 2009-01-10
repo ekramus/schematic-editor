@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.list
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;

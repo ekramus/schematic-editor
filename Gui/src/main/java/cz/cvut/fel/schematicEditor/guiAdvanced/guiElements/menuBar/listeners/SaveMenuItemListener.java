@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**

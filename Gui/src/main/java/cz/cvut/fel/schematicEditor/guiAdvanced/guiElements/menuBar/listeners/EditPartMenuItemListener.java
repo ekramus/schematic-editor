@@ -8,7 +8,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;

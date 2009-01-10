@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;

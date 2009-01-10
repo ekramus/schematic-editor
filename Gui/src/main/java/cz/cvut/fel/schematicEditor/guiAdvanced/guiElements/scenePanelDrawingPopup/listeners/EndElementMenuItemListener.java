@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
