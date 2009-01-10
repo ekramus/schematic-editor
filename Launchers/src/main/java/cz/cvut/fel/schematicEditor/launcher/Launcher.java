@@ -5,8 +5,6 @@ import javax.swing.UIManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
-import com.jgoodies.plaf.plastic.PlasticXPLookAndFeel;
-
 /**
  * This class implements methods used in all {@link Launcher} classes. This methods are mainly used for configuration.
  *
@@ -24,7 +22,8 @@ public abstract class Launcher {
     static final void setUI() {
         try {
             logger = Logger.getLogger(Launcher.class.getName());
-            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+            // UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             logger.info("Application started");
         } catch (Exception e) {
             logger.debug(e.getMessage());

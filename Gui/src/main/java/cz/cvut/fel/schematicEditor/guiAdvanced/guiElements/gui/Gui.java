@@ -44,51 +44,51 @@ public class Gui extends JApplet {
     /**
      * This field contains class UID for serialization.
      */
-    private static final long  serialVersionUID     = 1L;
+    private static final long serialVersionUID     = 1L;
     /**
      * Singleton instance field.
      */
-    private static Gui instance             = null;
+    private static Gui        instance             = null;
     /**
      * Logger instance for logging purposes.
      */
-    private static Logger      logger;
+    private static Logger     logger;
     /**
      * {@link JPanel} for applet.
      */
-    private JPanel             appletPanel          = null;
+    private JPanel            appletPanel          = null;
     /**
      * Main frame.
      */
-    private JFrame             applicationFrame     = null;
+    private JFrame            applicationFrame     = null;
     /**
      * JPanel containing scene.
      */
-    private JPanel             schemePartRootPanel  = null;
+    private JPanel            schemePartRootPanel  = null;
     /**
      * Scroll pane containing scheme scene.
      */
-    private JScrollPane        schemeJScrollPane    = null;
+    private JScrollPane       schemeJScrollPane    = null;
     /**
      * JPanel containing part.
      */
-    private JPanel             partRootPanel        = null;
+    private JPanel            partRootPanel        = null;
     /**
      * Scroll pane containing part scene.
      */
-    private JScrollPane        partJScrollPane      = null;
+    private JScrollPane       partJScrollPane      = null;
     /**
      * Scheme {@link ScenePanel} instance.
      */
-    private ScenePanel         schemeScenePanel     = null;
+    private ScenePanel        schemeScenePanel     = null;
     /**
      * Part {@link ScenePanel} instance.
      */
-    private ScenePanel         partScenePanel       = null;
+    private ScenePanel        partScenePanel       = null;
     /**
      * Scene {@link JTabbedPane} instance.
      */
-    private JTabbedPane        schemePartTabbedPane = null;
+    private JTabbedPane       schemePartTabbedPane = null;
 
     /**
      * Default singleton constructor.
@@ -300,6 +300,7 @@ public class Gui extends JApplet {
     /**
      * Initializes all plugins found in plugin folder.
      *
+     * @param sg sceneGraph, which initializes these plugins.
      * @param pluginsMenu plugins menu used for displaying plugin menu items.
      * @param drawingToolBar tool bar for drawing buttons.
      */
