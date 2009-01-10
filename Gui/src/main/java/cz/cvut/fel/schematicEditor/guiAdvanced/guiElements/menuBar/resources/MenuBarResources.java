@@ -154,6 +154,14 @@ public enum MenuBarResources {
      */
     DONE_EDIT_PART_MENU_ITEM("Done edit part"),
     /**
+     * Add menu string.
+     */
+    ADD_MENU("Add.."),
+    /**
+     * Add menu string.
+     */
+    SAVE_MENU("Save.."),
+    /**
      * Scale menu item string.
      */
     SCALE_MENU_ITEM("Scale..");
