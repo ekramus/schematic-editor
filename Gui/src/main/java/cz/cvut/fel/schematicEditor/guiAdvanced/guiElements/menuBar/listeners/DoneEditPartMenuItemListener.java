@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -30,18 +30,18 @@ public final class DoneEditPartMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(final ActionEvent ae) {
-        PartNode pn = GuiAdvanced.getInstance().getSchemeScenePanel().getEditedPartNode();
-        pn.initialize(GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().getTopNode());
+        PartNode pn = Gui.getInstance().getSchemeScenePanel().getEditedPartNode();
+        pn.initialize(Gui.getInstance().getPartScenePanel().getSceneGraph().getTopNode());
 
         // finish editing part node
-        GuiAdvanced.getInstance().getSchemeScenePanel().setEditedPartNode(null);
+        Gui.getInstance().getSchemeScenePanel().setEditedPartNode(null);
 
         // clean up part scene panel
-        GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph();
-        GuiAdvanced.getInstance().getPartScenePanel().schemeInvalidate(null);
+        Gui.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph();
+        Gui.getInstance().getPartScenePanel().schemeInvalidate(null);
 
         // refresh scene scene panel
-        GuiAdvanced.getInstance().getSchemeScenePanel().schemeInvalidate(null);
+        Gui.getInstance().getSchemeScenePanel().schemeInvalidate(null);
 
         // set correct menu bar items
         MenuBar.getInstance().setEditPartMenuItemEnabled(true);

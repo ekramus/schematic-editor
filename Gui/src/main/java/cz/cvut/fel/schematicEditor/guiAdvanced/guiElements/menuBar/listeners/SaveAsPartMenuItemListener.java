@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -25,7 +24,7 @@ import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorPro
 import cz.cvut.fel.schematicEditor.element.properties.partProperties.VoltageSourceProperties;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 
@@ -54,19 +53,13 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(ActionEvent e) {
-        if (!PartPropertiesPanel.getInstance().getEditingPartCheckBox().isSelected()) {
-            JOptionPane.showMessageDialog(null, "Part creation is not enabled", "Unable to save as part",
-                                          JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
         EnvironmentConfiguration env = EnvironmentConfiguration.getInstance();
 
         JFileChooser fileChooser = new JFileChooser(env.getLastSaveFolder());
         fileChooser.setDialogTitle("Choose file to save part");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.PRT, ExportFileFilter.PRTDESC));
 
-        int retValue = fileChooser.showSaveDialog(GuiAdvanced.getActiveScenePanel());
+        int retValue = fileChooser.showSaveDialog(Gui.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
@@ -96,7 +89,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
 
             Part p = new Part(pp);
 
-            PartNode pn = new PartNode(p, GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().getEnabledOnly());
+            PartNode pn = new PartNode(p, Gui.getActiveScenePanel().getSceneGraph().getTopNode().getEnabledOnly());
             serialize(pn, file);
         }
     }

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -31,12 +31,12 @@ public final class NewSchemeMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(final ActionEvent ae) {
-        int result = JOptionPane.showConfirmDialog(GuiAdvanced.getInstance(), "Do you want to discard current scheme?",
+        int result = JOptionPane.showConfirmDialog(Gui.getInstance(), "Do you want to discard current scheme?",
                                                    "New scheme", JOptionPane.OK_CANCEL_OPTION,
                                                    JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            GuiAdvanced.getInstance().getSchemeScenePanel().getSceneGraph().initSceneGraph();
-            GuiAdvanced.getInstance().getSchemeScenePanel().schemeInvalidate(null);
+            Gui.getInstance().getSchemeScenePanel().getSceneGraph().initSceneGraph();
+            Gui.getInstance().getSchemeScenePanel().schemeInvalidate(null);
         }
     }
 }

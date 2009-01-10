@@ -6,7 +6,7 @@ import java.awt.event.MouseMotionListener;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -28,7 +28,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      */
     public ScenePanelMouseMotionListener() {
         super();
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
     }
 
     /**
@@ -40,17 +40,17 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+            Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
 
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
                 UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates());
-                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), GuiAdvanced
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), Gui
                         .getActiveScenePanel().getZoomFactor());
 
                 // repaint scene, it is much faster than full scene invalidate
-                GuiAdvanced.getActiveScenePanel().repaint();
+                Gui.getActiveScenePanel().repaint();
             }
         } catch (NullPointerException npe) {
             logger.trace("No manipulation in manipulation queue");
@@ -66,17 +66,17 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         try {
             StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
 
-            Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+            Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
 
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
                 UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates());
-                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), GuiAdvanced
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), Gui
                         .getActiveScenePanel().getZoomFactor());
 
                 // repaint scene, it is much faster than full scene invalidate
-                GuiAdvanced.getActiveScenePanel().repaint();
+                Gui.getActiveScenePanel().repaint();
             }
         } catch (NullPointerException npe) {
             logger.trace("No active manipulation");

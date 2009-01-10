@@ -17,7 +17,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -51,15 +51,15 @@ public final class ImportMenuItemListener implements ActionListener {
         fileChooser.setDialogTitle("Choose file to import");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SEF, ExportFileFilter.SEFDESC));
 
-        int retValue = fileChooser.showOpenDialog(GuiAdvanced.getActiveScenePanel());
+        int retValue = fileChooser.showOpenDialog(Gui.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             env.setLastImportFolder(file.getParent());
 
-            SceneGraph sg = deserialize(GuiAdvanced.getActiveScenePanel().getSceneGraph().getClass(), file);
-            GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().add(sg.getTopNode());
-            GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
+            SceneGraph sg = deserialize(Gui.getActiveScenePanel().getSceneGraph().getClass(), file);
+            Gui.getActiveScenePanel().getSceneGraph().getTopNode().add(sg.getTopNode());
+            Gui.getActiveScenePanel().schemeInvalidate(null);
         }
     }
 

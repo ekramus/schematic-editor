@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -49,17 +49,17 @@ public final class OpenMenuItemListener implements ActionListener {
         fileChooser.setDialogTitle("Choose file to load");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SEF, ExportFileFilter.SEFDESC));
 
-        int retValue = fileChooser.showOpenDialog(GuiAdvanced.getActiveScenePanel());
+        int retValue = fileChooser.showOpenDialog(Gui.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             env.setLastOpenFolder(file.getParent());
-            GuiAdvanced.getInstance().getSchemeScenePanel().getSceneGraph()
+            Gui.getInstance().getSchemeScenePanel().getSceneGraph()
                     .initSceneGraph(
-                                    deserialize(GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode()
+                                    deserialize(Gui.getActiveScenePanel().getSceneGraph().getTopNode()
                                             .getClass(), file));
 
-            GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
+            Gui.getActiveScenePanel().schemeInvalidate(null);
         }
     }
 

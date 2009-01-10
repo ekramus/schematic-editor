@@ -10,7 +10,7 @@ import cz.cvut.fel.schematicEditor.export.NetListExport;
 import cz.cvut.fel.schematicEditor.export.PSExport;
 import cz.cvut.fel.schematicEditor.export.SVGExport;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -45,20 +45,20 @@ public final class SaveAsMenuItemListener implements ActionListener {
                 .addChoosableFileFilter(new ExportFileFilter(ExportFileFilter.POSTSCRIPT, ExportFileFilter.POSTDESC));
         fileChooser.addChoosableFileFilter(new ExportFileFilter(ExportFileFilter.NET, ExportFileFilter.NETDESC));
 
-        int retValue = fileChooser.showSaveDialog(GuiAdvanced.getActiveScenePanel());
+        int retValue = fileChooser.showSaveDialog(Gui.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (ExportFileFilter.getExtension(file).equalsIgnoreCase("svg")) {
-                new SVGExport().export(GuiAdvanced.getActiveScenePanel().getSceneGraph(), GuiAdvanced
+                new SVGExport().export(Gui.getActiveScenePanel().getSceneGraph(), Gui
                         .getActiveScenePanel().getZoomFactor(), file);
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("eps")) {
-                new PSExport().export(GuiAdvanced.getActiveScenePanel().getSceneGraph(), GuiAdvanced
+                new PSExport().export(Gui.getActiveScenePanel().getSceneGraph(), Gui
                         .getActiveScenePanel().getZoomFactor(), file);
 
             } else if (ExportFileFilter.getExtension(file).equalsIgnoreCase("net")) {
-                new NetListExport().export(GuiAdvanced.getActiveScenePanel().getSceneGraph(), GuiAdvanced
+                new NetListExport().export(Gui.getActiveScenePanel().getSceneGraph(), Gui
                         .getActiveScenePanel().getZoomFactor(), file);
 
             } else {

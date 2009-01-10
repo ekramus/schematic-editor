@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,9 +13,14 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.properties.PartType;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartRotationCenterButtonActionListener;
 
+/**
+ * @author urban.kravjansky
+ *
+ */
 /**
  * This class implements properties tool bar.
  *
@@ -28,7 +32,7 @@ public class PartPropertiesPanel extends JPanel {
      */
     private static Logger              logger;
     /**
-     * Singleton instance of {@link PartPropertiesDialogPanel}.
+     * Singleton instance of {@link PartPropertiesPanel}.
      */
     private static PartPropertiesPanel partPropertiesPanel      = null;
 
@@ -36,10 +40,6 @@ public class PartPropertiesPanel extends JPanel {
      * Line width {@link JComboBox} instance.
      */
     private JComboBox                  partTypeComboBox         = null;
-    /**
-     * Contour {@link JCheckBox} instance.
-     */
-    private JCheckBox                  editingPartCheckBox      = null;
     /**
      * {@link JButton} for setting part rotation center.
      */
@@ -55,7 +55,7 @@ public class PartPropertiesPanel extends JPanel {
     private PartPropertiesPanel() {
         super();
 
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
     }
 
     /**
@@ -70,7 +70,6 @@ public class PartPropertiesPanel extends JPanel {
             partPropertiesPanel.setPreferredSize(new Dimension(200, 600));
 
             // add elements
-            partPropertiesPanel.add(partPropertiesPanel.getEditingPartCheckBox());
             partPropertiesPanel.add(partPropertiesPanel.getPartTypeComboBox());
             partPropertiesPanel.add(partPropertiesPanel.getPartRotationCenterButton());
             partPropertiesPanel.add(partPropertiesPanel.getPartRotationCenterLabel());
@@ -83,22 +82,14 @@ public class PartPropertiesPanel extends JPanel {
      */
     public void refresh() {
         try {
-            if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
-                Part part = (Part) GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
+            if (Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getElementType() == ElementType.T_PART) {
+                Part part = (Part) Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
                         .getChildrenElementList().getFirst().getElement();
                 getInstance().getPartRotationCenterLabel().setText(part.getRotationCenter().toString());
             }
         } catch (NullPointerException npe) {
             logger.error("Probably no manipulation.");
         }
-    }
-
-    public JCheckBox getEditingPartCheckBox() {
-        if (this.editingPartCheckBox == null) {
-            this.editingPartCheckBox = new JCheckBox("Editing part");
-            this.editingPartCheckBox.setSelected(false);
-        }
-        return this.editingPartCheckBox;
     }
 
     /**

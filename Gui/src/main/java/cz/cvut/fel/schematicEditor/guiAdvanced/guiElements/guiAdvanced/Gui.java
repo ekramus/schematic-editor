@@ -40,7 +40,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel
  *
  * @author Urban Kravjansky
  */
-public class GuiAdvanced extends JApplet {
+public class Gui extends JApplet {
     /**
      * This field contains class UID for serialization.
      */
@@ -48,7 +48,7 @@ public class GuiAdvanced extends JApplet {
     /**
      * Singleton instance field.
      */
-    private static GuiAdvanced instance             = null;
+    private static Gui instance             = null;
     /**
      * Logger instance for logging purposes.
      */
@@ -93,18 +93,18 @@ public class GuiAdvanced extends JApplet {
     /**
      * Default singleton constructor.
      */
-    private GuiAdvanced() {
+    private Gui() {
         logger = Logger.getLogger(this.getClass());
     }
 
     /**
-     * Singleton getter for {@link GuiAdvanced} instance.
+     * Singleton getter for {@link Gui} instance.
      *
-     * @return Instance of {@link GuiAdvanced}.
+     * @return Instance of {@link Gui}.
      */
-    public static GuiAdvanced getInstance() {
+    public static Gui getInstance() {
         if (instance == null) {
-            instance = new GuiAdvanced();
+            instance = new Gui();
         }
         return instance;
     }

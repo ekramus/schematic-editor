@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -41,7 +41,7 @@ public final class ScaleMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(ActionEvent e) {
-        String result = JOptionPane.showInputDialog(GuiAdvanced.getActiveScenePanel(),
+        String result = JOptionPane.showInputDialog(Gui.getActiveScenePanel(),
                                                     "Choose scale factor (in percents)", "Scale factor",
                                                     JOptionPane.QUESTION_MESSAGE);
 
@@ -53,8 +53,8 @@ public final class ScaleMenuItemListener implements ActionListener {
             return;
         }
 
-        GuiAdvanced.getActiveScenePanel().setZoomFactor(value / 100);
-        GuiAdvanced.getActiveScenePanel().setGridValid(false);
-        GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
+        Gui.getActiveScenePanel().setZoomFactor(value / 100);
+        Gui.getActiveScenePanel().setGridValid(false);
+        Gui.getActiveScenePanel().schemeInvalidate(null);
     }
 }

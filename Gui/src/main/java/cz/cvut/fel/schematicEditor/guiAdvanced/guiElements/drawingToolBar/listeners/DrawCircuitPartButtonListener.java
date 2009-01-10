@@ -15,7 +15,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
@@ -82,17 +82,17 @@ public class DrawCircuitPartButtonListener implements ActionListener {
 
             // get all coordinates for snapping
             Vector<UnitPoint> snapCoordinates = new Vector<UnitPoint>();
-            snapCoordinates = GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().getPartsCoordinates();
+            snapCoordinates = Gui.getActiveScenePanel().getSceneGraph().getTopNode().getPartsCoordinates();
 
             // create active manipulation
-            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, GuiAdvanced.getActiveScenePanel()
+            Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, Gui.getActiveScenePanel()
                     .getSceneGraph().getTopNode(), ae.getSource(), gn);
             m.setSnapCoordinates(snapCoordinates);
-            GuiAdvanced.getActiveScenePanel().setActiveManipulation(m);
-            logger.trace(GuiAdvanced.getActiveScenePanel().getActiveManipulation());
+            Gui.getActiveScenePanel().setActiveManipulation(m);
+            logger.trace(Gui.getActiveScenePanel().getActiveManipulation());
 
             // set selected element properties to null
-            GuiAdvanced.getActiveScenePanel().getSceneProperties().setSelectedElementProperties(null);
+            Gui.getActiveScenePanel().getSceneProperties().setSelectedElementProperties(null);
             // refresh status on properties toolbar
             PartPropertiesPanel.getInstance().refresh();
         } catch (IllegalArgumentException e) {

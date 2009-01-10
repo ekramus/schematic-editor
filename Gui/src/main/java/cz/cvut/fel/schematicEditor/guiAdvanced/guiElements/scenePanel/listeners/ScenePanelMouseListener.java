@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
@@ -95,7 +95,7 @@ public class ScenePanelMouseListener implements MouseListener {
         logger.trace("mouse entered");
 
         // request focus for ScenePanel
-        GuiAdvanced.getActiveScenePanel().requestFocusInWindow();
+        Gui.getActiveScenePanel().requestFocusInWindow();
     }
 
     /**
@@ -121,14 +121,14 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                     GuiConfiguration.getInstance()
                                                                             .getPointerRectangle());
 
-            Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+            Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
             try {
                 if (!m.isActive() || (m.getManipulationType() == ManipulationType.SELECT)) {
                     // start manipulation and set result as active manipulation
-                    GuiAdvanced.getActiveScenePanel()
+                    Gui.getActiveScenePanel()
                             .setActiveManipulation(
-                                                   m.manipulationStart(e, r2d, GuiAdvanced.getActiveScenePanel()
-                                                           .getManipulationQueue(), GuiAdvanced.getActiveScenePanel()
+                                                   m.manipulationStart(e, r2d, Gui.getActiveScenePanel()
+                                                           .getManipulationQueue(), Gui.getActiveScenePanel()
                                                            .getZoomFactor(), isMouseClicked()));
                 }
             } catch (NullPointerException npe) {
@@ -147,7 +147,7 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public void mouseReleased(MouseEvent e) {
         try {
-            ManipulationQueue mq = GuiAdvanced.getActiveScenePanel().getManipulationQueue();
+            ManipulationQueue mq = Gui.getActiveScenePanel().getManipulationQueue();
 
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
 
@@ -160,7 +160,7 @@ public class ScenePanelMouseListener implements MouseListener {
             if (getMouseReleasedPoint().equals(getMousePressedPoint())) {
                 logger.debug("Mouse CLICKED");
 
-                Manipulation manipulation = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+                Manipulation manipulation = Gui.getActiveScenePanel().getActiveManipulation();
                 try {
                     ManipulationType mt = manipulation.getManipulationType();
 
@@ -172,38 +172,38 @@ public class ScenePanelMouseListener implements MouseListener {
                                 // element has infinite coordinates
                                 if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
                                     JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                    popup.show(GuiAdvanced.getActiveScenePanel(), e.getX(), e.getY());
+                                    popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup");
                                 } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
                                     JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                    popup.show(GuiAdvanced.getActiveScenePanel(), e.getX(), e.getY());
+                                    popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup");
                                 }
                             }
                             // left mouse button is clicked
                             else if (e.getButton() == MouseEvent.BUTTON1) {
-                                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
+                                Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
                             }
                             break;
                         case SELECT:
                         case DELETE:
                         case EDIT:
                         case MOVE:
-                            GuiAdvanced.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
+                            Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
                             break;
                         default:
                             break;
                     }
 
                     // fire scene graph update
-                    GuiAdvanced.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
+                    Gui.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
                 } catch (NullPointerException npe) {
                     logger.warn("No manipulation.");
                 }
             }
             // mouse button was just released after drag
             else {
-                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, false);
+                Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, false);
             }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());

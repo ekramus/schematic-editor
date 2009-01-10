@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialog;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
@@ -23,7 +23,7 @@ public class ViewPartPropertiesMenuItemListener implements ActionListener {
         PartPropertiesDialog ppd = new PartPropertiesDialog(null, true);
         // if dialog was accepted, modify part properties
         if (ppd.isAccepted()) {
-            Part part = (Part) GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
+            Part part = (Part) Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
                     .getChildrenElementList().getFirst().getElement();
             part.setPartProperties(PartPropertiesDialogPanel.getInstance().getPartProperties());
         }
