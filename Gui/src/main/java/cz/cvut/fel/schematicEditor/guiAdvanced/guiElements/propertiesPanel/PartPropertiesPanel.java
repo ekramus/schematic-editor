@@ -1,12 +1,16 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.apache.log4j.Logger;
 
@@ -48,6 +52,71 @@ public class PartPropertiesPanel extends JPanel {
      * {@link JLabel} displaying part rotation center.
      */
     private JLabel                     partRotationCenterLabel  = null;
+    /**
+     * Basic part properties JPanel.
+     */
+    private JPanel                     basicPropertiesPanel     = null;
+    /**
+     * Part netlist JLable.
+     */
+    private JTextArea                  partNetlistTextArea      = null;
+    /**
+     * Part netlist {@link JScrollPane}.
+     */
+    private JScrollPane                partNetlistScrollPane    = null;
+
+    /**
+     * Getter for <code>basicPropertiesPanel</code>.
+     *
+     * @return <code>basicPropertiesPanel</code> instance.
+     */
+    private JPanel getBasicPropertiesPanel() {
+        if (this.basicPropertiesPanel == null) {
+            // create and set JPanel instance
+            this.basicPropertiesPanel = new JPanel();
+            this.basicPropertiesPanel.setBorder(BorderFactory.createTitledBorder("Basic properties"));
+
+            // attach MiG layout to panel
+            this.basicPropertiesPanel.setLayout(new MigLayout("wrap 2"));
+
+            // add components in left to right order
+            this.basicPropertiesPanel.add(getPartTypeComboBox(), "wrap");
+            this.basicPropertiesPanel.add(getPartRotationCenterButton(), "wrap");
+            this.basicPropertiesPanel.add(new JLabel("rot. centre: "));
+            this.basicPropertiesPanel.add(getPartRotationCenterLabel());
+            this.basicPropertiesPanel.add(new JLabel("netlist: "), "wrap");
+            this.basicPropertiesPanel.add(getPartNetlistScrollPane(), "span");
+        }
+        return this.basicPropertiesPanel;
+    }
+
+    /**
+     * Getter for <code>partNetlistTextArea</code>.
+     *
+     * @return <code>partNetlistTextArea</code> instance.
+     */
+    private JTextArea getPartNetlistTextArea() {
+        if (this.partNetlistTextArea == null) {
+            // create part netlist label instance and set properties
+            this.partNetlistTextArea = new JTextArea(4, 50);
+            this.partNetlistTextArea.setEditable(false);
+        }
+        return this.partNetlistTextArea;
+    }
+
+    /**
+     * Getter for <code>partNetlistTextArea</code>.
+     *
+     * @return <code>partNetlistTextArea</code> instance.
+     */
+    private JScrollPane getPartNetlistScrollPane() {
+        if (this.partNetlistScrollPane == null) {
+            // create part netlist scroll pane instance and set properties
+            this.partNetlistScrollPane = new JScrollPane(getPartNetlistTextArea());
+            this.partNetlistScrollPane.setPreferredSize(new Dimension(200, 80));
+        }
+        return this.partNetlistScrollPane;
+    }
 
     /**
      * Default constructor. It is private for {@link PartPropertiesDialogPanel} singleton instance.
@@ -66,13 +135,10 @@ public class PartPropertiesPanel extends JPanel {
     public static PartPropertiesPanel getInstance() {
         if (partPropertiesPanel == null) {
             partPropertiesPanel = new PartPropertiesPanel();
-            partPropertiesPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 25));
-            partPropertiesPanel.setPreferredSize(new Dimension(210, 600));
+            partPropertiesPanel.setLayout(new MigLayout("wrap 1"));
 
             // add elements
-            partPropertiesPanel.add(partPropertiesPanel.getPartTypeComboBox());
-            partPropertiesPanel.add(partPropertiesPanel.getPartRotationCenterButton());
-            partPropertiesPanel.add(partPropertiesPanel.getPartRotationCenterLabel());
+            partPropertiesPanel.add(partPropertiesPanel.getBasicPropertiesPanel(), "width 210");
         }
         return partPropertiesPanel;
     }
@@ -86,6 +152,7 @@ public class PartPropertiesPanel extends JPanel {
                 Part part = (Part) Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
                         .getChildrenElementList().getFirst().getElement();
                 getInstance().getPartRotationCenterLabel().setText(part.getRotationCenter().toString());
+                getInstance().getPartNetlistTextArea().setText(part.getPartProperties().getNetlist());
             }
         } catch (NullPointerException npe) {
             logger.error("Probably no manipulation.");
@@ -122,6 +189,7 @@ public class PartPropertiesPanel extends JPanel {
     private JLabel getPartRotationCenterLabel() {
         if (this.partRotationCenterLabel == null) {
             this.partRotationCenterLabel = new JLabel();
+            this.partRotationCenterLabel.setPreferredSize(new Dimension(100, 20));
         }
         return this.partRotationCenterLabel;
     }
