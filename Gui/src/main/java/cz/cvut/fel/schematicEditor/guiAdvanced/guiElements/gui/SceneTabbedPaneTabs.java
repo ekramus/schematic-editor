@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui;
 
 /**
  *This enumerator contains types of tabs available in <code>sceneTabbedPane</code>.

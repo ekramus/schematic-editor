@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**

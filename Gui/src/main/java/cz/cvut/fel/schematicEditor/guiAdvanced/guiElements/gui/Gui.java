@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced;
+package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -30,7 +30,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.DrawingToolBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.listeners.SceneTabbedPaneChangeListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.listeners.SceneTabbedPaneChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;

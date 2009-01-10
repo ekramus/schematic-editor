@@ -15,7 +15,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;

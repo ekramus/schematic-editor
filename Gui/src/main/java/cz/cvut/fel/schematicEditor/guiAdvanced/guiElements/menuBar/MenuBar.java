@@ -10,7 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AboutMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AddPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AntialiasedCheckBoxMenuItemListener;

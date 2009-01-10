@@ -29,7 +29,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listen
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.DrawShapeButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.SelectButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.resources.DrawingToolBarResources;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 
 /**
  * This class implements drawing tool bar. It is used for drawing tool selection.

@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;

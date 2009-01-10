@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;

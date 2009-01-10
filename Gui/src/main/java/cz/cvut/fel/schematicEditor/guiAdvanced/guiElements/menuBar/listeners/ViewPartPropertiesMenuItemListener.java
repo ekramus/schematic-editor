@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialog;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
