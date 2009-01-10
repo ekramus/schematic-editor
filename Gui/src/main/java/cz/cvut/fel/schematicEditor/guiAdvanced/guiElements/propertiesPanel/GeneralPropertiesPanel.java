@@ -1,13 +1,12 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.apache.log4j.Logger;
 
@@ -51,17 +52,17 @@ public class GeneralPropertiesPanel extends JPanel {
     private static final Dimension        DIM                     = new Dimension(200, 40);
 
     /**
-     * Line width {@link JComboBox} instance.
+     * Contour width {@link JComboBox} instance.
      */
-    private JComboBox                     lineWidthComboBox       = null;
+    private JComboBox                     contourWidthComboBox    = null;
     /**
-     * Line width {@link JPanel} instance.
+     * Contour width {@link JPanel} instance.
      */
-    private JPanel                        lineWidthPanel          = null;
+    private final JPanel                  contourWidthPanel       = null;
     /**
-     * Line width predefined values.
+     * Contour width predefined values.
      */
-    private static final String[]         LINE_WIDTH              = { "1 px",
+    private static final String[]         CONTOUR_WIDTH           = { "1 px",
             "2 px",
             "3 px",
             "4 px",
@@ -96,7 +97,7 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * Contour color {@link JPanel} instance.
      */
-    private JPanel                        contourColorPanel       = null;
+    private final JPanel                  contourColorPanel       = null;
 
     /**
      * Fill {@link JCheckBox} instance.
@@ -114,11 +115,19 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * Fill color {@link JPanel} instance.
      */
-    private JPanel                        fillColorPanel          = null;
+    private final JPanel                  fillColorPanel          = null;
     /**
      * Name panel text field instance.
      */
     private JTextField                    namePanelTextField      = null;
+    /**
+     * Contour {@link JPanel} instance.
+     */
+    private JPanel                        contourPanel            = null;
+    /**
+     * Fill {@link JPanel} instance.
+     */
+    private JPanel                        fillPanel               = null;
 
     /**
      * Default constructor. It is private for {@link GeneralPropertiesPanel} singleton instance.
@@ -130,6 +139,50 @@ public class GeneralPropertiesPanel extends JPanel {
     }
 
     /**
+     * Getter for <code>contourPanel</code>.
+     *
+     * @return <code>contourPanel</code> instance.
+     */
+    private final JPanel getContourPanel() {
+        if (this.contourPanel == null) {
+            // create and set JPanel instance
+            this.contourPanel = new JPanel();
+            this.contourPanel.setBorder(BorderFactory.createTitledBorder("Contour"));
+
+            // attach MiG layout to panel
+            this.contourPanel.setLayout(new MigLayout("wrap 2"));
+
+            // add components in left to right order
+            this.contourPanel.add(getContourColorButton());
+            this.contourPanel.add(getContourColorAlphaSlider(), "width 50:100:150");
+            this.contourPanel.add(new JLabel("contour width:"));
+            this.contourPanel.add(getContourWidthComboBox());
+        }
+        return this.contourPanel;
+    }
+
+    /**
+     * Getter for <code>fillPanel</code>.
+     *
+     * @return <code>fillPanel</code> instance.
+     */
+    private final JPanel getFillPanel() {
+        if (this.fillPanel == null) {
+            // create and set JPanel instance
+            this.fillPanel = new JPanel();
+            this.fillPanel.setBorder(BorderFactory.createTitledBorder("Fill"));
+
+            // attach MiG layout to panel
+            this.fillPanel.setLayout(new MigLayout("wrap 2"));
+
+            // add components in left to right order
+            this.fillPanel.add(getFillColorButton());
+            this.fillPanel.add(getFillColorAlphaSlider(), "width 50:100:150");
+        }
+        return this.fillPanel;
+    }
+
+    /**
      * Getter for {@link GeneralPropertiesPanel} singleton instance.
      *
      * @return {@link GeneralPropertiesPanel} singleton instance.
@@ -137,32 +190,19 @@ public class GeneralPropertiesPanel extends JPanel {
     public static GeneralPropertiesPanel getInstance() {
         if (propertiesToolBar == null) {
             propertiesToolBar = new GeneralPropertiesPanel();
-            propertiesToolBar.setLayout(new BoxLayout(propertiesToolBar, BoxLayout.PAGE_AXIS));
-            propertiesToolBar.setPreferredSize(new Dimension(200, 0));
+            // propertiesToolBar.setLayout(new BoxLayout(propertiesToolBar, BoxLayout.PAGE_AXIS));
+            propertiesToolBar.setLayout(new MigLayout("wrap 1"));
+            propertiesToolBar.setPreferredSize(new Dimension(210, 0));
 
             // add elements
             propertiesToolBar.add(Box.createVerticalStrut(20));
-            propertiesToolBar.add(propertiesToolBar.getNamePanel());
-            propertiesToolBar.add(propertiesToolBar.getLineWidthPanel());
-            propertiesToolBar.add(propertiesToolBar.getContourCheckBox());
-            propertiesToolBar.add(propertiesToolBar.getContourColorPanel());
+            propertiesToolBar.add(propertiesToolBar.getContourPanel());
+            propertiesToolBar.add(propertiesToolBar.getFillPanel());
+            propertiesToolBar.add(new JLabel("Fill"));
             propertiesToolBar.add(propertiesToolBar.getFillCheckBox());
-            propertiesToolBar.add(propertiesToolBar.getFillColorPanel());
-            propertiesToolBar.add(propertiesToolBar.getFillStylePanel());
+            propertiesToolBar.add(propertiesToolBar.getNamePanel());
         }
         return propertiesToolBar;
-    }
-
-    /**
-     * @return
-     */
-    private Component getFillStylePanel() {
-        JPanel result = new JPanel();
-
-        result.setMaximumSize(DIM);
-        result.setBackground(Color.RED);
-
-        return result;
     }
 
     /**
@@ -176,9 +216,6 @@ public class GeneralPropertiesPanel extends JPanel {
         // add components
         result.add(label);
         result.add(getNamePanelTextField());
-
-        result.setBackground(Color.RED);
-        result.setMaximumSize(DIM);
 
         return result;
     }
@@ -209,39 +246,17 @@ public class GeneralPropertiesPanel extends JPanel {
             ep = Gui.getActiveScenePanel().getSceneProperties().getSelectedElementProperties();
         }
 
-        getLineWidthComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
+        getContourWidthComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
         getContourCheckBox().setSelected(ep.getContourStyle() == ElementStyle.NONE ? false : true);
         getFillCheckBox().setSelected(ep.getFillStyle() == ElementStyle.NONE ? false : true);
         getContourColorButton().setIcon(getColorIcon(ep.getContourColor(), ep.getContourColorAlpha()));
         getFillColorButton().setIcon(getColorIcon(ep.getFillColor(), ep.getFillColorAlpha()));
         getContourColorAlphaSlider().setValue(ep.getContourColorAlpha());
         getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
-        getNamePanelTextField().setText(
-                                        Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
-                                                .getId());
+        getNamePanelTextField()
+                .setText(Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getId());
 
         logger.debug("Contour style: " + ep.getContourStyle());
-    }
-
-    /**
-     * Getter for <code>lineWidthComboBox</code>.
-     *
-     * @return <code>lineWidthComboBox</code> instance.
-     */
-    private final JPanel getLineWidthPanel() {
-        if (this.lineWidthPanel == null) {
-            // create JPanel instance
-            this.lineWidthPanel = new JPanel();
-
-            // TODO add JLabel instance
-
-            // add lineWidthComboBox into lineWidthPanel
-            this.lineWidthPanel.add(getLineWidthComboBox());
-
-            this.lineWidthPanel.setMaximumSize(DIM);
-            this.lineWidthPanel.setBackground(Color.BLUE);
-        }
-        return this.lineWidthPanel;
     }
 
     /**
@@ -254,32 +269,8 @@ public class GeneralPropertiesPanel extends JPanel {
             this.contourCheckBox = new JCheckBox(PropertiesToolBarResources.CONTOUR_CHECK_BOX.getText());
             this.contourCheckBox.setSelected(true);
             this.contourCheckBox.addActionListener(new ContourCheckBoxListener(this.contourCheckBox));
-
-            this.contourCheckBox.setMaximumSize(DIM);
         }
         return this.contourCheckBox;
-    }
-
-    /**
-     * Getter for <code>contourColorPanel</code>.
-     *
-     * @return <code>contourColorPanel</code> instance.
-     */
-    private final JPanel getContourColorPanel() {
-        if (this.contourColorPanel == null) {
-            // create JPanel instance
-            this.contourColorPanel = new JPanel();
-
-            // TODO add JLabel instance
-
-            // add all into contourColorPanel
-            this.contourColorPanel.add(getContourColorButton());
-            this.contourColorPanel.add(getContourColorAlphaSlider());
-
-            this.contourColorPanel.setMaximumSize(DIM);
-            this.contourColorPanel.setBackground(Color.RED);
-        }
-        return this.contourColorPanel;
     }
 
     /**
@@ -291,7 +282,6 @@ public class GeneralPropertiesPanel extends JPanel {
         if (this.contourColorAlphaSlider == null) {
             this.contourColorAlphaSlider = new JSlider(ALPHA_MIN, ALPHA_MAX);
             this.contourColorAlphaSlider.setValue(ALPHA_MAX);
-            this.contourColorAlphaSlider.setPreferredSize(new Dimension(60, 20));
             this.contourColorAlphaSlider.addChangeListener(new ContourColorAlphaSliderChangeListener(
                     this.contourColorAlphaSlider));
         }
@@ -331,39 +321,17 @@ public class GeneralPropertiesPanel extends JPanel {
     }
 
     /**
-     * Getter for <code>fillColorPanel</code>.
+     * Getter for <code>contourWidthComboBox</code>.
      *
-     * @return <code>fillColorPanel</code> instance.
+     * @return <code>contourWidthComboBox</code> instance.
      */
-    private final JPanel getFillColorPanel() {
-        if (this.fillColorPanel == null) {
-            // create JPanel instance
-            this.fillColorPanel = new JPanel();
-
-            // TODO add JLabel instance
-
-            // add all into JPanel
-            this.fillColorPanel.add(getFillColorButton());
-            this.fillColorPanel.add(getFillColorAlphaSlider());
-
-            this.fillColorPanel.setMaximumSize(DIM);
-            this.fillColorPanel.setBackground(Color.BLUE);
+    private final JComboBox getContourWidthComboBox() {
+        if (this.contourWidthComboBox == null) {
+            this.contourWidthComboBox = new JComboBox(CONTOUR_WIDTH);
+            this.contourWidthComboBox.setEditable(true);
+            this.contourWidthComboBox.addActionListener(new LineWidthComboBoxActionListener(this.contourWidthComboBox));
         }
-        return this.fillColorPanel;
-    }
-
-    /**
-     * Getter for <code>lineWidthComboBox</code>.
-     *
-     * @return <code>lineWidthComboBox</code> instance.
-     */
-    private final JComboBox getLineWidthComboBox() {
-        if (this.lineWidthComboBox == null) {
-            this.lineWidthComboBox = new JComboBox(LINE_WIDTH);
-            this.lineWidthComboBox.setEditable(true);
-            this.lineWidthComboBox.addActionListener(new LineWidthComboBoxActionListener(this.lineWidthComboBox));
-        }
-        return this.lineWidthComboBox;
+        return this.contourWidthComboBox;
     }
 
     /**
@@ -374,10 +342,10 @@ public class GeneralPropertiesPanel extends JPanel {
     private final JButton getContourColorButton() {
         if (this.contourColorButton == null) {
             this.contourColorButton = new JButton();
-            this.contourColorButton.setText(PropertiesToolBarResources.CONTOUR_COLOR_BTN.getText());
+            // this.contourColorButton.setText(PropertiesToolBarResources.CONTOUR_COLOR_BTN.getText());
             this.contourColorButton.setIcon(getColorIcon(Gui.getActiveScenePanel().getSceneProperties()
-                    .getSceneElementProperties().getContourColor(), Gui.getActiveScenePanel()
-                    .getSceneProperties().getSceneElementProperties().getContourColorAlpha()));
+                    .getSceneElementProperties().getContourColor(), Gui.getActiveScenePanel().getSceneProperties()
+                    .getSceneElementProperties().getContourColorAlpha()));
             this.contourColorButton.addActionListener(new ContourColorButtonActionListener(this.contourColorButton));
         }
         return this.contourColorButton;
@@ -390,7 +358,8 @@ public class GeneralPropertiesPanel extends JPanel {
      */
     private JButton getFillColorButton() {
         if (this.fillColorButton == null) {
-            this.fillColorButton = new JButton(PropertiesToolBarResources.FILL_COLOR_BTN.getText());
+            this.fillColorButton = new JButton();
+            // this.fillColorButton.setText(PropertiesToolBarResources.FILL_COLOR_BTN.getText());
             this.fillColorButton.setIcon(getColorIcon(Gui.getActiveScenePanel().getSceneProperties()
                     .getSceneElementProperties().getFillColor(), Gui.getActiveScenePanel().getSceneProperties()
                     .getSceneElementProperties().getFillColorAlpha()));
