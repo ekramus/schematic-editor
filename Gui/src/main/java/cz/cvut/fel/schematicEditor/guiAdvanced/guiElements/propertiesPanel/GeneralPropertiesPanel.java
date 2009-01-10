@@ -56,10 +56,6 @@ public class GeneralPropertiesPanel extends JPanel {
      */
     private JComboBox                     contourWidthComboBox    = null;
     /**
-     * Contour width {@link JPanel} instance.
-     */
-    private final JPanel                  contourWidthPanel       = null;
-    /**
      * Contour width predefined values.
      */
     private static final String[]         CONTOUR_WIDTH           = { "1 px",
@@ -95,11 +91,6 @@ public class GeneralPropertiesPanel extends JPanel {
      */
     private JSlider                       contourColorAlphaSlider = null;
     /**
-     * Contour color {@link JPanel} instance.
-     */
-    private final JPanel                  contourColorPanel       = null;
-
-    /**
      * Fill {@link JCheckBox} instance.
      */
     private JCheckBox                     fillCheckBox            = null;
@@ -113,10 +104,6 @@ public class GeneralPropertiesPanel extends JPanel {
      */
     private JSlider                       fillColorAlphaSlider    = null;
     /**
-     * Fill color {@link JPanel} instance.
-     */
-    private final JPanel                  fillColorPanel          = null;
-    /**
      * Name panel text field instance.
      */
     private JTextField                    namePanelTextField      = null;
@@ -128,6 +115,10 @@ public class GeneralPropertiesPanel extends JPanel {
      * Fill {@link JPanel} instance.
      */
     private JPanel                        fillPanel               = null;
+    /**
+     * Details {@link JPanel} instance.
+     */
+    private JPanel                        detailsPanel            = null;
 
     /**
      * Default constructor. It is private for {@link GeneralPropertiesPanel} singleton instance.
@@ -154,9 +145,10 @@ public class GeneralPropertiesPanel extends JPanel {
 
             // add components in left to right order
             this.contourPanel.add(getContourColorButton());
-            this.contourPanel.add(getContourColorAlphaSlider(), "width 50:100:150");
-            this.contourPanel.add(new JLabel("contour width:"));
+            this.contourPanel.add(getContourColorAlphaSlider());
+            this.contourPanel.add(new JLabel("width: "));
             this.contourPanel.add(getContourWidthComboBox());
+            this.contourPanel.add(getContourCheckBox(), "skip 1");
         }
         return this.contourPanel;
     }
@@ -177,9 +169,31 @@ public class GeneralPropertiesPanel extends JPanel {
 
             // add components in left to right order
             this.fillPanel.add(getFillColorButton());
-            this.fillPanel.add(getFillColorAlphaSlider(), "width 50:100:150");
+            this.fillPanel.add(getFillColorAlphaSlider());
+            this.fillPanel.add(getFillCheckBox(), "skip 1");
         }
         return this.fillPanel;
+    }
+
+    /**
+     * Getter for <code>detailsPanel</code>.
+     *
+     * @return <code>detailsPanel</code> instance.
+     */
+    private final JPanel getDetailsPanel() {
+        if (this.detailsPanel == null) {
+            // create and set JPanel instance
+            this.detailsPanel = new JPanel();
+            this.detailsPanel.setBorder(BorderFactory.createTitledBorder("Details"));
+
+            // attach MiG layout to panel
+            this.detailsPanel.setLayout(new MigLayout("wrap 2"));
+
+            // add components in left to right order
+            this.detailsPanel.add(new JLabel("name: "));
+            this.detailsPanel.add(getNamePanelTextField());
+        }
+        return this.detailsPanel;
     }
 
     /**
@@ -190,40 +204,21 @@ public class GeneralPropertiesPanel extends JPanel {
     public static GeneralPropertiesPanel getInstance() {
         if (propertiesToolBar == null) {
             propertiesToolBar = new GeneralPropertiesPanel();
-            // propertiesToolBar.setLayout(new BoxLayout(propertiesToolBar, BoxLayout.PAGE_AXIS));
             propertiesToolBar.setLayout(new MigLayout("wrap 1"));
-            propertiesToolBar.setPreferredSize(new Dimension(210, 0));
 
             // add elements
             propertiesToolBar.add(Box.createVerticalStrut(20));
-            propertiesToolBar.add(propertiesToolBar.getContourPanel());
-            propertiesToolBar.add(propertiesToolBar.getFillPanel());
-            propertiesToolBar.add(new JLabel("Fill"));
-            propertiesToolBar.add(propertiesToolBar.getFillCheckBox());
-            propertiesToolBar.add(propertiesToolBar.getNamePanel());
+            propertiesToolBar.add(propertiesToolBar.getContourPanel(), "width 210");
+            propertiesToolBar.add(propertiesToolBar.getFillPanel(), "width 210");
+            propertiesToolBar.add(propertiesToolBar.getDetailsPanel(), "width 210");
         }
         return propertiesToolBar;
     }
 
     /**
-     * @return
-     */
-    private JPanel getNamePanel() {
-        JPanel result = new JPanel();
-
-        JLabel label = new JLabel("Name: ");
-
-        // add components
-        result.add(label);
-        result.add(getNamePanelTextField());
-
-        return result;
-    }
-
-    /**
      * Getter for text filed on name panel.
      *
-     * @return
+     * @return Instance of element name text field.
      */
     private JTextField getNamePanelTextField() {
         if (this.namePanelTextField == null) {
