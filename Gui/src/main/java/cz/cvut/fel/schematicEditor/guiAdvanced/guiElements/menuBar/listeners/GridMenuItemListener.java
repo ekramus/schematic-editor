@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.resources.MenuBarResources;
 import cz.cvut.fel.schematicEditor.unit.UnitType;
@@ -39,8 +39,8 @@ public final class GridMenuItemListener implements ActionListener {
         try {
             if (s != null) {
                 configuration.setGridSize(UnitType.parseUnit(s));
-                GuiAdvanced.getActiveScenePanel().setGridValid(false);
-                GuiAdvanced.getActiveScenePanel().repaint();
+                Gui.getActiveScenePanel().setGridValid(false);
+                Gui.getActiveScenePanel().repaint();
             }
         } catch (NumberFormatException nfe) {
             System.err.println(nfe.getLocalizedMessage());

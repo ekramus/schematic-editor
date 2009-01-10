@@ -7,7 +7,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -43,7 +43,7 @@ public final class ExportToPsMenuItemListener implements ActionListener {
         // fileChooser.addChoosableFileFilter(new
         // ExportFileFilter(ExportFileFilter.POSTSCRIPT,ExportFileFilter.POSTDESC));
 
-        int retValue = fileChooser.showSaveDialog(GuiAdvanced.getActiveScenePanel());
+        int retValue = fileChooser.showSaveDialog(Gui.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();

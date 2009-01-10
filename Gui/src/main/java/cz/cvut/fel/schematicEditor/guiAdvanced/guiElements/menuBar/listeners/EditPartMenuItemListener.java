@@ -8,7 +8,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
@@ -38,8 +38,8 @@ public final class EditPartMenuItemListener implements ActionListener {
     public void actionPerformed(final ActionEvent ae) {
         Select s;
         // is select active?
-        if (GuiAdvanced.getInstance().getSchemeScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
-            s = (Select) GuiAdvanced.getInstance().getSchemeScenePanel().getActiveManipulation();
+        if (Gui.getInstance().getSchemeScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
+            s = (Select) Gui.getInstance().getSchemeScenePanel().getActiveManipulation();
         } else {
             return;
         }
@@ -62,10 +62,10 @@ public final class EditPartMenuItemListener implements ActionListener {
             }
             // set top node as root for edit scene panel
             topNode.add(partGroupNode);
-            GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph(topNode);
+            Gui.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph(topNode);
 
             // set edited part node
-            GuiAdvanced.getInstance().getSchemeScenePanel().setEditedPartNode(pn);
+            Gui.getInstance().getSchemeScenePanel().setEditedPartNode(pn);
 
             // set correct state of menu items
             MenuBar.getInstance().setEditPartMenuItemEnabled(false);

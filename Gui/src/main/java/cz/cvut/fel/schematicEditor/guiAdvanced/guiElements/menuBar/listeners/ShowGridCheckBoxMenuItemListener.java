@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -35,6 +35,6 @@ public final class ShowGridCheckBoxMenuItemListener implements ActionListener {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
 
         configuration.setGridVisible(((JCheckBoxMenuItem) e.getSource()).isSelected());
-        GuiAdvanced.getActiveScenePanel().repaint();
+        Gui.getActiveScenePanel().repaint();
     }
 }

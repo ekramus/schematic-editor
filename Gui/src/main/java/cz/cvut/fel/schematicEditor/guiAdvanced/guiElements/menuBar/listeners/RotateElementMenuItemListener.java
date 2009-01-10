@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
@@ -37,18 +37,18 @@ public class RotateElementMenuItemListener implements ActionListener {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
-            if (GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup() != null) {
+        if (Gui.getActiveScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
+            if (Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup() != null) {
                 try {
-                    Manipulation m = ManipulationFactory.create(ManipulationType.ROTATE, GuiAdvanced
+                    Manipulation m = ManipulationFactory.create(ManipulationType.ROTATE, Gui
                             .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
-                    m.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
+                    m.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation()
                             .getManipulatedGroup());
-                    m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY(), GuiAdvanced
+                    m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY(), Gui
                             .getActiveScenePanel().getZoomFactor());
-                    GuiAdvanced.getActiveScenePanel().getManipulationQueue().execute(m);
+                    Gui.getActiveScenePanel().getManipulationQueue().execute(m);
 
-                    GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
+                    Gui.getActiveScenePanel().schemeInvalidate(null);
                 } catch (UnknownManipulationException ume) {
                     ume.printStackTrace();
                 }

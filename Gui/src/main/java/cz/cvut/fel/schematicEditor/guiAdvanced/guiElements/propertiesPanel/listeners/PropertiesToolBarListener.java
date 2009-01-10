@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
@@ -26,10 +26,10 @@ public abstract class PropertiesToolBarListener {
     protected final ElementProperties getElementProperties() {
         ElementProperties ep;
 
-        if (GuiAdvanced.getActiveScenePanel().getSceneProperties().getSelectedElementProperties() == null) {
-            ep = GuiAdvanced.getActiveScenePanel().getSceneProperties().getSceneElementProperties();
+        if (Gui.getActiveScenePanel().getSceneProperties().getSelectedElementProperties() == null) {
+            ep = Gui.getActiveScenePanel().getSceneProperties().getSceneElementProperties();
         } else {
-            ep = GuiAdvanced.getActiveScenePanel().getSceneProperties().getSelectedElementProperties();
+            ep = Gui.getActiveScenePanel().getSceneProperties().getSelectedElementProperties();
         }
         return ep;
     }
@@ -45,14 +45,14 @@ public abstract class PropertiesToolBarListener {
         // refresh all elements on properties toolbar
         PartPropertiesPanel.getInstance().refresh();
 
-        Manipulation m = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+        Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
 
         if (m.getManipulationType() == ManipulationType.SELECT) {
             Select select = (Select) m;
             if (select.getManipulatedGroup() != null) {
                 select.getManipulatedGroup().getChildrenParameterNode().setProperties(elementProperties);
 
-                GuiAdvanced.getActiveScenePanel().schemeInvalidate(select.getManipulatedGroup().getBounds());
+                Gui.getActiveScenePanel().schemeInvalidate(select.getManipulatedGroup().getBounds());
             }
         }
     }

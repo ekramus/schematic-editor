@@ -10,7 +10,7 @@ import javax.swing.JColorChooser;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.GeneralPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
@@ -42,7 +42,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
      * @param contourColorButton contour color {@link JButton} parameter.
      */
     public ContourColorButtonActionListener(final JButton contourColorButton) {
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
         setContourColorButton(contourColorButton);
     }
 
@@ -57,7 +57,7 @@ public final class ContourColorButtonActionListener extends PropertiesToolBarLis
     public void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(GuiAdvanced.getActiveScenePanel(), CONTOUR_COLOR_TITLE, ep.getContourColor());
+        Color c = JColorChooser.showDialog(Gui.getActiveScenePanel(), CONTOUR_COLOR_TITLE, ep.getContourColor());
         if (c != null) {
             ep.setContourColor(c);
             getContourColorButton().setIcon(GeneralPropertiesPanel.getColorIcon(c, ep.getContourColorAlpha()));

@@ -29,7 +29,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listen
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.DrawShapeButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.SelectButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.resources.DrawingToolBarResources;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 
 /**
  * This class implements drawing tool bar. It is used for drawing tool selection.
@@ -119,7 +119,7 @@ public final class DrawingToolBar extends JToolBar {
     public void refresh() {
         // tab independent tasks
         try {
-            ((AbstractButton) GuiAdvanced.getActiveScenePanel().getActiveManipulation().getSource()).setSelected(true);
+            ((AbstractButton) Gui.getActiveScenePanel().getActiveManipulation().getSource()).setSelected(true);
         } catch (ClassCastException e) {
             logger.warn("Source not Abstract button");
         } catch (NullPointerException e) {
@@ -127,14 +127,18 @@ public final class DrawingToolBar extends JToolBar {
         }
 
         // tab dependent tasks
-        switch (GuiAdvanced.getActiveScenePanelTab()) {
+        switch (Gui.getActiveScenePanelTab()) {
             case TAB_SCHEME:
                 // wire button
                 getComponent(13).setEnabled(true);
+                // pin button
+                getComponent(12).setEnabled(false);
                 break;
             case TAB_PART:
                 // wire button
                 getComponent(13).setEnabled(false);
+                // pin button
+                getComponent(12).setEnabled(true);
                 break;
             default:
                 break;

@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
@@ -35,7 +35,7 @@ public class ContourCheckBoxListener extends PropertiesToolBarListener implement
      * @param contourCheckBox contour style {@link JCheckBox} parameter.
      */
     public ContourCheckBoxListener(JCheckBox contourCheckBox) {
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
         setContourCheckBox(contourCheckBox);
     }
 

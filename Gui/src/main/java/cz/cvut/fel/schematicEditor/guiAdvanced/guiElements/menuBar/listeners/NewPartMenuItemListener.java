@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -31,12 +31,12 @@ public final class NewPartMenuItemListener implements ActionListener {
      *            needed.
      */
     public void actionPerformed(final ActionEvent ae) {
-        int result = JOptionPane.showConfirmDialog(GuiAdvanced.getInstance(), "Do you want to discard current part?",
+        int result = JOptionPane.showConfirmDialog(Gui.getInstance(), "Do you want to discard current part?",
                                                    "New part", JOptionPane.OK_CANCEL_OPTION,
                                                    JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            GuiAdvanced.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph();
-            GuiAdvanced.getInstance().getPartScenePanel().schemeInvalidate(null);
+            Gui.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph();
+            Gui.getInstance().getPartScenePanel().schemeInvalidate(null);
         }
     }
 }

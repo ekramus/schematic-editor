@@ -10,7 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AboutMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AddPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AntialiasedCheckBoxMenuItemListener;
@@ -312,7 +312,7 @@ public final class MenuBar extends JMenuBar {
      * Refreshes status of menu items.
      */
     public void refresh() {
-        switch (GuiAdvanced.getActiveScenePanelTab()) {
+        switch (Gui.getActiveScenePanelTab()) {
             case TAB_SCHEME:
                 getAddPartMenuItem().setEnabled(true);
                 getSaveMenuItem().setEnabled(true);

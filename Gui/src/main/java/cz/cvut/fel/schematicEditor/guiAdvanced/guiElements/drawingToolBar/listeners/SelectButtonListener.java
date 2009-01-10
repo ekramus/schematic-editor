@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
@@ -29,7 +29,7 @@ public final class SelectButtonListener implements ActionListener {
     public SelectButtonListener() {
         super();
 
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
     }
 
     /**
@@ -41,9 +41,9 @@ public final class SelectButtonListener implements ActionListener {
      */
     public void actionPerformed(final ActionEvent ae) {
         try {
-            Manipulation m = ManipulationFactory.create(ManipulationType.SELECT, GuiAdvanced.getActiveScenePanel()
+            Manipulation m = ManipulationFactory.create(ManipulationType.SELECT, Gui.getActiveScenePanel()
                     .getSceneGraph().getTopNode(), ae.getSource());
-            GuiAdvanced.getActiveScenePanel().setActiveManipulation(m);
+            Gui.getActiveScenePanel().setActiveManipulation(m);
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
         }

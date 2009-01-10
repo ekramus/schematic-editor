@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
@@ -49,13 +49,13 @@ public final class SaveMenuItemListener implements ActionListener {
         fileChooser.setDialogTitle("Choose file to save");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.SEF, ExportFileFilter.SEFDESC));
 
-        int retValue = fileChooser.showSaveDialog(GuiAdvanced.getActiveScenePanel());
+        int retValue = fileChooser.showSaveDialog(Gui.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             env.setLastSaveFolder(file.getParent());
 
-            serialize(GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode(), file);
+            serialize(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), file);
         }
     }
 

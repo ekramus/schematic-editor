@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Copy;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
@@ -35,7 +35,7 @@ public class ScenePanelKeyListener implements KeyListener {
      */
     public ScenePanelKeyListener() {
         super();
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
     }
 
     /**
@@ -47,7 +47,7 @@ public class ScenePanelKeyListener implements KeyListener {
         try {
             // CTRL alone was pressed - size locking
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-                Manipulation manipulation = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+                Manipulation manipulation = Gui.getActiveScenePanel().getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.CREATE) {
                     Create create = (Create) manipulation;
                     logger.debug("manipulation is instance of Create");
@@ -67,60 +67,60 @@ public class ScenePanelKeyListener implements KeyListener {
                 logger.trace("UNexecuting...");
 
                 // unexecute manipulation
-                GuiAdvanced.getActiveScenePanel().getManipulationQueue().unexecute();
+                Gui.getActiveScenePanel().getManipulationQueue().unexecute();
 
                 // invalidate scheme
-                GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
+                Gui.getActiveScenePanel().schemeInvalidate(null);
 
                 // add manipulation before unexecuted manipulation as activeManipulation
-                GuiAdvanced.getActiveScenePanel().setActiveManipulation(
-                                                                        ManipulationFactory.createNext(GuiAdvanced
+                Gui.getActiveScenePanel().setActiveManipulation(
+                                                                        ManipulationFactory.createNext(Gui
                                                                                 .getActiveScenePanel()
                                                                                 .getManipulationQueue()
                                                                                 .getActiveManipulation()));
 
-                logger.trace("Manipulation queue:\n" + GuiAdvanced.getActiveScenePanel().getManipulationQueue());
+                logger.trace("Manipulation queue:\n" + Gui.getActiveScenePanel().getManipulationQueue());
             }
             // CTRL + Y - redo
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_Y)) {
                 logger.trace("REexecuting...");
 
                 // reexecute manipulation
-                GuiAdvanced.getActiveScenePanel().getManipulationQueue().reexecute();
+                Gui.getActiveScenePanel().getManipulationQueue().reexecute();
 
                 // invalidate scheme
-                GuiAdvanced.getActiveScenePanel().schemeInvalidate(null);
+                Gui.getActiveScenePanel().schemeInvalidate(null);
 
                 // add reexecuted manipulation as activeManipulation
-                GuiAdvanced.getActiveScenePanel().setActiveManipulation(
-                                                                        ManipulationFactory.createNext(GuiAdvanced
+                Gui.getActiveScenePanel().setActiveManipulation(
+                                                                        ManipulationFactory.createNext(Gui
                                                                                 .getActiveScenePanel()
                                                                                 .getManipulationQueue()
                                                                                 .getActiveManipulation()));
 
-                logger.trace("Manipulation queue:\n" + GuiAdvanced.getActiveScenePanel().getManipulationQueue());
+                logger.trace("Manipulation queue:\n" + Gui.getActiveScenePanel().getManipulationQueue());
             }
             // CTRL + C - copy
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_C)) {
                 logger.trace("COPYing...");
 
                 // set active manipulation
-                Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, GuiAdvanced.getActiveScenePanel()
+                Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, Gui.getActiveScenePanel()
                         .getSceneGraph().getTopNode(), e.getSource());
                 // set manipulated group from select manipulation
-                copy.setManipulatedGroup(GuiAdvanced.getActiveScenePanel().getActiveManipulation()
+                copy.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation()
                         .getManipulatedGroup());
-                copy.manipulationStop(null, null, GuiAdvanced.getActiveScenePanel().getManipulationQueue(), GuiAdvanced
+                copy.manipulationStop(null, null, Gui.getActiveScenePanel().getManipulationQueue(), Gui
                         .getActiveScenePanel().getZoomFactor(), false);
 
                 // set copy as active manipulation
-                GuiAdvanced.getActiveScenePanel().setActiveManipulation(copy);
+                Gui.getActiveScenePanel().setActiveManipulation(copy);
 
                 // try finish manipulation
-                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(
+                Gui.getActiveScenePanel().tryFinishManipulation(
                                                                         null,
                                                                         null,
-                                                                        GuiAdvanced.getActiveScenePanel()
+                                                                        Gui.getActiveScenePanel()
                                                                                 .getManipulationQueue(), false);
             }
             // CTRL + V - paste
@@ -128,31 +128,31 @@ public class ScenePanelKeyListener implements KeyListener {
                 logger.trace("PASTEing...");
 
                 // set active manipulation
-                Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, GuiAdvanced
+                Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, Gui
                         .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
-                paste.manipulationStop(null, null, GuiAdvanced.getActiveScenePanel().getManipulationQueue(),
-                                       GuiAdvanced.getActiveScenePanel().getZoomFactor(), false);
+                paste.manipulationStop(null, null, Gui.getActiveScenePanel().getManipulationQueue(),
+                                       Gui.getActiveScenePanel().getZoomFactor(), false);
 
                 // set paste as active manipulation
-                GuiAdvanced.getActiveScenePanel().setActiveManipulation(paste);
+                Gui.getActiveScenePanel().setActiveManipulation(paste);
 
                 // try finish manipulation
-                GuiAdvanced.getActiveScenePanel().tryFinishManipulation(
+                Gui.getActiveScenePanel().tryFinishManipulation(
                                                                         null,
                                                                         null,
-                                                                        GuiAdvanced.getActiveScenePanel()
+                                                                        Gui.getActiveScenePanel()
                                                                                 .getManipulationQueue(), false);
             }
             // DEL or BACKSPACE
             else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
-                Manipulation manipulation = GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+                Manipulation manipulation = Gui.getActiveScenePanel().getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = manipulation.getManipulatedGroup();
-                    if (GuiAdvanced.getActiveScenePanel().getSceneGraph().getTopNode().delete(selected)) {
-                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, GuiAdvanced
+                    if (Gui.getActiveScenePanel().getSceneGraph().getTopNode().delete(selected)) {
+                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, Gui
                                 .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
                         delete.setActive(true);
-                        GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+                        Gui.getActiveScenePanel().getActiveManipulation();
                         // ScenePanel.getInstance().processFinalManipulationStep();
                     }
                 }

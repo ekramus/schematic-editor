@@ -10,7 +10,7 @@ import javax.swing.JColorChooser;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.GeneralPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
@@ -42,7 +42,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
      * @param fillColorButton fill color {@link JButton} parameter.
      */
     public FillColorButtonActionListener(final JButton fillColorButton) {
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
         setFillColorButton(fillColorButton);
     }
 
@@ -57,7 +57,7 @@ public class FillColorButtonActionListener extends PropertiesToolBarListener imp
     public final void actionPerformed(final ActionEvent ae) {
         ElementProperties ep = getElementProperties();
 
-        Color c = JColorChooser.showDialog(GuiAdvanced.getActiveScenePanel(), FILL_COLOR_TITLE, ep.getFillColor());
+        Color c = JColorChooser.showDialog(Gui.getActiveScenePanel(), FILL_COLOR_TITLE, ep.getFillColor());
         if (c != null) {
             ep.setFillColor(c);
             getFillColorButton().setIcon(GeneralPropertiesPanel.getColorIcon(c, ep.getFillColorAlpha()));

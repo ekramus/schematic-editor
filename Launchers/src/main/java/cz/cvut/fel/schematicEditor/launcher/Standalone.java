@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.launcher;
 
 import cz.cvut.fel.schematicEditor.configuration.Configuration;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 
 /**
  * This method implements stand alone launcher. It is used for stand alone launching of <em>SchematicEditor</em>
@@ -14,7 +14,7 @@ public class Standalone {
      * @param args
      */
     public static void main(String[] args) {
-        GuiAdvanced gui = GuiAdvanced.getInstance();
+        Gui gui = Gui.getInstance();
 
         Launcher.loadLog4JProperties();
         Configuration.getInstance();

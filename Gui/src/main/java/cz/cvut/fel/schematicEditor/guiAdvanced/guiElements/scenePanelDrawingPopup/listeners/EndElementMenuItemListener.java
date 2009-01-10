@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -39,7 +39,7 @@ public class EndElementMenuItemListener implements ActionListener {
      */
     public EndElementMenuItemListener(MouseEvent e, Rectangle2D.Double r2d) {
         super();
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
         setR2d(r2d);
         setE(e);
     }
@@ -53,12 +53,12 @@ public class EndElementMenuItemListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
-            Create create = (Create) GuiAdvanced.getActiveScenePanel().getActiveManipulation();
+            Create create = (Create) Gui.getActiveScenePanel().getActiveManipulation();
             create.setFinished(true);
-            GuiAdvanced.getActiveScenePanel().tryFinishManipulation(
+            Gui.getActiveScenePanel().tryFinishManipulation(
                                                                     getE(),
                                                                     getR2d(),
-                                                                    GuiAdvanced.getActiveScenePanel()
+                                                                    Gui.getActiveScenePanel()
                                                                             .getManipulationQueue(), false);
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());

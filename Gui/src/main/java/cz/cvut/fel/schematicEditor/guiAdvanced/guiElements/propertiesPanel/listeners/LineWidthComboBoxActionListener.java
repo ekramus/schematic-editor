@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.Gui;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -37,7 +37,7 @@ public class LineWidthComboBoxActionListener extends PropertiesToolBarListener i
      *            line width {@link JComboBox} parameter.
      */
     public LineWidthComboBoxActionListener(final JComboBox lineWidthComboBox) {
-        logger = Logger.getLogger(GuiAdvanced.class.getName());
+        logger = Logger.getLogger(Gui.class.getName());
         setLineWidthComboBox(lineWidthComboBox);
     }
 
