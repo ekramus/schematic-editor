@@ -102,8 +102,8 @@ public final class DrawingToolBar extends JToolBar {
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.RECTANGLE_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
-            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.TEXT_BUTTON));
-            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+            // drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.TEXT_BUTTON));
+            // bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(Box.createVerticalStrut(20));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PIN_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
@@ -130,11 +130,11 @@ public final class DrawingToolBar extends JToolBar {
         switch (GuiAdvanced.getActiveScenePanelTab()) {
             case TAB_SCHEME:
                 // wire button
-                getComponent(14).setEnabled(true);
+                getComponent(13).setEnabled(true);
                 break;
             case TAB_PART:
                 // wire button
-                getComponent(14).setEnabled(false);
+                getComponent(13).setEnabled(false);
                 break;
             default:
                 break;

@@ -21,7 +21,7 @@ import cz.cvut.fel.schematicEditor.export.DisplayExport;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.GeneralPropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners.ScenePanelKeyListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners.ScenePanelMouseListener;
@@ -243,7 +243,7 @@ public class ScenePanel extends JPanel {
                         MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(true);
 
                         // set part properties panel
-                        PartPropertiesPanel.getInstance().setPartProperties(part.getPartProperties());
+                        PartPropertiesDialogPanel.getInstance().setPartProperties(part.getPartProperties());
                     } catch (ClassCastException cce) {
                         MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(false);
                     } catch (NullPointerException npe) {

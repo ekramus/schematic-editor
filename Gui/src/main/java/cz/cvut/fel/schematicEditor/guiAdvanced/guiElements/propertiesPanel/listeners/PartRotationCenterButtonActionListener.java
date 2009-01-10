@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
- * This class implements listener for {@link PartPropertiesPanel} partRotationCenterButton.
+ * This class implements listener for {@link PartPropertiesDialogPanel} partRotationCenterButton.
  *
  * @author Urban Kravjansky
  */

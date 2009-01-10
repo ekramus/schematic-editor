@@ -7,7 +7,7 @@ import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.guiAdvanced.GuiAdvanced;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialog;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
 
 /**
  * This class implements {@link ActionListener} for <code>viewPartPropertiesMenuItem</code> in {@link MenuBar}.
@@ -25,7 +25,7 @@ public class ViewPartPropertiesMenuItemListener implements ActionListener {
         if (ppd.isAccepted()) {
             Part part = (Part) GuiAdvanced.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
                     .getChildrenElementList().getFirst().getElement();
-            part.setPartProperties(PartPropertiesPanel.getInstance().getPartProperties());
+            part.setPartProperties(PartPropertiesDialogPanel.getInstance().getPartProperties());
         }
     }
 }
