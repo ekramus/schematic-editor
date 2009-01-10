@@ -206,6 +206,18 @@ public final class MenuBar extends JMenuBar {
      * Save menu instance.
      */
     private JMenu             saveMenu                    = null;
+    /**
+     * Edit part menu instance.
+     */
+    private JMenu             editPartMenu                = null;
+    /**
+     * Rotate menu instance.
+     */
+    private JMenu             rotateMenu                  = null;
+    /**
+     * Mirror menu instance.
+     */
+    private JMenu             mirrorMenu                  = null;
 
     /**
      * Default constructor. As {@link MenuBar} is singleton, it is defined as private.
@@ -435,8 +447,58 @@ public final class MenuBar extends JMenuBar {
             this.cutMenuItem = new JMenuItem();
             this.cutMenuItem.setText(MenuBarResources.CUT_MENU_ITEM.getText());
             this.cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK, true));
+
+            this.cutMenuItem.setEnabled(false);
         }
         return this.cutMenuItem;
+    }
+
+    /**
+     * Getter for <code>editPartMenu</code>.
+     *
+     * @return <code>editPartMenu</code> instance.
+     */
+    private JMenu getEditPartMenu() {
+        if (this.editPartMenu == null) {
+            this.editPartMenu = new JMenu();
+            this.editPartMenu.setText(MenuBarResources.EDIT_PART_MENU.getText());
+
+            this.editPartMenu.add(getEditPartMenuItem());
+            this.editPartMenu.add(getDoneEditPartMenuItem());
+        }
+        return this.editPartMenu;
+    }
+
+    /**
+     * Getter for <code>rotateMenu</code>.
+     *
+     * @return <code>rotateMenu</code> instance.
+     */
+    private JMenu getRotateMenu() {
+        if (this.rotateMenu == null) {
+            this.rotateMenu = new JMenu();
+            this.rotateMenu.setText(MenuBarResources.ROTATE_MENU.getText());
+
+            this.rotateMenu.add(getRotateAnticlockwiseMenuItem());
+            this.rotateMenu.add(getRotateClockwiseMenuItem());
+        }
+        return this.rotateMenu;
+    }
+
+    /**
+     * Getter for <code>mirrorMenu</code>.
+     *
+     * @return <code>mirrorMenu</code> instance.
+     */
+    private JMenu getMirrorMenu() {
+        if (this.mirrorMenu == null) {
+            this.mirrorMenu = new JMenu();
+            this.mirrorMenu.setText(MenuBarResources.MIRROR_MENU.getText());
+
+            this.mirrorMenu.add(getMirrorHorizontalMenuItem());
+            this.mirrorMenu.add(getMirrorVerticalMenuItem());
+        }
+        return this.mirrorMenu;
     }
 
     /**
@@ -463,17 +525,15 @@ public final class MenuBar extends JMenuBar {
         if (this.editMenu == null) {
             this.editMenu = new JMenu();
             this.editMenu.setText(MenuBarResources.EDIT_MENU.getText());
-            this.editMenu.add(getCutMenuItem());
+
             this.editMenu.add(getCopyMenuItem());
+            this.editMenu.add(getCutMenuItem());
             this.editMenu.add(getPasteMenuItem());
             this.editMenu.addSeparator();
-            this.editMenu.add(getEditPartMenuItem());
-            this.editMenu.add(getDoneEditPartMenuItem());
+            this.editMenu.add(getEditPartMenu());
             this.editMenu.addSeparator();
-            this.editMenu.add(getRotateAnticlockwiseMenuItem());
-            this.editMenu.add(getRotateClockwiseMenuItem());
-            this.editMenu.add(getMirrorHorizontalMenuItem());
-            this.editMenu.add(getMirrorVerticalMenuItem());
+            this.editMenu.add(getRotateMenu());
+            this.editMenu.add(getMirrorMenu());
             this.editMenu.addSeparator();
             this.editMenu.add(getSnapToGridCheckBoxMenuItem());
             this.editMenu.add(getGridMenuItem());
