@@ -28,7 +28,7 @@ public class PartPropertiesPanel extends JPanel {
      */
     private static Logger              logger;
     /**
-     * Singleton instance of {@link PartPropertiesPanel}.
+     * Singleton instance of {@link PartPropertiesDialogPanel}.
      */
     private static PartPropertiesPanel partPropertiesPanel      = null;
 
@@ -50,7 +50,7 @@ public class PartPropertiesPanel extends JPanel {
     private JLabel                     partRotationCenterLabel  = null;
 
     /**
-     * Default constructor. It is private for {@link PartPropertiesPanel} singleton instance.
+     * Default constructor. It is private for {@link PartPropertiesDialogPanel} singleton instance.
      */
     private PartPropertiesPanel() {
         super();
@@ -59,9 +59,9 @@ public class PartPropertiesPanel extends JPanel {
     }
 
     /**
-     * Getter for {@link PartPropertiesPanel} singleton instance.
+     * Getter for {@link PartPropertiesDialogPanel} singleton instance.
      *
-     * @return {@link PartPropertiesPanel} singleton instance.
+     * @return {@link PartPropertiesDialogPanel} singleton instance.
      */
     public static PartPropertiesPanel getInstance() {
         if (partPropertiesPanel == null) {
@@ -79,7 +79,7 @@ public class PartPropertiesPanel extends JPanel {
     }
 
     /**
-     * Updates {@link PartPropertiesPanel} according to scene or selected element properties.
+     * Updates {@link PartPropertiesDialogPanel} according to scene or selected element properties.
      */
     public void refresh() {
         try {

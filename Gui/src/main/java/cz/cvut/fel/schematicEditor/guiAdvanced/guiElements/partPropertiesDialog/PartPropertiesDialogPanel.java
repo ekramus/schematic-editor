@@ -19,15 +19,15 @@ import cz.cvut.fel.schematicEditor.support.Property;
  * @author Urban Kravjansky
  *
  */
-public class PartPropertiesPanel extends JPanel {
+public class PartPropertiesDialogPanel extends JPanel {
     /**
      * {@link Logger} instance for logging purposes.
      */
     private static Logger               logger;
     /**
-     * {@link PartPropertiesPanel} singleton instance field.
+     * {@link PartPropertiesDialogPanel} singleton instance field.
      */
-    private static PartPropertiesPanel  instance                    = null;
+    private static PartPropertiesDialogPanel  instance                    = null;
     /**
      * Part properties, which is being manipulated with.
      */
@@ -41,20 +41,20 @@ public class PartPropertiesPanel extends JPanel {
      * This method instantiates new instance.
      *
      */
-    private PartPropertiesPanel() {
-        logger = Logger.getLogger(PartPropertiesPanel.class.getName());
+    private PartPropertiesDialogPanel() {
+        logger = Logger.getLogger(PartPropertiesDialogPanel.class.getName());
     }
 
     /**
-     * Singleton {@link PartPropertiesPanel} instance getter.
+     * Singleton {@link PartPropertiesDialogPanel} instance getter.
      *
-     * @return singleton {@link PartPropertiesPanel} instance.
+     * @return singleton {@link PartPropertiesDialogPanel} instance.
      */
-    public static PartPropertiesPanel getInstance() {
-        if (PartPropertiesPanel.instance == null) {
-            PartPropertiesPanel.instance = new PartPropertiesPanel();
+    public static PartPropertiesDialogPanel getInstance() {
+        if (PartPropertiesDialogPanel.instance == null) {
+            PartPropertiesDialogPanel.instance = new PartPropertiesDialogPanel();
         }
-        return PartPropertiesPanel.instance;
+        return PartPropertiesDialogPanel.instance;
     }
 
     /**

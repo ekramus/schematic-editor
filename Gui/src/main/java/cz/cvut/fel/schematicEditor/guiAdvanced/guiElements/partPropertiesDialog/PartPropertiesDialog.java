@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
 
 /**
- * This class extends {@link JDialog} so it is possible to set properties on {@link PartPropertiesPanel}.
+ * This class extends {@link JDialog} so it is possible to set properties on {@link PartPropertiesDialogPanel}.
  *
  * @author Urban Kravjansky
  *
@@ -42,11 +42,11 @@ public class PartPropertiesDialog extends JDialog implements ActionListener {
 
         logger = Logger.getLogger(this.getClass().getName());
 
-        // this.myPanel = PartPropertiesPanel.getInstance();
+        // this.myPanel = PartPropertiesDialogPanel.getInstance();
         this.myPanel = new JPanel();
         getContentPane().add(this.myPanel);
 
-        this.myPanel.add(PartPropertiesPanel.getInstance());
+        this.myPanel.add(PartPropertiesDialogPanel.getInstance());
 
         this.yesButton = new JButton("Yes");
         this.yesButton.addActionListener(this);
@@ -65,7 +65,7 @@ public class PartPropertiesDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (this.yesButton == e.getSource()) {
             logger.trace("User chose yes.");
-            PartPropertiesPanel.getInstance().actualizeProperties();
+            PartPropertiesDialogPanel.getInstance().actualizeProperties();
             setAccepted(true);
         } else if (this.noButton == e.getSource()) {
             logger.trace("User chose no.");

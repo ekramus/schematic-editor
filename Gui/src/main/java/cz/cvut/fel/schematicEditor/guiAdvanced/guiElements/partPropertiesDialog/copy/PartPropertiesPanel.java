@@ -25,7 +25,7 @@ public class PartPropertiesPanel extends JPanel {
      */
     private static Logger               logger;
     /**
-     * {@link PartPropertiesPanel} singleton instance field.
+     * {@link PartPropertiesDialogPanel} singleton instance field.
      */
     private static PartPropertiesPanel  instance                    = null;
     /**
@@ -46,9 +46,9 @@ public class PartPropertiesPanel extends JPanel {
     }
 
     /**
-     * Singleton {@link PartPropertiesPanel} instance getter.
+     * Singleton {@link PartPropertiesDialogPanel} instance getter.
      *
-     * @return singleton {@link PartPropertiesPanel} instance.
+     * @return singleton {@link PartPropertiesDialogPanel} instance.
      */
     public static PartPropertiesPanel getInstance() {
         if (PartPropertiesPanel.instance == null) {
