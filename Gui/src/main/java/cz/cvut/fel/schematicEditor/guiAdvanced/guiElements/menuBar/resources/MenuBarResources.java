@@ -148,11 +148,11 @@ public enum MenuBarResources {
     /**
      * Edit part menu item string.
      */
-    EDIT_PART_MENU_ITEM("Edit part"),
+    EDIT_PART_MENU_ITEM("Start"),
     /**
      * Done edit part menu item string.
      */
-    DONE_EDIT_PART_MENU_ITEM("Done edit part"),
+    DONE_EDIT_PART_MENU_ITEM("Stop"),
     /**
      * Add menu string.
      */
@@ -160,7 +160,19 @@ public enum MenuBarResources {
     /**
      * Add menu string.
      */
+    ROTATE_MENU("Rotate.."),
+    /**
+     * Add menu string.
+     */
+    MIRROR_MENU("Mirror.."),
+    /**
+     * Add menu string.
+     */
     SAVE_MENU("Save.."),
+    /**
+     * Add menu string.
+     */
+    EDIT_PART_MENU("Edit part.."),
     /**
      * Scale menu item string.
      */
