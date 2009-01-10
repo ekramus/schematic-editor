@@ -71,6 +71,10 @@ public final class MenuBar extends JMenuBar {
      */
     private JMenuItem         aboutMenuItem               = null;
     /**
+     * Add menu item instance.
+     */
+    private JMenu             addMenu                     = null;
+    /**
      * Add part menu item instance.
      */
     private JMenuItem         addPartMenuItem             = null;
@@ -198,6 +202,10 @@ public final class MenuBar extends JMenuBar {
      * Scale menu item instance.
      */
     private JMenuItem         scaleMenuItem               = null;
+    /**
+     * Save menu instance.
+     */
+    private JMenu             saveMenu                    = null;
 
     /**
      * Default constructor. As {@link MenuBar} is singleton, it is defined as private.
@@ -219,6 +227,37 @@ public final class MenuBar extends JMenuBar {
             this.newMenu.add(getNewPartMenuItem());
         }
         return this.newMenu;
+    }
+
+    /**
+     * Getter for <code>addMenu</code>.
+     *
+     * @return <code>addMenu</code> instance.
+     */
+    private JMenu getAddMenu() {
+        if (this.addMenu == null) {
+            this.addMenu = new JMenu();
+            this.addMenu.setText(MenuBarResources.ADD_MENU.getText());
+            this.addMenu.add(getAddPartMenuItem());
+            this.addMenu.add(getImportMenuItem());
+        }
+        return this.addMenu;
+    }
+
+    /**
+     * Getter for <code>saveMenu</code>.
+     *
+     * @return <code>saveMenu</code> instance.
+     */
+    private JMenu getSaveMenu() {
+        if (this.saveMenu == null) {
+            this.saveMenu = new JMenu();
+            this.saveMenu.setText(MenuBarResources.SAVE_MENU.getText());
+            this.saveMenu.add(getSaveMenuItem());
+            this.saveMenu.add(getSaveAsMenuItem());
+            this.saveMenu.add(getSaveAsPartMenuItem());
+        }
+        return this.saveMenu;
     }
 
     /**
@@ -496,13 +535,10 @@ public final class MenuBar extends JMenuBar {
             this.fileMenu.setText(MenuBarResources.FILE_MENU.getText());
 
             this.fileMenu.add(getNewMenu());
-            this.fileMenu.addSeparator();
+            this.fileMenu.add(getAddMenu());
             this.fileMenu.add(getOpenMenuItem());
-            this.fileMenu.add(getImportMenuItem());
-            this.fileMenu.add(getAddPartMenuItem());
-            this.fileMenu.add(getSaveMenuItem());
-            this.fileMenu.add(getSaveAsMenuItem());
-            this.fileMenu.add(getSaveAsPartMenuItem());
+            this.fileMenu.add(getSaveMenu());
+            this.fileMenu.addSeparator();
             this.fileMenu.add(getSavePreferencesMenuItem());
             this.fileMenu.add(getExitMenuItem());
         }
