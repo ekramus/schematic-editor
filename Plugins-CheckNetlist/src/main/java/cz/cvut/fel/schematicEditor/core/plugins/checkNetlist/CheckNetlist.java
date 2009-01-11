@@ -1,9 +1,7 @@
 package cz.cvut.fel.schematicEditor.core.plugins.checkNetlist;
 
 import javax.swing.JButton;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
@@ -26,11 +24,10 @@ public class CheckNetlist implements Plugin {
     private SceneGraph       sceneGraph;
 
     /**
-     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(JMenu, JToolBar)
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(SceneGraph)
      */
-    public boolean activate(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingBar) {
-        pluginsMenu.add(getMenuItem());
-        setSceneGraph(sg);
+    public boolean activate(SceneGraph sceneGraph) {
+        setSceneGraph(sceneGraph);
         return true;
     }
 
@@ -46,7 +43,7 @@ public class CheckNetlist implements Plugin {
      *
      * @return {@link JMenuItem} instance.
      */
-    private JMenuItem getMenuItem() {
+    public JMenuItem getMenuItem() {
         if (CheckNetlist.elementsCountMenuItem == null) {
             CheckNetlist.elementsCountMenuItem = new JMenuItem("Check netlist");
             CheckNetlist.elementsCountMenuItem.addActionListener(new CheckNetlistActionListener(getSceneGraph()));
