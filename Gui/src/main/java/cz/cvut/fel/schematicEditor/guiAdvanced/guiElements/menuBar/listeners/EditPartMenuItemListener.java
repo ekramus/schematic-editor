@@ -54,7 +54,7 @@ public final class EditPartMenuItemListener implements ActionListener {
             GroupNode partGroupNode = (GroupNode) pn.getPartGroupNode().duplicate();
 
             // add all connectors from part node into group node
-            for (PinNode pinNode : pn.getPartConnectors()) {
+            for (PinNode pinNode : pn.getPartPins()) {
                 GroupNode gn = new GroupNode();
                 gn.add(pinNode.duplicate());
                 gn.add(new ParameterNode());

@@ -336,7 +336,7 @@ public class DisplayExport implements Export {
                 Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
                 // search for connectors, draw them and display their names
                 int i = 0;
-                for (PinNode cn : partNode.getPartConnectors()) {
+                for (PinNode cn : partNode.getPartPins()) {
                     Pin c = (Pin) cn.getElement();
                     drawPin(c, parameterNode, nodeG2D);
                     drawConnectorText(c, connectorNames.get(i), nodeG2D);

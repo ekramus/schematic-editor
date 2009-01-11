@@ -99,7 +99,7 @@ public class PartNode extends ElementNode {
 
         result = new UnitRectangle(x, y, w, h);
 
-        for (PinNode cn : getPartConnectors()) {
+        for (PinNode cn : getPartPins()) {
             Pin c = (Pin) cn.getElement();
             result = (UnitRectangle) result.createUnion(c.getBounds());
         }
@@ -115,7 +115,7 @@ public class PartNode extends ElementNode {
         PartNode result = new PartNode((Part) getElement(), (GroupNode) getPartGroupNode().duplicate());
 
         Vector<PinNode> partConnectors = new Vector<PinNode>();
-        for (PinNode pinNode : getPartConnectors()) {
+        for (PinNode pinNode : getPartPins()) {
             partConnectors.add((PinNode) pinNode.duplicate());
         }
         result.setPartConnectors(partConnectors);
@@ -161,7 +161,7 @@ public class PartNode extends ElementNode {
         getPartGroupNode().add(new TransformationNode(t));
 
         // modify coordinates of part connectors
-        for (PinNode pinNode : getPartConnectors()) {
+        for (PinNode pinNode : getPartPins()) {
             pinNode.modifyCoordinates(t);
         }
 
@@ -180,7 +180,7 @@ public class PartNode extends ElementNode {
     /**
      * @return the partConnectors
      */
-    public Vector<PinNode> getPartConnectors() {
+    public Vector<PinNode> getPartPins() {
         return this.partConnectors;
     }
 
@@ -190,7 +190,7 @@ public class PartNode extends ElementNode {
     public Collection<? extends UnitPoint> getPartConnectorsCoordinates() {
         Vector<UnitPoint> result = new Vector<UnitPoint>();
 
-        for (PinNode pinNode : getPartConnectors()) {
+        for (PinNode pinNode : getPartPins()) {
             Pin c = (Pin) pinNode.getElement();
             for (int i = 0; i < c.getX().size(); i++) {
                 result.add(new UnitPoint(c.getX().get(i), c.getY().get(i)));
