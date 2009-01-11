@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -413,14 +414,14 @@ public class ScenePanel extends JPanel {
                 // draw frame around selected group
                 if (m.getManipulationType() == ManipulationType.SELECT) {
                     logger.trace("selected element frame drawing");
-                    BufferedImage selectionFrame = drawSelectionFrame();
-                    g2d.drawImage(selectionFrame, 0, 0, null);
+                    g2d.drawImage(drawSelectionFrame(), 0, 0, null);
+                    g2d.drawImage(drawEditMarks(), 0, 0, null);
                 }
                 // draw frame around edited group
                 else if (m.getManipulationType() == ManipulationType.EDIT) {
                     logger.trace("edited element frame drawing");
-                    BufferedImage selectionFrame = drawEditFrame();
-                    g2d.drawImage(selectionFrame, 0, 0, null);
+                    g2d.drawImage(drawEditFrame(), 0, 0, null);
+                    g2d.drawImage(drawEditMarks(), 0, 0, null);
                 }
             }
         } catch (NullPointerException npe) {
@@ -476,6 +477,32 @@ public class ScenePanel extends JPanel {
         g2d.draw(rect);
 
         return selectionFrame;
+    }
+
+    /**
+     * This method draws edit marks onto {@link BufferedImage}.
+     *
+     * @return {@link BufferedImage} with selection frame.
+     */
+    private BufferedImage drawEditMarks() {
+        // create new BufferedImage
+        BufferedImage editMarks = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        Manipulation m = getActiveManipulation();
+        GroupNode gn = m.getManipulatedGroup();
+        Transformation t = m.getManipulatedGroup().getTransformation();
+        Element e = gn.getChildrenElementList().getFirst().getElement();
+
+        Graphics2D g2d = (Graphics2D) editMarks.getGraphics();
+        for (int i = 0; i < e.getX().size(); i++) {
+            Rectangle2D.Double r2d = new Rectangle2D.Double(e.getX().get(i).doubleValue() - 2, e.getY().get(i)
+                    .doubleValue() - 2, 5, 5);
+            r2d = t.shift(r2d);
+            g2d.setColor(Color.YELLOW);
+            g2d.draw(r2d);
+        }
+
+        return editMarks;
     }
 
     /**
