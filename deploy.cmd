@@ -22,6 +22,7 @@ mkdir %CONF%
 mkdir %PLUGIN%
 
 copy %M2_REPO%\log4j\log4j\1.2.14\log4j-1.2.14.jar %LIB%
+copy %M2_REPO%\com\miglayout\miglayout\3.6.1\miglayout-3.6.1.jar %LIB%
 copy %M2_REPO%\jgoodies\looks\1.2.2\looks-1.2.2.jar %LIB%
 copy %M2_REPO%\com\thoughtworks\xstream\xstream\1.3\xstream-1.3.jar %LIB%
 
