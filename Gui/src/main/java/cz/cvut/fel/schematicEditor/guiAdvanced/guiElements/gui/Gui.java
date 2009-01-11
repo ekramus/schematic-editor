@@ -172,8 +172,18 @@ public class Gui extends JApplet {
             } catch (NullPointerException npe) {
                 logger.error("Error while loading plugins");
             }
+
+            this.refresh();
         }
         return this.applicationFrame;
+    }
+
+    /**
+     * Refresh gui components.
+     */
+    private void refresh() {
+        MenuBar.getInstance().refresh();
+        DrawingToolBar.getInstance().refresh();
     }
 
     /**
@@ -350,12 +360,14 @@ public class Gui extends JApplet {
                     // instantiate plugin object based on information in plugin xml
                     Class<?> pluginClass = urlClassLoader.loadClass(pluginProperties.getProperty("classpath") + "."
                             + pluginProperties.getProperty("classname"));
-                    Plugin plugin = (Plugin) pluginClass.newInstance();
 
                     // register plugin via its properties
                     Structures.getLoadedPluginProperties().add(pluginProperties);
 
                     for (SceneTabbedPaneTabs sceneTab : SceneTabbedPaneTabs.values()) {
+                        // create plugin for each one scene panel
+                        Plugin plugin = (Plugin) pluginClass.newInstance();
+
                         SceneGraph sg = getInstance().getScenePanel(sceneTab).getSceneGraph();
 
                         // activate plugin

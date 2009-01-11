@@ -120,7 +120,7 @@ public class CheckNetlistActionListener implements ActionListener {
             // wire was found, now we can validate all pins on that wire
             if (wire != null) {
                 Vector<String> matchedPinNames = getPinNamesForPinAndWire(pin, wire, partNodes, wireVector,
-                                                                          junctionVector, 10);
+                                                                          junctionVector, 2);
                 // compare all retrieved connectors (names) with name of connector
                 if (!matchedPinNames.isEmpty()) {
                     for (String matchedPinName : matchedPinNames) {
@@ -173,7 +173,7 @@ public class CheckNetlistActionListener implements ActionListener {
                     Vector<Wire> junctionWireVector = getWiresForJunctionAndWire(j, wireVector);
                     // add pin names of all wires attached to junction, recursion limit avoids circural dependencies to
                     // crash plugin
-                    if (!junctionWireVector.isEmpty()) {
+                    if (!junctionWireVector.isEmpty() && (recursionDepth > 0)) {
                         for (Wire w : junctionWireVector) {
                             result.addAll(getPinNamesForPinAndWire(pin, w, partNodes, wireVector, junctionVector,
                                                                    recursionDepth - 1));

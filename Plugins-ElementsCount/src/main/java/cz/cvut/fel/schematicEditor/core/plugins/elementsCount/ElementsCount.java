@@ -1,9 +1,7 @@
 package cz.cvut.fel.schematicEditor.core.plugins.elementsCount;
 
 import javax.swing.JButton;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
 
 import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
@@ -19,14 +17,14 @@ public class ElementsCount implements Plugin {
     /**
      * Menu item for elements count.
      */
-    private static JMenuItem elementsCountMenuItem = null;
+    private JMenuItem  elementsCountMenuItem = null;
     /**
      * {@link SceneGraph} instance.
      */
-    private SceneGraph       sceneGraph;
+    private SceneGraph sceneGraph;
 
     /**
-     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(JMenu, JToolBar)
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(SceneGraph)
      */
     public boolean activate(SceneGraph sg) {
         setSceneGraph(sg);
@@ -47,11 +45,11 @@ public class ElementsCount implements Plugin {
      *
      */
     public JMenuItem getMenuItem() {
-        if (ElementsCount.elementsCountMenuItem == null) {
-            ElementsCount.elementsCountMenuItem = new JMenuItem("Elements count");
-            ElementsCount.elementsCountMenuItem.addActionListener(new ElementsCountActionListener(getSceneGraph()));
+        if (this.elementsCountMenuItem == null) {
+            this.elementsCountMenuItem = new JMenuItem("Elements count");
+            this.elementsCountMenuItem.addActionListener(new ElementsCountActionListener(getSceneGraph()));
         }
-        return ElementsCount.elementsCountMenuItem;
+        return this.elementsCountMenuItem;
     }
 
     /**

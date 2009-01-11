@@ -44,7 +44,8 @@ public class ElementsCountActionListener implements ActionListener {
                 elementCount++;
             }
         }
-        JOptionPane.showMessageDialog(null, "Number of element Nodes: " + elementCount);
+        JOptionPane.showMessageDialog(null, "Number of element Nodes: "
+                + elementCount);
     }
 
     /**

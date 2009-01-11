@@ -17,11 +17,11 @@ public class CheckNetlist implements Plugin {
     /**
      * Menu item for elements count.
      */
-    private static JMenuItem elementsCountMenuItem = null;
+    private JMenuItem  elementsCountMenuItem = null;
     /**
      * {@link SceneGraph} instance.
      */
-    private SceneGraph       sceneGraph;
+    private SceneGraph sceneGraph;
 
     /**
      * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(SceneGraph)
@@ -44,11 +44,11 @@ public class CheckNetlist implements Plugin {
      * @return {@link JMenuItem} instance.
      */
     public JMenuItem getMenuItem() {
-        if (CheckNetlist.elementsCountMenuItem == null) {
-            CheckNetlist.elementsCountMenuItem = new JMenuItem("Check netlist");
-            CheckNetlist.elementsCountMenuItem.addActionListener(new CheckNetlistActionListener(getSceneGraph()));
+        if (this.elementsCountMenuItem == null) {
+            this.elementsCountMenuItem = new JMenuItem("Check netlist");
+            this.elementsCountMenuItem.addActionListener(new CheckNetlistActionListener(getSceneGraph()));
         }
-        return CheckNetlist.elementsCountMenuItem;
+        return this.elementsCountMenuItem;
     }
 
     /**
