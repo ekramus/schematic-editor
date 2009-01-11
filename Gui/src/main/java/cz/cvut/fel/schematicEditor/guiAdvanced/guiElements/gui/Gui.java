@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneTabbedPaneTabs;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.DrawingToolBar;
@@ -123,13 +124,27 @@ public class Gui extends JApplet {
 
             // initialize plugins
             try {
-                initializePlugins(getActiveScenePanel().getSceneGraph(), MenuBar.getInstance().getPluginsMenu(),
-                                  DrawingToolBar.getInstance());
+                initializePlugins(getScenePanelCollection(), MenuBar.getInstance().getPluginsMenu(), DrawingToolBar
+                        .getInstance());
             } catch (NullPointerException npe) {
                 logger.error("Error while loading plugins");
             }
         }
         return this.appletPanel;
+    }
+
+    /**
+     * Getter for collection of scene panels.
+     *
+     * @return {@link Collection} of {@link ScenePanel}s.
+     */
+    private Collection<ScenePanel> getScenePanelCollection() {
+        Vector<ScenePanel> result = new Vector<ScenePanel>();
+
+        result.add(getInstance().getSchemeScenePanel());
+        result.add(getInstance().getPartScenePanel());
+
+        return result;
     }
 
     /**
@@ -152,8 +167,8 @@ public class Gui extends JApplet {
             // initialize plugins
             // TODO initialize all ScenePanels
             try {
-                initializePlugins(getActiveScenePanel().getSceneGraph(), MenuBar.getInstance().getPluginsMenu(),
-                                  DrawingToolBar.getInstance());
+                initializePlugins(getScenePanelCollection(), MenuBar.getInstance().getPluginsMenu(), DrawingToolBar
+                        .getInstance());
             } catch (NullPointerException npe) {
                 logger.error("Error while loading plugins");
             }
@@ -291,20 +306,36 @@ public class Gui extends JApplet {
      * @return {@link SceneTabbedPaneTabs} value.
      */
     public static SceneTabbedPaneTabs getActiveScenePanelTab() {
-        if (getInstance().getSchemePartTabbedPane().getSelectedIndex() == 0) {
-            return SceneTabbedPaneTabs.TAB_SCHEME;
+        for (SceneTabbedPaneTabs sceneTab : SceneTabbedPaneTabs.values()) {
+            if (sceneTab.getOrder() == getInstance().getSchemePartTabbedPane().getSelectedIndex()) {
+                return sceneTab;
+            }
         }
-        return SceneTabbedPaneTabs.TAB_PART;
+        return null;
+    }
+
+    /**
+     * Getter for preferred scene panel.
+     *
+     * @param sceneTab tab to look for scene panel.
+     * @return instance of requested scene panel.
+     */
+    private ScenePanel getScenePanel(SceneTabbedPaneTabs sceneTab) {
+        if (sceneTab == SceneTabbedPaneTabs.TAB_SCHEME) {
+            return getInstance().getSchemeScenePanel();
+        }
+        return getInstance().getPartScenePanel();
     }
 
     /**
      * Initializes all plugins found in plugin folder.
      *
-     * @param sg sceneGraph, which initializes these plugins.
+     * @param scenePanelCollection collection of {@link ScenePanel}s, which will be accessible to plugins.
      * @param pluginsMenu plugins menu used for displaying plugin menu items.
      * @param drawingToolBar tool bar for drawing buttons.
      */
-    private void initializePlugins(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingToolBar) {
+    private void initializePlugins(Collection<ScenePanel> scenePanelCollection, JMenu pluginsMenu,
+            JToolBar drawingToolBar) {
         Collection<String> pluginsCollection = findPlugins("plugins");
 
         for (String pluginPath : pluginsCollection) {
@@ -324,12 +355,23 @@ public class Gui extends JApplet {
                     // register plugin via its properties
                     Structures.getLoadedPluginProperties().add(pluginProperties);
 
-                    // activate plugin
-                    plugin.activate(sg, pluginsMenu, drawingToolBar);
+                    for (SceneTabbedPaneTabs sceneTab : SceneTabbedPaneTabs.values()) {
+                        SceneGraph sg = getInstance().getScenePanel(sceneTab).getSceneGraph();
 
-                    if (plugin.implementsSceneGraphUpdateListener()) {
-                        getActiveScenePanel().getSceneGraph()
-                                .addSceneGraphUpdateListener((SceneGraphUpdateListener) plugin);
+                        // activate plugin
+                        plugin.activate(sg);
+
+                        // add menu item if applicable
+                        if (plugin.providesMenuItem()) {
+                            Structures.getPluginMenuItems().get(sceneTab).add(plugin.getMenuItem());
+                        }
+
+                        // TODO add drawing toolbar item if applicable
+
+                        // if plugin implements scene graph update listener, register it
+                        if (plugin.implementsSceneGraphUpdateListener()) {
+                            sg.addSceneGraphUpdateListener((SceneGraphUpdateListener) plugin);
+                        }
                     }
 
                     logger.trace("plugin loaded");

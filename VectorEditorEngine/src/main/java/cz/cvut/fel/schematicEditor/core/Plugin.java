@@ -1,8 +1,7 @@
 package cz.cvut.fel.schematicEditor.core;
 
 import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JToolBar;
+import javax.swing.JMenuItem;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
@@ -43,11 +42,18 @@ public interface Plugin {
     JButton getDrawingButton();
 
     /**
+     * Getter for menu item provided by plugin.
+     *
+     * @return {@link JMenuItem} instance provided by plugin.
+     */
+    JMenuItem getMenuItem();
+
+    /**
      * Activates plugin, so it is able to process data and be accessed by the user.
      *
-     * @param pluginsMenu menu, so custom menu items can be added as its children.
-     * @param drawingToolBar drawing bar, so custom drawing buttons can be added.
+     *@param sceneGraph {@link SceneGraph} for this plugin instance.
+     *
      * @return <code>true</code>, if plugin was activated successfully, <code>false</code> else.
      */
-    boolean activate(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingToolBar);
+    boolean activate(SceneGraph sceneGraph);
 }

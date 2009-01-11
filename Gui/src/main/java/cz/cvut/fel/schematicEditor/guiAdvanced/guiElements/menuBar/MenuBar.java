@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar;
 
 import java.awt.Event;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -10,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AboutMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.AddPartMenuItemListener;
@@ -376,6 +378,13 @@ public final class MenuBar extends JMenuBar {
                 break;
             default:
                 break;
+        }
+
+        // delete all menu item from plugins menu bar and add new for actual tab
+        getPluginsMenu().removeAll();
+        Vector<JMenuItem> menuItemVector = Structures.getPluginMenuItems().get(Gui.getActiveScenePanelTab());
+        for (JMenuItem menuItem : menuItemVector) {
+            getPluginsMenu().add(menuItem);
         }
     }
 
