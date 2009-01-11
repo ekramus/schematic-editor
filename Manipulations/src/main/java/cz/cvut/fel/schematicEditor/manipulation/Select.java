@@ -109,7 +109,7 @@ public class Select extends Manipulation {
         Manipulation result = this;
 
         // select is active AND GroupNode is already selected
-        if ((getManipulatedGroup() != null) && (getTopNode().findHit(r2d, zoomFactor) == getManipulatedGroup())) {
+        if ((getManipulatedGroup() != null) && ((getTopNode().findHit(r2d, zoomFactor) == getManipulatedGroup()) || (getManipulatedGroup().isHit(r2d, zoomFactor)))) {
             // select is in edit active zone
             if (getManipulatedGroup().startEdit(r2d, zoomFactor)) {
                 // create Edit manipulation

@@ -134,6 +134,15 @@ public class ElementNode extends Node {
         if (isDisabled()) {
             return false;
         }
+
+        // check element coordinates
+        for (int i = 0; i < this.element.getX().size(); i++) {
+            if (r2d.contains(this.element.getX().get(i).doubleValue(), this.element.getY().get(i).doubleValue())) {
+                return true;
+            }
+        }
+
+        // check element itself
         return this.element.isHit(r2d);
     }
 
