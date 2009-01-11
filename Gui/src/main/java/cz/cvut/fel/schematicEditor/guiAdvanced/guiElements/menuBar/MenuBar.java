@@ -10,6 +10,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
@@ -68,6 +70,10 @@ public final class MenuBar extends JMenuBar {
         return menuBar;
     }
 
+    /**
+     * Logger instance for logging purposes.
+     */
+    private static Logger     logger;
     /**
      * About menu item instance.
      */
@@ -226,6 +232,8 @@ public final class MenuBar extends JMenuBar {
      */
     private MenuBar() {
         super();
+
+        logger = Logger.getLogger(this.getClass());
     }
 
     /**
@@ -382,9 +390,14 @@ public final class MenuBar extends JMenuBar {
 
         // delete all menu item from plugins menu bar and add new for actual tab
         getPluginsMenu().removeAll();
-        Vector<JMenuItem> menuItemVector = Structures.getPluginMenuItems().get(Gui.getActiveScenePanelTab());
-        for (JMenuItem menuItem : menuItemVector) {
-            getPluginsMenu().add(menuItem);
+        try {
+            Vector<JMenuItem> menuItemVector = Structures.getPluginMenuItems().get(Gui.getActiveScenePanelTab());
+            logger.trace("filling plugins menu for tab: " + Gui.getActiveScenePanelTab());
+            for (JMenuItem menuItem : menuItemVector) {
+                getPluginsMenu().add(menuItem);
+            }
+        } catch (NullPointerException e) {
+            logger.trace("No plugin menu items defined");
         }
     }
 

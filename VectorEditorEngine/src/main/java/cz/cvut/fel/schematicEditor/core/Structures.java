@@ -59,6 +59,9 @@ public class Structures {
     public static HashMap<SceneTabbedPaneTabs, Vector<JMenuItem>> getPluginMenuItems() {
         if (pluginMenuItems == null) {
             pluginMenuItems = new HashMap<SceneTabbedPaneTabs, Vector<JMenuItem>>();
+            for (SceneTabbedPaneTabs sceneTab : SceneTabbedPaneTabs.values()) {
+                pluginMenuItems.put(sceneTab, new Vector<JMenuItem>());
+            }
         }
         return pluginMenuItems;
     }
