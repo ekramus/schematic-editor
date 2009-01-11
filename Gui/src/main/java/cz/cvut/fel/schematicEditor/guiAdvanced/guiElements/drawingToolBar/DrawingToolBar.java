@@ -13,6 +13,7 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
@@ -215,7 +216,7 @@ public final class DrawingToolBar extends JToolBar {
                 l = new DeleteButtonListener();
                 break;
             case JUNCTION_BUTTON:
-                // l = new DrawShapeButtonListener(new Junction());
+                l = new DrawCircuitPartButtonListener(new Junction());
                 break;
             default:
                 break;

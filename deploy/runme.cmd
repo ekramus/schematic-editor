@@ -15,4 +15,4 @@ set JAR_PATH=%JAR_PATH%;jar/Units-1.0-SNAPSHOT.jar
 set STANDALONE=cz.cvut.fel.schematicEditor.launcher.Standalone
 
 set CLASSPATH=%LIB_PATH%;%JAR_PATH%
-java %STANDALONE% 
+java -Dsun.java2d.noddraw=true -Dsun.java2d.d3d=false -Dsun.java2d.ddforcedram=true -Dsun.java2d.ddblit=false %STANDALONE%

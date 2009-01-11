@@ -197,7 +197,7 @@
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ConnectorNode>
+          <cz.cvut.fel.schematicEditor.graphNode.PinNode>
             <id>1224351127431</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
@@ -225,7 +225,7 @@
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ConnectorNode>
+          </cz.cvut.fel.schematicEditor.graphNode.PinNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
@@ -254,7 +254,7 @@
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ConnectorNode>
+          <cz.cvut.fel.schematicEditor.graphNode.PinNode>
             <id>1224351127431</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
@@ -282,7 +282,7 @@
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ConnectorNode>
+          </cz.cvut.fel.schematicEditor.graphNode.PinNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>

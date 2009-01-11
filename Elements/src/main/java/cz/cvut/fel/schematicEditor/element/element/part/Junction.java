@@ -10,27 +10,26 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class encapsulates pin part. Pin serves as bridge between {@link Wire} and {@link Part}. It is visible in
- * application, exported is invisible.
+ * This class encapsulates junction part. Junction serves as bridge between two {@link Wire}s.
  *
  * @author Urban Kravjansky
  */
-public class Pin extends Element {
+public class Junction extends Element {
 
     /**
-     * Default {@link Pin} constructor.
+     * Default {@link Junction} constructor.
      */
-    public Pin() {
+    public Junction() {
         super();
     }
 
     /**
-     * {@link Pin} constructor with coordinate vector.
+     * {@link Junction} constructor with coordinate vector.
      *
      * @param x {@link Vector} of <code>x</code> coordinates.
      * @param y {@link Vector} of <code>y</code> coordinates.
      */
-    public Pin(Vector<Unit> x, Vector<Unit> y) {
+    public Junction(Vector<Unit> x, Vector<Unit> y) {
         super(x, y);
     }
 
@@ -62,7 +61,7 @@ public class Pin extends Element {
      */
     @Override
     public ElementType getElementType() {
-        return ElementType.T_PIN;
+        return ElementType.T_JUNCTION;
     }
 
     /**
@@ -79,11 +78,11 @@ public class Pin extends Element {
      */
     @Override
     public Element duplicate() {
-        Pin pin = new Pin();
+        Junction junction = new Junction();
 
-        pin.duplicateCoordinates(this);
+        junction.duplicateCoordinates(this);
 
-        return pin;
+        return junction;
     }
 
     /**
@@ -91,6 +90,6 @@ public class Pin extends Element {
      */
     @Override
     public String toString() {
-        return "PIN";
+        return "JUNCTION";
     }
 }

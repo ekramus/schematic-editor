@@ -182,7 +182,8 @@ public abstract class Manipulation {
         try {
             switch (getManipulatedGroup().getElementType()) {
                 case T_WIRE:
-                case T_CONNECTOR:
+                case T_PIN:
+                case T_JUNCTION:
                 case T_PART:
                     setSnapCoordinates(getTopNode().getPartsCoordinates());
                     break;
