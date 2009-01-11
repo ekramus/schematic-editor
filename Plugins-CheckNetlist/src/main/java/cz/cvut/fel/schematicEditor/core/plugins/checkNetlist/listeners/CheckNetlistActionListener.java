@@ -10,7 +10,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
-import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
@@ -104,8 +104,8 @@ public class CheckNetlistActionListener implements ActionListener {
         Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
 
         int i = 0;
-        for (ConnectorNode connectorNode : partNode.getPartConnectors()) {
-            Pin pin = (Pin) connectorNode.getElement();
+        for (PinNode pinNode : partNode.getPartConnectors()) {
+            Pin pin = (Pin) pinNode.getElement();
             Wire wire = getWireForConnector(pin, wireVector);
             // wire was found, now we can validate all connectors on that wire
             if (wire != null) {
@@ -166,11 +166,11 @@ public class CheckNetlistActionListener implements ActionListener {
      */
     private String getConnectorNameForUnitPoint(UnitPoint wup, Vector<PartNode> partNodes) {
         for (PartNode partNode : partNodes) {
-            Vector<ConnectorNode> cnv = partNode.getPartConnectors();
+            Vector<PinNode> cnv = partNode.getPartConnectors();
             Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
             int i = 0;
             // search for connector name
-            for (ConnectorNode cn : cnv) {
+            for (PinNode cn : cnv) {
                 Pin c = (Pin) cn.getElement();
                 UnitPoint cup = new UnitPoint(c.getX().firstElement(), c.getY().firstElement());
                 if (cup.equals(wup)) {

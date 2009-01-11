@@ -679,7 +679,8 @@ public class GroupNode extends Node {
 
         for (ElementNode childNode : getChildrenElementList()) {
             switch (childNode.getElement().getElementType()) {
-                case T_CONNECTOR:
+                case T_PIN:
+                case T_JUNCTION:
                 case T_WIRE:
                     Element element = childNode.getElement();
                     for (int i = 0; i < element.getX().size(); i++) {
@@ -708,12 +709,12 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Retrieves {@link Vector} of connector nodes and removes them from group node, so they do not duplicate.
+     * Retrieves {@link Vector} of pin nodes and removes them from group node, so they do not duplicate.
      *
      * @return
      */
-    public Vector<ConnectorNode> getAndRemoveConnectorNodes() {
-        Vector<ConnectorNode> result = new Vector<ConnectorNode>();
+    public Vector<PinNode> getAndRemovePinNodes() {
+        Vector<PinNode> result = new Vector<PinNode>();
 
         if (isDisabled()) {
             return result;
@@ -722,8 +723,8 @@ public class GroupNode extends Node {
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode childNode = getChildrenElementList().get(i);
             switch (childNode.getElement().getElementType()) {
-                case T_CONNECTOR:
-                    result.add((ConnectorNode) childNode.duplicate());
+                case T_PIN:
+                    result.add((PinNode) childNode.duplicate());
                     getChildrenElementList().remove(i);
                     break;
                 default:
@@ -732,7 +733,7 @@ public class GroupNode extends Node {
         }
 
         for (GroupNode groupNode : getChildrenGroupList()) {
-            result.addAll(groupNode.getAndRemoveConnectorNodes());
+            result.addAll(groupNode.getAndRemovePinNodes());
         }
 
         if (getChildrenElementList().isEmpty() && getChildrenGroupList().isEmpty()) {

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
-import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
@@ -54,9 +54,9 @@ public final class EditPartMenuItemListener implements ActionListener {
             GroupNode partGroupNode = (GroupNode) pn.getPartGroupNode().duplicate();
 
             // add all connectors from part node into group node
-            for (ConnectorNode connectorNode : pn.getPartConnectors()) {
+            for (PinNode pinNode : pn.getPartConnectors()) {
                 GroupNode gn = new GroupNode();
-                gn.add(connectorNode.duplicate());
+                gn.add(pinNode.duplicate());
                 gn.add(new ParameterNode());
                 partGroupNode.add(gn);
             }

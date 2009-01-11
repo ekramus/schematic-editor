@@ -8,12 +8,14 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
-import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
@@ -64,8 +66,11 @@ public class DrawCircuitPartButtonListener implements ActionListener {
             ElementNode en = null;
 
             switch (getElement().getElementType()) {
-                case T_CONNECTOR:
-                    en = new ConnectorNode((Pin) getElement());
+                case T_PIN:
+                    en = new PinNode((Pin) getElement());
+                    break;
+                case T_JUNCTION:
+                    en = new JunctionNode((Junction) getElement());
                     break;
                 case T_WIRE:
                     en = new WireNode((Wire) getElement());

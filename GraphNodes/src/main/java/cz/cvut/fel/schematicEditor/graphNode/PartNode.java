@@ -29,7 +29,7 @@ public class PartNode extends ElementNode {
     /**
      * {@link Vector} of part connectors.
      */
-    private Vector<ConnectorNode> partConnectors;
+    private Vector<PinNode> partConnectors;
 
     /**
      * Constructor with default set of parameters. It instantiates new {@link PartNode}.
@@ -70,7 +70,7 @@ public class PartNode extends ElementNode {
             partGroupNode.add(pn);
         }
 
-        setPartConnectors(partGroupNode.getAndRemoveConnectorNodes());
+        setPartConnectors(partGroupNode.getAndRemovePinNodes());
         setPartGroupNode(partGroupNode.getEnabledOnly());
     }
 
@@ -99,7 +99,7 @@ public class PartNode extends ElementNode {
 
         result = new UnitRectangle(x, y, w, h);
 
-        for (ConnectorNode cn : getPartConnectors()) {
+        for (PinNode cn : getPartConnectors()) {
             Pin c = (Pin) cn.getElement();
             result = (UnitRectangle) result.createUnion(c.getBounds());
         }
@@ -114,9 +114,9 @@ public class PartNode extends ElementNode {
     public Node duplicate() {
         PartNode result = new PartNode((Part) getElement(), (GroupNode) getPartGroupNode().duplicate());
 
-        Vector<ConnectorNode> partConnectors = new Vector<ConnectorNode>();
-        for (ConnectorNode connectorNode : getPartConnectors()) {
-            partConnectors.add((ConnectorNode) connectorNode.duplicate());
+        Vector<PinNode> partConnectors = new Vector<PinNode>();
+        for (PinNode pinNode : getPartConnectors()) {
+            partConnectors.add((PinNode) pinNode.duplicate());
         }
         result.setPartConnectors(partConnectors);
 
@@ -161,8 +161,8 @@ public class PartNode extends ElementNode {
         getPartGroupNode().add(new TransformationNode(t));
 
         // modify coordinates of part connectors
-        for (ConnectorNode connectorNode : getPartConnectors()) {
-            connectorNode.modifyCoordinates(t);
+        for (PinNode pinNode : getPartConnectors()) {
+            pinNode.modifyCoordinates(t);
         }
 
         // modify coordinates of rotation center
@@ -173,14 +173,14 @@ public class PartNode extends ElementNode {
     /**
      * @param partConnectors the partConnectors to set
      */
-    public void setPartConnectors(Vector<ConnectorNode> partConnectors) {
+    public void setPartConnectors(Vector<PinNode> partConnectors) {
         this.partConnectors = partConnectors;
     }
 
     /**
      * @return the partConnectors
      */
-    public Vector<ConnectorNode> getPartConnectors() {
+    public Vector<PinNode> getPartConnectors() {
         return this.partConnectors;
     }
 
@@ -190,8 +190,8 @@ public class PartNode extends ElementNode {
     public Collection<? extends UnitPoint> getPartConnectorsCoordinates() {
         Vector<UnitPoint> result = new Vector<UnitPoint>();
 
-        for (ConnectorNode connectorNode : getPartConnectors()) {
-            Pin c = (Pin) connectorNode.getElement();
+        for (PinNode pinNode : getPartConnectors()) {
+            Pin c = (Pin) pinNode.getElement();
             for (int i = 0; i < c.getX().size(); i++) {
                 result.add(new UnitPoint(c.getX().get(i), c.getY().get(i)));
             }

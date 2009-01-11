@@ -2,7 +2,7 @@ package cz.cvut.fel.schematicEditor.element;
 
 /**
  * This enum contains all element types available.
- * 
+ *
  * @author Urban Kravjansky
  */
 public enum ElementType {
@@ -55,7 +55,11 @@ public enum ElementType {
      */
     T_ARC_SEGMENT,
     /**
-     * Identifier for connector element type.
+     * Identifier for pin element type.
      */
-    T_CONNECTOR,
+    T_PIN,
+    /**
+     * Identifier for junction element type.
+     */
+    T_JUNCTION,
 }

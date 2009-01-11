@@ -7,14 +7,14 @@ import cz.cvut.fel.schematicEditor.element.element.part.Pin;
  *
  * @author Urban Kravjansky
  */
-public class ConnectorNode extends ElementNode {
+public class PinNode extends ElementNode {
     /**
      * This is constructor.
      *
      * @param pin
-     *            {@link Pin} stored in this {@link ConnectorNode}.
+     *            {@link Pin} stored in this {@link PinNode}.
      */
-    public ConnectorNode(Pin pin) {
+    public PinNode(Pin pin) {
         super(pin);
     }
 
@@ -22,11 +22,11 @@ public class ConnectorNode extends ElementNode {
      * This is constructor.
      *
      * @param pin
-     *            {@link Pin} stored in this {@link ConnectorNode}.
+     *            {@link Pin} stored in this {@link PinNode}.
      * @param id
-     *            identifier of this {@link ConnectorNode}.
+     *            identifier of this {@link PinNode}.
      */
-    public ConnectorNode(Pin pin, String id) {
+    public PinNode(Pin pin, String id) {
         super(pin, id);
     }
 
@@ -35,7 +35,7 @@ public class ConnectorNode extends ElementNode {
      */
     @Override
     public Node duplicate() {
-        ConnectorNode result = new ConnectorNode((Pin) getElement());
+        PinNode result = new PinNode((Pin) getElement());
 
         return result;
     }

@@ -17,6 +17,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
@@ -28,11 +29,11 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
-import cz.cvut.fel.schematicEditor.graphNode.ConnectorNode;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -308,9 +309,21 @@ public class DisplayExport implements Export {
                 }
                 break;
 
-            case T_CONNECTOR:
+            case T_PIN:
                 Pin pin = (Pin) elementNode.getElement();
-                drawConnector(pin, parameterNode, nodeG2D);
+                drawPin(pin, parameterNode, nodeG2D);
+                break;
+
+            case T_JUNCTION:
+                Junction junction = (Junction) elementNode.getElement();
+                logger.trace("drawing connector at coordinates: " + new UnitPoint(junction.getX().firstElement(),
+                        junction.getY().firstElement()));
+
+                Ellipse2D.Double e2d = new Ellipse2D.Double(
+                        (junction.getX().firstElement().doubleValue() * getZoomFactor()) - 2, (junction.getY()
+                                .firstElement().doubleValue() * getZoomFactor()) - 2, 5, 5);
+                drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode
+                        .getFillStyle());
                 break;
 
             case T_PART:
@@ -323,9 +336,9 @@ public class DisplayExport implements Export {
                 Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
                 // search for connectors, draw them and display their names
                 int i = 0;
-                for (ConnectorNode cn : partNode.getPartConnectors()) {
+                for (PinNode cn : partNode.getPartConnectors()) {
                     Pin c = (Pin) cn.getElement();
-                    drawConnector(c, parameterNode, nodeG2D);
+                    drawPin(c, parameterNode, nodeG2D);
                     drawConnectorText(c, connectorNames.get(i), nodeG2D);
                     i++;
                 }
@@ -424,11 +437,11 @@ public class DisplayExport implements Export {
     }
 
     /**
-     * Draws connector.
+     * Draws pin.
      *
      * @param pin
      */
-    private void drawConnector(final Pin pin, ParameterNode parameterNode, Graphics2D nodeG2D) {
+    private void drawPin(final Pin pin, ParameterNode parameterNode, Graphics2D nodeG2D) {
         logger.trace("drawing connector at coordinates: " + new UnitPoint(pin.getX().firstElement(), pin.getY()
                 .firstElement()));
 
