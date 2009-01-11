@@ -28,8 +28,7 @@ public class ElementsCount implements Plugin {
     /**
      * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(JMenu, JToolBar)
      */
-    public boolean activate(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingBar) {
-        pluginsMenu.add(getMenuItem());
+    public boolean activate(SceneGraph sg) {
         setSceneGraph(sg);
         return true;
     }
@@ -47,7 +46,7 @@ public class ElementsCount implements Plugin {
      * @return {@link JMenuItem} instance.
      *
      */
-    private JMenuItem getMenuItem() {
+    public JMenuItem getMenuItem() {
         if (ElementsCount.elementsCountMenuItem == null) {
             ElementsCount.elementsCountMenuItem = new JMenuItem("Elements count");
             ElementsCount.elementsCountMenuItem.addActionListener(new ElementsCountActionListener(getSceneGraph()));

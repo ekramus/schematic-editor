@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JToolBar;
+import javax.swing.JMenuItem;
 
 import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.Structures;
@@ -29,9 +28,9 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
     SceneGraph sceneGraph;
 
     /**
-     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(javax.swing.JMenu, javax.swing.JToolBar)
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(SceneGraph)
      */
-    public boolean activate(SceneGraph sg, JMenu pluginsMenu, JToolBar drawingToolBar) {
+    public boolean activate(SceneGraph sg) {
         setSceneGraph(sg);
         return true;
     }
@@ -108,5 +107,12 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
      */
     private SceneGraph getSceneGraph() {
         return this.sceneGraph;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#getMenuItem()
+     */
+    public JMenuItem getMenuItem() {
+        return null;
     }
 }
