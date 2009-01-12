@@ -181,7 +181,7 @@ public class Gui extends JApplet {
     /**
      * Refresh gui components.
      */
-    private void refresh() {
+    public void refresh() {
         MenuBar.getInstance().refresh();
         DrawingToolBar.getInstance().refresh();
     }

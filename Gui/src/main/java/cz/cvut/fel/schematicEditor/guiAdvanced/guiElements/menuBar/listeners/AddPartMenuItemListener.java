@@ -68,7 +68,7 @@ public final class AddPartMenuItemListener implements ActionListener {
             // finally add to SceneGraph
             Gui.getActiveScenePanel().getSceneGraph().getTopNode().add(groupNode);
             Gui.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
-            Gui.getActiveScenePanel().schemeInvalidate(null);
+            Gui.getActiveScenePanel().sceneInvalidate(null);
         }
     }
 

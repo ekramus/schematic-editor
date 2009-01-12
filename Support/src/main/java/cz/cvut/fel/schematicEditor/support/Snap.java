@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.support;
 
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -14,6 +16,11 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
  * @author Urban Kravjansky
  */
 public class Snap {
+    /**
+     * Logger instance for logging purposes.
+     */
+    private static Logger logger;
+
     /**
      * Get snapped coordinate. In case snap to grid is disabled, coordinate will be unchanged.
      *
@@ -44,7 +51,7 @@ public class Snap {
      * @param snapPoints {@link Vector} of {@link UnitPoint}s, from which snap point is selected.
      * @return Snapped coordinate value.
      */
-    public static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints) {
+    private static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints) {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
         UnitPoint result = new UnitPoint(coordinate);
         Unit minDelta = configuration.getSnapDelta();
@@ -69,5 +76,47 @@ public class Snap {
         }
 
         return result;
+    }
+
+    /**
+     * Get snapped coordinate with rectangular snap to previous coordinate.
+     *
+     * @param coordinate coordinate to snap.
+     * @param snapPoints {@link Vector} of {@link UnitPoint}s, from which snap point is selected.
+     * @param previousX previous X coordinate used for snapping.
+     * @param previousY previous Y coordinate used for snapping.
+     * @return Snapped coordinate.
+     */
+    public static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints, Vector<Unit> x, Vector<Unit> y) {
+        UnitPoint result = new UnitPoint(coordinate);
+        logger = Logger.getLogger(Snap.class.getClass());
+
+        // do we have list of coordinates to use for snap?
+        if (snapPoints == null) {
+            return getSnap(coordinate);
+        }
+
+        // do we have previous coordinates?
+        try {
+            if ((x.size() < 2) || (y.size() < 2)) {
+                return getSnap(coordinate);
+            }
+        } catch (NullPointerException e) {
+            logger.trace("no coordinates at all");
+        }
+
+        Unit previousX = x.get(x.size() - 2);
+        Unit previousY = y.get(y.size() - 2);
+
+        double deltaX = Math.abs(coordinate.getX() - previousX.doubleValue());
+        double deltaY = Math.abs(coordinate.getY() - previousY.doubleValue());
+
+        if (deltaX < deltaY) {
+            result.setUnitX(previousX);
+        } else {
+            result.setUnitY(previousY);
+        }
+
+        return getSnap(result, snapPoints);
     }
 }

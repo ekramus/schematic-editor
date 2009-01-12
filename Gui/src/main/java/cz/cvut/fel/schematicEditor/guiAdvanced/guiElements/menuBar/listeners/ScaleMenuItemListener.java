@@ -55,6 +55,6 @@ public final class ScaleMenuItemListener implements ActionListener {
 
         Gui.getActiveScenePanel().setZoomFactor(value / 100);
         Gui.getActiveScenePanel().setGridValid(false);
-        Gui.getActiveScenePanel().schemeInvalidate(null);
+        Gui.getActiveScenePanel().sceneInvalidate(null);
     }
 }

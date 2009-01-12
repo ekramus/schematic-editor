@@ -109,7 +109,9 @@ public class Move extends Manipulation {
 
             // add two copies of same coordinates to be able to replace last one
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
-            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
+            // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+            // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
+            UnitPoint snap = Snap.getSnap(up, null, null, null);
             addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
             addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
         }
@@ -133,7 +135,9 @@ public class Move extends Manipulation {
             logger.debug("object MOVED");
 
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
-            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
+            // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+            // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
+            UnitPoint snap = Snap.getSnap(up, null, null, null);
             replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
 
             // compute delta

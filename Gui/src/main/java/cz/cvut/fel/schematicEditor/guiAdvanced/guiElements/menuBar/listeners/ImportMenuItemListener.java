@@ -59,7 +59,7 @@ public final class ImportMenuItemListener implements ActionListener {
 
             SceneGraph sg = deserialize(Gui.getActiveScenePanel().getSceneGraph().getClass(), file);
             Gui.getActiveScenePanel().getSceneGraph().getTopNode().add(sg.getTopNode());
-            Gui.getActiveScenePanel().schemeInvalidate(null);
+            Gui.getActiveScenePanel().sceneInvalidate(null);
         }
     }
 

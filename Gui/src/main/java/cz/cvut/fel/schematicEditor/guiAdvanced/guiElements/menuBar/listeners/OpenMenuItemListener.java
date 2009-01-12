@@ -59,7 +59,7 @@ public final class OpenMenuItemListener implements ActionListener {
                                     deserialize(Gui.getActiveScenePanel().getSceneGraph().getTopNode()
                                             .getClass(), file));
 
-            Gui.getActiveScenePanel().schemeInvalidate(null);
+            Gui.getActiveScenePanel().sceneInvalidate(null);
         }
     }
 

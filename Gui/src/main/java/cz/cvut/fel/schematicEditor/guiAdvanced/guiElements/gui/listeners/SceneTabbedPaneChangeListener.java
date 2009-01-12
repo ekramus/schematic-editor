@@ -19,7 +19,7 @@ public class SceneTabbedPaneChangeListener implements ChangeListener {
      * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
      */
     public void stateChanged(ChangeEvent e) {
-        Gui.getActiveScenePanel().schemeInvalidate(null);
+        Gui.getActiveScenePanel().sceneInvalidate(null);
         MenuBar.getInstance().refresh();
         DrawingToolBar.getInstance().refresh();
     }

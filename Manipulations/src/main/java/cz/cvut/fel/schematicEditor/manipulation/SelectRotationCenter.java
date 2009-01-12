@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
@@ -53,7 +54,8 @@ public class SelectRotationCenter extends Manipulation {
         if (isActive()) {
             // add coordinate
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
-            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
+            Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
         }
         // select rotation center is not possible - fall back to Select manipulation

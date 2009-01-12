@@ -36,7 +36,7 @@ public final class NewSchemeMenuItemListener implements ActionListener {
                                                    JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             Gui.getInstance().getSchemeScenePanel().getSceneGraph().initSceneGraph();
-            Gui.getInstance().getSchemeScenePanel().schemeInvalidate(null);
+            Gui.getInstance().getSchemeScenePanel().sceneInvalidate(null);
         }
     }
 }
