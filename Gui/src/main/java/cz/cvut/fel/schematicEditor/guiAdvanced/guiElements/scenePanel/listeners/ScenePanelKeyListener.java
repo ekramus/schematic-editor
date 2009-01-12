@@ -70,7 +70,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 Gui.getActiveScenePanel().getManipulationQueue().unexecute();
 
                 // invalidate scheme
-                Gui.getActiveScenePanel().schemeInvalidate(null);
+                Gui.getActiveScenePanel().sceneInvalidate(null);
 
                 // add manipulation before unexecuted manipulation as activeManipulation
                 Gui.getActiveScenePanel().setActiveManipulation(
@@ -89,7 +89,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 Gui.getActiveScenePanel().getManipulationQueue().reexecute();
 
                 // invalidate scheme
-                Gui.getActiveScenePanel().schemeInvalidate(null);
+                Gui.getActiveScenePanel().sceneInvalidate(null);
 
                 // add reexecuted manipulation as activeManipulation
                 Gui.getActiveScenePanel().setActiveManipulation(

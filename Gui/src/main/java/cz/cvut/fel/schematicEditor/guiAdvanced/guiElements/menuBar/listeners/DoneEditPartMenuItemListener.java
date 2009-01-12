@@ -38,10 +38,10 @@ public final class DoneEditPartMenuItemListener implements ActionListener {
 
         // clean up part scene panel
         Gui.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph();
-        Gui.getInstance().getPartScenePanel().schemeInvalidate(null);
+        Gui.getInstance().getPartScenePanel().sceneInvalidate(null);
 
         // refresh scene scene panel
-        Gui.getInstance().getSchemeScenePanel().schemeInvalidate(null);
+        Gui.getInstance().getSchemeScenePanel().sceneInvalidate(null);
 
         // set correct menu bar items
         MenuBar.getInstance().setEditPartMenuItemEnabled(true);

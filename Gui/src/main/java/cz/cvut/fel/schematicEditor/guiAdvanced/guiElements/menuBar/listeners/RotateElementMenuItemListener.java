@@ -48,7 +48,7 @@ public class RotateElementMenuItemListener implements ActionListener {
                             .getActiveScenePanel().getZoomFactor());
                     Gui.getActiveScenePanel().getManipulationQueue().execute(m);
 
-                    Gui.getActiveScenePanel().schemeInvalidate(null);
+                    Gui.getActiveScenePanel().sceneInvalidate(null);
                 } catch (UnknownManipulationException ume) {
                     ume.printStackTrace();
                 }

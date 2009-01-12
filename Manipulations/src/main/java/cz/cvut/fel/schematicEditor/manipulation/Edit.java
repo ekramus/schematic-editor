@@ -65,7 +65,8 @@ public class Edit extends Manipulation {
 
             // add two copies of same coordinates to be able to replace last one
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
-            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
+            Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
             addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
         }
@@ -88,7 +89,8 @@ public class Edit extends Manipulation {
 
             // replace last manipulation coordinates for delta
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
-            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
+            Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
 
             // compute delta

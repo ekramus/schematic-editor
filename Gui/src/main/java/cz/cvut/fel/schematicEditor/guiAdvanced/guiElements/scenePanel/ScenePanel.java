@@ -64,7 +64,7 @@ public class ScenePanel extends JPanel {
     /**
      * This field represents validity of scheme.
      */
-    private boolean           schemeValid;
+    private boolean           sceneValid;
     /**
      * {@link SceneGraph} instance used for this instance of {@link ScenePanel}.
      */
@@ -177,7 +177,7 @@ public class ScenePanel extends JPanel {
      * This field represents invalid rectangle of scheme.
      */
     @SuppressWarnings("unused")
-    private UnitRectangle schemeInvalidRect;
+    private UnitRectangle sceneInvalidRect;
 
     /**
      * This is the default constructor
@@ -191,13 +191,25 @@ public class ScenePanel extends JPanel {
     }
 
     /**
-     * This method invalidates <code>scheme</code>.
+     * This method invalidates <code>scene</code>.
      *
      * @param bounds bounds of invalid region.
      */
-    public void schemeInvalidate(UnitRectangle bounds) {
-        this.schemeValid = false;
-        this.schemeInvalidRect = bounds;
+    public void sceneInvalidate(UnitRectangle bounds) {
+        GuiConfiguration config = GuiConfiguration.getInstance();
+
+        // set invalid properties
+        this.sceneValid = false;
+        this.sceneInvalidRect = bounds;
+
+        // set scene dim
+        Dimension dim = config.getSceneDim();
+        dim = new Dimension((int) (dim.getWidth() * getZoomFactor()), (int) (dim.getHeight() * getZoomFactor()));
+        setMinimumSize(dim);
+        setMaximumSize(dim);
+        setPreferredSize(dim);
+
+        this.revalidate();
         this.repaint();
     }
 
@@ -256,7 +268,7 @@ public class ScenePanel extends JPanel {
             }
 
             // redraw scheme
-            schemeInvalidate(null);
+            sceneInvalidate(null);
 
             // create new manipulation based on previous
             setActiveManipulation(ManipulationFactory.createNext(getActiveManipulation()));
@@ -302,6 +314,7 @@ public class ScenePanel extends JPanel {
 
         // create new grid
         BufferedImage grid = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        logger.trace("Scene Panel width: " + getWidth() + " | height: " + getHeight());
         Graphics2D gridG2D = (Graphics2D) grid.getGraphics();
 
         // draw first rectangle
@@ -380,11 +393,11 @@ public class ScenePanel extends JPanel {
             g2d.drawImage(this.grid, 0, 0, null);
         }
         // if scheme is not valid, recreate it.
-        if (!this.schemeValid) {
+        if (!this.sceneValid) {
             // restore validity
-            this.schemeValid = true;
+            this.sceneValid = true;
 
-            // TODO add schemeInvalidRect to algorithm
+            // TODO add sceneInvalidRect to algorithm
             // re-draw scheme
             this.scheme = drawScheme();
         }

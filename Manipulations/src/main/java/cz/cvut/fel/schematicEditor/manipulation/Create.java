@@ -136,7 +136,8 @@ public class Create extends Manipulation {
 
         // add two pairs of coordinates (each element needs two)
         UnitPoint up = new UnitPoint(e.getX(), e.getY());
-        UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
+        Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+        UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
 
@@ -162,7 +163,8 @@ public class Create extends Manipulation {
             default:
                 // add next coordinate
                 up = new UnitPoint(e.getX(), e.getY());
-                snap = Snap.getSnap(up, getSnapCoordinates());
+                Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+                snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
                 addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
                 break;
         }

@@ -36,7 +36,7 @@ public final class NewPartMenuItemListener implements ActionListener {
                                                    JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             Gui.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph();
-            Gui.getInstance().getPartScenePanel().schemeInvalidate(null);
+            Gui.getInstance().getPartScenePanel().sceneInvalidate(null);
         }
     }
 }

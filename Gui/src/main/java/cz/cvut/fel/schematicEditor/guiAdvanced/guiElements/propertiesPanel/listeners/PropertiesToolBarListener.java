@@ -52,7 +52,7 @@ public abstract class PropertiesToolBarListener {
             if (select.getManipulatedGroup() != null) {
                 select.getManipulatedGroup().getChildrenParameterNode().setProperties(elementProperties);
 
-                Gui.getActiveScenePanel().schemeInvalidate(select.getManipulatedGroup().getBounds());
+                Gui.getActiveScenePanel().sceneInvalidate(select.getManipulatedGroup().getBounds());
             }
         }
     }
