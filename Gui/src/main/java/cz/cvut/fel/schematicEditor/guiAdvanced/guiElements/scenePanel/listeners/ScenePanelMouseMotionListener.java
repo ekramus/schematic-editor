@@ -10,6 +10,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
@@ -46,8 +47,13 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
-                Element el = m.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
-                UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates(), el.getX(), el.getY());
+                UnitPoint snap;
+                if (m.getManipulationType() == ManipulationType.CREATE) {
+                    Element el = m.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+                    snap = Snap.getSnap(up, m.getSnapCoordinates(), el.getX(), el.getY());
+                } else {
+                    snap = Snap.getSnap(up, m.getSnapCoordinates());
+                }
                 m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), Gui.getActiveScenePanel()
                         .getZoomFactor());
 
@@ -73,8 +79,13 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = new UnitPoint(e.getX(), e.getY());
-                Element el = m.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
-                UnitPoint snap = Snap.getSnap(up, m.getSnapCoordinates(), el.getX(), el.getY());
+                UnitPoint snap;
+                if (m.getManipulationType() == ManipulationType.CREATE) {
+                    Element el = m.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+                    snap = Snap.getSnap(up, m.getSnapCoordinates(), el.getX(), el.getY());
+                } else {
+                    snap = Snap.getSnap(up, m.getSnapCoordinates());
+                }
                 m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), Gui.getActiveScenePanel()
                         .getZoomFactor());
 
