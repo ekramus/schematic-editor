@@ -64,13 +64,13 @@ public class Edit extends Manipulation {
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
-            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
             // TODO re-thing editing wires
             // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
             // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         }
         // edit is not possible - fall back to Select manipulation
         else {
@@ -90,12 +90,12 @@ public class Edit extends Manipulation {
             logger.trace("object EDITED");
 
             // replace last manipulation coordinates for delta
-            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
             // TODO re-thing editing wires
             // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
             // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
-            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
             // compute delta
             setDelta(computeDelta());
@@ -205,22 +205,22 @@ public class Edit extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit, Unit, double)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit, Unit)
      */
     @Override
-    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.addManipulationCoordinates(x, y, zoomFactor);
+    public void addManipulationCoordinates(Unit x, Unit y) {
+        super.addManipulationCoordinates(x, y);
 
         setDelta(computeDelta());
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
-     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit, double)
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
      */
     @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.replaceLastManipulationCoordinates(x, y, zoomFactor);
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        super.replaceLastManipulationCoordinates(x, y);
 
         setDelta(computeDelta());
         getManipulatedGroup().switchEdit(new UnitPoint(getDelta()));

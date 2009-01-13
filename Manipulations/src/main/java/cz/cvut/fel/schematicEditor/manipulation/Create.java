@@ -81,8 +81,8 @@ public class Create extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
      */
     @Override
-    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.addManipulationCoordinates(x, y, zoomFactor);
+    public void addManipulationCoordinates(Unit x, Unit y) {
+        super.addManipulationCoordinates(x, y);
         if (getPointsLeft() > Element.ZERO_COORDINATES) {
             setPointsLeft(getPointsLeft() - 1);
         }
@@ -135,11 +135,11 @@ public class Create extends Manipulation {
         setActive(true);
 
         // add two pairs of coordinates (each element needs two)
-        UnitPoint up = new UnitPoint(e.getX(), e.getY());
+        UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
         Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
         UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
-        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
-        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+        addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
         return this;
     }
@@ -162,10 +162,10 @@ public class Create extends Manipulation {
             case Element.INFINITE_COORDINATES:
             default:
                 // add next coordinate
-                up = new UnitPoint(e.getX(), e.getY());
+                up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
                 Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
                 snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
-                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
                 break;
         }
 
@@ -185,11 +185,11 @@ public class Create extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
-     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit, double)
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
      */
     @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.replaceLastManipulationCoordinates(x, y, zoomFactor);
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        super.replaceLastManipulationCoordinates(x, y);
 
         // update manipulated group coordinates
         getManipulatedGroup().setXY(getX(), getY());

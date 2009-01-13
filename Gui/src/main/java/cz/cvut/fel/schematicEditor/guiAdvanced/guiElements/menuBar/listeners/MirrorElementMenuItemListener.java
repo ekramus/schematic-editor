@@ -38,12 +38,19 @@ public class MirrorElementMenuItemListener implements ActionListener {
         if (Gui.getActiveScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
             if (Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup() != null) {
                 try {
-                    Manipulation m = ManipulationFactory.create(ManipulationType.MIRROR, Gui
-                            .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
-                    m.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation()
-                            .getManipulatedGroup());
-                    m.addManipulationCoordinates(getMirrorAxe().getUnitX(), getMirrorAxe().getUnitY(), Gui
+                    // create manipulation
+                    Manipulation m = ManipulationFactory.create(ManipulationType.MIRROR, Gui.getActiveScenePanel()
+                            .getSceneGraph().getTopNode(), e.getSource());
+
+                    // create unit point
+                    UnitPoint up = m.getScaledUnitPoint(getMirrorAxe().getX(), getMirrorAxe().getY(), Gui
                             .getActiveScenePanel().getZoomFactor());
+
+                    // set up manipulation
+                    m.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup());
+                    m.addManipulationCoordinates(up.getUnitX(), up.getUnitY());
+
+                    // execute manipualtion
                     Gui.getActiveScenePanel().getManipulationQueue().execute(m);
 
                     Gui.getActiveScenePanel().sceneInvalidate(null);

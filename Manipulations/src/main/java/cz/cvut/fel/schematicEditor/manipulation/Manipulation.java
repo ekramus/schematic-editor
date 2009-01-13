@@ -88,11 +88,10 @@ public abstract class Manipulation {
      *
      * @param x <code>x</code> to add.
      * @param y <code>y</code> to add.
-     * @param zoomFactor <code>zoomFactor</code> used for coordinates normalization.
      */
-    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        this.x.add(new Pixel(x.doubleValue() / zoomFactor));
-        this.y.add(new Pixel(y.doubleValue() / zoomFactor));
+    public void addManipulationCoordinates(Unit x, Unit y) {
+        this.x.add(new Pixel(x.doubleValue()));
+        this.y.add(new Pixel(y.doubleValue()));
 
         logger.trace("added manipulation coordinates");
     }
@@ -153,17 +152,28 @@ public abstract class Manipulation {
      *
      * @param x new <code>x</code> coordinate.
      * @param y new <code>y</code> coordinate.
-     * @param zoomFactor <code>zoomFactor</code> used for coordinates normalization.
      */
-    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
         try {
-            this.x.set(this.x.size() - 1, new Pixel(x.doubleValue() / zoomFactor));
-            this.y.set(this.y.size() - 1, new Pixel(y.doubleValue() / zoomFactor));
+            this.x.set(this.x.size() - 1, new Pixel(x.doubleValue()));
+            this.y.set(this.y.size() - 1, new Pixel(y.doubleValue()));
         } catch (ArrayIndexOutOfBoundsException e) {
-            addManipulationCoordinates(x, y, zoomFactor);
+            addManipulationCoordinates(x, y);
         }
 
         logger.trace("replacing last manipulation coordinates");
+    }
+
+    /**
+     * Getter for scaled unit point.
+     *
+     * @param x x coordinate.
+     * @param y y coordinate.
+     * @param zoomFactor <code>zoomFactor</code> used for coordinates normalization.
+     * @return Scaled unit point.
+     */
+    public UnitPoint getScaledUnitPoint(double x, double y, double zoomFactor) {
+        return new UnitPoint(x / zoomFactor, y / zoomFactor);
     }
 
     /**

@@ -36,7 +36,7 @@ public class Snap {
             return new UnitPoint(coordinate);
         }
         x = new Pixel(configuration.getGridSize().doubleValue() * (int) ((coordinate.getX() + configuration
-                .getGridSize().doubleValue() / 2) / configuration.getGridSize().doubleValue()));
+                .getGridSize().doubleValue() / 2) / (configuration.getGridSize().doubleValue())));
         y = new Pixel(configuration.getGridSize().doubleValue() * (int) ((coordinate.getY() + configuration
                 .getGridSize().doubleValue() / 2) / configuration.getGridSize().doubleValue()));
 
