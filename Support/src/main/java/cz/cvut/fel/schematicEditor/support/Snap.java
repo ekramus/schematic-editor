@@ -51,7 +51,7 @@ public class Snap {
      * @param snapPoints {@link Vector} of {@link UnitPoint}s, from which snap point is selected.
      * @return Snapped coordinate value.
      */
-    private static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints) {
+    public static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints) {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
         UnitPoint result = new UnitPoint(coordinate);
         Unit minDelta = configuration.getSnapDelta();
@@ -83,8 +83,8 @@ public class Snap {
      *
      * @param coordinate coordinate to snap.
      * @param snapPoints {@link Vector} of {@link UnitPoint}s, from which snap point is selected.
-     * @param previousX previous X coordinate used for snapping.
-     * @param previousY previous Y coordinate used for snapping.
+     * @param x previous X coordinates used for snapping.
+     * @param y previous Y coordinates used for snapping.
      * @return Snapped coordinate.
      */
     public static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints, Vector<Unit> x, Vector<Unit> y) {

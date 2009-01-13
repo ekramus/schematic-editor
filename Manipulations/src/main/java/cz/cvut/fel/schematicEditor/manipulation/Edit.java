@@ -65,8 +65,10 @@ public class Edit extends Manipulation {
 
             // add two copies of same coordinates to be able to replace last one
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
-            Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
-            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
+            // TODO re-thing editing wires
+            // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+            // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
+            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
             addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
             addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
         }
@@ -89,8 +91,10 @@ public class Edit extends Manipulation {
 
             // replace last manipulation coordinates for delta
             UnitPoint up = new UnitPoint(e.getX(), e.getY());
-            Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
-            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
+            // TODO re-thing editing wires
+            // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+            // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
+            UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
             replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
 
             // compute delta
