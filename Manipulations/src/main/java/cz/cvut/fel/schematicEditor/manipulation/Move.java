@@ -53,8 +53,8 @@ public class Move extends Manipulation {
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit, double)
      */
     @Override
-    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.addManipulationCoordinates(x, y, zoomFactor);
+    public void addManipulationCoordinates(Unit x, Unit y) {
+        super.addManipulationCoordinates(x, y);
 
         setDelta(computeDelta());
         switchLastTransformation(getDelta());
@@ -108,12 +108,12 @@ public class Move extends Manipulation {
             getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
-            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
             // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
             // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             UnitPoint snap = Snap.getSnap(up, null, null, null);
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         }
         // move is not possible - fall back to Select manipulation
         else {
@@ -134,11 +134,11 @@ public class Move extends Manipulation {
         if (isActive()) {
             logger.debug("object MOVED");
 
-            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
             // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
             // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             UnitPoint snap = Snap.getSnap(up, null, null, null);
-            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+            replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
             // compute delta
             setDelta(computeDelta());
@@ -151,8 +151,8 @@ public class Move extends Manipulation {
      *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit, double)
      */
     @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.replaceLastManipulationCoordinates(x, y, zoomFactor);
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        super.replaceLastManipulationCoordinates(x, y);
 
         setDelta(computeDelta());
         switchLastTransformation(getDelta());

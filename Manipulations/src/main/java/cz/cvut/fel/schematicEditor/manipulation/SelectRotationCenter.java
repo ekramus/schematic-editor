@@ -52,11 +52,11 @@ public class SelectRotationCenter extends Manipulation {
         // check, whether select rotation center is possible or not
         if (isActive()) {
             // add coordinate
-            UnitPoint up = new UnitPoint(e.getX(), e.getY());
+            UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
             // Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
             // UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
             UnitPoint snap = Snap.getSnap(up, getSnapCoordinates());
-            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), zoomFactor);
+            addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         }
         // select rotation center is not possible - fall back to Select manipulation
         else {

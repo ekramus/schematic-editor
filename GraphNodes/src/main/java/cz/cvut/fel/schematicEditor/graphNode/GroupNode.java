@@ -429,6 +429,8 @@ public class GroupNode extends Node {
             return false;
         }
 
+        logger.trace("start edit?");
+
         // modify rectangle if zoomFactor != 1
         Rectangle2D r = r2d;
         if (zoomFactor != 1) {

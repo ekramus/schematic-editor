@@ -139,19 +139,19 @@ public class Mirror extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit, double)
+     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#addManipulationCoordinates(Unit,Unit)
      */
     @Override
-    public void addManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.addManipulationCoordinates(x, y, zoomFactor);
+    public void addManipulationCoordinates(Unit x, Unit y) {
+        super.addManipulationCoordinates(x, y);
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#replaceLastManipulationCoordinates(cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit,
-     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit, double)
+     *      cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit)
      */
     @Override
-    public void replaceLastManipulationCoordinates(Unit x, Unit y, double zoomFactor) {
-        super.replaceLastManipulationCoordinates(x, y, zoomFactor);
+    public void replaceLastManipulationCoordinates(Unit x, Unit y) {
+        super.replaceLastManipulationCoordinates(x, y);
     }
 }

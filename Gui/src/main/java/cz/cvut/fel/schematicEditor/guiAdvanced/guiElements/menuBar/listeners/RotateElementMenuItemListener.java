@@ -40,12 +40,19 @@ public class RotateElementMenuItemListener implements ActionListener {
         if (Gui.getActiveScenePanel().getActiveManipulation().getManipulationType() == ManipulationType.SELECT) {
             if (Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup() != null) {
                 try {
-                    Manipulation m = ManipulationFactory.create(ManipulationType.ROTATE, Gui
-                            .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
-                    m.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation()
-                            .getManipulatedGroup());
-                    m.addManipulationCoordinates(getOrientation().getUnitX(), getOrientation().getUnitY(), Gui
+                    // create manipulation
+                    Manipulation m = ManipulationFactory.create(ManipulationType.ROTATE, Gui.getActiveScenePanel()
+                            .getSceneGraph().getTopNode(), e.getSource());
+
+                    // create unit point
+                    UnitPoint up = m.getScaledUnitPoint(getOrientation().getX(), getOrientation().getY(), Gui
                             .getActiveScenePanel().getZoomFactor());
+
+                    // setup manipulation
+                    m.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup());
+                    m.addManipulationCoordinates(up.getUnitX(), getOrientation().getUnitY());
+
+                    // execute manipulation
                     Gui.getActiveScenePanel().getManipulationQueue().execute(m);
 
                     Gui.getActiveScenePanel().sceneInvalidate(null);

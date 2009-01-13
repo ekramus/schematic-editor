@@ -46,7 +46,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
             // manipulation is active
             if (m.isActive()) {
-                UnitPoint up = new UnitPoint(e.getX(), e.getY());
+                UnitPoint up = m.getScaledUnitPoint(e.getX(), e.getY(), Gui.getActiveScenePanel().getZoomFactor());
                 UnitPoint snap;
                 if (m.getManipulationType() == ManipulationType.CREATE) {
                     Element el = m.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
@@ -54,8 +54,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                 } else {
                     snap = Snap.getSnap(up, m.getSnapCoordinates());
                 }
-                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), Gui.getActiveScenePanel()
-                        .getZoomFactor());
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
                 // repaint scene, it is much faster than full scene invalidate
                 Gui.getActiveScenePanel().repaint();
@@ -78,7 +77,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
             // manipulation is active
             if (m.isActive()) {
-                UnitPoint up = new UnitPoint(e.getX(), e.getY());
+                UnitPoint up = m.getScaledUnitPoint(e.getX(), e.getY(), Gui.getActiveScenePanel().getZoomFactor());
                 UnitPoint snap;
                 if (m.getManipulationType() == ManipulationType.CREATE) {
                     Element el = m.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
@@ -86,8 +85,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
                 } else {
                     snap = Snap.getSnap(up, m.getSnapCoordinates());
                 }
-                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY(), Gui.getActiveScenePanel()
-                        .getZoomFactor());
+                m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
                 // repaint scene, it is much faster than full scene invalidate
                 Gui.getActiveScenePanel().repaint();

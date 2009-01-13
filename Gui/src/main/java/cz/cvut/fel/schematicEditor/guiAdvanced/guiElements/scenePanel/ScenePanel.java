@@ -508,8 +508,9 @@ public class ScenePanel extends JPanel {
 
         Graphics2D g2d = (Graphics2D) editMarks.getGraphics();
         for (int i = 0; i < e.getX().size(); i++) {
-            Rectangle2D.Double r2d = new Rectangle2D.Double(e.getX().get(i).doubleValue() - 2, e.getY().get(i)
-                    .doubleValue() - 2, 5, 5);
+            Rectangle2D.Double r2d = new Rectangle2D.Double(e.getX().get(i).doubleValue() * getZoomFactor() - 2, e
+                    .getY().get(i).doubleValue() * getZoomFactor()
+                    - 2, 5, 5);
             r2d = t.shift(r2d);
             g2d.setColor(Color.YELLOW);
             g2d.draw(r2d);
@@ -540,9 +541,10 @@ public class ScenePanel extends JPanel {
             for (UnitPoint unitPoint : sc) {
                 if (unitPoint.equals(up)) {
                     Graphics2D g2d = (Graphics2D) snapSymbol.getGraphics();
-                    Rectangle2D.Double rect = new Rectangle2D.Double(up.getX() - configuration.getSnapSymbolSize()
-                            .doubleValue(), up.getY() - configuration.getSnapSymbolSize().doubleValue(), configuration
-                            .getSnapSymbolSize().doubleValue() * 2, configuration.getSnapSymbolSize().doubleValue() * 2);
+                    Rectangle2D.Double rect = new Rectangle2D.Double((up.getX() - configuration.getSnapSymbolSize()
+                            .doubleValue()) * getZoomFactor(), (up.getY() - configuration.getSnapSymbolSize()
+                            .doubleValue()) * getZoomFactor(), configuration.getSnapSymbolSize().doubleValue() * 2,
+                            configuration.getSnapSymbolSize().doubleValue() * 2);
                     rect = t.shift(rect);
                     g2d.setColor(Color.YELLOW);
                     g2d.draw(rect);
