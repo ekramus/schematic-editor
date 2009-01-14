@@ -30,7 +30,7 @@ public class Configuration {
     /**
      * Application version string.
      */
-    private final String         version  = "0.0.10";
+    private final String         version  = "1.3.1";
 
     /**
      * Deserializes configuration from given file.
