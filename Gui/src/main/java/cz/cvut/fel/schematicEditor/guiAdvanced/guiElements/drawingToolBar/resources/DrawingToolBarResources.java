@@ -12,15 +12,15 @@ public enum DrawingToolBarResources {
     /**
      * Arc button caption.
      */
-    ARC_BUTTON("Arc", "resources/line_32.png"),
+    ARC_BUTTON("Arc", "resources/arc_32.png"),
     /**
      * Arc segment button caption.
      */
-    ARC_SEGMENT_BUTTON("Arc segment", "resources/line_32.png"),
+    ARC_SEGMENT_BUTTON("Arc segment", "resources/arc_segment_32.png"),
     /**
      * Text button caption.
      */
-    TEXT_BUTTON("Text", "resources/line_32.png"),
+    TEXT_BUTTON("Text", "resources/text_32.png"),
     /**
      * Bezier curve button caption.
      */
@@ -40,7 +40,7 @@ public enum DrawingToolBarResources {
     /**
      * Rectangle button caption.
      */
-    RECTANGLE_BUTTON("Rectangle", "resources/line_32.png"),
+    RECTANGLE_BUTTON("Rectangle", "resources/rectangle_32.png"),
     /**
      * Select button caption.
      */
@@ -52,15 +52,15 @@ public enum DrawingToolBarResources {
     /**
      * Pin button caption.
      */
-    PIN_BUTTON("Pin", "resources/line_32.png"),
+    PIN_BUTTON("Pin", "resources/pin_32.png"),
     /**
      * Junction button caption.
      */
-    JUNCTION_BUTTON("Junction", "resources/line_32.png"),
+    JUNCTION_BUTTON("Junction", "resources/junction_32.png"),
     /**
      * Wire button caption.
      */
-    WIRE_BUTTON("Wire", "resources/line_32.png"),
+    WIRE_BUTTON("Wire", "resources/wire_32.png"),
     /**
      * Ellipse button caption.
      */

@@ -169,6 +169,7 @@ public final class DrawingToolBar extends JToolBar {
         result.setAlignmentX(CENTER_ALIGNMENT);
 
         // set resources and tooltip
+        logger.trace("Loading resource " + buttonType.getResource());
         URL url = this.getClass().getResource(buttonType.getResource());
         result.setIcon(new ImageIcon(url));
         result.setToolTipText(buttonType.getText());
