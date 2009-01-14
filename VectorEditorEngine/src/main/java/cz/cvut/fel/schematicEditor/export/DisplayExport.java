@@ -304,7 +304,7 @@ public class DisplayExport implements Export {
                     Line2D.Double line2d = new Line2D.Double(xWi.get(i).doubleValue() * getZoomFactor(), yWi.get(i)
                             .doubleValue() * getZoomFactor(), xWi.get(i + 1).doubleValue() * getZoomFactor(), yWi
                             .get(i + 1).doubleValue() * getZoomFactor());
-                    drawShape(nodeG2D, line2d, parameterNode.getColor(), ElementStyle.DOTTED, null, parameterNode
+                    drawShape(nodeG2D, line2d, parameterNode.getColor(), ElementStyle.DASHED, null, parameterNode
                             .getFillStyle());
                 }
                 break;
