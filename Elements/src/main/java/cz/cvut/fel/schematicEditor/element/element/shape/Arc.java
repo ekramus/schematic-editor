@@ -11,6 +11,7 @@ import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements arc shape. It is represented by two data vectors.
@@ -54,9 +55,8 @@ public class Arc extends Ellipse {
     public double getStartAngle() {
         try {
             // calculate points
-            Point2D.Double arcStart = new Point2D.Double(getX().get(2).doubleValue(), getY().get(2).doubleValue());
-            Point2D.Double arcCenter = new Point2D.Double(Support.average(getX().get(0), getX().get(1)).doubleValue(),
-                    Support.average(getY().get(0), getY().get(1)).doubleValue());
+            Point2D.Double arcStart = new Point2D.Double(getStart().getX(), getStart().getY());
+            Point2D.Double arcCenter = new Point2D.Double(getCenter().getX(), getCenter().getY());
             Point2D.Double arcZero = new Point2D.Double(arcCenter.getX() + 1, arcCenter.getY());
 
             // cosine law
@@ -82,9 +82,8 @@ public class Arc extends Ellipse {
     public double getArcAngle() {
         try {
             // calculate points
-            Point2D.Double arcEnd = new Point2D.Double(getX().get(3).doubleValue(), getY().get(3).doubleValue());
-            Point2D.Double arcCenter = new Point2D.Double(Support.average(getX().get(0), getX().get(1)).doubleValue(),
-                    Support.average(getY().get(0), getY().get(1)).doubleValue());
+            Point2D.Double arcEnd = new Point2D.Double(getEnd().getX(), getEnd().getY());
+            Point2D.Double arcCenter = new Point2D.Double(getCenter().getX(), getCenter().getY());
             Point2D.Double arcZero = new Point2D.Double(arcCenter.getX() + 1, arcCenter.getY());
 
             // cosine law
@@ -180,5 +179,18 @@ public class Arc extends Ellipse {
     @Override
     public String toString() {
         return "ARC";
+    }
+
+    public UnitPoint getCenter() {
+        return new UnitPoint(Support.average(getX().get(0), getX().get(1)).doubleValue(), Support
+                .average(getY().get(0), getY().get(1)).doubleValue());
+    }
+
+    public UnitPoint getStart() {
+        return new UnitPoint(getX().get(2).doubleValue(), getY().get(2).doubleValue());
+    }
+
+    public UnitPoint getEnd() {
+        return new UnitPoint(getX().get(3).doubleValue(), getY().get(3).doubleValue());
     }
 }
