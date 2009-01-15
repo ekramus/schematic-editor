@@ -10,6 +10,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Junction;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -19,15 +21,19 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polygon;
 import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
+import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.graphNode.WireNode;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class represents export to the SVG graphic format.
@@ -67,7 +73,7 @@ public class SVGExport implements Export {
         }
 
         // print header
-        print(getHead(500, 500, 500, 500));
+        print(getHead(1000, 1000, 1000, 1000));
         //
         search(sg.getTopNode());
         // print footer
@@ -120,8 +126,12 @@ public class SVGExport implements Export {
             fillString = "fill:none";
         }
 
-        // fill opacity
-        opacity = " opacity=\"" + ((double) col.getAlpha() / 255) + "\"";
+        try {
+            // fill opacity
+            opacity = " opacity=\"" + ((double) col.getAlpha() / 255) + "\"";
+        } catch (NullPointerException e) {
+            opacity = " opacity=\"1\"";
+        }
 
         // stroking width
         width = pn.getWidth().intValue();
@@ -225,21 +235,21 @@ public class SVGExport implements Export {
      * Draw BezierCurve
      */
     private void drawCubicCurve(BezierCurve bC, ParameterNode pn, Transformation tn) {
-        this.out.println("<path d=\"M" + bC.getX().get(0)
+        this.out.println("<path d=\"M" + bC.getX().get(0).doubleValue()
                 + ","
-                + bC.getY().get(0)
+                + bC.getY().get(0).doubleValue()
                 + " C"
-                + bC.getX().get(1)
+                + bC.getX().get(2).doubleValue()
                 + ","
-                + bC.getY().get(1)
+                + bC.getY().get(2).doubleValue()
                 + " "
-                + bC.getX().get(2)
+                + bC.getX().get(3).doubleValue()
                 + ","
-                + bC.getY().get(2)
+                + bC.getY().get(3).doubleValue()
                 + " "
-                + bC.getX().get(3)
+                + bC.getX().get(1).doubleValue()
                 + ","
-                + bC.getY().get(3)
+                + bC.getY().get(1).doubleValue()
                 + "\" "
                 + createTransformString(tn)
                 + ""
@@ -307,6 +317,7 @@ public class SVGExport implements Export {
                 break;
 
             case T_ARC:
+            case T_ARC_SEGMENT:
                 Arc arc = (Arc) en.getElement();
                 drawArc(arc, pn, tn);
                 break;
@@ -341,7 +352,24 @@ public class SVGExport implements Export {
 
             case T_WIRE:
                 Wire w = (Wire) en.getElement();
-                drawPoly(false, w.getX(), w.getY(), pn, tn);
+                ParameterNode wpn = new ParameterNode();
+                wpn.setFillStyle(ElementStyle.NONE);
+                wpn.setFill(null);
+                drawPoly(false, w.getX(), w.getY(), wpn, tn);
+                break;
+
+            case T_PART:
+                PartNode partNode = (PartNode) en;
+                for (PinNode up : partNode.getPartPins()) {
+                    Pin pin = (Pin) up.getElement();
+                    UnitPoint pinCenter = new UnitPoint(pin.getX().firstElement(), pin.getY().firstElement());
+                    drawPin(pinCenter, pn, tn);
+                }
+                break;
+
+            case T_JUNCTION:
+                Junction junction = (Junction) en.getElement();
+                drawJunction(new UnitPoint(junction.getX().firstElement(), junction.getY().firstElement()), pn, tn);
                 break;
 
             default:
@@ -524,8 +552,13 @@ public class SVGExport implements Export {
                     drawNode(child, null, null);
                 }
             } else if (child instanceof PartNode) {
+                drawNode(child, p, t);
                 search(((PartNode) child).getPartGroupNode());
             } else if (child instanceof WireNode) {
+                drawNode(child, p, t);
+            } else if (child instanceof PinNode) {
+                drawNode(child, p, t);
+            } else if (child instanceof JunctionNode) {
                 drawNode(child, p, t);
             }
         }
@@ -554,5 +587,41 @@ public class SVGExport implements Export {
      */
     private final void setOut(final PrintStream out) {
         this.out = out;
+    }
+
+    /**
+     * Draw pin defined by center point.
+     */
+    private void drawPin(UnitPoint center, ParameterNode pn, Transformation tn) {
+        ParameterNode pinPN = new ParameterNode();
+        pinPN.setColor(Color.BLACK);
+        pinPN.setFill(null);
+        this.out.println("<ellipse cx=\"" + center.getX()
+                + "\" cy=\""
+                + center.getY()
+                + "\" rx=\"2\" ry=\"2\""
+                + createTransformString(tn)
+                + ""
+                + createStyleString(pinPN)
+                + "/>");
+
+    }
+
+    /**
+     * Draw junction defined by center point.
+     */
+    private void drawJunction(UnitPoint center, ParameterNode pn, Transformation tn) {
+        ParameterNode junctionPN = new ParameterNode();
+        junctionPN.setColor(Color.BLACK);
+        junctionPN.setFill(Color.BLACK);
+        this.out.println("<ellipse cx=\"" + center.getX()
+                + "\" cy=\""
+                + center.getY()
+                + "\" rx=\"2\" ry=\"2\""
+                + createTransformString(tn)
+                + ""
+                + createStyleString(junctionPN)
+                + "/>");
+
     }
 }

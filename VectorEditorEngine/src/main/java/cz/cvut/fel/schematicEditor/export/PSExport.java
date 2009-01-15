@@ -9,6 +9,8 @@ import java.io.PrintStream;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.part.Junction;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
 import cz.cvut.fel.schematicEditor.element.element.shape.BezierCurve;
@@ -18,9 +20,12 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Polygon;
 import cz.cvut.fel.schematicEditor.element.element.shape.Polyline;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
+import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -51,7 +56,7 @@ public class PSExport implements Export {
 
         this.out = new PrintStream(fos);
 
-        printHead(new Point2D.Float(0, 0), new Point2D.Float(500, 500));
+        printHead(new Point2D.Float(0, 0), new Point2D.Float(1000, 1000));
 
         for (Node node : sg) {
             if (node instanceof TransformationNode) {
@@ -87,6 +92,22 @@ public class PSExport implements Export {
             case T_ARC:
                 Arc ar = (Arc) en.getElement();
                 drawArc(ar, pn, tn.getTransformation());
+
+                // // create vector for closing polyline
+                // Vector<Unit> x = new Vector<Unit>();
+                // Vector<Unit> y = new Vector<Unit>();
+                // x.add(ar.getStart().getUnitX());
+                // y.add(ar.getStart().getUnitY());
+                // x.add(ar.getCenter().getUnitX());
+                // y.add(ar.getCenter().getUnitY());
+                // x.add(ar.getEnd().getUnitX());
+                // y.add(ar.getEnd().getUnitY());
+                // // draw closing polyline
+                // drawPoly(false, x, y, pn, tn.getTransformation());
+                break;
+            case T_ARC_SEGMENT:
+                Arc ars = (Arc) en.getElement();
+                drawArc(ars, pn, tn.getTransformation());
                 break;
             case T_ELLIPSE:
                 Ellipse el = (Ellipse) en.getElement();
@@ -114,7 +135,22 @@ public class PSExport implements Export {
                 break;
             case T_WIRE:
                 Wire w = (Wire) en.getElement();
-                drawPoly(false, w.getX(), w.getY(), pn, tn.getTransformation());
+                ParameterNode wpn = new ParameterNode();
+                wpn.setFillStyle(ElementStyle.NONE);
+                wpn.setFill(null);
+                drawPoly(false, w.getX(), w.getY(), wpn, tn.getTransformation());
+                break;
+
+            case T_PART:
+                PartNode partNode = (PartNode) en;
+                for (PinNode up : partNode.getPartPins()) {
+                    drawPin((Pin) up.getElement(), pn, tn.getTransformation());
+                }
+                break;
+
+            case T_JUNCTION:
+                Junction junction = (Junction) en.getElement();
+                drawJunction(junction, pn, tn.getTransformation());
                 break;
 
             default:
@@ -252,17 +288,17 @@ public class PSExport implements Export {
         this.printTransformString(tn);
         printStyleString(pn);
 
-        this.out.println(bC.getX().get(0) + " " + bC.getY().get(0) + " moveto");
-        this.out.println(bC.getX().get(2) + " "
-                + bC.getY().get(2)
+        this.out.println(bC.getX().get(0).doubleValue() + " " + bC.getY().get(0).doubleValue() + " moveto");
+        this.out.println(bC.getX().get(2).doubleValue() + " "
+                + bC.getY().get(2).doubleValue()
                 + " "
-                + bC.getX().get(3)
+                + bC.getX().get(3).doubleValue()
                 + " "
-                + bC.getY().get(3)
+                + bC.getY().get(3).doubleValue()
                 + " "
-                + bC.getX().get(1)
+                + bC.getX().get(1).doubleValue()
                 + " "
-                + bC.getY().get(1)
+                + bC.getY().get(1).doubleValue()
                 + " curveto");
 
         printFill(pn.getColor(), pn.getFill());
@@ -277,8 +313,8 @@ public class PSExport implements Export {
         printStyleString(pn);
 
         this.out.println("newpath");
-        this.out.println((arc.getX().get(0).doubleValue() + arc.getWidth() / 2) + " "
-                + (arc.getY().get(0).doubleValue() + arc.getWidth() / 2)
+        this.out.println(arc.getCenter().getX() + " "
+                + arc.getCenter().getY()
                 + " "
                 + arc.getWidth()
                 / 2
@@ -381,4 +417,37 @@ public class PSExport implements Export {
 
     }
 
+    private void drawPin(Pin pin, ParameterNode pn, Transformation tn) {
+
+        this.out.println(" gsave");
+
+        this.printTransformString(tn);
+        this.out.println("1 1 scale");
+        printStyleString(pn);
+
+        this.out.println("newpath");
+        this.out.println(pin.getX().get(0).doubleValue() + " " + pin.getY().get(0).doubleValue() + " 2 0 360 arc");
+
+        printFill(Color.BLACK, null);
+
+        this.out.println(" grestore");
+    }
+
+    private void drawJunction(Junction junction, ParameterNode pn, Transformation tn) {
+
+        this.out.println(" gsave");
+
+        this.printTransformString(tn);
+        this.out.println("1 1 scale");
+        printStyleString(pn);
+
+        this.out.println("newpath");
+        this.out.println(junction.getX().get(0).doubleValue() + " "
+                + junction.getY().get(0).doubleValue()
+                + " 2 0 360 arc");
+
+        printFill(Color.BLACK, Color.BLACK);
+
+        this.out.println(" grestore");
+    }
 }

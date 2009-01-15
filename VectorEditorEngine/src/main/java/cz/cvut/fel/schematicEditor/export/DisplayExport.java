@@ -322,8 +322,7 @@ public class DisplayExport implements Export {
                 Ellipse2D.Double e2d = new Ellipse2D.Double(
                         (junction.getX().firstElement().doubleValue() * getZoomFactor()) - 2, (junction.getY()
                                 .firstElement().doubleValue() * getZoomFactor()) - 2, 5, 5);
-                drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode
-                        .getFillStyle());
+                drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, Color.BLACK, ElementStyle.NORMAL);
                 break;
 
             case T_PART:
@@ -339,7 +338,7 @@ public class DisplayExport implements Export {
                 for (PinNode cn : partNode.getPartPins()) {
                     Pin c = (Pin) cn.getElement();
                     drawPin(c, parameterNode, nodeG2D);
-                    drawConnectorText(c, connectorNames.get(i), nodeG2D);
+                    drawPinText(c, connectorNames.get(i), nodeG2D);
                     i++;
                 }
 
@@ -457,7 +456,7 @@ public class DisplayExport implements Export {
         nodeG2D.drawString(text, coordinates.getUnitX().floatValue(), coordinates.getUnitY().floatValue());
     }
 
-    private void drawConnectorText(Pin pin, String connectorName, Graphics2D nodeG2D) {
+    private void drawPinText(Pin pin, String connectorName, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
         nodeG2D.drawString(connectorName, (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) - 10,
                            (int) (pin.getY().firstElement().floatValue() * getZoomFactor()) - 10);
