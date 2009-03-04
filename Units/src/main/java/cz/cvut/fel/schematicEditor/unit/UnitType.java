@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial.Inch;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial.Mil;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.metric.Milimeter;
 
 /**
@@ -19,6 +20,10 @@ public enum UnitType {
      * {@link Inch} {@link Unit} type.
      */
     INCH("in"),
+    /**
+     * {@link Mil} {@link Unit} type.
+     */
+    MIL("mil"),
     /**
      * {@link Milimeter} {@link Unit} type.
      */
@@ -79,6 +84,8 @@ public enum UnitType {
                 result = new Milimeter(value);
             } else if (parsedString[1].equalsIgnoreCase(INCH.getUnitString())) {
                 result = new Inch(value);
+            } else if (parsedString[1].equalsIgnoreCase(MIL.getUnitString())) {
+                result = new Mil(value);
             } else {
                 result = new Pixel(1);
             }
