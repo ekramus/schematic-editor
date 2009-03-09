@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
-
 /**
  * This class extends {@link JDialog} so it is possible to set properties on {@link PartPropertiesDialogPanel}.
  *
@@ -54,6 +52,7 @@ public class PartPropertiesDialog extends JDialog implements ActionListener {
         this.noButton = new JButton("No");
         this.noButton.addActionListener(this);
         this.myPanel.add(this.noButton);
+
         pack();
         setLocationRelativeTo(frame);
         setVisible(true);
