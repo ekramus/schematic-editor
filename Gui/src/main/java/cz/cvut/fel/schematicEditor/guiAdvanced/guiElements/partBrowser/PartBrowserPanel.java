@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -29,6 +30,8 @@ public class PartBrowserPanel extends JPanel {
             top.add(node);
         }
 
+        top.add(generatePartTree("parts"));
+
         JScrollPane sp = new JScrollPane(tree);
         add(sp, BorderLayout.CENTER);
     }
@@ -41,6 +44,38 @@ public class PartBrowserPanel extends JPanel {
             instance = new PartBrowserPanel();
         }
         return instance;
+    }
+
+    /**
+     * Generates part tree based on folder.
+     *
+     * @param path
+     * @return
+     */
+    private DefaultMutableTreeNode generatePartTree(String path) {
+        DefaultMutableTreeNode result;
+
+        // strip folder from path
+        String folderName;
+        try {
+            folderName = path.substring(path.lastIndexOf(System.getProperty("file.separator")));
+        } catch (IndexOutOfBoundsException e) {
+            folderName = path;
+        }
+        // create root node with folder name
+        result = new DefaultMutableTreeNode(folderName);
+
+        // recursively add folders and parts
+        File folder = new File(path);
+        for (File file : folder.listFiles()) {
+            if (file.isDirectory()) {
+                result.add(generatePartTree(file.getPath()));
+            } else {
+                result.add(new DefaultMutableTreeNode(file.getName()));
+            }
+        }
+
+        return result;
     }
 
     private Vector<String> getFiles() {
