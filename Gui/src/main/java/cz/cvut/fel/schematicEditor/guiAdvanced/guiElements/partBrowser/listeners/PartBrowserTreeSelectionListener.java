@@ -23,10 +23,18 @@ public class PartBrowserTreeSelectionListener implements TreeSelectionListener {
         if (node != null) {
             if (node.isLeaf()) {
                 PartBrowserPanel.getAddButton().setEnabled(true);
+                PartBrowserPanel.getInstance().setSelectedPartPath(getPartPath(node));
             } else {
                 PartBrowserPanel.getAddButton().setEnabled(false);
             }
         }
     }
 
+    private String getPartPath(DefaultMutableTreeNode node) {
+        String result = "";
+
+        result = "parts/" + node.toString();
+
+        return result;
+    }
 }
