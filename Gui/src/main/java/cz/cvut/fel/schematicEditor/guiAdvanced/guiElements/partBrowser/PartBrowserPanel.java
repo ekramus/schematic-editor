@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.PartBrowserTreeSelectionListener;
 
 /**
@@ -20,9 +21,10 @@ public class PartBrowserPanel extends JPanel {
     /**
      * {@link PartBrowserPanel} singleton instance.
      */
-    private static PartBrowserPanel instance  = null;
+    private static PartBrowserPanel instance         = null;
 
-    private static JButton          addButton = null;
+    private static JButton          addButton        = null;
+    private String                  selectedPartPath = null;
 
     private PartBrowserPanel() {
         setLayout(new BorderLayout());
@@ -47,10 +49,18 @@ public class PartBrowserPanel extends JPanel {
     public static JButton getAddButton() {
         if (addButton == null) {
             addButton = new JButton("Add");
-            addButton.addActionListener(null);
+            addButton.addActionListener(new AddButtonActionListener());
             addButton.setEnabled(false);
         }
         return addButton;
+    }
+
+    public String getSelectedPartPath() {
+        return this.selectedPartPath;
+    }
+
+    public void setSelectedPartPath(String selectedPartPath) {
+        this.selectedPartPath = selectedPartPath;
     }
 
     /**
