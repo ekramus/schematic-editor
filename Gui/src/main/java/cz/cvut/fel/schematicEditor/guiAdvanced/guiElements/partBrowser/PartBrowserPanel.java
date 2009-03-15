@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.PartBrowserTreeSelectionListener;
+
 /**
  * @author Urban Kravjansky
  *
@@ -24,6 +26,7 @@ public class PartBrowserPanel extends JPanel {
 
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("hokus");
         JTree tree = new JTree(top);
+        tree.addTreeSelectionListener(new PartBrowserTreeSelectionListener());
 
         for (String file : getFiles()) {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(file);
