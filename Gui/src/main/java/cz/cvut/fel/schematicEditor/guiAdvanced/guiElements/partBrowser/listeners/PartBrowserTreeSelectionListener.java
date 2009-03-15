@@ -1,12 +1,11 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.PartBrowserPanel;
 
 /**
  * @author Urban Kravjansky
@@ -22,7 +21,11 @@ public class PartBrowserTreeSelectionListener implements TreeSelectionListener {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
         if (node != null) {
-            JOptionPane.showMessageDialog(Gui.getInstance(), node.getUserObject());
+            if (node.isLeaf()) {
+                PartBrowserPanel.getAddButton().setEnabled(true);
+            } else {
+                PartBrowserPanel.getAddButton().setEnabled(false);
+            }
         }
     }
 
