@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.io.File;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -19,7 +20,9 @@ public class PartBrowserPanel extends JPanel {
     /**
      * {@link PartBrowserPanel} singleton instance.
      */
-    private static PartBrowserPanel instance = null;
+    private static PartBrowserPanel instance  = null;
+
+    private static JButton          addButton = null;
 
     private PartBrowserPanel() {
         setLayout(new BorderLayout());
@@ -36,7 +39,18 @@ public class PartBrowserPanel extends JPanel {
         top.add(generatePartTree("parts"));
 
         JScrollPane sp = new JScrollPane(tree);
+
         add(sp, BorderLayout.CENTER);
+        add(getAddButton(), BorderLayout.SOUTH);
+    }
+
+    public static JButton getAddButton() {
+        if (addButton == null) {
+            addButton = new JButton("Add");
+            addButton.addActionListener(null);
+            addButton.setEnabled(false);
+        }
+        return addButton;
     }
 
     /**
