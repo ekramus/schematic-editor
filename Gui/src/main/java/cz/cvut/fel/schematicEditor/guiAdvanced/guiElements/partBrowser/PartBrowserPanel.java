@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser;
 
 import java.awt.BorderLayout;
 import java.io.File;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -29,16 +28,9 @@ public class PartBrowserPanel extends JPanel {
     private PartBrowserPanel() {
         setLayout(new BorderLayout());
 
-        DefaultMutableTreeNode top = new DefaultMutableTreeNode("hokus");
+        DefaultMutableTreeNode top = generatePartTree("parts");
         JTree tree = new JTree(top);
         tree.addTreeSelectionListener(new PartBrowserTreeSelectionListener());
-
-        for (String file : getFiles()) {
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(file);
-            top.add(node);
-        }
-
-        top.add(generatePartTree("parts"));
 
         JScrollPane sp = new JScrollPane(tree);
 
@@ -101,17 +93,6 @@ public class PartBrowserPanel extends JPanel {
                 result.add(new DefaultMutableTreeNode(file.getName()));
             }
         }
-
-        return result;
-    }
-
-    private Vector<String> getFiles() {
-        Vector<String> result = new Vector<String>();
-
-        result.add("asdasd");
-        result.add("asdggfhgfh");
-        result.add("asdas345");
-        result.add("67frht");
 
         return result;
     }
