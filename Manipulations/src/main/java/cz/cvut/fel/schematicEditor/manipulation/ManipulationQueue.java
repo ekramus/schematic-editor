@@ -37,7 +37,7 @@ public class ManipulationQueue {
         logger = Logger.getLogger(this.getClass().getName());
 
         setManipulationQueue(new LinkedList<Manipulation>());
-        setActiveManipulationIndex(-1);
+        setActiveManipulationIndex(0);
     }
 
     /**
@@ -50,9 +50,6 @@ public class ManipulationQueue {
     public boolean execute(Manipulation activeManipulation) {
         // try to add and execute manipulation
         try {
-            // move index of active manipulation to the next one
-            setActiveManipulationIndex(getActiveManipulationIndex() + 1);
-
             // there are manipulations, which are to be abandoned
             if (getManipulationQueue().size() > getActiveManipulationIndex()) {
                 setManipulationQueue(new LinkedList<Manipulation>(getManipulationQueue()
@@ -64,6 +61,9 @@ public class ManipulationQueue {
 
             // execute manipulation
             activeManipulation.execute();
+
+            // move index of active manipulation to the next one
+            setActiveManipulationIndex(getActiveManipulationIndex() + 1);
         }
         // manipulation was null
         catch (NullPointerException e) {
@@ -86,20 +86,20 @@ public class ManipulationQueue {
      *         <code>true</code>.
      */
     public boolean reexecute() {
-        // move index of active manipulation to the next one
-        setActiveManipulationIndex(getActiveManipulationIndex() + 1);
-
-        // if there is no manipulation to execute, add last one
-        if (getManipulationQueue().size() <= getActiveManipulationIndex()) {
-            getManipulationQueue().add(ManipulationFactory.duplicate(getManipulationQueue().getLast()));
-        }
-
-        // retrieve manipulation
-        Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex());
-
         // try to reexecute manipulation
         try {
+            // if there is no manipulation to execute, add last one
+            if (getManipulationQueue().size() <= getActiveManipulationIndex()) {
+                getManipulationQueue().add(ManipulationFactory.duplicate(getManipulationQueue().getLast()));
+            }
+
+            // retrieve manipulation
+            Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex());
+
             manipulation.reexecute();
+
+            // move index of active manipulation to the next one
+            setActiveManipulationIndex(getActiveManipulationIndex() + 1);
         }
         // manipulation was null
         catch (NullPointerException npe) {
@@ -140,10 +140,10 @@ public class ManipulationQueue {
      *         <code>true</code>.
      */
     public boolean unexecute() {
-        Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex());
-
         // try to unexecute manipulation
         try {
+            Manipulation manipulation = getManipulationQueue().get(getActiveManipulationIndex() - 1);
+
             manipulation.unexecute();
 
             // move index of active manipulation to the previous one
@@ -155,6 +155,10 @@ public class ManipulationQueue {
         }
         // exception occurred during unexecution
         catch (ManipulationExecutionException e) {
+            return false;
+        }
+        // index out of bounds
+        catch (IndexOutOfBoundsException e) {
             return false;
         }
 
@@ -185,7 +189,11 @@ public class ManipulationQueue {
      * @param activeManipulationIndex Index of active {@link Manipulation}.
      */
     private void setActiveManipulationIndex(int activeManipulationIndex) {
-        this.activeManipulationIndex = activeManipulationIndex;
+        if (activeManipulationIndex >= 0) {
+            this.activeManipulationIndex = activeManipulationIndex;
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     /**
