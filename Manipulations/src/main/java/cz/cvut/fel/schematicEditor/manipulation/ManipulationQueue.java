@@ -210,7 +210,9 @@ public class ManipulationQueue {
      */
     public Manipulation getActiveManipulation() {
         try {
-            return getManipulationQueue().get(getActiveManipulationIndex());
+            // return active manipulation (actually activeManipulationIndex - 1, as
+            // this index is increased after execution
+            return getManipulationQueue().get(getActiveManipulationIndex() - 1);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
