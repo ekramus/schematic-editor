@@ -17,7 +17,7 @@ public class ResistorPropertiesTest {
      */
     @Test
     public void getNetlist() {
-        PartProperties pp = new ResistorProperties("variant A", "This is variant A");
+        PartProperties pp = new ResistorProperties("resistor A", "This is variant A");
 
         pp.setProperty("value", "10");
         pp.setProperty("name", "R");

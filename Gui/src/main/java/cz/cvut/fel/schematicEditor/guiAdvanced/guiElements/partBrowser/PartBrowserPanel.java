@@ -1,7 +1,10 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser;
 
 import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -9,6 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.PartBrowserTreeSelectionListener;
 
@@ -23,7 +30,7 @@ public class PartBrowserPanel extends JPanel {
     private static PartBrowserPanel instance         = null;
 
     private static JButton          addButton        = null;
-    private String                  selectedPartPath = null;
+    private PartNode                selectedPartNode = null;
 
     private PartBrowserPanel() {
         setLayout(new BorderLayout());
@@ -47,12 +54,12 @@ public class PartBrowserPanel extends JPanel {
         return addButton;
     }
 
-    public String getSelectedPartPath() {
-        return this.selectedPartPath;
+    public PartNode getSelectedPartNode() {
+        return this.selectedPartNode;
     }
 
-    public void setSelectedPartPath(String selectedPartPath) {
-        this.selectedPartPath = selectedPartPath;
+    public void setSelectedPartNode(PartNode selectedPartNode) {
+        this.selectedPartNode = selectedPartNode;
     }
 
     /**
@@ -90,10 +97,42 @@ public class PartBrowserPanel extends JPanel {
             if (file.isDirectory()) {
                 result.add(generatePartTree(file.getPath()));
             } else {
-                result.add(new DefaultMutableTreeNode(file.getName()));
+                PartNode pn = deserialize(PartNode.class, file);
+                PartBrowserNode pbn = new PartBrowserNode();
+                pbn.setPartNode(pn);
+                result.add(new DefaultMutableTreeNode(pn));
             }
         }
 
         return result;
+    }
+
+    /**
+     * Deserializes {@link PartNode} from given file.
+     *
+     * @param clazz Class of deserialized {@link PartNode}.
+     * @param file Path to file, where is serialized {@link PartNode}.
+     * @return Deserialized {@link PartNode} class.
+     */
+    protected static PartNode deserialize(Class<? extends PartNode> clazz, File file) {
+        XStream xstream = new XStream(new DomDriver());
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            processAnnotations(xstream, clazz);
+            return (PartNode) xstream.fromXML(br);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Processes all {@link XStream} annotations in entered classes.
+     *
+     * @param xstream {@link XStream} instance to configure.
+     * @param clazz Class of {@link PartNode} object.
+     */
+    private static void processAnnotations(XStream xstream, Class<? extends PartNode> clazz) {
+        xstream.processAnnotations(clazz);
     }
 }
