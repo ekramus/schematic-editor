@@ -43,8 +43,8 @@ public abstract class PartProperties implements Iterable<Property<String, String
     public PartProperties(String variant, String description) {
         logger = Logger.getLogger(this.getClass().getName());
 
-        setPartDescription(description);
         setPartVariant(variant);
+        setPartDescription(description);
 
         this.partPropertiesMap = new HashMap<String, Property<String, String>>();
     }
@@ -210,5 +210,8 @@ public abstract class PartProperties implements Iterable<Property<String, String
         return collection.iterator();
     }
 
+    /**
+     * @return the partType
+     */
     public abstract PartType getPartType();
 }

@@ -17,7 +17,7 @@ public class PartPropertiesTest {
      */
     @Test
     public void getPartConnectors() {
-        PartProperties pp = new ResistorProperties("variant A", "This is variant A");
+        PartProperties pp = new ResistorProperties("resistor A", "This is variant A");
 
         Vector<String> pc = new Vector<String>();
         pc.add("A, A");

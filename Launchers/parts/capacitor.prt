@@ -9,7 +9,7 @@
     <connectorVector/>
     <partProperties class="cz.cvut.fel.schematicEditor.element.properties.partProperties.CapacitorProperties">
       <partDescription>variant description</partDescription>
-      <partVariant>variant</partVariant>
+      <partVariant>Capacitor</partVariant>
       <partPropertiesMap>
         <entry>
           <string>connectorP</string>

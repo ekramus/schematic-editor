@@ -69,19 +69,19 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             PartProperties pp = null;
             switch ((PartType) PartPropertiesPanel.getInstance().getPartTypeComboBox().getSelectedItem()) {
                 case RESISTOR:
-                    pp = new ResistorProperties("variant", "variant description");
+                    pp = new ResistorProperties("Resistor", "variant description");
                     break;
                 case CAPACITOR:
-                    pp = new CapacitorProperties("variant", "variant description");
+                    pp = new CapacitorProperties("Capacitor", "variant description");
                     break;
                 case INDUCTOR:
-                    pp = new InductorProperties("variant", "variant description");
+                    pp = new InductorProperties("Indictor", "variant description");
                     break;
                 case VOLTAGE_SOURCE:
-                    pp = new VoltageSourceProperties("variant", "variant description");
+                    pp = new VoltageSourceProperties("Voltage source", "variant description");
                     break;
                 case CURRENT_SOURCE:
-                    pp = new CurrentSourceProperties("variant", "variant description");
+                    pp = new CurrentSourceProperties("Current source", "variant description");
                     break;
                 default:
                     break;
