@@ -5,7 +5,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.PartBrowserNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.PartBrowserPanel;
 
 /**
@@ -24,7 +24,9 @@ public class PartBrowserTreeSelectionListener implements TreeSelectionListener {
         if (node != null) {
             if (node.isLeaf()) {
                 PartBrowserPanel.getAddButton().setEnabled(true);
-                PartBrowserPanel.getInstance().setSelectedPartNode((PartNode) (node.getUserObject()));
+                PartBrowserPanel.getInstance().setSelectedPartNode(
+                                                                   ((PartBrowserNode) (node.getUserObject()))
+                                                                           .getPartNode());
             } else {
                 PartBrowserPanel.getAddButton().setEnabled(false);
             }

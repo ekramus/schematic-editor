@@ -62,12 +62,4 @@ public class PartBrowserNode {
     public String getDescription() {
         return ((Part) getPartNode().getElement()).getPartProperties().getPartDescription();
     }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return getVariant() + " (" + getDescription() + ")";
-    }
 }

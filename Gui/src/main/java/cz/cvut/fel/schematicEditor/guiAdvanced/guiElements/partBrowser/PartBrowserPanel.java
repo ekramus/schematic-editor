@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -37,7 +38,9 @@ public class PartBrowserPanel extends JPanel {
 
         DefaultMutableTreeNode top = generatePartTree("parts");
         JTree tree = new JTree(top);
+
         tree.addTreeSelectionListener(new PartBrowserTreeSelectionListener());
+        tree.setCellRenderer(new PartBrowserNodeRenderer());
 
         JScrollPane sp = new JScrollPane(tree);
 
@@ -96,11 +99,17 @@ public class PartBrowserPanel extends JPanel {
         for (File file : folder.listFiles()) {
             if (file.isDirectory()) {
                 result.add(generatePartTree(file.getPath()));
-            } else {
+            } else if (file.getName().indexOf("prt") > -1) {
                 PartNode pn = deserialize(PartNode.class, file);
+                ImageIcon icon = new ImageIcon(file.getPath().replaceAll("prt", "png"));
+
                 PartBrowserNode pbn = new PartBrowserNode();
                 pbn.setPartNode(pn);
-                result.add(new DefaultMutableTreeNode(pn));
+                pbn.setIcon(icon);
+
+                DefaultMutableTreeNode node = new DefaultMutableTreeNode(pbn);
+
+                result.add(node);
             }
         }
 
