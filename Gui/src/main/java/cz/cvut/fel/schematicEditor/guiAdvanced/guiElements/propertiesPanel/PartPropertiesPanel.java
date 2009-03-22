@@ -18,7 +18,6 @@ import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.properties.PartType;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.PartBrowserPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartRotationCenterButtonActionListener;
 
@@ -87,9 +86,6 @@ public class PartPropertiesPanel extends JPanel {
             this.basicPropertiesPanel.add(getPartRotationCenterLabel());
             this.basicPropertiesPanel.add(new JLabel("netlist: "), "wrap");
             this.basicPropertiesPanel.add(getPartNetlistScrollPane(), "span");
-
-
-            this.basicPropertiesPanel.add(PartBrowserPanel.getInstance(), "span");
         }
         return this.basicPropertiesPanel;
     }

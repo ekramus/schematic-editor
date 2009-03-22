@@ -58,16 +58,25 @@ public class PropertiesPanel extends JPanel {
                 add(GeneralPropertiesPanel.getInstance(), BorderLayout.CENTER);
                 GeneralPropertiesPanel.getInstance().setVisible(true);
                 PartPropertiesPanel.getInstance().setVisible(false);
+                PartTreePanel.getInstance().setVisible(false);
                 break;
             case PropertiesSelectorToolBar.PART_PROPERTIES:
                 add(PartPropertiesPanel.getInstance(), BorderLayout.CENTER);
                 GeneralPropertiesPanel.getInstance().setVisible(false);
                 PartPropertiesPanel.getInstance().setVisible(true);
+                PartTreePanel.getInstance().setVisible(false);
+                break;
+            case PropertiesSelectorToolBar.PART_TREE:
+                add(PartTreePanel.getInstance(), BorderLayout.CENTER);
+                GeneralPropertiesPanel.getInstance().setVisible(false);
+                PartPropertiesPanel.getInstance().setVisible(false);
+                PartTreePanel.getInstance().setVisible(true);
                 break;
             case PropertiesSelectorToolBar.NONE:
             default:
                 GeneralPropertiesPanel.getInstance().setVisible(false);
                 PartPropertiesPanel.getInstance().setVisible(false);
+                PartTreePanel.getInstance().setVisible(false);
                 break;
         }
 
