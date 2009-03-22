@@ -48,43 +48,47 @@ public class GuiConfiguration extends Configuration {
     /**
      * ScenePanel grid size.
      */
-    private Unit           gridSize             = new Pixel(25);
+    private Unit           gridSize              = new Pixel(25);
     /**
      * Delta for snapping on special elements.
      */
-    private final Unit     snapDelta            = new Pixel(5);
+    private final Unit     snapDelta             = new Pixel(5);
     /**
      * Size of snap symbol size. Ideally the same as snapDelta value.
      */
-    private final Unit     snapSymbolSize       = new Pixel(5);
+    private final Unit     snapSymbolSize        = new Pixel(5);
     /**
      * Grid visibility indicator.
      */
-    private boolean        gridVisible          = true;
+    private boolean        gridVisible           = true;
     /**
      * Size of pointer used in Manipulations.
      */
-    private Point2D.Double pointerRectangle     = new Point2D.Double(5, 5);
+    private Point2D.Double pointerRectangle      = new Point2D.Double(5, 5);
     /**
      * Background color of ScenePanel.
      */
-    private Color          sceneBackgroundColor = new Color(255, 255, 255);
+    private Color          sceneBackgroundColor  = new Color(255, 255, 255);
     /**
      * ScenePanel X and Y dimension.
      */
-    private Dimension      sceneDim             = new Dimension(1280, 1024);
+    private Dimension      sceneDim              = new Dimension(1280, 1024);
     /**
      * Scheme antialiasing indicator.
      */
-    private boolean        schemeAntialiased    = true;
+    private boolean        schemeAntialiased     = true;
     /**
      * Indicates, whether is scheme debugged.
      */
-    private boolean        schemeDebugged       = false;
+    private boolean        schemeDebugged        = false;
     /**
      * Indicate, whether is snap to grid or not.
      */
-    private boolean        snapToGrid           = false;
+    private boolean        snapToGrid            = false;
+    /**
+     * Indicate, whether are connector names visible or not.
+     */
+    private boolean        connectorNamesVisible = false;
 
     /**
      *
@@ -206,6 +210,13 @@ public class GuiConfiguration extends Configuration {
     }
 
     /**
+     * @param connectorNamesVisible the connectorNamesVisible to set
+     */
+    public void setConnectorNamesVisible(boolean connectorNamesVisible) {
+        this.connectorNamesVisible = connectorNamesVisible;
+    }
+
+    /**
      * @return the snapDelta to get.
      */
     public Unit getSnapDelta() {
@@ -217,5 +228,12 @@ public class GuiConfiguration extends Configuration {
      */
     public Unit getSnapSymbolSize() {
         return this.snapSymbolSize;
+    }
+
+    /**
+     * @return the onnectorNamesVisible.
+     */
+    public boolean isConnectorNamesVisible() {
+        return this.connectorNamesVisible;
     }
 }

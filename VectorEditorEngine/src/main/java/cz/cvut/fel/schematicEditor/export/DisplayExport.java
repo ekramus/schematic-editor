@@ -16,6 +16,7 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
@@ -338,7 +339,10 @@ public class DisplayExport implements Export {
                 for (PinNode cn : partNode.getPartPins()) {
                     Pin c = (Pin) cn.getElement();
                     drawPin(c, parameterNode, nodeG2D);
-                    drawPinText(c, connectorNames.get(i), nodeG2D);
+                    // check, whether connector names should be printed
+                    if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
+                        drawConnectorText(c, connectorNames.get(i), nodeG2D);
+                    }
                     i++;
                 }
 
@@ -456,7 +460,7 @@ public class DisplayExport implements Export {
         nodeG2D.drawString(text, coordinates.getUnitX().floatValue(), coordinates.getUnitY().floatValue());
     }
 
-    private void drawPinText(Pin pin, String connectorName, Graphics2D nodeG2D) {
+    private void drawConnectorText(Pin pin, String connectorName, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
         nodeG2D.drawString(connectorName, (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) - 10,
                            (int) (pin.getY().firstElement().floatValue() * getZoomFactor()) - 10);
