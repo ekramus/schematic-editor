@@ -31,6 +31,10 @@ public class PropertiesSelectorToolBar extends JToolBar {
      * General properties button selected.
      */
     public static final int                  GENERAL_PROPERTIES      = 2;
+    /**
+     * Part tree button selected.
+     */
+    public static final int                  PART_TREE               = 3;
 
     /**
      * Actually selected button.
@@ -44,6 +48,10 @@ public class PropertiesSelectorToolBar extends JToolBar {
      * Part properties button instance.
      */
     private JToggleButton                    partPropertiesButton    = null;
+    /**
+     * Part tree button instance.
+     */
+    private JToggleButton                    partTreeButton          = null;
 
     /**
      * Instance of {@link PropertiesSelectorToolBar}.
@@ -73,6 +81,7 @@ public class PropertiesSelectorToolBar extends JToolBar {
             // add tool bar buttons
             instance.add(instance.getGeneralPropertiesButton());
             instance.add(instance.getPartPropertiesButton());
+            instance.add(instance.getPartTreeButton());
         }
         return instance;
     }
@@ -109,6 +118,22 @@ public class PropertiesSelectorToolBar extends JToolBar {
             this.generalPropertiesButton.setIcon(getImageIcon("General properties"));
         }
         return this.generalPropertiesButton;
+    }
+
+    /**
+     * Generates part tree button.
+     *
+     * @return Instance of part tree button.
+     */
+    private JToggleButton getPartTreeButton() {
+        if (this.partTreeButton == null) {
+            this.partTreeButton = new JToggleButton();
+            this.partTreeButton.addActionListener(new PropertiesSelectorToolBarButtonActionListener(PART_TREE));
+
+            this.partTreeButton.setToolTipText("Part tree");
+            this.partTreeButton.setIcon(getImageIcon("Part tree"));
+        }
+        return this.partTreeButton;
     }
 
     /**
@@ -154,15 +179,23 @@ public class PropertiesSelectorToolBar extends JToolBar {
             case GENERAL_PROPERTIES:
                 getGeneralPropertiesButton().setSelected(true);
                 getPartPropertiesButton().setSelected(false);
+                getPartTreeButton().setSelected(false);
                 break;
             case PART_PROPERTIES:
                 getGeneralPropertiesButton().setSelected(false);
                 getPartPropertiesButton().setSelected(true);
+                getPartTreeButton().setSelected(false);
+                break;
+            case PART_TREE:
+                getGeneralPropertiesButton().setSelected(false);
+                getPartPropertiesButton().setSelected(false);
+                getPartTreeButton().setSelected(true);
                 break;
             case NONE:
             default:
                 getGeneralPropertiesButton().setSelected(false);
                 getPartPropertiesButton().setSelected(false);
+                getPartTreeButton().setSelected(false);
                 break;
         }
 
