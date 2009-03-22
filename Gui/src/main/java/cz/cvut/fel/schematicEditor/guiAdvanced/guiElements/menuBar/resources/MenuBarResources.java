@@ -176,8 +176,11 @@ public enum MenuBarResources {
     /**
      * Scale menu item string.
      */
-    SCALE_MENU_ITEM("Scale..");
-
+    SCALE_MENU_ITEM("Scale.."),
+    /**
+     * Show connector names menu item string.
+     */
+    SHOW_CONNECTOR_NAMES_MENU_ITEM("Show connector names");
     /**
      * String value of item.
      */

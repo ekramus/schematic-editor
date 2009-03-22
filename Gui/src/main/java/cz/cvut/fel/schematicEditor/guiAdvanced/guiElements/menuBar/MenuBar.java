@@ -34,6 +34,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.Sav
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SavePreferencesMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ScaleMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ShowConnectorNamesMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ShowGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SnapToGridCheckBoxMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ViewPartPropertiesMenuItemListener;
@@ -174,6 +175,10 @@ public final class MenuBar extends JMenuBar {
      * Show grid check box menu item instance.
      */
     private JCheckBoxMenuItem showGridCheckBoxMenuItem    = null;
+    /**
+     * Show show connector names menu item instance.
+     */
+    private JCheckBoxMenuItem showConnectorNamesMenuItem  = null;
     /**
      * Snap to grid check box menu item instance.
      */
@@ -856,11 +861,27 @@ public final class MenuBar extends JMenuBar {
             this.viewMenu.setText(MenuBarResources.VIEW_MENU.getText());
             this.viewMenu.add(getAntialiasedCheckBoxMenuItem());
             this.viewMenu.add(getShowGridCheckBoxMenuItem());
+            this.viewMenu.add(getShowConnectorNamesMenuItem());
             this.viewMenu.add(getDebugCheckBoxMenuItem());
             this.viewMenu.add(getViewPartPropertiesMenuItem());
             this.viewMenu.addSeparator();
             this.viewMenu.add(getScaleMenuItem());
         }
         return this.viewMenu;
+    }
+
+    /**
+     * Getter for <code>showConnectorNamesMenuItem</code>.
+     *
+     * @return <code>showConnectorNamesMenuItem</code> instance.
+     */
+    private JCheckBoxMenuItem getShowConnectorNamesMenuItem() {
+        if (this.showConnectorNamesMenuItem == null) {
+            this.showConnectorNamesMenuItem = new JCheckBoxMenuItem();
+            this.showConnectorNamesMenuItem.setText(MenuBarResources.SHOW_CONNECTOR_NAMES_MENU_ITEM.getText());
+            this.showConnectorNamesMenuItem.setSelected(GuiConfiguration.getInstance().isConnectorNamesVisible());
+            this.showConnectorNamesMenuItem.addActionListener(new ShowConnectorNamesMenuItemListener());
+        }
+        return this.showConnectorNamesMenuItem;
     }
 }
