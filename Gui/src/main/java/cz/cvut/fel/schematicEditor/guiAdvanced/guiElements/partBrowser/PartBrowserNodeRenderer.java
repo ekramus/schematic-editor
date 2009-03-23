@@ -25,7 +25,7 @@ public class PartBrowserNodeRenderer extends DefaultTreeCellRenderer {
             PartBrowserNode pbn = (PartBrowserNode) node.getUserObject();
 
             setIcon(pbn.getIcon());
-            setText(pbn.getVariant() + " (" + pbn.getDescription() + ")");
+            setText(pbn.getVariant() + " - " + pbn.getDescription());
         }
 
         return this;
