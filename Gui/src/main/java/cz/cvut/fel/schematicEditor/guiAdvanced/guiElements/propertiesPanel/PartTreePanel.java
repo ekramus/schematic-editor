@@ -45,7 +45,7 @@ public class PartTreePanel extends JPanel {
             instance.setLayout(new MigLayout("wrap 1"));
 
             // add elements
-            instance.add(PartBrowserPanel.getInstance(), "width 210");
+            instance.add(PartBrowserPanel.getInstance(), "width 210, height 600");
         }
         return instance;
     }

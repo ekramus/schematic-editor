@@ -92,7 +92,7 @@ public class PartBrowserPanel extends JPanel {
             folderName = path;
         }
         // create root node with folder name (remove all forward slashes)
-        result = new DefaultMutableTreeNode(folderName.replaceAll("/", ""));
+        result = new DefaultMutableTreeNode(folderName.replaceAll("[/\\\\]", ""));
 
         // recursively add folders and parts
         File folder = new File(path);
