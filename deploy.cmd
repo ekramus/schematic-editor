@@ -47,4 +47,4 @@ copy Plugins-CheckNetlist\target\Plugins-CheckNetlist-1.0-SNAPSHOT.jar %PLUGIN%
 copy Plugins-AutomaticPartNaming\target\Plugins-AutomaticPartNaming-1.0-SNAPSHOT.jar %PLUGIN%
 
 rem copy parts
-copy 
+xcopy Launchers\parts\*.* %PARTS% /S /Q /Y
