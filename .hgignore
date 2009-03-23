@@ -28,3 +28,4 @@ target
 bin
 deploy/*.xml
 deploy/config/*
+deploy/parts/*
