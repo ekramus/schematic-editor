@@ -241,16 +241,17 @@ public class ScenePanel extends JPanel {
             // process manipulation dependent actions
             switch (getActiveManipulation().getManipulationType()) {
                 case SELECT:
-                    Select select = (Select) getActiveManipulation();
-
-                    // set selected element properties to selected element
-                    GroupNode gn = select.getManipulatedGroup();
-                    getSceneProperties().setSelectedElementProperties(gn.getChildrenParameterNode().getProperties());
-                    // refresh general properties panel
-                    GeneralPropertiesPanel.getInstance().refresh();
-
-                    // partPropertiesPanel
                     try {
+                        Select select = (Select) getActiveManipulation();
+
+                        // set selected element properties to selected element
+                        GroupNode gn = select.getManipulatedGroup();
+                        getSceneProperties()
+                                .setSelectedElementProperties(gn.getChildrenParameterNode().getProperties());
+                        // refresh general properties panel
+                        GeneralPropertiesPanel.getInstance().refresh();
+
+                        // partPropertiesPanel
                         Part part = (Part) select.getManipulatedGroup().getChildrenElementList().getFirst()
                                 .getElement();
                         MenuBar.getInstance().getViewPartPropertiesMenuItem().setEnabled(true);
