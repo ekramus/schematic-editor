@@ -107,7 +107,7 @@ public class Mirror extends Manipulation {
     @Override
     protected void execute() throws ManipulationExecutionException {
         // get reference coordinate
-        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
+        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getRotationCenter();
 
         // move so that reference is in point 0,0
         Transformation initialTransformation = Transformation.getShift(rc);

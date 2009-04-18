@@ -72,7 +72,11 @@ public class Support {
      * @return Middle point between given points.
      */
     public static UnitPoint middle(UnitPoint p1, UnitPoint p2) {
-        return new UnitPoint((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+        try {
+            return new UnitPoint((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+        } catch (NullPointerException e) {
+            return (p1 == null) ? p2 : p1;
+        }
     }
 
     /**

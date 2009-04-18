@@ -220,4 +220,13 @@ public class ElementNode extends Node {
             element.getY().set(i, up.getUnitY());
         }
     }
+
+    /**
+     * Getter for rotation center of element stored in element node.
+     *
+     * @return {@link UnitPoint} of rotation center.
+     */
+    public UnitPoint getRotationCenter() {
+        return getElement().getRotationCenter();
+    }
 }

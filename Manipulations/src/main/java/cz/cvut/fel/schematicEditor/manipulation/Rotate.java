@@ -118,7 +118,7 @@ public class Rotate extends Manipulation {
         double angle = assesAngle();
 
         // get reference coordinate
-        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
+        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getRotationCenter();
 
         // move so that reference is in point 0,0
         Transformation initialTransformation = Transformation.getShift(rc);
@@ -148,7 +148,7 @@ public class Rotate extends Manipulation {
         double angle = assesAngle();
 
         // get reference coordinate
-        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getElement().getRotationCenter();
+        UnitPoint rc = getManipulatedGroup().getChildrenElementList().getFirst().getRotationCenter();
 
         // move so that reference is in point 0,0
         Transformation initialTransformation = Transformation.getShift(rc);

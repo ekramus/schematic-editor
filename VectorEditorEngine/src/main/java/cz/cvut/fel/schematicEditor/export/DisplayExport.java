@@ -347,7 +347,7 @@ public class DisplayExport implements Export {
                 }
 
                 // draw partRotationCenter, if different from [0,0]
-                UnitPoint rotationCenter = partNode.getElement().getRotationCenter();
+                UnitPoint rotationCenter = partNode.getRotationCenter();
                 if ((rotationCenter.getX() != 0) && (rotationCenter.getY() != 0)) {
                     nodeG2D.setColor(Color.RED);
                     nodeG2D.drawOval((int) (rotationCenter.getX() * getZoomFactor()) - 2,
