@@ -2,11 +2,13 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
+import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -21,11 +23,11 @@ public class PartNode extends ElementNode {
     /**
      * GroupNode containing graphic representation of part shape.
      */
-    private GroupNode             partGroupNode;
+    private GroupNode       partGroupNode;
     /**
      * {@link ParameterNode} containing parameters of part shape.
      */
-    private ParameterNode         partParameterNode;
+    private ParameterNode   partParameterNode;
     /**
      * {@link Vector} of part connectors.
      */
@@ -167,7 +169,7 @@ public class PartNode extends ElementNode {
 
         // modify coordinates of rotation center
         Part part = (Part) getElement();
-        part.setRotationCenter(Transformation.multiply(t, part.getRotationCenter()));
+        part.setRotationCenter(Transformation.multiply(t, getRotationCenter()));
     }
 
     /**
@@ -197,6 +199,27 @@ public class PartNode extends ElementNode {
             }
         }
 
+        return result;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#getRotationCenter()
+     */
+    @Override
+    public UnitPoint getRotationCenter() {
+        UnitPoint result = getElement().getRotationCenter();
+
+        if (result == null) {
+            ArrayList<Node> arrayList = getPartGroupNode().getNodeArray(null, getPartParameterNode());
+            for (Node node : arrayList) {
+                if (node instanceof ElementNode) {
+                    result = Support.middle(result, ((ElementNode) node).getRotationCenter());
+                }
+            }
+            if (result == null) {
+                result = new UnitPoint();
+            }
+        }
         return result;
     }
 }

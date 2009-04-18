@@ -1,13 +1,11 @@
 package cz.cvut.fel.schematicEditor.element.element.part;
 
 import java.awt.geom.Rectangle2D;
-import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
-import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -126,17 +124,6 @@ public class Part extends Element {
      */
     @Override
     public UnitPoint getRotationCenter() {
-        if (this.rotationCenter == null) {
-            try {
-                UnitPoint result = new UnitPoint(getX().firstElement(), getY().firstElement());
-                for (int i = 1; i < getX().size(); i++) {
-                    result = Support.middle(result, new UnitPoint(getX().get(i), getY().get(i)));
-                }
-                return result;
-            } catch (NoSuchElementException e) {
-                return new UnitPoint();
-            }
-        }
         return this.rotationCenter;
     }
 
