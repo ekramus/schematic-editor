@@ -65,6 +65,17 @@ public class Support {
     }
 
     /**
+     * Calculates middle point between two given points.
+     *
+     * @param p1 given 1st point.
+     * @param p2 given 2nd point.
+     * @return Middle point between given points.
+     */
+    public static UnitPoint middle(UnitPoint p1, UnitPoint p2) {
+        return new UnitPoint((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+    }
+
+    /**
      * Calculates average of two given {@link Unit}s.
      *
      * @param a given 1st {@link Unit}.

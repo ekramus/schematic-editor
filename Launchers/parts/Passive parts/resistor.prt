@@ -78,16 +78,6 @@
       </partPropertiesMap>
       <netlistPrototype>r&lt;name&gt; &lt;connectorP&gt; &lt;connectorM&gt; [&lt;value&gt;] [&lt;model&gt;] [l=&lt;length&gt;] [w=&lt;width&gt;] [temp=&lt;temperature&gt;]</netlistPrototype>
     </partProperties>
-    <rotationCenter>
-      <unitX class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
-        <value>0.0</value>
-        <doubleFactor>1.0</doubleFactor>
-      </unitX>
-      <unitY class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
-        <value>0.0</value>
-        <doubleFactor>1.0</doubleFactor>
-      </unitY>
-    </rotationCenter>
   </element>
   <elementType>T_PART</elementType>
   <edited>false</edited>

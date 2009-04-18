@@ -341,7 +341,7 @@ public class DisplayExport implements Export {
                     drawPin(c, parameterNode, nodeG2D);
                     // check, whether connector names should be printed
                     if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
-                        drawConnectorText(c, connectorNames.get(i), nodeG2D);
+                        drawPinText(c, connectorNames.get(i), nodeG2D);
                     }
                     i++;
                 }
@@ -440,9 +440,11 @@ public class DisplayExport implements Export {
     }
 
     /**
-     * Draws pin.
+     * Draws pin. Currently pin is set to be red filled circle.
      *
-     * @param pin
+     * @param pin {@link Pin} to draw.
+     * @param parameterNode {@link ParameterNode} of {@link Pin}.
+     * @param nodeG2D {@link Graphics2D} for painting.
      */
     private void drawPin(final Pin pin, ParameterNode parameterNode, Graphics2D nodeG2D) {
         logger.trace("drawing connector at coordinates: " + new UnitPoint(pin.getX().firstElement(), pin.getY()
@@ -450,7 +452,7 @@ public class DisplayExport implements Export {
 
         Ellipse2D.Double e2d = new Ellipse2D.Double((pin.getX().firstElement().doubleValue() * getZoomFactor()) - 2,
                 (pin.getY().firstElement().doubleValue() * getZoomFactor()) - 2, 5, 5);
-        drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, null, parameterNode.getFillStyle());
+        drawShape(nodeG2D, e2d, Color.RED, ElementStyle.NORMAL, Color.RED, ElementStyle.NORMAL);
     }
 
     private void drawText(String text, UnitPoint coordinates, Graphics2D nodeG2D) {
@@ -460,7 +462,7 @@ public class DisplayExport implements Export {
         nodeG2D.drawString(text, coordinates.getUnitX().floatValue(), coordinates.getUnitY().floatValue());
     }
 
-    private void drawConnectorText(Pin pin, String connectorName, Graphics2D nodeG2D) {
+    private void drawPinText(Pin pin, String connectorName, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
         nodeG2D.drawString(connectorName, (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) - 10,
                            (int) (pin.getY().firstElement().floatValue() * getZoomFactor()) - 10);
