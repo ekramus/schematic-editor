@@ -1,10 +1,10 @@
 package cz.cvut.fel.schematicEditor.remoteConfiguration;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Properties;
 
 /**
  *
@@ -21,23 +21,26 @@ public class RemoteConfiguration {
      *
      */
     public RemoteConfiguration(String url) {
+        HashMap<Character, Properties> externalProperties = new HashMap<Character, Properties>();
+
         for (char c = 'a'; c <= 'z'; c++) {
             System.out.println("\n" + c + ":");
+            Properties p = new Properties();
             try {
-                URL u = new URL(url + c + ".html");
-                BufferedReader br = new BufferedReader(new InputStreamReader(u.openStream()));
-                String buf = br.readLine();
-                while (buf != null) {
-                    System.out.println(buf);
-                    buf = br.readLine();
-                }
+                URL u = new URL(url + c + ".ini");
+                p.load(u.openStream());
+                externalProperties.put(c, p);
             } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                System.err.println("File not found");
             }
+        }
+
+        for (Character c : externalProperties.keySet()) {
+            System.out.println(c + ": " + externalProperties.get(c).size());
         }
     }
 }
