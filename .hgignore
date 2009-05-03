@@ -2,6 +2,7 @@ syntax: glob
 
 # skip Mac OS X files
 .DS_Store
+.lock
 
 # skip subversion files
 .svn
@@ -13,6 +14,8 @@ syntax: glob
 
 # skip Eclipse workspace files
 .metadata
+.plugins
+version.ini
 
 # skip Eclipse project files
 .classpath
