@@ -3,8 +3,7 @@ package cz.cvut.fel.schematicEditor.remoteConfiguration;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.TreeMap;
 
 /**
  *
@@ -21,11 +20,11 @@ public class RemoteConfiguration {
      *
      */
     public RemoteConfiguration(String url) {
-        HashMap<Character, Properties> externalProperties = new HashMap<Character, Properties>();
+        TreeMap<Character, RemoteProperties> externalProperties = new TreeMap<Character, RemoteProperties>();
 
         for (char c = 'a'; c <= 'z'; c++) {
             System.out.println("\n" + c + ":");
-            Properties p = new Properties();
+            RemoteProperties p = new RemoteProperties();
             try {
                 URL u = new URL(url + c + ".ini");
                 p.load(u.openStream());
@@ -40,7 +39,7 @@ public class RemoteConfiguration {
         }
 
         for (Character c : externalProperties.keySet()) {
-            System.out.println(c + ": " + externalProperties.get(c).size());
+            System.out.println(c + ": " + externalProperties.get(c).getInstance().keySet());
         }
     }
 }
