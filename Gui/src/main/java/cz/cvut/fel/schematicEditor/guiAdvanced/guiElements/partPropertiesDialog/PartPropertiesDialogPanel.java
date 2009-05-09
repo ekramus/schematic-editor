@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.support.Property;
 
 /**

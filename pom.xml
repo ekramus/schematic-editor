@@ -13,9 +13,9 @@
 		<module>Manipulations</module>
 		<module>GraphNodes</module>
 		<module>Elements</module>
+		<module>Parts</module>
 		<module>Support</module>
 		<module>Configuration</module>
-		<module>RemoteConfiguration</module>
 		<module>Units</module>
 		<module>Plugins-AutomaticPartNaming</module>
 		<module>Plugins-ElementsCount</module>

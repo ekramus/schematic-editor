@@ -15,18 +15,18 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
-import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
-import cz.cvut.fel.schematicEditor.element.properties.PartType;
-import cz.cvut.fel.schematicEditor.element.properties.partProperties.CapacitorProperties;
-import cz.cvut.fel.schematicEditor.element.properties.partProperties.CurrentSourceProperties;
-import cz.cvut.fel.schematicEditor.element.properties.partProperties.InductorProperties;
-import cz.cvut.fel.schematicEditor.element.properties.partProperties.ResistorProperties;
-import cz.cvut.fel.schematicEditor.element.properties.partProperties.VoltageSourceProperties;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.PartType;
+import cz.cvut.fel.schematicEditor.parts.partProperties.CapacitorProperties;
+import cz.cvut.fel.schematicEditor.parts.partProperties.CurrentSourceProperties;
+import cz.cvut.fel.schematicEditor.parts.partProperties.InductorProperties;
+import cz.cvut.fel.schematicEditor.parts.partProperties.ResistorProperties;
+import cz.cvut.fel.schematicEditor.parts.partProperties.VoltageSourceProperties;
 
 /**
  * This class implements {@link ActionListener} for <code>saveAsMenuItem</code> in {@link MenuBar}.
