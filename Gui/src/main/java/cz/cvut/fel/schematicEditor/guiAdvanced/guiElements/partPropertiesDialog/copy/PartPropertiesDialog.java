@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.element.properties.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 
 /**
  * This class extends {@link JDialog} so it is possible to set properties on {@link PartPropertiesDialogPanel}.
