@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.support.Property;
 
 /**
- * This class encapsulates properties specific for any {@link Part}.
+ * This class encapsulates properties specific for any <code>Part</code>.
  *
  * @author Urban Kravjansky
  */
@@ -32,6 +32,10 @@ public abstract class PartProperties implements Iterable<Property<String, String
      * {@link HashMap} containing all part specific properties, used e.g. for netlist generation.
      */
     private final HashMap<String, Property<String, String>> partPropertiesMap;
+    /**
+     * Part remote properties.
+     */
+    private final RemoteProperties                          remoteProperties;
 
     /**
      * Default constructor. It initializes part with default values.
@@ -46,6 +50,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
         setPartDescription(description);
 
         this.partPropertiesMap = new HashMap<String, Property<String, String>>();
+        this.remoteProperties = new RemoteProperties();
     }
 
     /**
