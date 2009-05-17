@@ -33,11 +33,6 @@ public abstract class PartProperties implements Iterable<Property<String, String
      */
     private final HashMap<String, Property<String, String>> partPropertiesMap;
     /**
-     * Part remote properties.
-     */
-    private final RemoteProperties                          remoteProperties;
-
-    /**
      * Default constructor. It initializes part with default values.
      *
      * @param variant variant of part.
@@ -50,7 +45,6 @@ public abstract class PartProperties implements Iterable<Property<String, String
         setPartDescription(description);
 
         this.partPropertiesMap = new HashMap<String, Property<String, String>>();
-        this.remoteProperties = new RemoteProperties();
     }
 
     /**
