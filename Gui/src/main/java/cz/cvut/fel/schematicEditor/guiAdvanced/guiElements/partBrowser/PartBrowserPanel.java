@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.apache.log4j.Logger;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -26,6 +28,10 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners
  */
 public class PartBrowserPanel extends JPanel {
     /**
+     * Logger instance.
+     */
+    private static Logger           logger;
+    /**
      * {@link PartBrowserPanel} singleton instance.
      */
     private static PartBrowserPanel instance         = null;
@@ -34,6 +40,8 @@ public class PartBrowserPanel extends JPanel {
     private PartNode                selectedPartNode = null;
 
     private PartBrowserPanel() {
+        logger = Logger.getLogger(getClass());
+
         setLayout(new BorderLayout());
 
         DefaultMutableTreeNode top = generatePartTree("parts");
@@ -96,21 +104,25 @@ public class PartBrowserPanel extends JPanel {
 
         // recursively add folders and parts
         File folder = new File(path);
-        for (File file : folder.listFiles()) {
-            if (file.isDirectory()) {
-                result.add(generatePartTree(file.getPath()));
-            } else if (file.getName().indexOf("prt") > -1) {
-                PartNode pn = deserialize(PartNode.class, file);
-                ImageIcon icon = new ImageIcon(file.getPath().replaceAll("prt", "png"));
+        try {
+            for (File file : folder.listFiles()) {
+                if (file.isDirectory()) {
+                    result.add(generatePartTree(file.getPath()));
+                } else if (file.getName().indexOf("prt") > -1) {
+                    PartNode pn = deserialize(PartNode.class, file);
+                    ImageIcon icon = new ImageIcon(file.getPath().replaceAll("prt", "png"));
 
-                PartBrowserNode pbn = new PartBrowserNode();
-                pbn.setPartNode(pn);
-                pbn.setIcon(icon);
+                    PartBrowserNode pbn = new PartBrowserNode();
+                    pbn.setPartNode(pn);
+                    pbn.setIcon(icon);
 
-                DefaultMutableTreeNode node = new DefaultMutableTreeNode(pbn);
+                    DefaultMutableTreeNode node = new DefaultMutableTreeNode(pbn);
 
-                result.add(node);
+                    result.add(node);
+                }
             }
+        } catch (NullPointerException e) {
+            logger.info("No parts folder found");
         }
 
         return result;

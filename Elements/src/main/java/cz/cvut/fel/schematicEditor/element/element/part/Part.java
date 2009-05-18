@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.SynchronizedPartProperties;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
@@ -20,22 +20,22 @@ public class Part extends Element {
      * Vector of connectors.
      */
     @Deprecated
-    private Vector<UnitPoint> connectorVector;
+    private Vector<UnitPoint>          connectorVector;
     /**
      * Field containing part properties.
      */
-    private PartProperties    partProperties;
+    private SynchronizedPartProperties partProperties;
     /**
      * Field containing part rotation center.
      */
-    private UnitPoint         rotationCenter;
+    private UnitPoint                  rotationCenter;
 
     /**
      * Default constructor. It initializes {@link Part} element.
      *
      * @param partProperties part properties containing part variant and part description.
      */
-    public Part(PartProperties partProperties) {
+    public Part(SynchronizedPartProperties partProperties) {
         super();
 
         setConnectorVector(new Vector<UnitPoint>());
@@ -91,7 +91,7 @@ public class Part extends Element {
     /**
      * @return the partProperties
      */
-    public PartProperties getPartProperties() {
+    public SynchronizedPartProperties getPartProperties() {
         return this.partProperties;
     }
 
@@ -107,7 +107,7 @@ public class Part extends Element {
     /**
      * @param partProperties the partProperties to set
      */
-    public void setPartProperties(PartProperties partProperties) {
+    public void setPartProperties(SynchronizedPartProperties partProperties) {
         this.partProperties = partProperties;
     }
 
