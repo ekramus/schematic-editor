@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser;
 
 import javax.swing.Icon;
 
-import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 
 /**
@@ -53,13 +52,15 @@ public class PartBrowserNode {
      * @return the partVariant
      */
     public String getVariant() {
-        return ((Part) getPartNode().getElement()).getPartProperties().getPartVariant();
+        // return ((Part) getPartNode().getElement()).getPartProperties().getPartVariant();
+        return "variant";
     }
 
     /**
      * @return the partDescription
      */
     public String getDescription() {
-        return ((Part) getPartNode().getElement()).getPartProperties().getPartDescription();
+        // return ((Part) getPartNode().getElement()).getPartProperties().getPartDescription();
+        return "desc";
     }
 }

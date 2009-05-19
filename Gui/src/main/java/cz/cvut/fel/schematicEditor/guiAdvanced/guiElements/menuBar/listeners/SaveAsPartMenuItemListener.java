@@ -20,13 +20,13 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.parts.partProperties.CapacitorProperties;
-import cz.cvut.fel.schematicEditor.parts.partProperties.CurrentSourceProperties;
-import cz.cvut.fel.schematicEditor.parts.partProperties.InductorProperties;
-import cz.cvut.fel.schematicEditor.parts.partProperties.ResistorProperties;
-import cz.cvut.fel.schematicEditor.parts.partProperties.VoltageSourceProperties;
+import cz.cvut.fel.schematicEditor.parts.SynchronizedPartProperties;
+import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.CapacitorProperties;
+import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.CurrentSourceProperties;
+import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.InductorProperties;
+import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.ResistorProperties;
+import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.VoltageSourceProperties;
 
 /**
  * This class implements {@link ActionListener} for <code>saveAsMenuItem</code> in {@link MenuBar}.
@@ -66,22 +66,22 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             env.setLastSaveFolder(file.getParent());
 
             // FIXME rewrite, so it is generated automatically
-            PartProperties pp = null;
+            SynchronizedPartProperties pp = null;
             switch ((PartType) PartPropertiesPanel.getInstance().getPartTypeComboBox().getSelectedItem()) {
                 case RESISTOR:
-                    pp = new ResistorProperties("Resistor", "variant description");
+                    pp = new ResistorProperties();
                     break;
                 case CAPACITOR:
-                    pp = new CapacitorProperties("Capacitor", "variant description");
+                    pp = new CapacitorProperties();
                     break;
                 case INDUCTOR:
-                    pp = new InductorProperties("Indictor", "variant description");
+                    pp = new InductorProperties();
                     break;
                 case VOLTAGE_SOURCE:
-                    pp = new VoltageSourceProperties("Voltage source", "variant description");
+                    pp = new VoltageSourceProperties();
                     break;
                 case CURRENT_SOURCE:
-                    pp = new CurrentSourceProperties("Current source", "variant description");
+                    pp = new CurrentSourceProperties();
                     break;
                 default:
                     break;

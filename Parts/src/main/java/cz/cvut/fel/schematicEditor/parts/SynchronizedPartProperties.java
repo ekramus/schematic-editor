@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.parts;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
@@ -37,24 +36,9 @@ public abstract class SynchronizedPartProperties {
     public abstract String getNetlist();
 
     /**
-     * Retrieves part pin names, so they can be used for connector matching.
-     *
-     * @return the partPinNames
-     */
-    @Deprecated
-    public abstract Vector<String> getPartPinNames();
-
-    /**
      * @return the partType
      */
     public abstract PartType getPartType();
-
-    /**
-     * Sets part pin names.
-     *
-     * @param partPinNames {@link Vector} of part pin names.
-     */
-    public abstract void setPartPinNames(Vector<String> partPinNames);
 
     /**
      * Updates this instance with given {@link SynchronizedPartProperties}.

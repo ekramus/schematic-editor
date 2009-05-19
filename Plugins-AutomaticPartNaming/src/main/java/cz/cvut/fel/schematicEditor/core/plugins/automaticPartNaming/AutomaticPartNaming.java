@@ -14,7 +14,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpda
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.SynchronizedPartProperties;
 
 /**
  * This plugin provides automatic naming of SceneGraph PINs.
@@ -75,7 +75,7 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
             if (node instanceof PartNode) {
                 // do automatic part naming
                 int i = Structures.getLastPartNumber();
-                PartProperties pp = ((Part) ((PartNode) node).getElement()).getPartProperties();
+                SynchronizedPartProperties pp = ((Part) ((PartNode) node).getElement()).getPartProperties();
                 String name = pp.getProperty("name").getValue();
                 if (name.equals("")) {
                     pp.setProperty("name", "part_" + i);
