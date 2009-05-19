@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
-import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.shape.Ellipse;
 import cz.cvut.fel.schematicEditor.element.element.shape.Line;
 import cz.cvut.fel.schematicEditor.element.element.shape.Rectangle;
@@ -20,11 +19,8 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
-import cz.cvut.fel.schematicEditor.parts.partProperties.ResistorProperties;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.types.SceneGraphIterator;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -255,16 +251,6 @@ public class SceneGraph implements Iterable<Node> {
         ShapeNode sn2 = new ShapeNode(new Line(new UnitPoint(200, 10), new UnitPoint(10, 200)));
         partGroupNode.add(sn1);
         partGroupNode.add(sn2);
-
-        PartProperties pp = new ResistorProperties("variant", "variant description");
-        Vector<String> c = new Vector<String>();
-        c.add("a");
-        c.add("b");
-        Part part = new Part(pp);
-
-        PartNode partNode = new PartNode(part, partGroupNode, "pokus");
-        gn.add(new ParameterNode());
-        gn.add(partNode);
 
         this.topNode.add(gn);
         this.topNode.add(new ParameterNode());
