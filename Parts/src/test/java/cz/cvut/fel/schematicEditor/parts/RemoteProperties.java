@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 /**
- * @author Urban Kravjanskz
+ * @author Urban Kravjansky
  *
  */
 public class RemoteProperties {

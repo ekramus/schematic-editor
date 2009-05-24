@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.PartBrowserTreeSelectionListener;
@@ -109,15 +110,23 @@ public class PartBrowserPanel extends JPanel {
                 if (file.isDirectory()) {
                     result.add(generatePartTree(file.getPath()));
                 } else if (file.getName().indexOf("prt") > -1) {
+                    // deserialize
                     PartNode pn = deserialize(PartNode.class, file);
+                    // update part properties
+                    boolean updateStatus = ((Part) pn.getElement()).getPartProperties().update();
+                    logger.trace("Status of part updating process (true=updated/false=not updates): " + updateStatus);
+                    // set image icon
                     ImageIcon icon = new ImageIcon(file.getPath().replaceAll("prt", "png"));
 
+                    // create part browser node
                     PartBrowserNode pbn = new PartBrowserNode();
                     pbn.setPartNode(pn);
                     pbn.setIcon(icon);
 
+                    // create tree node
                     DefaultMutableTreeNode node = new DefaultMutableTreeNode(pbn);
 
+                    // add node to result
                     result.add(node);
                 }
             }
