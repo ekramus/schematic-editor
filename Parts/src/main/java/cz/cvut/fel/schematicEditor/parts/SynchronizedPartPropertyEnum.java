@@ -8,7 +8,7 @@ public enum SynchronizedPartPropertyEnum {
     /**
      * Definition of property.
      */
-    DEFINITION("\\[.*\\]"),
+    DEFINITION("definition"),
     /**
      * Czech name of property.
      */

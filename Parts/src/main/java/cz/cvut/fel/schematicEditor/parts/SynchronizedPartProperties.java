@@ -222,12 +222,13 @@ public abstract class SynchronizedPartProperties {
                     }
                     // initialize new key
                     key = buf.replaceFirst("\\[(.*)\\]", "$1");
+                    propertiesBlock.put("definition", key);
                 }
                 // property field
                 else if (buf.indexOf("=") != -1) {
                     int i = buf.indexOf("=");
                     String name = buf.substring(0, i);
-                    String value = buf.substring(i + 1, buf.length());
+                    String value = buf.substring(i + 1, buf.length()).replaceAll("\"", "");
                     propertiesBlock.put(name, value);
                 }
             }
