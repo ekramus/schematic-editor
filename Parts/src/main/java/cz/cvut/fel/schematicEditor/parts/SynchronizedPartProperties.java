@@ -1,7 +1,13 @@
 package cz.cvut.fel.schematicEditor.parts;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
@@ -19,13 +25,25 @@ public abstract class SynchronizedPartProperties {
      * {@link HashMap} containing all relevant properties.
      */
     private HashSet<SynchronizedPartProperty> synchronizedPartProperties;
+    /**
+     * Base address for remote configuration.
+     */
+    private final String                      remoteConfigurationBase = "http://asinus.feld.cvut.cz/pracan3/data/part-spice/soucastky/";
+
+    static {
+        // neccessary to reinitialize logger, as it will not be set up correctly after deserialization
+        logger = Logger.getLogger(SynchronizedPartProperties.class);
+    }
 
     /**
      * This method instantiates new instance.
      *
      */
     public SynchronizedPartProperties() {
+        // logger = Logger.getLogger(getClass());
+        //
         setSynchronizedPartProperties(new HashSet<SynchronizedPartProperty>());
+        update();
     }
 
     /**
@@ -43,11 +61,62 @@ public abstract class SynchronizedPartProperties {
     /**
      * Updates this instance with given {@link SynchronizedPartProperties}.
      *
-     * @param spp {@link SynchronizedPartProperties} to use for update.
+     * @return <code>true</code>, if properties instance was updated, <code>false</code> else.
      */
-    public void update(SynchronizedPartProperties spp) {
-        // TODO implement
+    public boolean update() {
+        // // neccessary to reinitialize logger, as it will not be set up correctly after deserialization
+        // logger = Logger.getLogger(getClass());
+
+        try {
+            URL url = new URL(getRemoteConfigurationBase() + getRemoteConfigurationName());
+            HashMap<String, HashMap<String, String>> remoteConfiguration = load(url.openStream());
+            synchronize(remoteConfiguration);
+        } catch (IOException e) {
+            logger.info("Configuration located on " + getRemoteConfigurationBase()
+                    + getRemoteConfigurationName()
+                    + "was not loaded");
+            return false;
+        }
+
+        return true;
     }
+
+    /**
+     * Synchronizes remote configuration and this instance.
+     *
+     * @param remoteConfiguration
+     */
+    private void synchronize(HashMap<String, HashMap<String, String>> remoteConfiguration) {
+        for (String key : remoteConfiguration.keySet()) {
+            boolean keyMatched = false;
+            try {
+                for (SynchronizedPartProperty synchronizedPartProperty : getSynchronizedPartProperties()) {
+                    if (synchronizedPartProperty.getDefinition().equalsIgnoreCase(key)) {
+                        logger.trace("SPP key match");
+
+                        keyMatched = true;
+                        break;
+                    }
+                }
+            } catch (NullPointerException e) {
+                logger.trace("SPP probably null");
+            }
+
+            if (!keyMatched) {
+                logger.trace("SPP key didn't match. Adding key [" + key + "]");
+
+                SynchronizedPartProperty spp = new SynchronizedPartProperty(remoteConfiguration.get(key));
+                getSynchronizedPartProperties().add(spp);
+            }
+        }
+    }
+
+    /**
+     * Gets all part pin names.
+     *
+     * @return
+     */
+    public abstract Vector<String> getPartPinNames();
 
     /**
      * @return the synchronizedPartProperties
@@ -115,5 +184,58 @@ public abstract class SynchronizedPartProperties {
         // return result;
 
         return "";
+    }
+
+    /**
+     * @return the remoteConfigurationName
+     */
+    public abstract String getRemoteConfigurationName();
+
+    /**
+     * @return the remoteConfigurationBase
+     */
+    public String getRemoteConfigurationBase() {
+        return this.remoteConfigurationBase;
+    }
+
+    /**
+     * Loads remote properties from given input stream.
+     *
+     * @param inputStream
+     * @return {@link HashMap} of all remote properties for given part.
+     */
+    private HashMap<String, HashMap<String, String>> load(InputStream inputStream) {
+        HashMap<String, HashMap<String, String>> result = new HashMap<String, HashMap<String, String>>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        String buf;
+        String key = null;
+        HashMap<String, String> propertiesBlock = new HashMap<String, String>();
+
+        try {
+            for (buf = br.readLine(); buf != null; buf = br.readLine()) {
+                // named block
+                if (buf.indexOf("[") == 0) {
+                    // store named properties block and reinitialize properties block hash map
+                    if (key != null) {
+                        result.put(key, propertiesBlock);
+                        propertiesBlock = new HashMap<String, String>();
+                    }
+                    // initialize new key
+                    key = buf.replaceFirst("\\[(.*)\\]", "$1");
+                }
+                // property field
+                else if (buf.indexOf("=") != -1) {
+                    int i = buf.indexOf("=");
+                    String name = buf.substring(0, i);
+                    String value = buf.substring(i + 1, buf.length());
+                    propertiesBlock.put(name, value);
+                }
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

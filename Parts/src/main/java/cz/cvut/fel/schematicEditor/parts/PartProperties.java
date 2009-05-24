@@ -15,6 +15,7 @@ import cz.cvut.fel.schematicEditor.support.Property;
  *
  * @author Urban Kravjansky
  */
+@Deprecated
 public abstract class PartProperties implements Iterable<Property<String, String>> {
     /**
      * {@link Logger} instance for logging purposes.

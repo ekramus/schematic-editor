@@ -44,15 +44,15 @@
    </type>
    <relationship>
       <class="edu.buffalo.cse.green.relationship.dependency.DependencyLPart"/>
-      <sourceType="=Parts/src\/main\/java<cz.cvut.fel.schematicEditor.parts{PartProperties.java[PartProperties"/>
-      <targetType="=Support/src\/main\/java<cz.cvut.fel.schematicEditor.support{Property.java[Property"/>
+      <sourceType="=Parts/src\/main\/java<cz.cvut.fel.schematicEditor.parts{RemoteConfiguration.java[RemoteConfiguration"/>
+      <targetType="=Parts/src\/main\/java<cz.cvut.fel.schematicEditor.parts{RemoteProperties.java[RemoteProperties"/>
       <bendpoints>
       </bendpoints>
    </relationship>
    <relationship>
       <class="edu.buffalo.cse.green.relationship.dependency.DependencyLPart"/>
-      <sourceType="=Parts/src\/main\/java<cz.cvut.fel.schematicEditor.parts{RemoteConfiguration.java[RemoteConfiguration"/>
-      <targetType="=Parts/src\/main\/java<cz.cvut.fel.schematicEditor.parts{RemoteProperties.java[RemoteProperties"/>
+      <sourceType="=Parts/src\/main\/java<cz.cvut.fel.schematicEditor.parts{PartProperties.java[PartProperties"/>
+      <targetType="=Support/src\/main\/java<cz.cvut.fel.schematicEditor.support{Property.java[Property"/>
       <bendpoints>
       </bendpoints>
    </relationship>
