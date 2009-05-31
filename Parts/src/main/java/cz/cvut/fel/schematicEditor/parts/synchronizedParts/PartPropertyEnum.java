@@ -1,10 +1,10 @@
-package cz.cvut.fel.schematicEditor.parts;
+package cz.cvut.fel.schematicEditor.parts.synchronizedParts;
 
 /**
  * @author Urban Kravjansky
  *
  */
-public enum SynchronizedPartPropertyEnum {
+public enum PartPropertyEnum {
     /**
      * Definition of property.
      */
@@ -53,7 +53,7 @@ public enum SynchronizedPartPropertyEnum {
      * @param value value of property, which is added.
      *
      */
-    private SynchronizedPartPropertyEnum(String value) {
+    private PartPropertyEnum(String value) {
         setValue(value);
     }
 

@@ -1,16 +1,16 @@
-package cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties;
+package cz.cvut.fel.schematicEditor.parts.synchronizedParts.partProperties;
 
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.parts.SynchronizedPartProperties;
+import cz.cvut.fel.schematicEditor.parts.synchronizedParts.PartProperties;
 
 /**
  * This class implements properties with are unique for resistor part.
  *
  * @author Urban Kravjansky
  */
-public class ResistorProperties extends SynchronizedPartProperties {
+public class ResistorProperties extends PartProperties {
     /**
      * Prototype of netlist string, where codes will be replaced with values.
      */
@@ -28,15 +28,23 @@ public class ResistorProperties extends SynchronizedPartProperties {
     }
 
     /**
-     * @see SynchronizedPartProperties#getNetlist()
+     * @see PartProperties#getNetlist()
      */
     @Override
     public String getNetlist() {
+        return "";
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.synchronizedParts.PartProperties#expandNetlist()
+     */
+    @Override
+    public String expandNetlist() {
         return expandPrototype(this.netlistPrototype, this);
     }
 
     /**
-     * @see SynchronizedPartProperties#getPartType()
+     * @see PartProperties#getPartType()
      */
     @Override
     public PartType getPartType() {
@@ -44,7 +52,7 @@ public class ResistorProperties extends SynchronizedPartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.SynchronizedPartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.synchronizedParts.PartProperties#getPartPinNames()
      */
     @Override
     public Vector<String> getPartPinNames() {
@@ -53,7 +61,7 @@ public class ResistorProperties extends SynchronizedPartProperties {
     }
 
     /**
-     * @see SynchronizedPartProperties#getRemoteConfigurationName()
+     * @see PartProperties#getRemoteConfigurationName()
      */
     @Override
     public String getRemoteConfigurationName() {

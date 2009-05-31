@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.parts;
+package cz.cvut.fel.schematicEditor.parts.originalParts;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.support.Property;
 
 /**

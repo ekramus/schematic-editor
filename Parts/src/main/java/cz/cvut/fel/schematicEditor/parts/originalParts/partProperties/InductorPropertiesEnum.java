@@ -1,21 +1,21 @@
-package cz.cvut.fel.schematicEditor.parts.partProperties;
+package cz.cvut.fel.schematicEditor.parts.originalParts.partProperties;
 
 /**
- * This enumeration contains keys and descriptions of all voltage source part properties. It is based on netlist
- * definition string: <br/>
- * <code>i&lt;name&gt &lt;connectorP&gt; &lt;connectorM&gt; [dc &lt;dc_analysis&gt;]</code>
+ * This enumeration contains keys and descriptions of all inductor part properties. It is based on netlist definition
+ * string: <br/>
+ * <code>i&lt;name&gt &lt;connectorP&gt; &lt;connectorM&gt; &lt;value&gt; [ic=&lt;initial_current&gt;]</code>
  *
  * @author Urban Kravjansky
  */
-public enum CurrentSourcePropertiesEnum {
+public enum InductorPropertiesEnum {
     /**
      * Name of resistor part.
      */
-    NAME("name", "Name of voltage source part."),
+    NAME("name", "Name of capacitor part."),
     /**
      * Value of resistance.
      */
-    VALUE("value", "Value of voltage source."),
+    VALUE("value", "Value of capatity."),
     /**
      * Name of + connector.
      */
@@ -25,9 +25,12 @@ public enum CurrentSourcePropertiesEnum {
      */
     CONNECTOR_M("connectorM", "Name of - connector."),
     /**
+     * Model of resistor.
+     */
+    /**
      * ??
      */
-    DC("dc_analysis", "value for DC/Tran analysis");
+    INITIAL_CURRENT("initial_current", "?? initial current");
 
     /**
      * Key of property.
@@ -44,7 +47,7 @@ public enum CurrentSourcePropertiesEnum {
      * @param key key of property.
      * @param description description of key.
      */
-    CurrentSourcePropertiesEnum(String key, String description) {
+    InductorPropertiesEnum(String key, String description) {
         setKey(key);
         setDescription(description);
     }

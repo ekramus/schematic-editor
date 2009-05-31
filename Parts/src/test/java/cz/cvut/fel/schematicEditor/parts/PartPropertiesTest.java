@@ -4,7 +4,8 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import cz.cvut.fel.schematicEditor.parts.partProperties.ResistorProperties;
+import cz.cvut.fel.schematicEditor.parts.originalParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.originalParts.partProperties.ResistorProperties;
 
 /**
  * JUnit test class for {@link PartProperties}.

@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.parts;
+package cz.cvut.fel.schematicEditor.parts.synchronizedParts;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,38 +11,40 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.parts.PartType;
+
 /**
  * @author Urban Kravjansky
  *
  *
  */
-public abstract class SynchronizedPartProperties {
+public abstract class PartProperties {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger                     logger;
+    private static Logger         logger;
     /**
      * {@link HashMap} containing all relevant properties.
      */
-    private HashSet<SynchronizedPartProperty> synchronizedPartProperties;
+    private HashSet<PartProperty> synchronizedPartProperties;
     /**
      * Base address for remote configuration.
      */
-    private final String                      remoteConfigurationBase = "http://asinus.feld.cvut.cz/pracan3/data/part-spice/soucastky/";
+    private final String          remoteConfigurationBase = "http://asinus.feld.cvut.cz/pracan3/data/part-spice/soucastky/";
 
     static {
         // neccessary to reinitialize logger, as it will not be set up correctly after deserialization
-        logger = Logger.getLogger(SynchronizedPartProperties.class);
+        logger = Logger.getLogger(PartProperties.class);
     }
 
     /**
      * This method instantiates new instance.
      *
      */
-    public SynchronizedPartProperties() {
+    public PartProperties() {
         // logger = Logger.getLogger(getClass());
         //
-        setSynchronizedPartProperties(new HashSet<SynchronizedPartProperty>());
+        setSynchronizedPartProperties(new HashSet<PartProperty>());
         update();
     }
 
@@ -59,7 +61,7 @@ public abstract class SynchronizedPartProperties {
     public abstract PartType getPartType();
 
     /**
-     * Updates this instance with given {@link SynchronizedPartProperties}.
+     * Updates this instance with given {@link PartProperties}.
      *
      * @return <code>true</code>, if properties instance was updated, <code>false</code> else.
      */
@@ -90,7 +92,7 @@ public abstract class SynchronizedPartProperties {
         for (String key : remoteConfiguration.keySet()) {
             boolean keyMatched = false;
             try {
-                for (SynchronizedPartProperty synchronizedPartProperty : getSynchronizedPartProperties()) {
+                for (PartProperty synchronizedPartProperty : getSynchronizedPartProperties()) {
                     if (synchronizedPartProperty.getDefinition().equalsIgnoreCase(key)) {
                         logger.trace("SPP key match");
 
@@ -105,7 +107,7 @@ public abstract class SynchronizedPartProperties {
             if (!keyMatched) {
                 logger.trace("SPP key didn't match. Adding key [" + key + "]");
 
-                SynchronizedPartProperty spp = new SynchronizedPartProperty(remoteConfiguration.get(key));
+                PartProperty spp = new PartProperty(remoteConfiguration.get(key));
                 getSynchronizedPartProperties().add(spp);
             }
         }
@@ -121,14 +123,14 @@ public abstract class SynchronizedPartProperties {
     /**
      * @return the synchronizedPartProperties
      */
-    private HashSet<SynchronizedPartProperty> getSynchronizedPartProperties() {
+    private HashSet<PartProperty> getSynchronizedPartProperties() {
         return this.synchronizedPartProperties;
     }
 
     /**
      * @param synchronizedPartProperties the synchronizedPartProperties to set
      */
-    private void setSynchronizedPartProperties(HashSet<SynchronizedPartProperty> synchronizedPartProperties) {
+    private void setSynchronizedPartProperties(HashSet<PartProperty> synchronizedPartProperties) {
         this.synchronizedPartProperties = synchronizedPartProperties;
     }
 
@@ -140,8 +142,7 @@ public abstract class SynchronizedPartProperties {
      * @param synchronizedPartProperties Part properties, which will be searched for values during expansion.
      * @return Expanded netlist {@link String}.
      */
-    protected String expandPrototype(final String netlistPrototype,
-            final SynchronizedPartProperties synchronizedPartProperties) {
+    protected String expandPrototype(final String netlistPrototype, final PartProperties synchronizedPartProperties) {
         // String result = netlistPrototype;
         //
         // String mandatoryString = "<(\\S+)>";
@@ -239,4 +240,11 @@ public abstract class SynchronizedPartProperties {
 
         return result;
     }
+
+    /**
+     * Expand part specific netlist.
+     *
+     * @return Netlist represented by {@link String}.
+     */
+    public abstract String expandNetlist();
 }

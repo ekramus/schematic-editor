@@ -1,21 +1,21 @@
-package cz.cvut.fel.schematicEditor.parts.partProperties;
+package cz.cvut.fel.schematicEditor.parts.originalParts.partProperties;
 
 /**
- * This enumeration contains keys and descriptions of all capacitor part properties. It is based on netlist definition
+ * This enumeration contains keys and descriptions of all resistor part properties. It is based on netlist definition
  * string: <br/>
- * <code>c&lt;name&gt &lt;connectorP&gt; &lt;connectorM&gt; [&lt;value&gt;] [&lt;model&gt;] [l=&lt;length&gt; ] [w=&lt;width&gt;] [ic=&lt;initial voltage&gt;]</code>
+ * <code>r&lt;name&gt; &lt;connectorP&gt; &lt;connectorM&gt; [&lt;value&gt;] [&lt;model&gt;] [l=&lt;length&gt; ] [w=&lt;width&gt;] [temp=&lt;temperature&gt;]</code>
  *
  * @author Urban Kravjansky
  */
-public enum CapacitorPropertiesEnum {
+public enum ResistorPropertiesEnum {
     /**
      * Name of resistor part.
      */
-    NAME("name", "Name of capacitor part."),
+    NAME("name", "Name of resistor part."),
     /**
      * Value of resistance.
      */
-    VALUE("value", "Value of capatity."),
+    VALUE("value", "Value of resistance."),
     /**
      * Name of + connector.
      */
@@ -27,19 +27,19 @@ public enum CapacitorPropertiesEnum {
     /**
      * Model of resistor.
      */
-    MODEL("model", "Model of capacitor."),
+    MODEL("model", "Model of resistor."),
     /**
      * ??
      **/
-    LENGTH("length", "?? length"),
+    LENGTH("length", "??"),
     /**
      * ??
      */
-    WIDTH("width", "?? width"),
+    WIDTH("width", "??"),
     /**
      * ??
      */
-    INITIAL_VOLTAGE("initial_voltage", "?? initial voltage");
+    TEMPERATURE("temperature", "??");
 
     /**
      * Key of property.
@@ -56,7 +56,7 @@ public enum CapacitorPropertiesEnum {
      * @param key key of property.
      * @param description description of key.
      */
-    CapacitorPropertiesEnum(String key, String description) {
+    ResistorPropertiesEnum(String key, String description) {
         setKey(key);
         setDescription(description);
     }

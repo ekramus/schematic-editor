@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.originalParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.originalParts.partProperties.ResistorProperties;
 
 /**
  * JUnit test class for {@link ResistorProperties}.
