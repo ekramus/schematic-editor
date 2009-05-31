@@ -1,9 +1,9 @@
-package cz.cvut.fel.schematicEditor.parts.partProperties;
+package cz.cvut.fel.schematicEditor.parts.originalParts.partProperties;
 
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
+import cz.cvut.fel.schematicEditor.parts.originalParts.PartProperties;
 
 /**
  * This class implements properties with are unique for resistor part.
@@ -32,7 +32,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getNetlist()
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.PartPropertiesInterface.properties.PartProperties#getNetlist()
      */
     @Override
     public String getNetlist() {
@@ -40,7 +40,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.PartPropertiesInterface.properties.PartProperties#getPartPinNames()
      */
     @Override
     @Deprecated
@@ -54,7 +54,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#setPartPinNames(java.util.Vector)
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.PartPropertiesInterface.properties.PartProperties#setPartPinNames(java.util.Vector)
      */
     @Override
     public void setPartPinNames(Vector<String> partPinNames) {
@@ -63,7 +63,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.element.properties.PartProperties#getPartType()
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.PartPropertiesInterface.properties.PartProperties#getPartType()
      */
     @Override
     public PartType getPartType() {

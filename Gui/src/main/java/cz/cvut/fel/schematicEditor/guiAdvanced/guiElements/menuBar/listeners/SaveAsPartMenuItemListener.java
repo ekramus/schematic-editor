@@ -21,12 +21,12 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.parts.SynchronizedPartProperties;
-import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.CapacitorProperties;
-import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.CurrentSourceProperties;
-import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.InductorProperties;
-import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.ResistorProperties;
-import cz.cvut.fel.schematicEditor.parts.synchronizedPartProperties.VoltageSourceProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.CapacitorProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.CurrentSourceProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.InductorProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.ResistorProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.VoltageSourceProperties;
 
 /**
  * This class implements {@link ActionListener} for <code>saveAsMenuItem</code> in {@link MenuBar}.
@@ -66,7 +66,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             env.setLastSaveFolder(file.getParent());
 
             // FIXME rewrite, so it is generated automatically
-            SynchronizedPartProperties pp = null;
+            PartProperties pp = null;
             switch ((PartType) PartPropertiesPanel.getInstance().getPartTypeComboBox().getSelectedItem()) {
                 case RESISTOR:
                     pp = new ResistorProperties();

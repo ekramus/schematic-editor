@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
@@ -20,6 +21,7 @@ import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartRotationCenterButtonActionListener;
+import cz.cvut.fel.schematicEditor.parts.PartPropertiesInterface;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 
 /**
@@ -65,6 +67,10 @@ public class PartPropertiesPanel extends JPanel {
      * Part netlist {@link JScrollPane}.
      */
     private JScrollPane                partNetlistScrollPane    = null;
+    /**
+     * Part properties table.
+     */
+    private JTable                     partPropertiesTable      = null;
 
     /**
      * Getter for <code>basicPropertiesPanel</code>.
@@ -140,6 +146,7 @@ public class PartPropertiesPanel extends JPanel {
 
             // add elements
             partPropertiesPanel.add(partPropertiesPanel.getBasicPropertiesPanel(), "width 210");
+            partPropertiesPanel.add(partPropertiesPanel.getPartPropertiesTable(), "width 210");
         }
         return partPropertiesPanel;
     }
@@ -153,8 +160,12 @@ public class PartPropertiesPanel extends JPanel {
                 PartNode partNode = (PartNode) Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup()
                         .getChildrenElementList().getFirst();
                 Part part = (Part) partNode.getElement();
-                getInstance().getPartRotationCenterLabel().setText(partNode.getRotationCenter().toString());
-                getInstance().getPartNetlistTextArea().setText(part.getPartProperties().getNetlist());
+                getPartRotationCenterLabel().setText(partNode.getRotationCenter().toString());
+                getPartNetlistTextArea().setText(part.getPartProperties().getNetlist());
+
+                PartPropertiesInterface pp = part.getPartProperties();
+                ((PartPropertiesTableModel) getPartPropertiesTable().getModel()).setPartProperties(pp
+                        .getPropertiesTable());
             }
         } catch (NullPointerException npe) {
             logger.error("Probably no manipulation.");
@@ -194,5 +205,15 @@ public class PartPropertiesPanel extends JPanel {
             this.partRotationCenterLabel.setPreferredSize(new Dimension(100, 20));
         }
         return this.partRotationCenterLabel;
+    }
+
+    /**
+     * @return the partPropertiesTable
+     */
+    private JTable getPartPropertiesTable() {
+        if (this.partPropertiesTable == null) {
+            this.partPropertiesTable = new JTable(new PartPropertiesTableModel());
+        }
+        return this.partPropertiesTable;
     }
 }

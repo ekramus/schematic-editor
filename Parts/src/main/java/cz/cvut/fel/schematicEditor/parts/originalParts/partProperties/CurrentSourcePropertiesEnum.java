@@ -1,17 +1,21 @@
-package cz.cvut.fel.schematicEditor.parts.partProperties;
+package cz.cvut.fel.schematicEditor.parts.originalParts.partProperties;
 
 /**
  * This enumeration contains keys and descriptions of all voltage source part properties. It is based on netlist
  * definition string: <br/>
- * <code>v&lt;name&gt &lt;connectorP&gt; &lt;connectorM&gt; [dc &lt;dc_analysis&gt;]</code>
+ * <code>i&lt;name&gt &lt;connectorP&gt; &lt;connectorM&gt; [dc &lt;dc_analysis&gt;]</code>
  *
  * @author Urban Kravjansky
  */
-public enum VoltageSourcePropertiesEnum {
+public enum CurrentSourcePropertiesEnum {
     /**
-     * Name of voltage source part.
+     * Name of resistor part.
      */
     NAME("name", "Name of voltage source part."),
+    /**
+     * Value of resistance.
+     */
+    VALUE("value", "Value of voltage source."),
     /**
      * Name of + connector.
      */
@@ -20,9 +24,6 @@ public enum VoltageSourcePropertiesEnum {
      * Name of - connector.
      */
     CONNECTOR_M("connectorM", "Name of - connector."),
-    /**
-     * Model of resistor.
-     */
     /**
      * ??
      */
@@ -43,7 +44,7 @@ public enum VoltageSourcePropertiesEnum {
      * @param key key of property.
      * @param description description of key.
      */
-    VoltageSourcePropertiesEnum(String key, String description) {
+    CurrentSourcePropertiesEnum(String key, String description) {
         setKey(key);
         setDescription(description);
     }

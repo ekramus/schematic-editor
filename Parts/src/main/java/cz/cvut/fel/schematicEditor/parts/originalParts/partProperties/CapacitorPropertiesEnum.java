@@ -1,21 +1,21 @@
-package cz.cvut.fel.schematicEditor.parts.partProperties;
+package cz.cvut.fel.schematicEditor.parts.originalParts.partProperties;
 
 /**
- * This enumeration contains keys and descriptions of all resistor part properties. It is based on netlist definition
+ * This enumeration contains keys and descriptions of all capacitor part properties. It is based on netlist definition
  * string: <br/>
- * <code>r&lt;name&gt; &lt;connectorP&gt; &lt;connectorM&gt; [&lt;value&gt;] [&lt;model&gt;] [l=&lt;length&gt; ] [w=&lt;width&gt;] [temp=&lt;temperature&gt;]</code>
+ * <code>c&lt;name&gt &lt;connectorP&gt; &lt;connectorM&gt; [&lt;value&gt;] [&lt;model&gt;] [l=&lt;length&gt; ] [w=&lt;width&gt;] [ic=&lt;initial voltage&gt;]</code>
  *
  * @author Urban Kravjansky
  */
-public enum ResistorPropertiesEnum {
+public enum CapacitorPropertiesEnum {
     /**
      * Name of resistor part.
      */
-    NAME("name", "Name of resistor part."),
+    NAME("name", "Name of capacitor part."),
     /**
      * Value of resistance.
      */
-    VALUE("value", "Value of resistance."),
+    VALUE("value", "Value of capatity."),
     /**
      * Name of + connector.
      */
@@ -27,19 +27,19 @@ public enum ResistorPropertiesEnum {
     /**
      * Model of resistor.
      */
-    MODEL("model", "Model of resistor."),
+    MODEL("model", "Model of capacitor."),
     /**
      * ??
      **/
-    LENGTH("length", "??"),
+    LENGTH("length", "?? length"),
     /**
      * ??
      */
-    WIDTH("width", "??"),
+    WIDTH("width", "?? width"),
     /**
      * ??
      */
-    TEMPERATURE("temperature", "??");
+    INITIAL_VOLTAGE("initial_voltage", "?? initial voltage");
 
     /**
      * Key of property.
@@ -56,7 +56,7 @@ public enum ResistorPropertiesEnum {
      * @param key key of property.
      * @param description description of key.
      */
-    ResistorPropertiesEnum(String key, String description) {
+    CapacitorPropertiesEnum(String key, String description) {
         setKey(key);
         setDescription(description);
     }

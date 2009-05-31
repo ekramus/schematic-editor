@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.parts;
+package cz.cvut.fel.schematicEditor.parts.synchronizedParts;
 
 import java.util.HashMap;
 
@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
  * @author Urban Kravjansky
  *
  */
-public class SynchronizedPartProperty {
+public class PartProperty {
     /**
      * {@link Logger} instance for logging purposes.
      */
@@ -56,27 +56,27 @@ public class SynchronizedPartProperty {
      * @param sppMap {@link HashMap} used for initialization of this instance.
      *
      */
-    public SynchronizedPartProperty(HashMap<String, String> sppMap) {
+    public PartProperty(HashMap<String, String> sppMap) {
         logger = Logger.getLogger(getClass());
 
         for (String key : sppMap.keySet()) {
-            if (key.matches(SynchronizedPartPropertyEnum.DEFINITION.getValue())) {
+            if (key.matches(PartPropertyEnum.DEFINITION.getValue())) {
                 setDefinition(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.HELP_CS.getValue())) {
+            } else if (key.matches(PartPropertyEnum.HELP_CS.getValue())) {
                 setHelpCS(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.HELP_EN.getValue())) {
+            } else if (key.matches(PartPropertyEnum.HELP_EN.getValue())) {
                 setHelpEN(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.TYPE.getValue())) {
+            } else if (key.matches(PartPropertyEnum.TYPE.getValue())) {
                 setType(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.NAME_CS.getValue())) {
+            } else if (key.matches(PartPropertyEnum.NAME_CS.getValue())) {
                 setNameCS(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.NAME_EN.getValue())) {
+            } else if (key.matches(PartPropertyEnum.NAME_EN.getValue())) {
                 setNameEN(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.VALIDATE.getValue())) {
+            } else if (key.matches(PartPropertyEnum.VALIDATE.getValue())) {
                 setValidate(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.USE.getValue())) {
+            } else if (key.matches(PartPropertyEnum.USE.getValue())) {
                 setUse(sppMap.get(key));
-            } else if (key.matches(SynchronizedPartPropertyEnum.SHOW.getValue())) {
+            } else if (key.matches(PartPropertyEnum.SHOW.getValue())) {
                 setShow(sppMap.get(key));
             } else {
                 logger.error("Unknow property field");
