@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.support.Property;
+import cz.cvut.fel.schematicEditor.parts.PartProperty;
 
 /**
  * This class encapsulates properties specific for any <code>Part</code>.
@@ -17,7 +17,7 @@ import cz.cvut.fel.schematicEditor.support.Property;
  * @author Urban Kravjansky
  */
 @Deprecated
-public abstract class OriginalPartProperties implements Iterable<Property<String, String>> {
+public abstract class OriginalPartProperties implements Iterable<PartProperty<String, String>> {
     /**
      * {@link Logger} instance for logging purposes.
      */
@@ -33,7 +33,7 @@ public abstract class OriginalPartProperties implements Iterable<Property<String
     /**
      * {@link HashMap} containing all part specific properties, used e.g. for netlist generation.
      */
-    private final HashMap<String, Property<String, String>> partPropertiesMap;
+    private final HashMap<String, PartProperty<String, String>> partPropertiesMap;
     /**
      * Default constructor. It initializes part with default values.
      *
@@ -46,7 +46,7 @@ public abstract class OriginalPartProperties implements Iterable<Property<String
         setPartVariant(variant);
         setPartDescription(description);
 
-        this.partPropertiesMap = new HashMap<String, Property<String, String>>();
+        this.partPropertiesMap = new HashMap<String, PartProperty<String, String>>();
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class OriginalPartProperties implements Iterable<Property<String
      *
      * @return {@link HashMap} of all properties in.
      */
-    protected HashMap<String, Property<String, String>> getPartPropertiesMap() {
+    protected HashMap<String, PartProperty<String, String>> getPartPropertiesMap() {
         return this.partPropertiesMap;
     }
 
@@ -132,17 +132,17 @@ public abstract class OriginalPartProperties implements Iterable<Property<String
      * @param propertyDescription description of given property.
      */
     public void setProperty(String propertyName, String propertyValue, String propertyDescription) {
-        Property<String, String> p = new Property<String, String>(propertyName, propertyValue, propertyDescription);
+        PartProperty<String, String> p = new PartProperty<String, String>(propertyName, propertyValue, propertyDescription);
         getPartPropertiesMap().put(propertyName, p);
     }
 
     /**
-     * Gets {@link Property} assigned property name. Properties are internally stored in {@link HashMap}.
+     * Gets {@link PartProperty} assigned property name. Properties are internally stored in {@link HashMap}.
      *
      * @param propertyName name of property to be retrieved.
      * @return Instance of property.
      */
-    public Property<String, String> getProperty(String propertyName) {
+    public PartProperty<String, String> getProperty(String propertyName) {
         return getPartPropertiesMap().get(propertyName);
     }
 
@@ -200,8 +200,8 @@ public abstract class OriginalPartProperties implements Iterable<Property<String
     /**
      * @see java.lang.Iterable#iterator()
      */
-    public Iterator<Property<String, String>> iterator() {
-        Vector<Property<String, String>> collection = new Vector<Property<String, String>>();
+    public Iterator<PartProperty<String, String>> iterator() {
+        Vector<PartProperty<String, String>> collection = new Vector<PartProperty<String, String>>();
 
         for (String key : getPartPropertiesMap().keySet()) {
             collection.add(getProperty(key));

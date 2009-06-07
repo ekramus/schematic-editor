@@ -9,8 +9,8 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.parts.PartProperty;
 import cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties;
-import cz.cvut.fel.schematicEditor.support.Property;
 
 /**
  * This class implements panel for access to part properties. It is created dynamically based on properties of each
@@ -58,12 +58,12 @@ public class PartPropertiesDialogPanel extends JPanel {
     }
 
     /**
-     * Creates {@link JLabel} with text from {@link Property} key.
+     * Creates {@link JLabel} with text from {@link PartProperty} key.
      *
-     * @param property {@link Property} to retrieve key.
-     * @return {@link JLabel} instance with text from {@link Property} key.
+     * @param property {@link PartProperty} to retrieve key.
+     * @return {@link JLabel} instance with text from {@link PartProperty} key.
      */
-    private JLabel getPropertyKeyLabel(Property<String, String> property) {
+    private JLabel getPropertyKeyLabel(PartProperty<String, String> property) {
         JLabel result = new JLabel();
 
         result.setText(property.getKey() + ": ");
@@ -72,12 +72,12 @@ public class PartPropertiesDialogPanel extends JPanel {
     }
 
     /**
-     * Creates {@link JTextField} with text from {@link Property} value.
+     * Creates {@link JTextField} with text from {@link PartProperty} value.
      *
-     * @param property {@link Property} to retrieve value.
-     * @return {@link JTextField} instance with text from {@link Property} value.
+     * @param property {@link PartProperty} to retrieve value.
+     * @return {@link JTextField} instance with text from {@link PartProperty} value.
      */
-    private JTextField getPropertyValueField(Property<String, String> property) {
+    private JTextField getPropertyValueField(PartProperty<String, String> property) {
         JTextField result = new JTextField();
 
         result.setText(property.getValue());
@@ -105,7 +105,7 @@ public class PartPropertiesDialogPanel extends JPanel {
         // reinitialize partProperties
         setPartPropertiesTextFieldsMap(new HashMap<String, JTextField>());
         // add all elements
-        for (Property<String, String> property : getPartProperties()) {
+        for (PartProperty<String, String> property : getPartProperties()) {
             add(getPropertyKeyLabel(property));
             JTextField ptf = getPropertyValueField(property);
             add(ptf);
@@ -119,7 +119,7 @@ public class PartPropertiesDialogPanel extends JPanel {
      */
     public void actualizeProperties() {
         for (String key : getPartPropertiesTextFieldsMap().keySet()) {
-            Property<String, String> p = getPartProperties().getProperty(key);
+            PartProperty<String, String> p = getPartProperties().getProperty(key);
             getPartProperties().setProperty(key, getPartPropertiesTextFieldsMap().get(key).getText(),
                                             p.getDescription());
         }

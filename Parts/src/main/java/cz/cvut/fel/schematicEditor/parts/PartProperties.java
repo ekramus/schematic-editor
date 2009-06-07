@@ -45,7 +45,7 @@ public interface PartProperties extends Iterable<PropertiesCategory> {
     public boolean update();
 
     /**
-     * Get value of property. Property name has to be in dot form (e.g. color.foreground), where word before dot is
+     * Get value of property. PartProperty name has to be in dot form (e.g. color.foreground), where word before dot is
      * category name. If category name is missing, <code>general</code> will be assigned.
      *
      * @param propertyName
@@ -54,7 +54,7 @@ public interface PartProperties extends Iterable<PropertiesCategory> {
     public String getProperty(String propertyName);
 
     /**
-     * Set value of property. Property name has to be in dot form (e.g. color.foreground), where word before dot is
+     * Set value of property. PartProperty name has to be in dot form (e.g. color.foreground), where word before dot is
      * category name. If category name is missing, <code>general</code> will be assigned.
      *
      * @param propertyName

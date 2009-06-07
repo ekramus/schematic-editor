@@ -7,27 +7,45 @@ import java.util.ArrayList;
  *
  */
 public class PropertiesCategory {
-    private ArrayList<PartProperty> propertiesCategory;
+    private String                                  key;
+    private ArrayList<PartProperty<String, String>> propertiesForCategory;
 
     /**
      * This method instantiates new instance.
      *
+     * @param key
+     *
      */
-    public PropertiesCategory() {
-        setPropertiesCategory(new ArrayList<PartProperty>());
+    public PropertiesCategory(String key) {
+        setKey(key);
+        setPropertiesForCategory(new ArrayList<PartProperty<String, String>>());
     }
 
     /**
-     * @return the propertiesCategory
+     * @param key the key to set
      */
-    public ArrayList<PartProperty> getPropertiesCategory() {
-        return this.propertiesCategory;
+    private void setKey(String key) {
+        this.key = key;
     }
 
     /**
-     * @param propertiesCategory the propertiesCategory to set
+     * @return the key
      */
-    private void setPropertiesCategory(ArrayList<PartProperty> propertiesCategory) {
-        this.propertiesCategory = propertiesCategory;
+    public String getKey() {
+        return this.key;
+    }
+
+    /**
+     * @return the propertiesForCategory
+     */
+    public ArrayList<PartProperty<String, String>> getPropertiesForCategory() {
+        return this.propertiesForCategory;
+    }
+
+    /**
+     * @param propertiesForCategory the propertiesForCategory to set
+     */
+    private void setPropertiesForCategory(ArrayList<PartProperty<String, String>> propertiesForCategory) {
+        this.propertiesForCategory = propertiesForCategory;
     }
 }

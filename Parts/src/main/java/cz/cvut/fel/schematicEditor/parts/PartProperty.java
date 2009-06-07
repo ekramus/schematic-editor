@@ -1,62 +1,100 @@
 package cz.cvut.fel.schematicEditor.parts;
 
 /**
- * This class defines part property methods and thus structure.
+ * This class is holder of one property. PartProperty consists of property key and property value. PartProperty key identifies
+ * property value, it is mostly declared as {@link String}.
  *
+ * @param <K> key generic type.
+ * @param <V> value generic type.
  * @author Urban Kravjansky
- *
  */
-public abstract class PartProperty {
+public class PartProperty<K extends Comparable<K>, V> implements Comparable<PartProperty<K, V>> {
     /**
-     * Property key.
+     * Key parameter.
      */
-    private String key   = "";
+    private K      key;
     /**
-     * Property value.
+     * Value parameter.
      */
-    private Object value = null;
+    private V      value;
+    /**
+     * Description of property.
+     */
+    private String description;
 
     /**
-     * This method instantiates new instance.
+     * Constructor for {@link PartProperty} class.
      *
-     * @param key key of property.
-     * @param value value of property.
-     *
+     * @param key key of parameter.
+     * @param value value assigned to given key.
      */
-    public PartProperty(String key, Object value) {
+    public PartProperty(K key, V value) {
         setKey(key);
         setValue(value);
+        setDescription("");
+    }
+
+    /**
+     * Constructor for {@link PartProperty} class.
+     *
+     * @param key key of parameter.
+     * @param value value assigned to given key.
+     * @param description description of given property.
+     */
+    public PartProperty(K key, V value, String description) {
+        setKey(key);
+        setValue(value);
+        setDescription(description);
     }
 
     /**
      * @param key the key to set
      */
-    private void setKey(String key) {
+    private void setKey(K key) {
         this.key = key;
+    }
+
+    /**
+     * @return the key
+     */
+    public K getKey() {
+        return this.key;
     }
 
     /**
      * @param value the value to set
      */
-    private void setValue(Object value) {
+    private void setValue(V value) {
         this.value = value;
     }
 
     /**
-     * Get key of property.
-     *
-     * @return Key of property.
+     * @return the value
      */
-    public String getKey() {
-        return this.key;
+    public V getValue() {
+        return this.value;
     }
 
     /**
-     * Get value of property
-     *
-     * @return Value of property.
+     * @param property {@link PartProperty} instance, which is being compared to this.
+     * @return value as defined in {@link Comparable}.
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public Object getValue() {
-        return this.value;
+    public int compareTo(PartProperty<K, V> property) {
+        return getKey().compareTo(property.getKey());
+    }
+
+    /**
+     * @param description the description to set
+     */
+    private void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return this.description;
     }
 }
