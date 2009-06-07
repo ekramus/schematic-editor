@@ -8,7 +8,7 @@ import org.apache.log4j.xml.DOMConfigurator;
 /**
  * This class implements methods used in all {@link Launcher} classes. This methods are mainly used for configuration.
  *
- * @author Urban Kravjanský
+ * @author Urban Kravjansky
  */
 public abstract class Launcher {
     /**

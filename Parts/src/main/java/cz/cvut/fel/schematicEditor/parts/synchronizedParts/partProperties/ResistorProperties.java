@@ -3,14 +3,14 @@ package cz.cvut.fel.schematicEditor.parts.synchronizedParts.partProperties;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.parts.synchronizedParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.synchronizedParts.SynchronizedPartProperties;
 
 /**
  * This class implements properties with are unique for resistor part.
  *
  * @author Urban Kravjansky
  */
-public class ResistorProperties extends PartProperties {
+public class ResistorProperties extends SynchronizedPartProperties {
     /**
      * Prototype of netlist string, where codes will be replaced with values.
      */
@@ -28,7 +28,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see PartProperties#getNetlist()
+     * @see LightweightPartProperties#getNetlist()
      */
     @Override
     public String getNetlist() {
@@ -36,7 +36,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.synchronizedParts.PartProperties#expandNetlist()
+     * @see cz.cvut.fel.schematicEditor.parts.synchronizedParts.SynchronizedPartProperties#expandNetlist()
      */
     @Override
     public String expandNetlist() {
@@ -44,7 +44,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see PartProperties#getPartType()
+     * @see LightweightPartProperties#getPartType()
      */
     @Override
     public PartType getPartType() {
@@ -52,7 +52,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.synchronizedParts.PartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.synchronizedParts.SynchronizedPartProperties#getPartPinNames()
      */
     @Override
     public Vector<String> getPartPinNames() {
@@ -61,7 +61,7 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see PartProperties#getRemoteConfigurationName()
+     * @see LightweightPartProperties#getRemoteConfigurationName()
      */
     @Override
     public String getRemoteConfigurationName() {

@@ -17,7 +17,7 @@ import cz.cvut.fel.schematicEditor.support.Property;
  * @author Urban Kravjansky
  */
 @Deprecated
-public abstract class PartProperties implements Iterable<Property<String, String>> {
+public abstract class OriginalPartProperties implements Iterable<Property<String, String>> {
     /**
      * {@link Logger} instance for logging purposes.
      */
@@ -40,7 +40,7 @@ public abstract class PartProperties implements Iterable<Property<String, String
      * @param variant variant of part.
      * @param description description of part.
      */
-    public PartProperties(String variant, String description) {
+    public OriginalPartProperties(String variant, String description) {
         logger = Logger.getLogger(this.getClass().getName());
 
         setPartVariant(variant);
@@ -148,13 +148,13 @@ public abstract class PartProperties implements Iterable<Property<String, String
 
     /**
      * Expands prototype netlist {@link String} into correct netlist representation based on given prototype and
-     * {@link PartProperties}. Expansion is done using regular expressions, it is faster and more bug resistant.
+     * {@link LightweightPartProperties}. Expansion is done using regular expressions, it is faster and more bug resistant.
      *
      * @param netlistPrototype Netlist prototype to be expanded.
      * @param partProperties Part properties, which will be searched for values during expansion.
      * @return Expanded netlist {@link String}.
      */
-    protected String expandPrototype(final String netlistPrototype, final PartProperties partProperties) {
+    protected String expandPrototype(final String netlistPrototype, final OriginalPartProperties partProperties) {
         String result = netlistPrototype;
 
         String mandatoryString = "<(\\S+)>";

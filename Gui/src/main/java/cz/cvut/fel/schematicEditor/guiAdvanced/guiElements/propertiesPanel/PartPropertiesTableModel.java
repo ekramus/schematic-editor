@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
 import javax.swing.table.AbstractTableModel;
 
+import cz.cvut.fel.schematicEditor.parts.PropertiesArray;
+
 /**
  * This class implements table model for part properties.
  *
@@ -9,8 +11,8 @@ import javax.swing.table.AbstractTableModel;
  *
  */
 public class PartPropertiesTableModel extends AbstractTableModel {
-    private final String[] columnNames    = { "Name", "Value" };
-    private Object[]       partProperties = null;
+    private final String[]  columnNames    = { "Name", "Value" };
+    private PropertiesArray partProperties = null;
 
     /**
      * @see javax.swing.table.TableModel#getColumnCount()
@@ -40,14 +42,14 @@ public class PartPropertiesTableModel extends AbstractTableModel {
     /**
      * @param partProperties the partProperties to set
      */
-    public void setPartProperties(Object[] partProperties) {
+    public void setPartProperties(PropertiesArray partProperties) {
         this.partProperties = partProperties;
     }
 
     /**
      * @return the partProperties
      */
-    private Object[] getPartProperties() {
+    private PropertiesArray getPartProperties() {
         return this.partProperties;
     }
 }

@@ -18,7 +18,7 @@ import cz.cvut.fel.schematicEditor.parts.PartType;
  *
  *
  */
-public abstract class PartProperties {
+public abstract class SynchronizedPartProperties {
     /**
      * {@link Logger} instance for logging purposes.
      */
@@ -26,7 +26,7 @@ public abstract class PartProperties {
     /**
      * {@link HashMap} containing all relevant properties.
      */
-    private HashSet<PartProperty> synchronizedPartProperties;
+    private HashSet<SynchronizedPartProperty> synchronizedPartProperties;
     /**
      * Base address for remote configuration.
      */
@@ -34,17 +34,17 @@ public abstract class PartProperties {
 
     static {
         // neccessary to reinitialize logger, as it will not be set up correctly after deserialization
-        logger = Logger.getLogger(PartProperties.class);
+        logger = Logger.getLogger(SynchronizedPartProperties.class);
     }
 
     /**
      * This method instantiates new instance.
      *
      */
-    public PartProperties() {
+    public SynchronizedPartProperties() {
         // logger = Logger.getLogger(getClass());
         //
-        setSynchronizedPartProperties(new HashSet<PartProperty>());
+        setSynchronizedPartProperties(new HashSet<SynchronizedPartProperty>());
         update();
     }
 
@@ -61,7 +61,7 @@ public abstract class PartProperties {
     public abstract PartType getPartType();
 
     /**
-     * Updates this instance with given {@link PartProperties}.
+     * Updates this instance with given {@link LightweightPartProperties}.
      *
      * @return <code>true</code>, if properties instance was updated, <code>false</code> else.
      */
@@ -92,7 +92,7 @@ public abstract class PartProperties {
         for (String key : remoteConfiguration.keySet()) {
             boolean keyMatched = false;
             try {
-                for (PartProperty synchronizedPartProperty : getSynchronizedPartProperties()) {
+                for (SynchronizedPartProperty synchronizedPartProperty : getSynchronizedPartProperties()) {
                     if (synchronizedPartProperty.getDefinition().equalsIgnoreCase(key)) {
                         logger.trace("SPP key match");
 
@@ -107,7 +107,7 @@ public abstract class PartProperties {
             if (!keyMatched) {
                 logger.trace("SPP key didn't match. Adding key [" + key + "]");
 
-                PartProperty spp = new PartProperty(remoteConfiguration.get(key));
+                SynchronizedPartProperty spp = new SynchronizedPartProperty(remoteConfiguration.get(key));
                 getSynchronizedPartProperties().add(spp);
             }
         }
@@ -123,26 +123,26 @@ public abstract class PartProperties {
     /**
      * @return the synchronizedPartProperties
      */
-    private HashSet<PartProperty> getSynchronizedPartProperties() {
+    private HashSet<SynchronizedPartProperty> getSynchronizedPartProperties() {
         return this.synchronizedPartProperties;
     }
 
     /**
      * @param synchronizedPartProperties the synchronizedPartProperties to set
      */
-    private void setSynchronizedPartProperties(HashSet<PartProperty> synchronizedPartProperties) {
+    private void setSynchronizedPartProperties(HashSet<SynchronizedPartProperty> synchronizedPartProperties) {
         this.synchronizedPartProperties = synchronizedPartProperties;
     }
 
     /**
      * Expands prototype netlist {@link String} into correct netlist representation based on given prototype and
-     * {@link PartProperties}. Expansion is done using regular expressions, it is faster and more bug resistant.
+     * {@link LightweightPartProperties}. Expansion is done using regular expressions, it is faster and more bug resistant.
      *
      * @param netlistPrototype Netlist prototype to be expanded.
      * @param synchronizedPartProperties Part properties, which will be searched for values during expansion.
      * @return Expanded netlist {@link String}.
      */
-    protected String expandPrototype(final String netlistPrototype, final PartProperties synchronizedPartProperties) {
+    protected String expandPrototype(final String netlistPrototype, final SynchronizedPartProperties synchronizedPartProperties) {
         // String result = netlistPrototype;
         //
         // String mandatoryString = "<(\\S+)>";

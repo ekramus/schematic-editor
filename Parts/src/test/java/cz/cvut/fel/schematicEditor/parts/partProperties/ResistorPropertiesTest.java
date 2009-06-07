@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cz.cvut.fel.schematicEditor.parts.originalParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties;
 import cz.cvut.fel.schematicEditor.parts.originalParts.partProperties.ResistorProperties;
 
 /**
@@ -18,7 +18,7 @@ public class ResistorPropertiesTest {
      */
     @Test
     public void getNetlist() {
-        PartProperties pp = new ResistorProperties("resistor A", "This is variant A");
+        OriginalPartProperties pp = new ResistorProperties("resistor A", "This is variant A");
 
         pp.setProperty("value", "10");
         pp.setProperty("name", "R");

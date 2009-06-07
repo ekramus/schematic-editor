@@ -3,14 +3,14 @@ package cz.cvut.fel.schematicEditor.parts.originalParts.partProperties;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.parts.originalParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties;
 
 /**
  * This class implements properties with are unique for capacitor part.
  *
  * @author Urban Kravjansky
  */
-public class CapacitorProperties extends PartProperties {
+public class CapacitorProperties extends OriginalPartProperties {
     /**
      * Prototype of netlist string, where codes will be replaced with values.
      */
@@ -32,7 +32,7 @@ public class CapacitorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.originalParts.PartPropertiesInterface.properties.PartProperties#getNetlist()
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties.properties.SynchronizedPartProperties#getNetlist()
      */
     @Override
     public String getNetlist() {
@@ -40,7 +40,7 @@ public class CapacitorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.originalParts.PartPropertiesInterface.properties.PartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties.properties.SynchronizedPartProperties#getPartPinNames()
      */
     @Override
     @Deprecated
@@ -54,7 +54,7 @@ public class CapacitorProperties extends PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.originalParts.PartPropertiesInterface.properties.PartProperties#setPartPinNames(java.util.Vector)
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties.properties.SynchronizedPartProperties#setPartPinNames(java.util.Vector)
      */
     @Override
     public void setPartPinNames(Vector<String> partPinNames) {

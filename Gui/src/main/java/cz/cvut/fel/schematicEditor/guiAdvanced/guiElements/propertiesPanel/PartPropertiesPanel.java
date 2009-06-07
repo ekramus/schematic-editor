@@ -21,7 +21,7 @@ import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartRotationCenterButtonActionListener;
-import cz.cvut.fel.schematicEditor.parts.PartPropertiesInterface;
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 
 /**
@@ -163,9 +163,9 @@ public class PartPropertiesPanel extends JPanel {
                 getPartRotationCenterLabel().setText(partNode.getRotationCenter().toString());
                 getPartNetlistTextArea().setText(part.getPartProperties().getNetlist());
 
-                PartPropertiesInterface pp = part.getPartProperties();
+                PartProperties pp = part.getPartProperties();
                 ((PartPropertiesTableModel) getPartPropertiesTable().getModel()).setPartProperties(pp
-                        .getPropertiesTable());
+                        .getPartProperties());
             }
         } catch (NullPointerException npe) {
             logger.error("Probably no manipulation.");

@@ -2,16 +2,16 @@ package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.parts.PartPropertiesInterface;
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.parts.lightweightParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
 /**
  * This class implements properties with are unique for resistor part.
  *
  * @author Urban Kravjansky
  */
-public class ResistorProperties extends PartProperties {
+public class ResistorProperties extends LightweightPartProperties {
     /**
      * Prototype of netlist string, where codes will be replaced with values.
      */
@@ -28,37 +28,36 @@ public class ResistorProperties extends PartProperties {
     }
 
     /**
-     * @see PartPropertiesInterface#getNetlist()
+     * @see PartProperties#getNetlist()
      */
     public String getNetlist() {
         return "";
     }
 
     /**
-     * @see PartPropertiesInterface#getPartPinNames()
+     * @see PartProperties#getPartPinNames()
      */
     public Vector<String> getPartPinNames() {
         return null;
     }
 
     /**
-     * @see PartPropertiesInterface#setPartPinNames(java.util.Vector)
+     * @see PartProperties#setPartPinNames(java.util.Vector)
      */
     public void setPartPinNames(Vector<String> partPinNames) {
     }
 
     /**
-     * @see PartPropertiesInterface#getPartType()
+     * @see PartProperties#getPartType()
      */
     public PartType getPartType() {
         return PartType.RESISTOR;
     }
 
     /**
-     * @see PartPropertiesInterface#setNetlist(java.lang.String)
+     * @see PartProperties#setNetlist(java.lang.String)
      */
     public void setNetlist(String netlist) {
         // TODO Auto-generated method stub
-
     }
 }

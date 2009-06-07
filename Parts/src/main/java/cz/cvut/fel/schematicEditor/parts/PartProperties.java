@@ -3,12 +3,12 @@ package cz.cvut.fel.schematicEditor.parts;
 import java.util.Vector;
 
 /**
- * This interface defines PartProperties in general.
+ * This interface defines LightweightPartProperties in general.
  *
  * @author Urban Kravjansky
  *
  */
-public interface PartPropertiesInterface extends Iterable<String> {
+public interface PartProperties extends Iterable<PropertiesCategory> {
     /**
      * Set netlist {@link String}
      *
@@ -44,11 +44,23 @@ public interface PartPropertiesInterface extends Iterable<String> {
 
     public boolean update();
 
+    /**
+     * Get value of property. Property name has to be in dot form (e.g. color.foreground), where word before dot is
+     * category name. If category name is missing, <code>general</code> will be assigned.
+     *
+     * @param propertyName
+     * @return value of property.
+     */
     public String getProperty(String propertyName);
 
-    public void setProperty(String propertyName, String value);
+    /**
+     * Set value of property. Property name has to be in dot form (e.g. color.foreground), where word before dot is
+     * category name. If category name is missing, <code>general</code> will be assigned.
+     *
+     * @param propertyName
+     * @param value
+     */
+    public void setProperty(String propertyName, Object value);
 
-    public int getSize();
-
-    public Object[] getPropertiesTable();
+    public PropertiesArray getPartProperties();
 }
