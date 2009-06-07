@@ -8,27 +8,27 @@ import java.util.ArrayList;
  * @author Urban Kravjansky
  */
 public class PropertiesArray {
-    private ArrayList<PropertiesCategory> propertiesArray;
+    private ArrayList<PropertiesCategory> categoriesForPropertiesArray;
 
     /**
      * This method instantiates new instance.
      *
      */
     public PropertiesArray() {
-        setPropertiesArray(new ArrayList<PropertiesCategory>());
+        setCategoriesForPropertiesArray(new ArrayList<PropertiesCategory>());
     }
 
     /**
-     * @return the propertiesArray
+     * @return the categoriesForPropertiesArray
      */
-    public ArrayList<PropertiesCategory> getPropertiesArray() {
-        return this.propertiesArray;
+    public ArrayList<PropertiesCategory> getCategoriesForPropertiesArray() {
+        return this.categoriesForPropertiesArray;
     }
 
     /**
-     * @param propertiesArray the propertiesArray to set
+     * @param categoriesForPropertiesArray the categoriesForPropertiesArray to set
      */
-    private void setPropertiesArray(ArrayList<PropertiesCategory> propertiesArray) {
-        this.propertiesArray = propertiesArray;
+    private void setCategoriesForPropertiesArray(ArrayList<PropertiesCategory> categoriesForPropertiesArray) {
+        this.categoriesForPropertiesArray = categoriesForPropertiesArray;
     }
 }
