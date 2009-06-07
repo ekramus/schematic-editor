@@ -21,7 +21,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.parts.PartType;
-import cz.cvut.fel.schematicEditor.parts.lightweightParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.CapacitorProperties;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.CurrentSourceProperties;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.InductorProperties;
@@ -66,7 +66,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
             env.setLastSaveFolder(file.getParent());
 
             // FIXME rewrite, so it is generated automatically
-            PartProperties pp = null;
+            LightweightPartProperties pp = null;
             switch ((PartType) PartPropertiesPanel.getInstance().getPartTypeComboBox().getSelectedItem()) {
                 case RESISTOR:
                     pp = new ResistorProperties();

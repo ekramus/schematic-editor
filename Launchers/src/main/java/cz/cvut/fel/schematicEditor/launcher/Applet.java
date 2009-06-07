@@ -8,7 +8,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 /**
  * This class implements applet launcher. It is used to launch <em>SchematicEditor</em> as applet.
  *
- * @author Urban Kravjanský
+ * @author Urban Kravjansky
  */
 public class Applet extends JApplet {
     /**

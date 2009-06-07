@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.parts.originalParts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties;
 import cz.cvut.fel.schematicEditor.support.Property;
 
 /**
@@ -31,7 +31,7 @@ public class PartPropertiesDialogPanel extends JPanel {
     /**
      * Part properties, which is being manipulated with.
      */
-    private PartProperties              partProperties              = null;
+    private OriginalPartProperties              partProperties              = null;
     /**
      * Stores reference to text field for each part property key.
      */
@@ -89,14 +89,14 @@ public class PartPropertiesDialogPanel extends JPanel {
     /**
      * @return the partProperties
      */
-    public PartProperties getPartProperties() {
+    public OriginalPartProperties getPartProperties() {
         return this.partProperties;
     }
 
     /**
      * @param partProperties the partProperties to set
      */
-    public void setPartProperties(PartProperties partProperties) {
+    public void setPartProperties(OriginalPartProperties partProperties) {
         this.partProperties = partProperties;
 
         logger.debug("properties panel will be rebuilded");

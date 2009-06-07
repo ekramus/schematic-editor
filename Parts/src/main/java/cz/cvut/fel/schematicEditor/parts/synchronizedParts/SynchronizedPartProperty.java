@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
  * @author Urban Kravjansky
  *
  */
-public class PartProperty {
+public class SynchronizedPartProperty {
     /**
      * {@link Logger} instance for logging purposes.
      */
@@ -56,7 +56,7 @@ public class PartProperty {
      * @param sppMap {@link HashMap} used for initialization of this instance.
      *
      */
-    public PartProperty(HashMap<String, String> sppMap) {
+    public SynchronizedPartProperty(HashMap<String, String> sppMap) {
         logger = Logger.getLogger(getClass());
 
         for (String key : sppMap.keySet()) {

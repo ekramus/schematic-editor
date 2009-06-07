@@ -7,7 +7,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
  * This method implements stand alone launcher. It is used for stand alone launching of <em>SchematicEditor</em>
  * application.
  *
- * @author Urban Kravjanský
+ * @author Urban Kravjansky
  */
 public class Standalone {
     /**
