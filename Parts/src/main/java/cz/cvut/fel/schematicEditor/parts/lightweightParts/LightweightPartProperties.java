@@ -28,15 +28,18 @@ public abstract class LightweightPartProperties implements PartProperties {
      *
      */
     public LightweightPartProperties() {
-
+        setPartProperties(new PropertiesArray());
     }
 
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#update()
+     */
     public boolean update() {
         return true;
     }
 
     /**
-     * @param partProperties the partProperties to set
+     * @param propertiesArray the properties array to set
      */
     private void setPartProperties(PropertiesArray propertiesArray) {
         this.partProperties = propertiesArray;
@@ -91,13 +94,34 @@ public abstract class LightweightPartProperties implements PartProperties {
         getPartProperties().getCategoriesForPropertiesArray().add(propertiesCategory);
     }
 
-    /*
-     * (non-Javadoc)
-     *
+    /**
      * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getProperty(java.lang.String)
      */
     public String getProperty(String propertyName) {
-        // TODO Auto-generated method stub
+        String category;
+        String key;
+
+        int index = propertyName.indexOf(".");
+        // category is included
+        if (index > 0) {
+            category = propertyName.substring(0, index);
+            key = propertyName.substring(index + 1);
+        }
+        // category is not included
+        else {
+            category = "general";
+            key = propertyName;
+        }
+
+        for (PropertiesCategory propertiesCategory : getPartProperties().getCategoriesForPropertiesArray()) {
+            if (propertiesCategory.getKey().equalsIgnoreCase(category)) {
+                for (PartProperty<String, String> partProperty : propertiesCategory.getPropertiesForCategory()) {
+                    if (partProperty.getKey().equalsIgnoreCase(key)) {
+                        return partProperty.getValue();
+                    }
+                }
+            }
+        }
         return null;
     }
 
