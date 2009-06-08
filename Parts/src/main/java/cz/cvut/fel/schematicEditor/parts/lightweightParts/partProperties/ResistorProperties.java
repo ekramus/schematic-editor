@@ -23,8 +23,9 @@ public class ResistorProperties extends LightweightPartProperties {
     public ResistorProperties() {
         super();
 
-        setProperty("name", "resistor");
         setProperty("value", "10k");
+        setProperty("name", "resistor");
+        setProperty("abraka.dabra", "bububu");
     }
 
     /**
