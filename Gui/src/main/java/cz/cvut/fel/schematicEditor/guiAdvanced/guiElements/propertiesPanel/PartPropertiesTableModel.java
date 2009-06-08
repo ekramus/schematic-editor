@@ -1,8 +1,12 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel;
 
+import java.util.Iterator;
+
 import javax.swing.table.AbstractTableModel;
 
+import cz.cvut.fel.schematicEditor.parts.PartProperty;
 import cz.cvut.fel.schematicEditor.parts.PropertiesArray;
+import cz.cvut.fel.schematicEditor.parts.PropertiesCategory;
 
 /**
  * This class implements table model for part properties.
@@ -25,18 +29,36 @@ public class PartPropertiesTableModel extends AbstractTableModel {
      * @see javax.swing.table.TableModel#getRowCount()
      */
     public int getRowCount() {
-        try {
-            return getPartProperties().length / 2;
-        } catch (NullPointerException e) {
-            return 0;
+        int result = 0;
+        for (PropertiesCategory pc : getPartProperties().getCategoriesForPropertiesArray()) {
+            result += pc.getPropertiesForCategory().size();
         }
+
+        return result;
     }
 
     /**
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return getPartProperties()[rowIndex * getColumnCount() + columnIndex];
+        PartProperty<String, String> pp = getPartProperty(rowIndex);
+        return (columnIndex == 0) ? pp.getKey() : pp.getValue();
+    }
+
+    /**
+     * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
+     */
+    @Override
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
+        setPartProperty((String) value, rowIndex);
+    }
+
+    /**
+     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
+     */
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return (columnIndex > 0) ? true : false;
     }
 
     /**
@@ -51,5 +73,42 @@ public class PartPropertiesTableModel extends AbstractTableModel {
      */
     private PropertiesArray getPartProperties() {
         return this.partProperties;
+    }
+
+    private PartProperty<String, String> getPartProperty(int index) {
+        int i = 0;
+
+        Iterator<PropertiesCategory> it = getPartProperties().getCategoriesForPropertiesArray().iterator();
+        PropertiesCategory pc = it.next();
+        while (i < index) {
+            if (i + pc.getPropertiesForCategory().size() < index) {
+                i += pc.getPropertiesForCategory().size();
+                pc = it.next();
+            } else {
+                break;
+            }
+        }
+
+        return pc.getPropertiesForCategory().get(index - i);
+    }
+
+    private void setPartProperty(String value, int index) {
+        int i = 0;
+
+        Iterator<PropertiesCategory> it = getPartProperties().getCategoriesForPropertiesArray().iterator();
+        PropertiesCategory pc = it.next();
+        while (i < index) {
+            if (i + pc.getPropertiesForCategory().size() < index) {
+                i += pc.getPropertiesForCategory().size();
+                pc = it.next();
+            } else {
+                break;
+            }
+        }
+
+        PartProperty<String, String> pp = pc.getPropertiesForCategory().get(index - i);
+        PartProperty<String, String> newPP = new PartProperty<String, String>(pp.getKey(), value);
+
+        pc.getPropertiesForCategory().set(index - i, newPP);
     }
 }
