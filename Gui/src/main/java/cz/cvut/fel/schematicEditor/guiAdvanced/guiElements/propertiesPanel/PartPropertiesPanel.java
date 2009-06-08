@@ -166,6 +166,7 @@ public class PartPropertiesPanel extends JPanel {
                 PartProperties pp = part.getPartProperties();
                 ((PartPropertiesTableModel) getPartPropertiesTable().getModel()).setPartProperties(pp
                         .getPartProperties());
+                getPartPropertiesTable().repaint();
             }
         } catch (NullPointerException npe) {
             logger.error("Probably no manipulation.");
