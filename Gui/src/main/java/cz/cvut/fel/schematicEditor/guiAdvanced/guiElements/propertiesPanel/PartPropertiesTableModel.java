@@ -81,7 +81,8 @@ public class PartPropertiesTableModel extends AbstractTableModel {
         Iterator<PropertiesCategory> it = getPartProperties().getCategoriesForPropertiesArray().iterator();
         PropertiesCategory pc = it.next();
         while (i < index) {
-            if (i + pc.getPropertiesForCategory().size() < index) {
+            // i has to be maximally equal to index, so we can advance to the next category
+            if (i + pc.getPropertiesForCategory().size() <= index) {
                 i += pc.getPropertiesForCategory().size();
                 pc = it.next();
             } else {
@@ -98,7 +99,8 @@ public class PartPropertiesTableModel extends AbstractTableModel {
         Iterator<PropertiesCategory> it = getPartProperties().getCategoriesForPropertiesArray().iterator();
         PropertiesCategory pc = it.next();
         while (i < index) {
-            if (i + pc.getPropertiesForCategory().size() < index) {
+            // i has to be maximally equal to index, so we can advance to the next category
+            if (i + pc.getPropertiesForCategory().size() <= index) {
                 i += pc.getPropertiesForCategory().size();
                 pc = it.next();
             } else {
