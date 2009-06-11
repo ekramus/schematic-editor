@@ -11,6 +11,7 @@ set JAR_PATH=%JAR_PATH%;jar/Elements-1.0-SNAPSHOT.jar
 set JAR_PATH=%JAR_PATH%;jar/Support-1.0-SNAPSHOT.jar
 set JAR_PATH=%JAR_PATH%;jar/Configuration-1.0-SNAPSHOT.jar
 set JAR_PATH=%JAR_PATH%;jar/Units-1.0-SNAPSHOT.jar
+set JAR_PATH=%JAR_PATH%;jar/Parts-1.0-SNAPSHOT.jar
 
 set STANDALONE=cz.cvut.fel.schematicEditor.launcher.Standalone
 
