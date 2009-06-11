@@ -38,6 +38,7 @@ copy Elements\target\Elements-1.0-SNAPSHOT.jar %JAR%
 copy Support\target\Support-1.0-SNAPSHOT.jar %JAR%
 copy Configuration\target\Configuration-1.0-SNAPSHOT.jar %JAR%
 copy Units\target\Units-1.0-SNAPSHOT.jar %JAR%
+copy Parts\target\Parts-1.0-SNAPSHOT.jar %JAR%
 
 copy Launchers\log4j.xml %DEPLOY%
 
