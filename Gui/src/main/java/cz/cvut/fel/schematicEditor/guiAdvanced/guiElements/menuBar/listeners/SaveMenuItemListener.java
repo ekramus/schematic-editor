@@ -2,18 +2,11 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
@@ -55,36 +48,7 @@ public final class SaveMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastSaveFolder(file.getParent());
 
-            serialize(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), file);
+            Gui.getActiveScenePanel().getSceneGraph().serialize(file);
         }
-    }
-
-    /**
-     * Serializes given {@link GroupNode} into given file.
-     *
-     * @param topNode {@link GroupNode} to serialize.
-     * @param file Path to file, where should be {@link GroupNode} serialized.
-     */
-    protected static void serialize(GroupNode topNode, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            processAnnotations(xstream, topNode.getClass());
-            xstream.toXML(topNode, bw);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Processes all {@link XStream} annotations in entered classes.
-     *
-     * @param xstream {@link XStream} instance to configure.
-     * @param clazz Class of {@link GroupNode} object.
-     */
-    private static void processAnnotations(XStream xstream, Class<? extends GroupNode> clazz) {
-        xstream.processAnnotations(clazz);
     }
 }

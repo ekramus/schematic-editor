@@ -2,12 +2,19 @@ package cz.cvut.fel.schematicEditor.core.coreStructures;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
@@ -385,5 +392,46 @@ public class SceneGraph implements Iterable<Node> {
             SceneGraphUpdateEvent sceneGraphUpdateEvent = new SceneGraphUpdateEvent(this);
             sceneGraphUpdateListener.sceneGraphUpdateOccured(sceneGraphUpdateEvent);
         }
+    }
+
+    /**
+     * Serializes given {@link GroupNode} into given file.
+     *
+     * @param file Path to file, where should be {@link GroupNode} serialized.
+     */
+    public void serialize(File file) {
+        XStream xstream = new XStream(new DomDriver());
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            processAnnotations(xstream, getTopNode().getClass());
+            xstream.toXML(getTopNode(), bw);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Serializes given {@link GroupNode} and return it as a String.
+     */
+    public String serialize() {
+        XStream xstream = new XStream(new DomDriver());
+        String result;
+
+        processAnnotations(xstream, getTopNode().getClass());
+        result = xstream.toXML(getTopNode());
+
+        return result;
+    }
+
+    /**
+     * Processes all {@link XStream} annotations in entered classes.
+     *
+     * @param xstream {@link XStream} instance to configure.
+     * @param clazz Class of {@link GroupNode} object.
+     */
+    private static void processAnnotations(XStream xstream, Class<? extends GroupNode> clazz) {
+        xstream.processAnnotations(clazz);
     }
 }
