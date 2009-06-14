@@ -13,26 +13,19 @@ import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartPropert
  */
 public class ResistorProperties extends LightweightPartProperties {
     /**
-     * Prototype of netlist string, where codes will be replaced with values.
-     */
-    private final String netlistPrototype = "r<name> <connectorP> <connectorM> [<value>] [<model>] [l=<length>] [w=<width>] [temp=<temperature>]";
-
-    /**
      * This method instantiates new instance.
      */
     public ResistorProperties() {
         super();
 
-        setProperty("value", "10k");
-        setProperty("abraka.dabra", "bububu");
-        setProperty("name", "resistor");
-    }
+        setNetlistPrototype("r<name> <connectorP> <connectorM> [<value>] [<model>] [l=<length>] [w=<width>] [temp=<temperature>]");
 
-    /**
-     * @see PartProperties#getNetlist()
-     */
-    public String getNetlist() {
-        return "";
+        // setProperty("abraka.dabra", "bububu");
+        setProperty("value", "10k");
+        setProperty("name", "resistor");
+        setProperty("connectorP", "A");
+        setProperty("connectorM", "B");
+        setProperty("netlist", getNetlist());
     }
 
     /**
@@ -53,12 +46,5 @@ public class ResistorProperties extends LightweightPartProperties {
      */
     public PartType getPartType() {
         return PartType.RESISTOR;
-    }
-
-    /**
-     * @see PartProperties#setNetlist(java.lang.String)
-     */
-    public void setNetlist(String netlist) {
-        // TODO Auto-generated method stub
     }
 }
