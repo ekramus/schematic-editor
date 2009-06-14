@@ -1,10 +1,7 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser;
 
 import java.awt.BorderLayout;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,9 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.apache.log4j.Logger;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
+import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
@@ -111,7 +106,7 @@ public class PartBrowserPanel extends JPanel {
                     result.add(generatePartTree(file.getPath()));
                 } else if (file.getName().indexOf("prt") > -1) {
                     // deserialize
-                    PartNode pn = deserialize(PartNode.class, file);
+                    PartNode pn = SceneGraph.deserialize(PartNode.class, file);
                     // update part properties
                     boolean updateStatus = ((Part) pn.getElement()).getPartProperties().update();
                     logger.trace("Status of part updating process (true=updated/false=not updates): " + updateStatus);
@@ -135,34 +130,5 @@ public class PartBrowserPanel extends JPanel {
         }
 
         return result;
-    }
-
-    /**
-     * Deserializes {@link PartNode} from given file.
-     *
-     * @param clazz Class of deserialized {@link PartNode}.
-     * @param file Path to file, where is serialized {@link PartNode}.
-     * @return Deserialized {@link PartNode} class.
-     */
-    protected static PartNode deserialize(Class<? extends PartNode> clazz, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            processAnnotations(xstream, clazz);
-            return (PartNode) xstream.fromXML(br);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Processes all {@link XStream} annotations in entered classes.
-     *
-     * @param xstream {@link XStream} instance to configure.
-     * @param clazz Class of {@link PartNode} object.
-     */
-    private static void processAnnotations(XStream xstream, Class<? extends PartNode> clazz) {
-        xstream.processAnnotations(clazz);
     }
 }

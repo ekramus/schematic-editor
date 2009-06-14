@@ -2,8 +2,10 @@ package cz.cvut.fel.schematicEditor.core.coreStructures;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.support.Transformation;
@@ -426,12 +429,64 @@ public class SceneGraph implements Iterable<Node> {
     }
 
     /**
+     * Deserializes {@link GroupNode} from given file.
+     *
+     * @param clazz Class of deserialized {@link GroupNode}.
+     * @param file Path to file, where is serialized {@link GroupNode}.
+     * @return Deserialized {@link GroupNode} class.
+     */
+    public static GroupNode deserialize(Class<? extends GroupNode> clazz, File file) {
+        XStream xstream = new XStream(new DomDriver());
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            processAnnotations(xstream, clazz);
+            return (GroupNode) xstream.fromXML(br);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Deserializes {@link PartNode} from given file.
+     *
+     * @param clazz Class of deserialized {@link PartNode}.
+     * @param file Path to file, where is serialized {@link PartNode}.
+     * @return Deserialized {@link PartNode} class.
+     */
+    public static PartNode deserialize(Class<? extends PartNode> clazz, File file) {
+        XStream xstream = new XStream(new DomDriver());
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            processAnnotations(xstream, clazz);
+            return (PartNode) xstream.fromXML(br);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Deserializes {@link GroupNode} from given file.
+     *
+     * @param clazz Class of deserialized {@link GroupNode}.
+     * @param session Serialized session in form of {@link String}.
+     * @return Deserialized {@link GroupNode} class.
+     */
+    public static GroupNode deserialize(Class<? extends GroupNode> clazz, String session) {
+        XStream xstream = new XStream(new DomDriver());
+
+        processAnnotations(xstream, clazz);
+        return (GroupNode) xstream.fromXML(session);
+    }
+
+    /**
      * Processes all {@link XStream} annotations in entered classes.
      *
      * @param xstream {@link XStream} instance to configure.
      * @param clazz Class of {@link GroupNode} object.
      */
-    private static void processAnnotations(XStream xstream, Class<? extends GroupNode> clazz) {
+    private static void processAnnotations(XStream xstream, Class<? extends Node> clazz) {
         xstream.processAnnotations(clazz);
     }
 }

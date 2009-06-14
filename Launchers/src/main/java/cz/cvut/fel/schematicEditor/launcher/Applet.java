@@ -5,6 +5,7 @@ import javax.swing.JApplet;
 import cz.cvut.fel.schematicEditor.configuration.Configuration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.export.NetListExport;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 
 /**
@@ -35,6 +36,17 @@ public class Applet extends JApplet {
     public String getSession() {
         SceneGraph sg = Gui.getActiveScenePanel().getSceneGraph();
         return sg.serialize();
+    }
+
+    /**
+     * Setter for XML serialized session.
+     *
+     * @param session XML serialized session.
+     */
+    public void setSession(String session) {
+        SceneGraph sg = Gui.getActiveScenePanel().getSceneGraph();
+        sg.setTopNode(SceneGraph.deserialize(GroupNode.class, session));
+        Gui.getInstance().refresh();
     }
 
     /**
