@@ -1,6 +1,8 @@
 package cz.cvut.fel.schematicEditor.parts.lightweightParts;
 
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
@@ -16,6 +18,7 @@ import cz.cvut.fel.schematicEditor.parts.PropertiesCategory;
  *
  */
 public abstract class LightweightPartProperties implements PartProperties {
+    private String          netlistPrototype;
     private PropertiesArray partProperties;
     private static Logger   logger;
 
@@ -130,5 +133,76 @@ public abstract class LightweightPartProperties implements PartProperties {
      */
     public Iterator<PropertiesCategory> iterator() {
         return getPartProperties().getCategoriesForPropertiesArray().iterator();
+    }
+
+    /**
+     * Expands prototype netlist {@link String} into correct netlist representation based on given prototype and
+     * {@link LightweightPartProperties}. Expansion is done using regular expressions, it is faster and more bug
+     * resistant.
+     *
+     * @return Expanded netlist {@link String}.
+     */
+    protected String expandPrototype() {
+        String result = getNetlistPrototype();
+
+        String mandatoryString = "<(\\S+)>";
+        String optionalString = "\\[\\S*(<(\\S+)>)\\]";
+        Pattern mandatoryPattern = Pattern.compile(mandatoryString);
+        Pattern optionalPattern = Pattern.compile(optionalString);
+
+        Matcher optionalMatcher = optionalPattern.matcher(result);
+        while (optionalMatcher.find()) {
+            String value = getProperty(optionalMatcher.group(2));
+            // if parameter value is found
+            if ((value != null) && (!value.equals(""))) {
+                result = result.replaceAll(optionalMatcher.group(1), value);
+            }
+            // parameter value was not found
+            else {
+                // we have to left [ and ] characters, as they are special chars for regexp
+                result = result.replaceAll(optionalMatcher.group(1), "");
+            }
+        }
+
+        Matcher mandatoryMatcher = mandatoryPattern.matcher(result);
+        while (mandatoryMatcher.find()) {
+            String value = getProperty(mandatoryMatcher.group(1));
+            // if parameter value is found
+            if (value != null) {
+                result = result.replaceAll(mandatoryMatcher.group(), value);
+            }
+        }
+
+        // clean netlist string from left brackets and undefined variables
+        result = result.replaceAll("\\[(?:\\S+=)?\\]", "");
+        // clean netlist from brackets left with filled optional values
+        result = result.replaceAll("[\\[\\]]", "");
+        // replace multiple white chars with one space
+        result = result.replaceAll("\\s+", " ");
+        // remove space at the end of string, if present
+        result = result.replaceAll(" $", "");
+
+        return result;
+    }
+
+    /**
+     * @param netlistPrototype the netlistPrototype to set
+     */
+    protected void setNetlistPrototype(String netlistPrototype) {
+        this.netlistPrototype = netlistPrototype;
+    }
+
+    /**
+     * @return the netlistPrototype
+     */
+    protected String getNetlistPrototype() {
+        return this.netlistPrototype;
+    }
+
+    /**
+     * @see PartProperties#getNetlist()
+     */
+    public String getNetlist() {
+        return expandPrototype();
     }
 }

@@ -10,13 +10,6 @@ import java.util.Vector;
  */
 public interface PartProperties extends Iterable<PropertiesCategory> {
     /**
-     * Set netlist {@link String}
-     *
-     * @param netlist netlist {@link String}.
-     */
-    public void setNetlist(String netlist);
-
-    /**
      * Get netlist {@link String}
      *
      * @return netlist {@link String}.

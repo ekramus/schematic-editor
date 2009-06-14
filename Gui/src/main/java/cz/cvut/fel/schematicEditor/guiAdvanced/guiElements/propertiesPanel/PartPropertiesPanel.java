@@ -166,6 +166,7 @@ public class PartPropertiesPanel extends JPanel {
                 PartProperties pp = part.getPartProperties();
                 ((PartPropertiesTableModel) getPartPropertiesTable().getModel()).setPartProperties(pp
                         .getPartProperties());
+                pp.setProperty("netlist", pp.getNetlist());
                 getPartPropertiesTable().repaint();
             }
         } catch (NullPointerException npe) {
@@ -214,6 +215,8 @@ public class PartPropertiesPanel extends JPanel {
     private JTable getPartPropertiesTable() {
         if (this.partPropertiesTable == null) {
             this.partPropertiesTable = new JTable(new PartPropertiesTableModel());
+            // TODO add chang listener
+            // this.partPropertiesTable.add
         }
         return this.partPropertiesTable;
     }
