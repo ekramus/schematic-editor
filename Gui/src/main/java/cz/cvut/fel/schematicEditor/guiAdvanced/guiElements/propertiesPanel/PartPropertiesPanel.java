@@ -20,6 +20,7 @@ import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partPropertiesDialog.PartPropertiesDialogPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartPropertiesTableModelListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PartRotationCenterButtonActionListener;
 import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
@@ -167,7 +168,6 @@ public class PartPropertiesPanel extends JPanel {
                 ((PartPropertiesTableModel) getPartPropertiesTable().getModel()).setPartProperties(pp
                         .getPartProperties());
                 pp.setProperty("netlist", pp.getNetlist());
-                getPartPropertiesTable().repaint();
             }
         } catch (NullPointerException npe) {
             logger.error("Probably no manipulation.");
@@ -215,8 +215,8 @@ public class PartPropertiesPanel extends JPanel {
     private JTable getPartPropertiesTable() {
         if (this.partPropertiesTable == null) {
             this.partPropertiesTable = new JTable(new PartPropertiesTableModel());
-            // TODO add chang listener
-            // this.partPropertiesTable.add
+            // TODO add change listener
+            this.partPropertiesTable.getModel().addTableModelListener(new PartPropertiesTableModelListener());
         }
         return this.partPropertiesTable;
     }
