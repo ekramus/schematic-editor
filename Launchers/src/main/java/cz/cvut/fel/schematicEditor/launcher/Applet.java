@@ -19,9 +19,18 @@ public class Applet extends JApplet {
      */
     @Override
     public void init() {
+        Launcher.loadLog4JProperties();
+    }
+
+    /**
+     * @see java.applet.Applet#start()
+     */
+    @Override
+    public void start() {
+        super.start();
+
         Gui gui = Gui.getInstance();
 
-        Launcher.loadLog4JProperties();
         Configuration.getInstance();
         Launcher.setUI();
 
