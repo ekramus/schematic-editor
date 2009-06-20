@@ -30,8 +30,12 @@ public class PartPropertiesTableModel extends AbstractTableModel {
      */
     public int getRowCount() {
         int result = 0;
-        for (PropertiesCategory pc : getPartProperties().getCategoriesForPropertiesArray()) {
-            result += pc.getPropertiesForCategory().size();
+        try {
+            for (PropertiesCategory pc : getPartProperties().getCategoriesForPropertiesArray()) {
+                result += pc.getPropertiesForCategory().size();
+            }
+        } catch (NullPointerException e) {
+            return 0;
         }
 
         return result;

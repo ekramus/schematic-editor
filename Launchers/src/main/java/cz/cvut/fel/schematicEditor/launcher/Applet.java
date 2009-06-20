@@ -27,14 +27,24 @@ public class Applet extends JApplet {
      */
     @Override
     public void start() {
-        super.start();
-
         Gui gui = Gui.getInstance();
 
         Configuration.getInstance();
         Launcher.setUI();
 
         this.setContentPane(gui.getAppletPanel());
+
+        super.start();
+    }
+
+    /**
+     * @see java.applet.Applet#stop()
+     */
+    @Override
+    public void stop() {
+        Gui.resetInstance();
+
+        super.stop();
     }
 
     /**

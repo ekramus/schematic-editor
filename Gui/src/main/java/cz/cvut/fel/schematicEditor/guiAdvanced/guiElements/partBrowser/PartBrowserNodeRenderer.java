@@ -20,12 +20,16 @@ public class PartBrowserNodeRenderer extends DefaultTreeCellRenderer {
             boolean leaf, int row, boolean hasFocus) {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
-        if (leaf) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-            PartBrowserNode pbn = (PartBrowserNode) node.getUserObject();
+        try {
+            if (leaf) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+                PartBrowserNode pbn = (PartBrowserNode) node.getUserObject();
 
-            setIcon(pbn.getIcon());
-            setText(pbn.getVariant() + " - " + pbn.getDescription());
+                setIcon(pbn.getIcon());
+                setText(pbn.getVariant() + " - " + pbn.getDescription());
+            }
+        } catch (ClassCastException e) {
+            // nothing to do
         }
 
         return this;
