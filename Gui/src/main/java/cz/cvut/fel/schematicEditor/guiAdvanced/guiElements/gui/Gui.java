@@ -111,6 +111,13 @@ public class Gui extends JApplet {
     }
 
     /**
+     * Resets {@link Gui} instance to <code>null</code>.
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
+
+    /**
      * This method initializes appletPanel. This method is implemented for the purpose of applet launching.
      *
      * @return javax.swing.JPanel
