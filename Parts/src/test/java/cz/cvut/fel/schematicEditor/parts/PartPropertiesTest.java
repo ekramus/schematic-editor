@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties;
-import cz.cvut.fel.schematicEditor.parts.originalParts.partProperties.ResistorProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.ResistorProperties;
 
 /**
  * JUnit test class for {@link LightweightPartProperties}.
@@ -18,7 +18,7 @@ public class PartPropertiesTest {
      */
     @Test
     public void getPartConnectors() {
-        OriginalPartProperties pp = new ResistorProperties("resistor A", "This is variant A");
+        LightweightPartProperties pp = new ResistorProperties();
 
         Vector<String> pc = new Vector<String>();
         pc.add("A, A");
