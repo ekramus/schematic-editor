@@ -3,6 +3,7 @@ package cz.cvut.fel.schematicEditor.launcher;
 import javax.swing.JApplet;
 
 import cz.cvut.fel.schematicEditor.configuration.Configuration;
+import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.export.NetListExport;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -53,8 +54,7 @@ public class Applet extends JApplet {
      * @return XML serialized session.
      */
     public String getSession() {
-        SceneGraph sg = Gui.getActiveScenePanel().getSceneGraph();
-        return sg.serialize();
+        return Serialization.serialize(Gui.getActiveScenePanel().getSceneGraph());
     }
 
     /**
@@ -64,7 +64,7 @@ public class Applet extends JApplet {
      */
     public void setSession(String session) {
         SceneGraph sg = Gui.getActiveScenePanel().getSceneGraph();
-        sg.setTopNode(SceneGraph.deserialize(GroupNode.class, session));
+        sg.setTopNode(Serialization.deserialize(GroupNode.class, session));
         Gui.getInstance().refresh();
     }
 

@@ -2,20 +2,14 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
 import org.apache.log4j.Logger;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
@@ -97,38 +91,7 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
 
             PartNode pn = NodeFactory.createPartNode(p, Gui.getActiveScenePanel().getSceneGraph().getTopNode()
                     .getEnabledOnly());
-            serialize(pn, file);
+            Serialization.serialize(pn, file);
         }
-    }
-
-    /**
-     * Serializes given {@link PartNode} into given file.
-     *
-     * @param partNode {@link PartNode} file to serialize.
-     * @param file Path to file, where should be {@link PartNode} serialized.
-     */
-    protected static void serialize(PartNode partNode, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            processAnnotations(xstream, partNode.getClass());
-            xstream.toXML(partNode, bw);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Processes all {@link XStream} annotations in entered classes.
-     *
-     * @param xstream {@link XStream} instance to configure.
-     * @param clazz Class of {@link SceneGraph} object.
-     */
-    private static void processAnnotations(XStream xstream, Class<? extends PartNode> clazz) {
-        xstream.processAnnotations(clazz);
-        // xstream.processAnnotations(Unit.class);
-        // xstream.processAnnotations(Pixel.class);
     }
 }

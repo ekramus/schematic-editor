@@ -12,7 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
@@ -106,7 +106,7 @@ public class PartBrowserPanel extends JPanel {
                     result.add(generatePartTree(file.getPath()));
                 } else if (file.getName().indexOf("prt") > -1) {
                     // deserialize
-                    PartNode pn = SceneGraph.deserialize(PartNode.class, file);
+                    PartNode pn = Serialization.deserialize(PartNode.class, file);
                     // update part properties
                     boolean updateStatus = ((Part) pn.getElement()).getPartProperties().update();
                     logger.trace("Status of part updating process (true=updated/false=not updates): " + updateStatus);

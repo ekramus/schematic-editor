@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
@@ -59,7 +59,7 @@ public final class AddPartMenuItemListener implements ActionListener {
             env.setLastImportFolder(file.getParent());
 
             // prepare PartNode, GroupNode and ParameterNode
-            PartNode partNode = SceneGraph.deserialize(PartNode.class, file);
+            PartNode partNode = Serialization.deserialize(PartNode.class, file);
             GroupNode groupNode = NodeFactory.createGroupNode();
             ParameterNode parameterNode = NodeFactory.createParameterNode();
 

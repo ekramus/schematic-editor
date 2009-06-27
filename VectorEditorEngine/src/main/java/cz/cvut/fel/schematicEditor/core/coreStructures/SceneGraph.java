@@ -1,12 +1,6 @@
 package cz.cvut.fel.schematicEditor.core.coreStructures;
 
 import java.awt.geom.Rectangle2D;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,16 +8,12 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.types.SceneGraphIterator;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -235,98 +225,5 @@ public class SceneGraph implements Iterable<Node> {
             SceneGraphUpdateEvent sceneGraphUpdateEvent = new SceneGraphUpdateEvent(this);
             sceneGraphUpdateListener.sceneGraphUpdateOccured(sceneGraphUpdateEvent);
         }
-    }
-
-    /**
-     * Serializes given {@link GroupNode} into given file.
-     *
-     * @param file Path to file, where should be {@link GroupNode} serialized.
-     */
-    public void serialize(File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            processAnnotations(xstream);
-            xstream.toXML(getTopNode(), bw);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Serializes given {@link GroupNode} and return it as a String.
-     */
-    public String serialize() {
-        XStream xstream = new XStream(new DomDriver());
-        String result;
-
-        processAnnotations(xstream);
-        result = xstream.toXML(getTopNode());
-
-        return result;
-    }
-
-    /**
-     * Deserializes {@link GroupNode} from given file.
-     *
-     * @param clazz Class of deserialized {@link GroupNode}.
-     * @param file Path to file, where is serialized {@link GroupNode}.
-     * @return Deserialized {@link GroupNode} class.
-     */
-    public static GroupNode deserialize(Class<? extends GroupNode> clazz, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            processAnnotations(xstream);
-            return (GroupNode) xstream.fromXML(br);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Deserializes {@link PartNode} from given file.
-     *
-     * @param clazz Class of deserialized {@link PartNode}.
-     * @param file Path to file, where is serialized {@link PartNode}.
-     * @return Deserialized {@link PartNode} class.
-     */
-    public static PartNode deserialize(Class<? extends PartNode> clazz, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            processAnnotations(xstream);
-            return (PartNode) xstream.fromXML(br);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Deserializes {@link GroupNode} from given file.
-     *
-     * @param clazz Class of deserialized {@link GroupNode}.
-     * @param session Serialized session in form of {@link String}.
-     * @return Deserialized {@link GroupNode} class.
-     */
-    public static GroupNode deserialize(Class<? extends GroupNode> clazz, String session) {
-        XStream xstream = new XStream(new DomDriver());
-
-        processAnnotations(xstream);
-        return (GroupNode) xstream.fromXML(session);
-    }
-
-    /**
-     * Processes all {@link XStream} annotations in entered classes.
-     *
-     * @param xstream {@link XStream} instance to configure.
-     */
-    private static void processAnnotations(XStream xstream) {
-        xstream.processAnnotations(NodeFactory.getInstance().getClassArray());
-        xstream.processAnnotations(Pixel.class);
     }
 }
