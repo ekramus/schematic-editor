@@ -1,0 +1,196 @@
+<PartNode>
+  <id>1246139523406</id>
+  <disabled>false</disabled>
+  <element class="cz.cvut.fel.schematicEditor.element.element.part.Part">
+    <editedCoordinateIndex>0</editedCoordinateIndex>
+    <x/>
+    <y/>
+    <elementModificator>NO_MODIFICATION</elementModificator>
+    <connectorVector/>
+    <partProperties class="cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.ResistorProperties">
+      <netlistPrototype>r&lt;name&gt; &lt;connectorP&gt; &lt;connectorM&gt; [&lt;value&gt;] [&lt;model&gt;] [l=&lt;length&gt;] [w=&lt;width&gt;] [temp=&lt;temperature&gt;]</netlistPrototype>
+      <partProperties>
+        <categoriesForPropertiesArray>
+          <cz.cvut.fel.schematicEditor.parts.PropertiesCategory>
+            <key>general</key>
+            <propertiesForCategory>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">value</key>
+                <value class="string">10k</value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">name</key>
+                <value class="string">resistor</value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">connectorP</key>
+                <value class="string">A</value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">connectorM</key>
+                <value class="string">B</value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">netlist</key>
+                <value class="string">rresistor A B 10k</value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+            </propertiesForCategory>
+          </cz.cvut.fel.schematicEditor.parts.PropertiesCategory>
+        </categoriesForPropertiesArray>
+      </partProperties>
+    </partProperties>
+  </element>
+  <elementType>T_PART</elementType>
+  <edited>false</edited>
+  <partGroupNode>
+    <id>1246139523406</id>
+    <disabled>false</disabled>
+    <childrenGroupList>
+      <GroupNode>
+        <id>1246139523406</id>
+        <disabled>false</disabled>
+        <childrenGroupList/>
+        <childrenElementList>
+          <ShapeNode>
+            <id>1246139523406</id>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Line">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>192.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>373.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>286.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>287.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+            </element>
+            <elementType>T_LINE</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+        </childrenElementList>
+        <childrenTransformationList/>
+        <chidrenParameterNode>
+          <id>1246139523406</id>
+          <disabled>false</disabled>
+          <color>
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+            <alpha>255</alpha>
+          </color>
+          <fill>
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+            <alpha>255</alpha>
+          </fill>
+          <width class="Pixel">
+            <value>1.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </width>
+        </chidrenParameterNode>
+      </GroupNode>
+    </childrenGroupList>
+    <childrenElementList/>
+    <childrenTransformationList/>
+    <chidrenParameterNode>
+      <id>1246139523406</id>
+      <disabled>false</disabled>
+      <color>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+        <alpha>255</alpha>
+      </color>
+      <fill>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+        <alpha>255</alpha>
+      </fill>
+      <width class="Pixel">
+        <value>1.0</value>
+        <doubleFactor>1.0</doubleFactor>
+      </width>
+    </chidrenParameterNode>
+  </partGroupNode>
+  <partConnectors>
+    <PinNode>
+      <id>1246139523406</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+        <x>
+          <Pixel>
+            <value>188.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>188.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </x>
+        <y>
+          <Pixel>
+            <value>287.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>287.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+    <PinNode>
+      <id>1246139523406</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+        <x>
+          <Pixel>
+            <value>376.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>376.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </x>
+        <y>
+          <Pixel>
+            <value>287.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>287.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+  </partConnectors>
+</PartNode>
