@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
+import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
@@ -48,7 +49,7 @@ public final class SaveMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastSaveFolder(file.getParent());
 
-            Gui.getActiveScenePanel().getSceneGraph().serialize(file);
+            Serialization.serialize(Gui.getActiveScenePanel().getSceneGraph(), file);
         }
     }
 }

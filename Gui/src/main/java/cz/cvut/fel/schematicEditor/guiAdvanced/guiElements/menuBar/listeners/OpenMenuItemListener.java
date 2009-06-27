@@ -7,7 +7,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
-import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
@@ -49,7 +49,7 @@ public final class OpenMenuItemListener implements ActionListener {
             File file = fileChooser.getSelectedFile();
             env.setLastOpenFolder(file.getParent());
             Gui.getInstance().getSchemeScenePanel().getSceneGraph().initSceneGraph(
-                                                                                   SceneGraph.deserialize(Gui
+                                                                                   Serialization.deserialize(Gui
                                                                                            .getActiveScenePanel()
                                                                                            .getSceneGraph()
                                                                                            .getTopNode().getClass(),
