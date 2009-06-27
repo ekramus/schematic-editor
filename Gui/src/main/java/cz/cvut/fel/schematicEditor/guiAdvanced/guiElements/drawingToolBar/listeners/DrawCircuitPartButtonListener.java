@@ -13,10 +13,8 @@ import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.PinNode;
-import cz.cvut.fel.schematicEditor.graphNode.WireNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
@@ -61,19 +59,19 @@ public class DrawCircuitPartButtonListener implements ActionListener {
     public final void actionPerformed(final ActionEvent ae) {
         try {
             // create group node for create manipulation
-            GroupNode gn = new GroupNode();
-            ParameterNode pn = new ParameterNode();
+            GroupNode gn = NodeFactory.createGroupNode();
+            ParameterNode pn = NodeFactory.createParameterNode();
             ElementNode en = null;
 
             switch (getElement().getElementType()) {
                 case T_PIN:
-                    en = new PinNode((Pin) getElement());
+                    en = NodeFactory.createPinNode((Pin) getElement());
                     break;
                 case T_JUNCTION:
-                    en = new JunctionNode((Junction) getElement());
+                    en = NodeFactory.createJunctionNode((Junction) getElement());
                     break;
                 case T_WIRE:
-                    en = new WireNode((Wire) getElement());
+                    en = NodeFactory.createWireNode((Wire) getElement());
                     break;
                 case T_PART:
                     // en = new PartNode((Part) getElement());

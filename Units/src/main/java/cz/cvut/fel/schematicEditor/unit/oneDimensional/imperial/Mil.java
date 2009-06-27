@@ -1,5 +1,7 @@
 package cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.unit.UnitType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 
@@ -9,6 +11,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
  *
  * @author Urban Kravjansky
  */
+@XStreamAlias("Mil")
 public class Mil extends Unit {
     /**
      * Number of pixels per one mil (one thousandth of inch).

@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.geom.Rectangle2D;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
@@ -25,6 +27,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
  *
  * @author uk
  */
+@XStreamAlias("ElementNode")
 public class ElementNode extends Node {
     /**
      * This field represents <code>element</code> of this node.
@@ -48,7 +51,7 @@ public class ElementNode extends Node {
      *
      * @param element <code>Element</code> to create <code>ElementNode</code> with.
      */
-    public ElementNode(Element element) {
+    protected ElementNode(Element element) {
         super();
         initialize(element);
     }
@@ -59,7 +62,7 @@ public class ElementNode extends Node {
      * @param element <code>Element</code> to create <code>ElementNode</code> with.
      * @param id this <code>ElementNode</code> identifier.
      */
-    public ElementNode(Element element, String id) {
+    protected ElementNode(Element element, String id) {
         super(id);
         initialize(element);
     }
@@ -191,7 +194,7 @@ public class ElementNode extends Node {
      * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
-    public Node duplicate() {
+    protected Node duplicate() {
         ElementNode result = new ElementNode(getElement());
 
         return result;

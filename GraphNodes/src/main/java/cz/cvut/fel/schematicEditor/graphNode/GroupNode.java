@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
@@ -22,6 +24,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
  *
  * @author Urban Kravjansky
  */
+@XStreamAlias("GroupNode")
 public class GroupNode extends Node {
     /**
      * {@link Logger} instance for logging purposes.
@@ -52,7 +55,7 @@ public class GroupNode extends Node {
     /**
      * Default constructor. It initializes all fields with default values, thus creating empty {@link GroupNode}.
      */
-    public GroupNode() {
+    protected GroupNode() {
         super();
 
         logger = Logger.getLogger(this.getClass().getName());
@@ -533,7 +536,7 @@ public class GroupNode extends Node {
      * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
-    public Node duplicate() {
+    protected Node duplicate() {
         GroupNode result = new GroupNode();
         ParameterNode chPN = null;
 

@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -57,20 +58,25 @@ public class Move extends Manipulation {
         super.addManipulationCoordinates(x, y);
 
         setDelta(computeDelta());
-        switchLastTransformation(getDelta());
+        try {
+            switchLastTransformation(getDelta());
+        } catch (ManipulationExecutionException e) {
+            logger.error("Error in manipulation");
+        }
     }
 
     /**
      * Switches last transformation node with transformation node containing delta.
      *
      * @param delta shift parameter.
+     * @throws ManipulationExecutionException In case of manipulation execution problems.
      */
-    private void switchLastTransformation(Point2D.Double delta) {
+    private void switchLastTransformation(Point2D.Double delta) throws ManipulationExecutionException {
         Transformation tNew = Transformation.getShift(delta.getX(), delta.getY());
         Transformation t = Transformation.multiply(getAppliedTransformation().getInverse(), tNew);
         setAppliedTransformation(tNew);
 
-        TransformationNode tn = new TransformationNode(t);
+        TransformationNode tn = NodeFactory.createTransformationNode(t);
 
         getManipulatedGroup().add(tn);
     }
@@ -105,7 +111,7 @@ public class Move extends Manipulation {
         // check, whether move is possible or not
         if (isActive() && (getManipulatedGroup() == getTopNode().findHit(r2d, zoomFactor))) {
             // add identity transformation, so it can be later changed
-            getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
+            getManipulatedGroup().add(NodeFactory.createTransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
             UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
@@ -155,7 +161,11 @@ public class Move extends Manipulation {
         super.replaceLastManipulationCoordinates(x, y);
 
         setDelta(computeDelta());
-        switchLastTransformation(getDelta());
+        try {
+            switchLastTransformation(getDelta());
+        } catch (ManipulationExecutionException e) {
+            logger.error("Error in manipulation");
+        }
     }
 
     /**
@@ -218,7 +228,7 @@ public class Move extends Manipulation {
     @Override
     protected void reexecute() throws ManipulationExecutionException {
         Transformation t = Transformation.getShift(getDelta().getX(), getDelta().getY());
-        TransformationNode tn = new TransformationNode(t);
+        TransformationNode tn = NodeFactory.createTransformationNode(t);
 
         getManipulatedGroup().add(tn);
     }
@@ -229,7 +239,8 @@ public class Move extends Manipulation {
     @Override
     protected void unexecute() throws ManipulationExecutionException {
         Transformation t = Transformation.getShift(getDelta().getX(), getDelta().getY());
-        TransformationNode tn = new TransformationNode(t.getInverse());
+
+        TransformationNode tn = NodeFactory.createTransformationNode(t.getInverse());
 
         getManipulatedGroup().add(tn);
     }

@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.unit;
 
 import org.apache.log4j.Logger;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial.Inch;
@@ -11,6 +13,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.metric.Milimeter;
 /**
  * @author Urban Kravjansky
  */
+@XStreamAlias("UnitType")
 public enum UnitType {
     /**
      * {@link Pixel} {@link Unit} type.

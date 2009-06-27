@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
@@ -53,9 +54,9 @@ public class DrawShapeButtonListener implements ActionListener {
     public final void actionPerformed(final ActionEvent ae) {
         try {
             // create group node for create manipulation
-            GroupNode gn = new GroupNode();
-            ParameterNode pn = new ParameterNode();
-            ShapeNode sn = new ShapeNode((Shape) getShape().duplicate());
+            GroupNode gn = NodeFactory.createGroupNode();
+            ParameterNode pn = NodeFactory.createParameterNode();
+            ShapeNode sn = NodeFactory.createShapeNode((Shape) getShape().duplicate());
             gn.add(pn);
             gn.add(sn);
 

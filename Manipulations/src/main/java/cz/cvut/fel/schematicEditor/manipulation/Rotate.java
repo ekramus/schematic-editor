@@ -7,7 +7,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Transformation;
@@ -122,14 +122,14 @@ public class Rotate extends Manipulation {
 
         // move so that reference is in point 0,0
         Transformation initialTransformation = Transformation.getShift(rc);
-        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
+        getManipulatedGroup().add(NodeFactory.createTransformationNode(initialTransformation.getInverse()));
 
         // rotate
         Transformation rotate = Transformation.getRotation(angle);
-        getManipulatedGroup().add(new TransformationNode(rotate));
+        getManipulatedGroup().add(NodeFactory.createTransformationNode(rotate));
 
         // move back
-        getManipulatedGroup().add(new TransformationNode(initialTransformation));
+        getManipulatedGroup().add(NodeFactory.createTransformationNode(initialTransformation));
     }
 
     /**
@@ -152,14 +152,14 @@ public class Rotate extends Manipulation {
 
         // move so that reference is in point 0,0
         Transformation initialTransformation = Transformation.getShift(rc);
-        getManipulatedGroup().add(new TransformationNode(initialTransformation.getInverse()));
+        getManipulatedGroup().add(NodeFactory.createTransformationNode(initialTransformation.getInverse()));
 
         // rotate back
         Transformation rotate = Transformation.getRotation(angle).getInverse();
-        getManipulatedGroup().add(new TransformationNode(rotate));
+        getManipulatedGroup().add(NodeFactory.createTransformationNode(rotate));
 
         // move back
-        getManipulatedGroup().add(new TransformationNode(initialTransformation));
+        getManipulatedGroup().add(NodeFactory.createTransformationNode(initialTransformation));
     }
 
     /**

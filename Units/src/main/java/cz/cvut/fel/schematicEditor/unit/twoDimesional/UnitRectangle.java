@@ -3,6 +3,8 @@ package cz.cvut.fel.schematicEditor.unit.twoDimesional;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * This class implements Rectangle defined by two {@link UnitPoint} instances (one top left coordinate, one dimension
  * coordinate).
@@ -10,6 +12,7 @@ import java.awt.geom.Rectangle2D;
  * @author Urban Kravjansky
  *
  */
+@XStreamAlias("UnitRectangle")
 public class UnitRectangle extends Rectangle2D {
     /**
      * Top left rectangle coordinate.

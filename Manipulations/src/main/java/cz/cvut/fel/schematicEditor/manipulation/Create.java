@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -229,7 +230,7 @@ public class Create extends Manipulation {
      */
     @Override
     protected Manipulation duplicate() {
-        Create c = new Create(getTopNode(), (GroupNode) getManipulatedGroup().duplicate(), getSource());
+        Create c = new Create(getTopNode(), (GroupNode) NodeFactory.duplicate(getManipulatedGroup()), getSource());
 
         return c;
     }

@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -61,7 +61,7 @@ public class Edit extends Manipulation {
         // check, whether move is possible or not
         if (isActive() && (getManipulatedGroup() == getTopNode().findHit(r2d, zoomFactor))) {
             // add identity transformation, so it can be later changed
-            getManipulatedGroup().add(new TransformationNode(Transformation.getIdentity()));
+            getManipulatedGroup().add(NodeFactory.createTransformationNode(Transformation.getIdentity()));
 
             // add two copies of same coordinates to be able to replace last one
             UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);

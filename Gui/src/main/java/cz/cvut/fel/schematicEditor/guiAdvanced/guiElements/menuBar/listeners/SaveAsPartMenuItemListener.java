@@ -9,12 +9,15 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
+import org.apache.log4j.Logger;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
@@ -34,12 +37,15 @@ import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.Voltage
  * @author Urban Kravjansky
  */
 public final class SaveAsPartMenuItemListener implements ActionListener {
+    private static Logger logger;
 
     /**
      * Default constructor. It only calls constructor of super class.
      */
     public SaveAsPartMenuItemListener() {
         super();
+
+        logger = Logger.getLogger(this.getClass());
     }
 
     // FIXME add externalized strings
@@ -89,7 +95,8 @@ public final class SaveAsPartMenuItemListener implements ActionListener {
 
             Part p = new Part(pp);
 
-            PartNode pn = new PartNode(p, Gui.getActiveScenePanel().getSceneGraph().getTopNode().getEnabledOnly());
+            PartNode pn = NodeFactory.createPartNode(p, Gui.getActiveScenePanel().getSceneGraph().getTopNode()
+                    .getEnabledOnly());
             serialize(pn, file);
         }
     }

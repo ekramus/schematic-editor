@@ -3,7 +3,10 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listener
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
@@ -14,17 +17,24 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.PartBrows
  *
  */
 public class AddButtonActionListener implements ActionListener {
+    private static Logger logger;
 
-    /*
-     * (non-Javadoc)
+    /**
+     * This method instantiates new instance.
      *
+     */
+    public AddButtonActionListener() {
+        logger = Logger.getLogger(this.getClass().getName());
+    }
+
+    /**
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         // prepare PartNode, GroupNode and ParameterNode
         PartNode partNode = PartBrowserPanel.getInstance().getSelectedPartNode();
-        GroupNode groupNode = new GroupNode();
-        ParameterNode parameterNode = new ParameterNode();
+        GroupNode groupNode = NodeFactory.createGroupNode();
+        ParameterNode parameterNode = NodeFactory.createParameterNode();
 
         groupNode.add(partNode);
         groupNode.add(parameterNode);

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.support.Support;
@@ -19,6 +21,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
  *
  * @author Urban Kravjansky
  */
+@XStreamAlias("PartNode")
 public class PartNode extends ElementNode {
     /**
      * GroupNode containing graphic representation of part shape.
@@ -39,7 +42,7 @@ public class PartNode extends ElementNode {
      * @param part <code>Part</code> stored in this <code>PartNode</code>.
      * @param partGroupNode graphical representation of part.
      */
-    public PartNode(Part part, GroupNode partGroupNode) {
+    protected PartNode(Part part, GroupNode partGroupNode) {
         super(part);
 
         initialize(partGroupNode);
@@ -52,7 +55,7 @@ public class PartNode extends ElementNode {
      * @param partGroupNode graphical representation of part.
      * @param id identifier of this <code>PartNode</code>.
      */
-    public PartNode(Part part, GroupNode partGroupNode, String id) {
+    protected PartNode(Part part, GroupNode partGroupNode, String id) {
         super(part, id);
 
         initialize(partGroupNode);
@@ -113,7 +116,7 @@ public class PartNode extends ElementNode {
      * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
-    public Node duplicate() {
+    protected Node duplicate() {
         PartNode result = new PartNode((Part) getElement(), (GroupNode) getPartGroupNode().duplicate());
 
         Vector<PinNode> partConnectors = new Vector<PinNode>();

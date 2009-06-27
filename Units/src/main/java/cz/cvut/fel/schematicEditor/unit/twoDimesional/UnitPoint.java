@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.unit.twoDimesional;
 
 import java.awt.geom.Point2D;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
@@ -11,6 +13,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
  * @author Urban Kravjansky
  *
  */
+@XStreamAlias("UnitPoint")
 public class UnitPoint extends Point2D implements Comparable<UnitPoint> {
     /**
      * Point {@link Unit} x coordinate.

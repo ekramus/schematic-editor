@@ -1,10 +1,13 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * This class implements Node and all generic methods.
  *
  * @author uk
  */
+@XStreamAlias("Node")
 public abstract class Node {
     /**
      * This field represents ID of node.
@@ -22,7 +25,7 @@ public abstract class Node {
     /**
      * This is default constructor.
      */
-    public Node() {
+    protected Node() {
         this.id = Long.toString(System.currentTimeMillis());
         setDisabled(false);
     }
@@ -32,7 +35,7 @@ public abstract class Node {
      *
      * @param id identifier of node.
      */
-    public Node(String id) {
+    protected Node(String id) {
         this.id = id;
         setDisabled(false);
     }
@@ -42,7 +45,7 @@ public abstract class Node {
      *
      * @return Copy of node with it's children.
      */
-    public abstract Node duplicate();
+    protected abstract Node duplicate();
 
     /**
      * @see java.lang.Object#toString()

@@ -1,12 +1,15 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.support.Transformation;
 
 /**
  * This class represents Transformation Node.
- * 
+ *
  * @author uk
  */
+@XStreamAlias("TransformationNode")
 public class TransformationNode extends Node {
     /**
      * This field represents transformation, which is applied on children of this node.
@@ -15,16 +18,16 @@ public class TransformationNode extends Node {
 
     /**
      * This is constructor.
-     * 
+     *
      * @param t transformation node.
      */
-    public TransformationNode(Transformation t) {
+    protected TransformationNode(Transformation t) {
         this.transformation = t;
     }
 
     /**
      * Getter for transformation.
-     * 
+     *
      * @return the transformation
      */
     public Transformation getTransformation() {
@@ -33,7 +36,7 @@ public class TransformationNode extends Node {
 
     /**
      * Setter for transformation.
-     * 
+     *
      * @param transformation the transformation to set
      */
     public void setTransformation(Transformation transformation) {
@@ -45,14 +48,14 @@ public class TransformationNode extends Node {
      */
     @Override
     public String toString() {
-        return id + " [TransformationNode: " + getTransformation() + "]";
+        return this.id + " [TransformationNode: " + getTransformation() + "]";
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
-    public Node duplicate() {
+    protected Node duplicate() {
         TransformationNode result = new TransformationNode(getTransformation());
 
         return result;
