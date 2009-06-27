@@ -32,7 +32,7 @@ public class AddButtonActionListener implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         // prepare PartNode, GroupNode and ParameterNode
-        PartNode partNode = PartBrowserPanel.getInstance().getSelectedPartNode();
+        PartNode partNode = (PartNode) NodeFactory.duplicate(PartBrowserPanel.getInstance().getSelectedPartNode());
         GroupNode groupNode = NodeFactory.createGroupNode();
         ParameterNode parameterNode = NodeFactory.createParameterNode();
 
