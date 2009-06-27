@@ -1,5 +1,7 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 
 /**
@@ -7,13 +9,14 @@ import cz.cvut.fel.schematicEditor.element.element.part.Junction;
  *
  * @author Urban Kravjansky
  */
+@XStreamAlias("JunctionNode")
 public class JunctionNode extends ElementNode {
     /**
      * This is constructor.
      *
      * @param junction {@link Junction} stored in this {@link JunctionNode}.
      */
-    public JunctionNode(Junction junction) {
+    protected JunctionNode(Junction junction) {
         super(junction);
     }
 
@@ -23,7 +26,7 @@ public class JunctionNode extends ElementNode {
      * @param junction {@link Junction} stored in this {@link JunctionNode}.
      * @param id identifier of this {@link JunctionNode}.
      */
-    public JunctionNode(Junction junction, String id) {
+    protected JunctionNode(Junction junction, String id) {
         super(junction, id);
     }
 
@@ -31,7 +34,7 @@ public class JunctionNode extends ElementNode {
      * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
-    public Node duplicate() {
+    protected Node duplicate() {
         JunctionNode result = new JunctionNode((Junction) getElement());
 
         return result;

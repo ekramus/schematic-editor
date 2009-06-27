@@ -23,6 +23,7 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.PinNode;
@@ -135,7 +136,7 @@ public class PSExport implements Export {
                 break;
             case T_WIRE:
                 Wire w = (Wire) en.getElement();
-                ParameterNode wpn = new ParameterNode();
+                ParameterNode wpn = NodeFactory.createParameterNode();
                 wpn.setFillStyle(ElementStyle.NONE);
                 wpn.setFill(null);
                 drawPoly(false, w.getX(), w.getY(), wpn, tn.getTransformation());

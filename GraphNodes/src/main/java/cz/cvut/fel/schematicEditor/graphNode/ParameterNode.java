@@ -2,6 +2,8 @@ package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Color;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -12,6 +14,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
  *
  * @author uk
  */
+@XStreamAlias("ParameterNode")
 public class ParameterNode extends Node {
     private ElementStyle lineStyle;
     private ElementStyle fillStyle;
@@ -41,7 +44,7 @@ public class ParameterNode extends Node {
     /**
      * This is default constructor.
      */
-    public ParameterNode() {
+    protected ParameterNode() {
         this.setColor(Color.BLACK);
         this.setWidth(new Pixel(1));
         this.setFill(Color.WHITE);
@@ -181,7 +184,7 @@ public class ParameterNode extends Node {
      * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
-    public Node duplicate() {
+    protected Node duplicate() {
         ParameterNode result = new ParameterNode();
 
         result.setProperties(getProperties());

@@ -25,6 +25,7 @@ import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.PinNode;
@@ -352,7 +353,7 @@ public class SVGExport implements Export {
 
             case T_WIRE:
                 Wire w = (Wire) en.getElement();
-                ParameterNode wpn = new ParameterNode();
+                ParameterNode wpn = NodeFactory.createParameterNode();
                 wpn.setFillStyle(ElementStyle.NONE);
                 wpn.setFill(null);
                 drawPoly(false, w.getX(), w.getY(), wpn, tn);
@@ -593,7 +594,7 @@ public class SVGExport implements Export {
      * Draw pin defined by center point.
      */
     private void drawPin(UnitPoint center, ParameterNode pn, Transformation tn) {
-        ParameterNode pinPN = new ParameterNode();
+        ParameterNode pinPN = NodeFactory.createParameterNode();
         pinPN.setColor(Color.BLACK);
         pinPN.setFill(null);
         this.out.println("<ellipse cx=\"" + center.getX()
@@ -611,7 +612,7 @@ public class SVGExport implements Export {
      * Draw junction defined by center point.
      */
     private void drawJunction(UnitPoint center, ParameterNode pn, Transformation tn) {
-        ParameterNode junctionPN = new ParameterNode();
+        ParameterNode junctionPN = NodeFactory.createParameterNode();
         junctionPN.setColor(Color.BLACK);
         junctionPN.setFill(Color.BLACK);
         this.out.println("<ellipse cx=\"" + center.getX()

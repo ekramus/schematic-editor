@@ -1,5 +1,7 @@
 package cz.cvut.fel.schematicEditor.graphNode;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 
 /**
@@ -7,26 +9,24 @@ import cz.cvut.fel.schematicEditor.element.element.part.Pin;
  *
  * @author Urban Kravjansky
  */
+@XStreamAlias("PinNode")
 public class PinNode extends ElementNode {
     /**
      * This is constructor.
      *
-     * @param pin
-     *            {@link Pin} stored in this {@link PinNode}.
+     * @param pin {@link Pin} stored in this {@link PinNode}.
      */
-    public PinNode(Pin pin) {
+    protected PinNode(Pin pin) {
         super(pin);
     }
 
     /**
      * This is constructor.
      *
-     * @param pin
-     *            {@link Pin} stored in this {@link PinNode}.
-     * @param id
-     *            identifier of this {@link PinNode}.
+     * @param pin {@link Pin} stored in this {@link PinNode}.
+     * @param id identifier of this {@link PinNode}.
      */
-    public PinNode(Pin pin, String id) {
+    protected PinNode(Pin pin, String id) {
         super(pin, id);
     }
 
@@ -34,7 +34,7 @@ public class PinNode extends ElementNode {
      * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
-    public Node duplicate() {
+    protected Node duplicate() {
         PinNode result = new PinNode((Pin) getElement());
 
         return result;

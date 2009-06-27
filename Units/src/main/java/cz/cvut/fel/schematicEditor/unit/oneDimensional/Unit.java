@@ -10,7 +10,7 @@ import cz.cvut.fel.schematicEditor.unit.UnitType;
  *
  * @author Urban Kravjansky
  */
-@XStreamAlias("unit")
+@XStreamAlias("Unit")
 public abstract class Unit implements Comparable<Unit> {
     /**
      * Value of given unit.

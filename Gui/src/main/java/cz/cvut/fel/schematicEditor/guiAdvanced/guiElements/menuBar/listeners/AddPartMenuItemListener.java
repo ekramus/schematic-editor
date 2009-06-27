@@ -6,9 +6,12 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
@@ -21,12 +24,15 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
  * @author Urban Kravjansky
  */
 public final class AddPartMenuItemListener implements ActionListener {
+    private static Logger logger;
 
     /**
      * Default constructor. It only calls constructor of super class.
      */
     public AddPartMenuItemListener() {
         super();
+
+        logger = Logger.getLogger(this.getClass());
     }
 
     // FIXME add externalized strings
@@ -54,8 +60,8 @@ public final class AddPartMenuItemListener implements ActionListener {
 
             // prepare PartNode, GroupNode and ParameterNode
             PartNode partNode = SceneGraph.deserialize(PartNode.class, file);
-            GroupNode groupNode = new GroupNode();
-            ParameterNode parameterNode = new ParameterNode();
+            GroupNode groupNode = NodeFactory.createGroupNode();
+            ParameterNode parameterNode = NodeFactory.createParameterNode();
 
             groupNode.add(partNode);
             groupNode.add(parameterNode);

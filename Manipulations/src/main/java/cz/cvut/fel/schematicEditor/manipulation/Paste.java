@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
@@ -109,7 +110,7 @@ public class Paste extends Manipulation {
      */
     @Override
     protected void execute() throws ManipulationExecutionException {
-        setManipulatedGroup((GroupNode) getManipulationQueue().getClipboard().duplicate());
+        setManipulatedGroup((GroupNode) NodeFactory.duplicate(getManipulationQueue().getClipboard()));
         getTopNode().add(getManipulatedGroup());
 
         // if original GroupNode was deleted, undelete it

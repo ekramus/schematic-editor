@@ -11,7 +11,7 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
  *
  * @author Urban Kravjansky
  */
-@XStreamAlias("pixel")
+@XStreamAlias("Pixel")
 public class Pixel extends Unit {
     /**
      * Default constructor. It initializes value with zero value.

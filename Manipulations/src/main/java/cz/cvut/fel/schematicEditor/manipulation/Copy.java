@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
@@ -111,7 +112,7 @@ public class Copy extends Manipulation {
      */
     @Override
     protected void execute() throws ManipulationExecutionException {
-        getManipulationQueue().setClipboard((GroupNode) getManipulatedGroup().duplicate());
+        getManipulationQueue().setClipboard((GroupNode) NodeFactory.duplicate(getManipulatedGroup()));
     }
 
     /**
