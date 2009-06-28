@@ -132,12 +132,17 @@ public class Create extends Manipulation {
             double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
         logger.trace(this + " manipulation START");
 
+        Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+
+        // clear all coordinates in element, so they are not multiplying while duplicate is called
+        el.getX().clear();
+        el.getY().clear();
+
         // Create create = (Create) Structures.getManipulationQueue().peek();
         setActive(true);
 
         // add two pairs of coordinates (each element needs two)
         UnitPoint up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
-        Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
         UnitPoint snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
