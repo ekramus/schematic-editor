@@ -11,6 +11,10 @@ import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.PartBrowserPanel;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
+import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 
 /**
  * @author uk
@@ -43,5 +47,26 @@ public class AddButtonActionListener implements ActionListener {
         Gui.getActiveScenePanel().getSceneGraph().getTopNode().add(groupNode);
         Gui.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
         Gui.getActiveScenePanel().sceneInvalidate(null);
+
+        Manipulation m;
+
+        try {
+            // set move manipulation as active manipulation
+            m = ManipulationFactory.create(ManipulationType.MOVE, Gui.getActiveScenePanel().getSceneGraph()
+                    .getTopNode(), this);
+            m.setManipulatedGroup(groupNode);
+            m.setActive(true);
+
+            // add start and stop coordinates
+            m.addManipulationCoordinates(partNode.getRotationCenter().getUnitX(), partNode.getRotationCenter()
+                    .getUnitY());
+            m.addManipulationCoordinates(partNode.getRotationCenter().getUnitX(), partNode.getRotationCenter()
+                    .getUnitY());
+
+            // set manipulation as active
+            Gui.getActiveScenePanel().setActiveManipulation(m);
+        } catch (UnknownManipulationException ume) {
+            logger.error("Unknown manipulation");
+        }
     }
 }
