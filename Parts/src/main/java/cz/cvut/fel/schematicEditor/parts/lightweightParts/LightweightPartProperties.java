@@ -23,6 +23,7 @@ public abstract class LightweightPartProperties implements PartProperties {
     private static Logger   logger;
 
     static {
+        System.err.println("Hello world");
         logger = Logger.getLogger(LightweightPartProperties.class);
     }
 

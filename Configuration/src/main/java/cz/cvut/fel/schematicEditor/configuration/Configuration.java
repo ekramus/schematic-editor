@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStream.InitializationException;
+import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -40,13 +42,19 @@ public class Configuration {
      * @return Deserialized {@link Configuration} class.
      */
     public static Configuration deserialize(Class<? extends Configuration> clazz, String file) {
-        XStream xstream = new XStream(new DomDriver());
-
         try {
+            System.err.println("bubu");
+            XStream xstream = new XStream(new DomDriver());
+
             BufferedReader br = new BufferedReader(new FileReader(file));
             processAnnotations(xstream, clazz);
+
             return (Configuration) xstream.fromXML(br);
         } catch (IOException e) {
+            return null;
+        } catch (ConversionException e) {
+            return null;
+        } catch (InitializationException e) {
             return null;
         }
     }

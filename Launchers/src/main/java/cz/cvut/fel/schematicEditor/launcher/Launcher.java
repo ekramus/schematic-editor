@@ -1,8 +1,11 @@
 package cz.cvut.fel.schematicEditor.launcher;
 
+import java.net.URL;
+
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.helpers.Loader;
 import org.apache.log4j.xml.DOMConfigurator;
 
 /**
@@ -34,7 +37,9 @@ public abstract class Launcher {
      * Loads Log4J properties.
      */
     static void loadLog4JProperties() {
-        DOMConfigurator.configure("log4j.xml");
+        URL url = Loader.getResource("log4j.xml");
+        DOMConfigurator.configure(url);
+
         logger = Logger.getLogger(Launcher.class.getName());
         logger.info("Log4J alive.");
     }

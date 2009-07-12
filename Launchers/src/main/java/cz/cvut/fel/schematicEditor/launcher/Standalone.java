@@ -14,9 +14,10 @@ public class Standalone {
      * @param args
      */
     public static void main(String[] args) {
+        Launcher.loadLog4JProperties();
+
         Gui gui = Gui.getInstance();
 
-        Launcher.loadLog4JProperties();
         Configuration.getInstance();
         Launcher.setUI();
 
