@@ -21,4 +21,24 @@
 		<module>Plugins-ElementsCount</module>
 		<module>Plugins-CheckNetlist</module>
 	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<alias>mykey</alias>
+					<storepass>qwerty</storepass>
+					<verify>true</verify>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
