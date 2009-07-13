@@ -43,7 +43,6 @@ public class Configuration {
      */
     public static Configuration deserialize(Class<? extends Configuration> clazz, String file) {
         try {
-            System.err.println("bubu");
             XStream xstream = new XStream(new DomDriver());
 
             BufferedReader br = new BufferedReader(new FileReader(file));
