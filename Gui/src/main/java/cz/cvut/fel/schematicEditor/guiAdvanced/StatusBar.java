@@ -47,6 +47,13 @@ public class StatusBar extends JPanel {
         return statusBar;
     }
 
+    /**
+     * Updates status bar.
+     */
+    public void refresh() {
+        this.repaint();
+    }
+
     private JLabel getCoordinatesLabel() {
         if (coordinatesJLabel == null) {
             coordinatesJLabel = new JLabel("X: Y: ");
@@ -66,8 +73,7 @@ public class StatusBar extends JPanel {
     }
 
     /**
-     * @param sizeLockingLabel
-     *            the sizeLockingLabel to set
+     * @param sizeLockingLabel the sizeLockingLabel to set
      */
     public void setSizeLockingLabel(String text) {
         sizeLockingLabel.setText(text);

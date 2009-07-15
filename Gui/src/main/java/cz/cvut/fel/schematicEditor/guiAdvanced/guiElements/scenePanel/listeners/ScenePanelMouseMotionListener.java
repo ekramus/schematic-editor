@@ -39,11 +39,18 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
      */
     public void mouseDragged(MouseEvent e) {
+        UnitPoint sb = Snap.getSnap(new UnitPoint(e.getX(), e.getY()), null);
+        Gui.getActiveScenePanel().setActualPointerCoordinates(sb);
+        // adjust coordinate according to relative start
+        logger.trace("SB: " + sb);
+        sb.setX(sb.getX() - Gui.getActiveScenePanel().getRelativeStart().getX());
+        sb.setY(sb.getY() - Gui.getActiveScenePanel().getRelativeStart().getY());
+        // set label
+        StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
+
         try {
             Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
 
-            UnitPoint sb = Snap.getSnap(new UnitPoint(e.getX(), e.getY()), null);
-            StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = m.getScaledUnitPoint(e.getX(), e.getY(), Gui.getActiveScenePanel().getZoomFactor());
@@ -70,11 +77,16 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
      */
     public void mouseMoved(MouseEvent e) {
+        UnitPoint sb = Snap.getSnap(new UnitPoint(e.getX(), e.getY()), null);
+        Gui.getActiveScenePanel().setActualPointerCoordinates(sb);
+        // adjust coordinate according to relative start
+        sb.setX(sb.getX() - Gui.getActiveScenePanel().getRelativeStart().getX());
+        sb.setY(sb.getY() - Gui.getActiveScenePanel().getRelativeStart().getY());
+        // set label
+        StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
+
         try {
             Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
-
-            UnitPoint sb = Snap.getSnap(new UnitPoint(e.getX(), e.getY()), null);
-            StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
 
             // manipulation is active
             if (m.isActive()) {

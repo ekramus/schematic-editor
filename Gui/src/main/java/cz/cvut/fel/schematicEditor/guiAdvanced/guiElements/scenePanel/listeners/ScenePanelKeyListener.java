@@ -74,10 +74,9 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 // add manipulation before unexecuted manipulation as activeManipulation
                 Gui.getActiveScenePanel().setActiveManipulation(
-                                                                        ManipulationFactory.createNext(Gui
-                                                                                .getActiveScenePanel()
-                                                                                .getManipulationQueue()
-                                                                                .getActiveManipulation()));
+                                                                ManipulationFactory.createNext(Gui
+                                                                        .getActiveScenePanel().getManipulationQueue()
+                                                                        .getActiveManipulation()));
 
                 logger.trace("Manipulation queue:\n" + Gui.getActiveScenePanel().getManipulationQueue());
             }
@@ -93,10 +92,9 @@ public class ScenePanelKeyListener implements KeyListener {
 
                 // add reexecuted manipulation as activeManipulation
                 Gui.getActiveScenePanel().setActiveManipulation(
-                                                                        ManipulationFactory.createNext(Gui
-                                                                                .getActiveScenePanel()
-                                                                                .getManipulationQueue()
-                                                                                .getActiveManipulation()));
+                                                                ManipulationFactory.createNext(Gui
+                                                                        .getActiveScenePanel().getManipulationQueue()
+                                                                        .getActiveManipulation()));
 
                 logger.trace("Manipulation queue:\n" + Gui.getActiveScenePanel().getManipulationQueue());
             }
@@ -108,8 +106,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 Copy copy = (Copy) ManipulationFactory.create(ManipulationType.COPY, Gui.getActiveScenePanel()
                         .getSceneGraph().getTopNode(), e.getSource());
                 // set manipulated group from select manipulation
-                copy.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation()
-                        .getManipulatedGroup());
+                copy.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup());
                 copy.manipulationStop(null, null, Gui.getActiveScenePanel().getManipulationQueue(), Gui
                         .getActiveScenePanel().getZoomFactor(), false);
 
@@ -117,31 +114,25 @@ public class ScenePanelKeyListener implements KeyListener {
                 Gui.getActiveScenePanel().setActiveManipulation(copy);
 
                 // try finish manipulation
-                Gui.getActiveScenePanel().tryFinishManipulation(
-                                                                        null,
-                                                                        null,
-                                                                        Gui.getActiveScenePanel()
-                                                                                .getManipulationQueue(), false);
+                Gui.getActiveScenePanel()
+                        .tryFinishManipulation(null, null, Gui.getActiveScenePanel().getManipulationQueue(), false);
             }
             // CTRL + V - paste
             else if ((e.isControlDown()) && (e.getKeyCode() == KeyEvent.VK_V)) {
                 logger.trace("PASTEing...");
 
                 // set active manipulation
-                Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, Gui
-                        .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
-                paste.manipulationStop(null, null, Gui.getActiveScenePanel().getManipulationQueue(),
-                                       Gui.getActiveScenePanel().getZoomFactor(), false);
+                Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, Gui.getActiveScenePanel()
+                        .getSceneGraph().getTopNode(), e.getSource());
+                paste.manipulationStop(null, null, Gui.getActiveScenePanel().getManipulationQueue(), Gui
+                        .getActiveScenePanel().getZoomFactor(), false);
 
                 // set paste as active manipulation
                 Gui.getActiveScenePanel().setActiveManipulation(paste);
 
                 // try finish manipulation
-                Gui.getActiveScenePanel().tryFinishManipulation(
-                                                                        null,
-                                                                        null,
-                                                                        Gui.getActiveScenePanel()
-                                                                                .getManipulationQueue(), false);
+                Gui.getActiveScenePanel()
+                        .tryFinishManipulation(null, null, Gui.getActiveScenePanel().getManipulationQueue(), false);
             }
             // DEL or BACKSPACE
             else if ((e.getKeyCode() == KeyEvent.VK_DELETE) || (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
@@ -156,6 +147,11 @@ public class ScenePanelKeyListener implements KeyListener {
                         // ScenePanel.getInstance().processFinalManipulationStep();
                     }
                 }
+            }
+            // SPACE for relative coordinates start set
+            else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                Gui.getActiveScenePanel().setRelativeStart();
+                StatusBar.getInstance().refresh();
             }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
