@@ -40,10 +40,10 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      */
     public void mouseDragged(MouseEvent e) {
         try {
-            StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-
             Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
 
+            UnitPoint sb = Snap.getSnap(new UnitPoint(e.getX(), e.getY()), null);
+            StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
             // manipulation is active
             if (m.isActive()) {
                 UnitPoint up = m.getScaledUnitPoint(e.getX(), e.getY(), Gui.getActiveScenePanel().getZoomFactor());
@@ -71,9 +71,10 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
      */
     public void mouseMoved(MouseEvent e) {
         try {
-            StatusBar.getInstance().setCoordinatesJLabel("X: " + e.getX() + " Y: " + e.getY());
-
             Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
+
+            UnitPoint sb = Snap.getSnap(new UnitPoint(e.getX(), e.getY()), null);
+            StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
 
             // manipulation is active
             if (m.isActive()) {
