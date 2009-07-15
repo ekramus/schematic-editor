@@ -46,7 +46,12 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         sb.setX(sb.getX() - Gui.getActiveScenePanel().getRelativeStart().getX());
         sb.setY(sb.getY() - Gui.getActiveScenePanel().getRelativeStart().getY());
         // set label
-        StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
+        StatusBar.getInstance().setCoordinatesJLabel(
+                                                     "X: " + sb.getUnitX()
+                                                             + " Y: "
+                                                             + sb.getUnitY()
+                                                             + " "
+                                                             + Gui.getActiveScenePanel().getRelativeStart());
 
         try {
             Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
@@ -83,7 +88,12 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
         sb.setX(sb.getX() - Gui.getActiveScenePanel().getRelativeStart().getX());
         sb.setY(sb.getY() - Gui.getActiveScenePanel().getRelativeStart().getY());
         // set label
-        StatusBar.getInstance().setCoordinatesJLabel("X: " + sb.getUnitX() + " Y: " + sb.getUnitY());
+        StatusBar.getInstance().setCoordinatesJLabel(
+                                                     "X: " + sb.getUnitX()
+                                                             + " Y: "
+                                                             + sb.getUnitY()
+                                                             + " "
+                                                             + Gui.getActiveScenePanel().getRelativeStart());
 
         try {
             Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
