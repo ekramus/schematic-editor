@@ -67,27 +67,63 @@ public class ScenePanel extends JPanel {
     /**
      * {@link SceneGraph} instance used for this instance of {@link ScenePanel}.
      */
-    private SceneGraph        sceneGraph         = null;
+    private SceneGraph        sceneGraph               = null;
     /**
      * Reference to <code>SceneProperties</code> instance.
      */
-    private SceneProperties   sceneProperties    = null;
+    private SceneProperties   sceneProperties          = null;
     /**
      * Reference to <code>ManipulationQueue</code> instance.
      */
-    private ManipulationQueue manipulationQueue  = null;
+    private ManipulationQueue manipulationQueue        = null;
     /**
      * Reference to active {@link Manipulation} instance.
      */
-    private Manipulation      activeManipulation = null;
+    private Manipulation      activeManipulation       = null;
     /**
      * PartNode, which is being edited.
      */
-    private PartNode          editedPartNode     = null;
+    private PartNode          editedPartNode           = null;
     /**
      * Zoom factor of this scene panel.
      */
-    private double            zoomFactor         = 1.0;
+    private double            zoomFactor               = 1.0;
+    /**
+     * Actual pointer coordinates.
+     */
+    private UnitPoint         actualPointerCoordinates = null;
+    /**
+     * Relative coordinate system start to aid users.
+     */
+    private UnitPoint         relativeStart            = new UnitPoint(0, 0);
+
+    /**
+     * @return the relativeStart
+     */
+    public UnitPoint getRelativeStart() {
+        return this.relativeStart;
+    }
+
+    /**
+     * Set the relativeStart based on current <code>actualPointerCoordinates</code> field.
+     */
+    public void setRelativeStart() {
+        this.relativeStart = new UnitPoint(this.actualPointerCoordinates);
+    }
+
+    /**
+     * @return the actualPointerCoordinates
+     */
+    private UnitPoint getActualPointerCoordinates() {
+        return this.actualPointerCoordinates;
+    }
+
+    /**
+     * @param actualPointerCoordinates the actualPointerCoordinates to set
+     */
+    public void setActualPointerCoordinates(UnitPoint actualPointerCoordinates) {
+        this.actualPointerCoordinates = new UnitPoint(actualPointerCoordinates);
+    }
 
     /**
      * @return the zoomFactor

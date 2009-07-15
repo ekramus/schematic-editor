@@ -54,6 +54,16 @@ public class UnitPoint extends Point2D implements Comparable<UnitPoint> {
     }
 
     /**
+     * Constructor with coordinate parameter. It initializes new {@link UnitPoint} instance with given coordinate.
+     *
+     * @param p {@link UnitPoint} defined coordinates of point.
+     */
+    public UnitPoint(UnitPoint p) {
+        setUnitX(p.getUnitX().duplicate());
+        setUnitY(p.getUnitY().duplicate());
+    }
+
+    /**
      * Constructor with coordinate parameters. It initializes new {@link UnitPoint} instance with given double
      * coordinates.
      *
@@ -141,7 +151,7 @@ public class UnitPoint extends Point2D implements Comparable<UnitPoint> {
      * @param x the X coordinate of this {@link UnitPoint}.
      */
     public final void setX(final double x) {
-        setUnitX(new Pixel(x));
+        getUnitX().setDouble(x);
     }
 
     /**
@@ -150,7 +160,7 @@ public class UnitPoint extends Point2D implements Comparable<UnitPoint> {
      * @param y the Y coordinate of this {@link UnitPoint}.
      */
     public final void setY(final double y) {
-        setUnitY(new Pixel(y));
+        getUnitY().setDouble(y);
     }
 
     /**
