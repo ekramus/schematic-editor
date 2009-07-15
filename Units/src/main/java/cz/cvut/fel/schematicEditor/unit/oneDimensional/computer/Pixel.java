@@ -38,4 +38,16 @@ public class Pixel extends Unit {
     protected UnitType getUnitType() {
         return UnitType.PIXEL;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit#duplicate()
+     */
+    @Override
+    public Unit duplicate() {
+        Unit result = new Pixel();
+
+        result.setValue(getValue());
+
+        return result;
+    }
 }

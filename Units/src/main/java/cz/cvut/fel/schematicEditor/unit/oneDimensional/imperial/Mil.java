@@ -43,4 +43,16 @@ public class Mil extends Unit {
     protected UnitType getUnitType() {
         return UnitType.MIL;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit#duplicate()
+     */
+    @Override
+    public Unit duplicate() {
+        Unit result = new Mil();
+
+        result.setValue(getValue());
+
+        return result;
+    }
 }

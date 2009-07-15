@@ -152,4 +152,11 @@ public abstract class Unit implements Comparable<Unit> {
         }
         return false;
     }
+
+    /**
+     * Duplicates current {@link Unit}.
+     *
+     * @return {@link Unit} duplicate.
+     */
+    public abstract Unit duplicate();
 }

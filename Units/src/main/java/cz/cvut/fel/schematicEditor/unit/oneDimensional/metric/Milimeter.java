@@ -38,4 +38,16 @@ public class Milimeter extends Unit {
     protected UnitType getUnitType() {
         return UnitType.MILIMETER;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit#duplicate()
+     */
+    @Override
+    public Unit duplicate() {
+        Unit result = new Milimeter();
+
+        result.setValue(getValue());
+
+        return result;
+    }
 }

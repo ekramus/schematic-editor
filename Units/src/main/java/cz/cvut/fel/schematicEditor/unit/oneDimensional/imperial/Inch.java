@@ -43,4 +43,16 @@ public class Inch extends Unit {
     protected UnitType getUnitType() {
         return UnitType.INCH;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit#duplicate()
+     */
+    @Override
+    public Unit duplicate() {
+        Unit result = new Inch();
+
+        result.setValue(getValue());
+
+        return result;
+    }
 }

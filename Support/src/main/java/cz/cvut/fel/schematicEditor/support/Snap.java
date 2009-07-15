@@ -29,16 +29,22 @@ public class Snap {
      */
     private static UnitPoint getSnap(UnitPoint coordinate) {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
-        Pixel x;
-        Pixel y;
 
+        // set unit types by duplicating grid unit
+        Unit x = configuration.getGridSize().duplicate();
+        Unit y = configuration.getGridSize().duplicate();
+
+        // coordinates will not be snapped
         if (!configuration.isSnapToGrid()) {
-            return new UnitPoint(coordinate);
+            x.setDouble(coordinate.getX());
+            y.setDouble(coordinate.getY());
+            return new UnitPoint(x, y);
         }
-        x = new Pixel(configuration.getGridSize().doubleValue() * (int) ((coordinate.getX() + configuration
-                .getGridSize().doubleValue() / 2) / (configuration.getGridSize().doubleValue())));
-        y = new Pixel(configuration.getGridSize().doubleValue() * (int) ((coordinate.getY() + configuration
-                .getGridSize().doubleValue() / 2) / configuration.getGridSize().doubleValue()));
+        // coordinates will be snapped
+        x.setDouble(configuration.getGridSize().doubleValue() * (int) ((coordinate.getX() + configuration.getGridSize()
+                .doubleValue() / 2) / (configuration.getGridSize().doubleValue())));
+        y.setDouble(configuration.getGridSize().doubleValue() * (int) ((coordinate.getY() + configuration.getGridSize()
+                .doubleValue() / 2) / configuration.getGridSize().doubleValue()));
 
         return new UnitPoint(x, y);
     }
