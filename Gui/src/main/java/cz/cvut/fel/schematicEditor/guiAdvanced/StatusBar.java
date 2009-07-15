@@ -56,7 +56,7 @@ public class StatusBar extends JPanel {
 
     private JLabel getCoordinatesLabel() {
         if (coordinatesJLabel == null) {
-            coordinatesJLabel = new JLabel("X: Y: ");
+            coordinatesJLabel = new JLabel("X: Y: []");
         }
         return coordinatesJLabel;
     }
