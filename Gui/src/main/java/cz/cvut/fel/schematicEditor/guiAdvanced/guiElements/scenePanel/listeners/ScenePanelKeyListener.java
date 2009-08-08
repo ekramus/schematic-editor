@@ -2,22 +2,26 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.manipulation.Copy;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
-import cz.cvut.fel.schematicEditor.manipulation.Delete;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Paste;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.support.Support;
 
 /**
  * This class implements {@link KeyListener} for {@link ScenePanel}.
@@ -139,13 +143,31 @@ public class ScenePanelKeyListener implements KeyListener {
                 Manipulation manipulation = Gui.getActiveScenePanel().getActiveManipulation();
                 if (manipulation.getManipulationType() == ManipulationType.SELECT) {
                     GroupNode selected = manipulation.getManipulatedGroup();
-                    if (Gui.getActiveScenePanel().getSceneGraph().getTopNode().delete(selected)) {
-                        Delete delete = (Delete) ManipulationFactory.create(ManipulationType.DELETE, Gui
-                                .getActiveScenePanel().getSceneGraph().getTopNode(), e.getSource());
-                        delete.setActive(true);
-                        Gui.getActiveScenePanel().getActiveManipulation();
-                        // ScenePanel.getInstance().processFinalManipulationStep();
-                    }
+
+                    // prepare necessary data
+                    Element el = selected.getChildrenElementList().getFirst().getElement();
+                    Rectangle2D r2d = Support.createPointerRectangle(new Point2D.Double(el.getX().firstElement()
+                            .doubleValue(), el.getY().firstElement().doubleValue()), GuiConfiguration.getInstance()
+                            .getPointerRectangle());
+
+                    // prepare manipulation
+                    Manipulation m = ManipulationFactory.create(ManipulationType.DELETE, Gui.getActiveScenePanel()
+                            .getSceneGraph().getTopNode(), e.getSource());
+                    manipulation.setActive(false);
+
+                    // execute manipulation
+                    Gui.getActiveScenePanel().setActiveManipulation(m);
+                    m.manipulationStart(null, r2d, null, Gui.getActiveScenePanel().getZoomFactor(), true);
+                    m.manipulationStop(null, r2d, null, Gui.getActiveScenePanel().getZoomFactor(), true);
+                    Gui.getActiveScenePanel().getManipulationQueue().execute(m);
+
+                    // redraw scheme and update scene graph
+                    Gui.getActiveScenePanel().sceneInvalidate(null);
+                    Gui.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
+
+                    // prepare previous manipulation
+                    manipulation.setManipulatedGroup(null);
+                    Gui.getActiveScenePanel().setActiveManipulation(ManipulationFactory.duplicate(manipulation));
                 }
             }
             // SPACE for relative coordinates start set
