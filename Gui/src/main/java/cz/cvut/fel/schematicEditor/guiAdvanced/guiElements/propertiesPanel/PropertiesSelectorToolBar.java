@@ -5,11 +5,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
+import net.miginfocom.swing.MigLayout;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.PropertiesSelectorToolBarButtonActionListener;
 
 /**
@@ -76,11 +76,12 @@ public class PropertiesSelectorToolBar extends JToolBar {
             instance = new PropertiesSelectorToolBar();
 
             // set tool bar layout
-            instance.setLayout(new BoxLayout(instance, BoxLayout.PAGE_AXIS));
+            instance.setLayout(new MigLayout());
 
             // add tool bar buttons
-            instance.add(instance.getGeneralPropertiesButton());
-            instance.add(instance.getPartPropertiesButton());
+            instance.add(PropertiesPanel.getInstance(), "span 1 3");
+            instance.add(instance.getGeneralPropertiesButton(), "wrap");
+            instance.add(instance.getPartPropertiesButton(), "wrap");
             instance.add(instance.getPartTreeButton());
         }
         return instance;

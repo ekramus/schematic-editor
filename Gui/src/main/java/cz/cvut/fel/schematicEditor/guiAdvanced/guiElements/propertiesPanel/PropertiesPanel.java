@@ -42,7 +42,6 @@ public class PropertiesPanel extends JPanel {
             // propertiesPanel.setPreferredSize(new Dimension(225, 400));
 
             // add elements by updating properties tool bar
-            propertiesPanel.add(PropertiesSelectorToolBar.getInstance(), BorderLayout.EAST);
             propertiesPanel.refresh();
         }
         return propertiesPanel;

@@ -33,7 +33,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.DrawingToolBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.listeners.SceneTabbedPaneChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesSelectorToolBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 
 /**
@@ -208,7 +208,7 @@ public class Gui extends JApplet {
         // add components
         container.add(MenuBar.getInstance(), BorderLayout.NORTH);
         container.add(DrawingToolBar.getInstance(), BorderLayout.WEST);
-        container.add(PropertiesPanel.getInstance(), BorderLayout.EAST);
+        container.add(PropertiesSelectorToolBar.getInstance(), BorderLayout.EAST);
         container.add(StatusBar.getInstance(), BorderLayout.SOUTH);
         container.add(getSchemePartTabbedPane(), BorderLayout.CENTER);
     }
