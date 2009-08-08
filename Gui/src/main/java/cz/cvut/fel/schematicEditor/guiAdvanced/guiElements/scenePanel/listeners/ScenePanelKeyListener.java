@@ -155,6 +155,8 @@ public class ScenePanelKeyListener implements KeyListener {
             }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
+        } catch (NullPointerException npe) {
+            logger.debug("Probably no manipulation");
         }
     }
 
