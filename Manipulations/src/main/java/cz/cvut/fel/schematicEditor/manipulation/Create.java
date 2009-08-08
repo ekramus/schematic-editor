@@ -167,23 +167,14 @@ public class Create extends Manipulation {
                 break;
             case Element.INFINITE_COORDINATES:
             default:
-                // add next coordinate
-                up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
-                Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
-                snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
-                addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+                if (!isFinished()) {
+                    // add next coordinate
+                    up = getScaledUnitPoint(e.getX(), e.getY(), zoomFactor);
+                    Element el = getManipulatedGroup().getChildrenElementList().getFirst().getElement();
+                    snap = Snap.getSnap(up, getSnapCoordinates(), el.getX(), el.getY());
+                    addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+                }
                 break;
-        }
-
-        // finalize, if possible
-        if (isFinished()) {
-            // GroupNode gn = getManipulatedGroup();
-            //
-            // logger.debug("processing final manipulation step");
-            //
-            // setActive(false);
-            //
-            // topNode.add(gn);
         }
 
         return isFinished() ? this : null;
