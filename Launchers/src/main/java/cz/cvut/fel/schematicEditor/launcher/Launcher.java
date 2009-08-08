@@ -37,10 +37,14 @@ public abstract class Launcher {
      * Loads Log4J properties.
      */
     static void loadLog4JProperties() {
-        URL url = Loader.getResource("log4j.xml");
-        DOMConfigurator.configure(url);
+        try {
+            URL url = Loader.getResource("META-INF/log4j.xml");
+            DOMConfigurator.configure(url);
 
-        logger = Logger.getLogger(Launcher.class.getName());
-        logger.info("Log4J alive.");
+            logger = Logger.getLogger(Launcher.class.getName());
+            logger.info("Log4J alive.");
+        } catch (NullPointerException e) {
+            System.err.println("Logger not initialized");
+        }
     }
 }
