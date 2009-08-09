@@ -165,9 +165,7 @@ public class PartPropertiesPanel extends JPanel {
                 getPartNetlistTextArea().setText(part.getPartProperties().getNetlist());
 
                 PartProperties pp = part.getPartProperties();
-                ((PartPropertiesTableModel) getPartPropertiesTable().getModel()).setPartProperties(pp
-                        .getPartProperties());
-                pp.setProperty("netlist", pp.getNetlist());
+                ((PartPropertiesTableModel) getPartPropertiesTable().getModel()).setPartProperties(pp);
             }
         } catch (NullPointerException npe) {
             logger.error("Probably no manipulation.");

@@ -61,7 +61,7 @@ public abstract class LightweightPartProperties implements PartProperties {
     /**
      * @return the partProperties
      */
-    public PropertiesArray getPartProperties() {
+    public PropertiesArray getPartPropertiesArray() {
         return this.partProperties;
     }
 
@@ -86,7 +86,7 @@ public abstract class LightweightPartProperties implements PartProperties {
 
         PartProperty<String, String> ppNew = new PartProperty<String, String>(key, (String) value);
 
-        for (PropertiesCategory propertiesCategory : getPartProperties().getCategoriesForPropertiesArray()) {
+        for (PropertiesCategory propertiesCategory : getPartPropertiesArray().getCategoriesForPropertiesArray()) {
             if (propertiesCategory.getKey().equalsIgnoreCase(category)) {
                 for (int i = 0; i < propertiesCategory.getPropertiesForCategory().size(); i++) {
                     PartProperty<String, String> pp = propertiesCategory.getPropertiesForCategory().get(i);
@@ -104,7 +104,7 @@ public abstract class LightweightPartProperties implements PartProperties {
         // category was not found
         PropertiesCategory propertiesCategory = new PropertiesCategory(category);
         propertiesCategory.getPropertiesForCategory().add(ppNew);
-        getPartProperties().getCategoriesForPropertiesArray().add(propertiesCategory);
+        getPartPropertiesArray().getCategoriesForPropertiesArray().add(propertiesCategory);
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class LightweightPartProperties implements PartProperties {
             key = propertyName;
         }
 
-        for (PropertiesCategory propertiesCategory : getPartProperties().getCategoriesForPropertiesArray()) {
+        for (PropertiesCategory propertiesCategory : getPartPropertiesArray().getCategoriesForPropertiesArray()) {
             if (propertiesCategory.getKey().equalsIgnoreCase(category)) {
                 for (PartProperty<String, String> partProperty : propertiesCategory.getPropertiesForCategory()) {
                     if (partProperty.getKey().equalsIgnoreCase(key)) {
@@ -142,7 +142,7 @@ public abstract class LightweightPartProperties implements PartProperties {
      * @see java.lang.Iterable#iterator()
      */
     public Iterator<PropertiesCategory> iterator() {
-        return getPartProperties().getCategoriesForPropertiesArray().iterator();
+        return getPartPropertiesArray().getCategoriesForPropertiesArray().iterator();
     }
 
     /**

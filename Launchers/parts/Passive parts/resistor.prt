@@ -34,11 +34,6 @@
                 <value class="string">B</value>
                 <description></description>
               </cz.cvut.fel.schematicEditor.parts.PartProperty>
-              <cz.cvut.fel.schematicEditor.parts.PartProperty>
-                <key class="string">netlist</key>
-                <value class="string">rresistor A B 10k</value>
-                <description></description>
-              </cz.cvut.fel.schematicEditor.parts.PartProperty>
             </propertiesForCategory>
           </cz.cvut.fel.schematicEditor.parts.PropertiesCategory>
         </categoriesForPropertiesArray>
