@@ -12,12 +12,15 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.parts.PartType;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
 /**
+
  * @author Urban Kravjansky
  *
  *
  */
+@Deprecated
 public abstract class SynchronizedPartProperties {
     /**
      * {@link Logger} instance for logging purposes.

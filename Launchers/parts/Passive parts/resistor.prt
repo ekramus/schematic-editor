@@ -1,5 +1,5 @@
 <PartNode>
-  <id>1246139523406</id>
+  <id>1249813504125</id>
   <disabled>false</disabled>
   <element class="cz.cvut.fel.schematicEditor.element.element.part.Part">
     <editedCoordinateIndex>0</editedCoordinateIndex>
@@ -48,36 +48,36 @@
   <elementType>T_PART</elementType>
   <edited>false</edited>
   <partGroupNode>
-    <id>1246139523406</id>
+    <id>1249813504125</id>
     <disabled>false</disabled>
     <childrenGroupList>
       <GroupNode>
-        <id>1246139523406</id>
+        <id>1249813504125</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
           <ShapeNode>
-            <id>1246139523406</id>
+            <id>1249813504125</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.Line">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
                 <Pixel>
-                  <value>192.0</value>
+                  <value>174.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
                 <Pixel>
-                  <value>373.0</value>
+                  <value>424.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
               </x>
               <y>
                 <Pixel>
-                  <value>286.0</value>
+                  <value>140.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
                 <Pixel>
-                  <value>287.0</value>
+                  <value>195.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
               </y>
@@ -89,7 +89,7 @@
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1246139523406</id>
+          <id>1249813504125</id>
           <disabled>false</disabled>
           <color>
             <red>0</red>
@@ -113,7 +113,7 @@
     <childrenElementList/>
     <childrenTransformationList/>
     <chidrenParameterNode>
-      <id>1246139523406</id>
+      <id>1249813504125</id>
       <disabled>false</disabled>
       <color>
         <red>0</red>
@@ -135,27 +135,27 @@
   </partGroupNode>
   <partConnectors>
     <PinNode>
-      <id>1246139523406</id>
+      <id>1249813504125</id>
       <disabled>false</disabled>
       <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
         <editedCoordinateIndex>0</editedCoordinateIndex>
         <x>
           <Pixel>
-            <value>188.0</value>
+            <value>175.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
           <Pixel>
-            <value>188.0</value>
+            <value>175.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
         </x>
         <y>
           <Pixel>
-            <value>287.0</value>
+            <value>139.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
           <Pixel>
-            <value>287.0</value>
+            <value>139.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
         </y>
@@ -164,27 +164,27 @@
       <edited>false</edited>
     </PinNode>
     <PinNode>
-      <id>1246139523406</id>
+      <id>1249813504125</id>
       <disabled>false</disabled>
       <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
         <editedCoordinateIndex>0</editedCoordinateIndex>
         <x>
           <Pixel>
-            <value>376.0</value>
+            <value>424.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
           <Pixel>
-            <value>376.0</value>
+            <value>424.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
         </x>
         <y>
           <Pixel>
-            <value>287.0</value>
+            <value>194.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
           <Pixel>
-            <value>287.0</value>
+            <value>194.0</value>
             <doubleFactor>1.0</doubleFactor>
           </Pixel>
         </y>

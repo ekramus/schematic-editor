@@ -79,6 +79,10 @@ public class PartPropertiesTableModel extends AbstractTableModel {
         return this.partProperties;
     }
 
+    /**
+     * @param index
+     * @return
+     */
     private PartProperty<String, String> getPartProperty(int index) {
         int i = 0;
 
@@ -97,6 +101,10 @@ public class PartPropertiesTableModel extends AbstractTableModel {
         return pc.getPropertiesForCategory().get(index - i);
     }
 
+    /**
+     * @param value
+     * @param index
+     */
     private void setPartProperty(String value, int index) {
         int i = 0;
 

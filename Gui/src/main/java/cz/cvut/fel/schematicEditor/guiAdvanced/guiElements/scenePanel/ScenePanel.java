@@ -22,7 +22,7 @@ import cz.cvut.fel.schematicEditor.export.DisplayExport;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.GeneralPropertiesPanel;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners.ScenePanelKeyListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners.ScenePanelMouseListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners.ScenePanelMouseMotionListener;
@@ -283,8 +283,8 @@ public class ScenePanel extends JPanel {
                         GroupNode gn = select.getManipulatedGroup();
                         getSceneProperties()
                                 .setSelectedElementProperties(gn.getChildrenParameterNode().getProperties());
-                        // refresh general properties panel
-                        GeneralPropertiesPanel.getInstance().refresh();
+                        // refresh properties panel
+                        PropertiesPanel.getInstance().refresh();
 
                         // partPropertiesPanel
                         Part part = (Part) select.getManipulatedGroup().getChildrenElementList().getFirst()
