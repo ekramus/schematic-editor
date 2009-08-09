@@ -18,8 +18,17 @@ import cz.cvut.fel.schematicEditor.parts.PropertiesCategory;
  *
  */
 public abstract class LightweightPartProperties implements PartProperties {
+    /**
+     * Netlist prototype {@link String} for this part.
+     */
     private String          netlistPrototype;
+    /**
+     * Array of part properties.
+     */
     private PropertiesArray partProperties;
+    /**
+     * {@link Logger} for logging purposes.
+     */
     private static Logger   logger;
 
     static {

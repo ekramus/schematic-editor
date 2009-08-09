@@ -81,5 +81,15 @@ public class PropertiesPanel extends JPanel {
 
         // update properties selector tool bar
         PropertiesSelectorToolBar.getInstance().refresh();
+        // update visible panels
+        if (GeneralPropertiesPanel.getInstance().isVisible()) {
+            GeneralPropertiesPanel.getInstance().refresh();
+        }
+        if (PartPropertiesPanel.getInstance().isVisible()) {
+            PartPropertiesPanel.getInstance().refresh();
+        }
+        if (PartTreePanel.getInstance().isVisible()) {
+            PartTreePanel.getInstance().refresh();
+        }
     }
 }
