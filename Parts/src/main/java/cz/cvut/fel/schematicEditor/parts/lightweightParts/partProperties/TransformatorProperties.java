@@ -6,26 +6,32 @@ import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
 /**
- * This class implements properties with are unique for current source part.
+ * This class implements properties with are unique for inductor part.
  *
  * @author Urban Kravjansky
  */
-public class CurrentSourceProperties extends LightweightPartProperties {
+public class TransformatorProperties extends LightweightPartProperties {
 
     /**
      * This method instantiates new instance.
      */
-    public CurrentSourceProperties() {
+    public TransformatorProperties() {
         super();
 
-        setNetlistPrototype("i<name> <n1> <n2> [dc <dc_value>] [ac <ac_value>] <tran_value>");
+        setNetlistPrototype("l<name_Lx1> <n1> <n2> <value_Lx1>\nl<name_Lx2> n3 n4 <value_Lx2>\nk<name_Kx> <Lx1> <Lx2> <value_Kx>");
 
-        setProperty("tran_value", "");
-        setProperty("ac_value", "");
-        setProperty("dc_value", "");
-        setProperty("name", "");
+        setProperty("name_Lx1", "");
+        setProperty("name_Lx2", "");
+        setProperty("name_Kx", "");
+        setProperty("value_Lx1", "");
+        setProperty("value_Lx2", "");
+        setProperty("value_Kx", "");
         setProperty("n1", "");
         setProperty("n2", "");
+        setProperty("n3", "");
+        setProperty("n4", "");
+        setProperty("Lx1", "");
+        setProperty("Lx2", "");
     }
 
     /**
@@ -45,6 +51,6 @@ public class CurrentSourceProperties extends LightweightPartProperties {
      * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartType()
      */
     public PartType getPartType() {
-        return PartType.CURRENT_SOURCE;
+        return PartType.TRANSFORMATOR;
     }
 }

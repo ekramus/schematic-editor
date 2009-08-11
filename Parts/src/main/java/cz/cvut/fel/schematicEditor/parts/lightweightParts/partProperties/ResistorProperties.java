@@ -18,14 +18,12 @@ public class ResistorProperties extends LightweightPartProperties {
     public ResistorProperties() {
         super();
 
-        setNetlistPrototype("r<name> <connectorP> <connectorM> [<value>] [<model>] [l=<length>] [w=<width>] [temp=<temperature>]");
+        setNetlistPrototype("r<name> <n1> <n2> <value>");
 
-        // setProperty("abraka.dabra", "bububu");
-        setProperty("value", "10k");
-        setProperty("name", "resistor");
-        setProperty("connectorP", "A");
-        setProperty("connectorM", "B");
-        setProperty("netlist", getNetlist());
+        setProperty("value", "");
+        setProperty("name", "");
+        setProperty("n1", "");
+        setProperty("n2", "");
     }
 
     /**

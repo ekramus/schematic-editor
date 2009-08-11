@@ -56,4 +56,8 @@ public interface PartProperties extends Iterable<PropertiesCategory> {
     public void setProperty(String propertyName, Object value);
 
     public PropertiesArray getPartPropertiesArray();
+
+    public String getPartVariant();
+
+    public String getPartDescription();
 }

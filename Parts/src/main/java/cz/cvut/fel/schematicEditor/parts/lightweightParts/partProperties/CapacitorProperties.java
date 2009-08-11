@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
 import java.util.Vector;
 
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
@@ -11,27 +12,19 @@ import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartPropert
  * @author Urban Kravjansky
  */
 public class CapacitorProperties extends LightweightPartProperties {
-    /**
-     * Prototype of netlist string, where codes will be replaced with values.
-     */
-    private final String netlistPrototype = "c<name> <connectorP> <connectorM> [<value>] [<model>] [l=<length>] [w=<width>] [ic=<initial_voltage>]";
 
     /**
      * This method instantiates new instance.
-     *
-     * @param variant part variant.
-     * @param description part description.
      */
     public CapacitorProperties() {
         super();
-    }
 
-    /**
-     * @see cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties#getNetlist()
-     */
-    @Override
-    public String getNetlist() {
-        return "";
+        setNetlistPrototype("c<name> <n1> <n2> <value>");
+
+        setProperty("value", "");
+        setProperty("name", "");
+        setProperty("n1", "");
+        setProperty("n2", "");
     }
 
     /**
@@ -42,7 +35,7 @@ public class CapacitorProperties extends LightweightPartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinNames(java.util.Vector)
+     * @see PartProperties#setPartPinNames(java.util.Vector)
      */
     public void setPartPinNames(Vector<String> partPinNames) {
     }
@@ -52,31 +45,5 @@ public class CapacitorProperties extends LightweightPartProperties {
      */
     public PartType getPartType() {
         return PartType.CAPACITOR;
-    }
-
-    public void setNetlist(String netlist) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getProperty(java.lang.String)
-     */
-    @Override
-    public String getProperty(String propertyName) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setProperty(java.lang.String, java.lang.String)
-     */
-    public void setProperty(String propertyName, String value) {
-        // TODO Auto-generated method stub
-
     }
 }

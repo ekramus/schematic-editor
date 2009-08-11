@@ -215,4 +215,18 @@ public abstract class LightweightPartProperties implements PartProperties {
     public String getNetlist() {
         return expandPrototype();
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartVariant()
+     */
+    public String getPartVariant() {
+        return getPartType().getVariant();
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartDescription()
+     */
+    public String getPartDescription() {
+        return getPartType().getDescription();
+    }
 }

@@ -2,7 +2,6 @@ package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
@@ -12,66 +11,40 @@ import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartPropert
  * @author Urban Kravjansky
  */
 public class VoltageSourceProperties extends LightweightPartProperties {
-    /**
-     * Prototype of netlist string, where codes will be replaced with values.
-     */
-    private final String netlistPrototype = "v<name> <connectorP> <connectorM> [dc <dc_analysis>]";
 
     /**
      * This method instantiates new instance.
      */
     public VoltageSourceProperties() {
         super();
+
+        setNetlistPrototype("v<name> <n1> <n2> [dc <dc_value>] [ac <ac_value>] <tran_value>");
+
+        setProperty("tran_value", "");
+        setProperty("ac_value", "");
+        setProperty("dc_value", "");
+        setProperty("name", "");
+        setProperty("n1", "");
+        setProperty("n2", "");
     }
 
     /**
-     * @see PartProperties#getNetlist()
-     */
-    public String getNetlist() {
-        return "";
-    }
-
-    /**
-     * @see PartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartPinNames()
      */
     public Vector<String> getPartPinNames() {
         return null;
     }
 
     /**
-     * @see PartProperties#setPartPinNames(java.util.Vector)
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinNames(java.util.Vector)
      */
     public void setPartPinNames(Vector<String> partPinNames) {
     }
 
     /**
-     * @see PartProperties#getPartType()
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartType()
      */
     public PartType getPartType() {
         return PartType.VOLTAGE_SOURCE;
-    }
-
-    /**
-     * @see PartProperties#setNetlist(java.lang.String)
-     */
-    public void setNetlist(String netlist) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * @see PartProperties#getProperty(java.lang.String)
-     */
-    public String getProperty(String propertyName) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * @see PartProperties#setProperty(java.lang.String, java.lang.String)
-     */
-    public void setProperty(String propertyName, String value) {
-        // TODO Auto-generated method stub
-
     }
 }
