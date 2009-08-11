@@ -27,6 +27,10 @@ public enum PartType {
      */
     CURRENT_SOURCE("I", "current source"),
     /**
+     * Identifier for nonlinear source part.
+     */
+    NONLINEAR_SOURCE("B", "nonlinear source"),
+    /**
      * Identifier for transformator part.
      */
     TRANSFORMATOR("T", "transformator");
