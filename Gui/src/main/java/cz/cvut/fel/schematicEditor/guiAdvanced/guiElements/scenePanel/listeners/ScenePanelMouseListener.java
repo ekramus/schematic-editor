@@ -125,11 +125,12 @@ public class ScenePanelMouseListener implements MouseListener {
             try {
                 if (!m.isActive() || (m.getManipulationType() == ManipulationType.SELECT)) {
                     // start manipulation and set result as active manipulation
-                    Gui.getActiveScenePanel()
-                            .setActiveManipulation(
-                                                   m.manipulationStart(e, r2d, Gui.getActiveScenePanel()
-                                                           .getManipulationQueue(), Gui.getActiveScenePanel()
-                                                           .getZoomFactor(), isMouseClicked()));
+                    Gui.getActiveScenePanel().setActiveManipulation(
+                                                                    m.manipulationStart(e, r2d, Gui
+                                                                            .getActiveScenePanel()
+                                                                            .getManipulationQueue(), Gui
+                                                                            .getActiveScenePanel().getZoomFactor(),
+                                                                                        isMouseClicked()));
                 }
             } catch (NullPointerException npe) {
                 logger.warn("No manipulation");
