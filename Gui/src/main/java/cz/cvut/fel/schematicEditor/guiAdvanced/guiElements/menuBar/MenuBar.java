@@ -27,7 +27,8 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.Imp
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.MirrorElementMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.NewPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.NewSchemeMenuItemListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.OpenMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.OpenPartMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.OpenSchemeMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.RotateElementMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveAsMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveAsPartMenuItemListener;
@@ -128,9 +129,17 @@ public final class MenuBar extends JMenuBar {
      */
     private JMenuItem         importMenuItem              = null;
     /**
-     * Open menu item instance.
+     * Open menu instance.
      */
-    private JMenuItem         openMenuItem                = null;
+    private JMenu             openMenu                    = null;
+    /**
+     * Open scheme menu item instance.
+     */
+    private JMenuItem         openSchemeMenuItem          = null;
+    /**
+     * Open part menu item instance.
+     */
+    private JMenuItem         openPartMenuItem            = null;
     /**
      * Paste menu item instance.
      */
@@ -623,7 +632,7 @@ public final class MenuBar extends JMenuBar {
 
             this.fileMenu.add(getNewMenu());
             this.fileMenu.add(getAddMenu());
-            this.fileMenu.add(getOpenMenuItem());
+            this.fileMenu.add(getOpenMenu());
             this.fileMenu.add(getSaveMenu());
             this.fileMenu.addSeparator();
             this.fileMenu.add(getSavePreferencesMenuItem());
@@ -705,18 +714,47 @@ public final class MenuBar extends JMenuBar {
     }
 
     /**
-     * Getter for <code>openMenuItem</code>.
+     * Getter for <code>openMenu</code>.
      *
-     * @return <code>openMenuItem</code> instance.
+     * @return <code>openMenu</code> instance.
      */
-    private JMenuItem getOpenMenuItem() {
-        if (this.openMenuItem == null) {
-            this.openMenuItem = new JMenuItem();
-            this.openMenuItem.setText(MenuBarResources.OPEN_MENU_ITEM.getText());
-            this.openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK, true));
-            this.openMenuItem.addActionListener(new OpenMenuItemListener());
+    private JMenuItem getOpenMenu() {
+        if (this.openMenu == null) {
+            this.openMenu = new JMenu();
+            this.openMenu.setText(MenuBarResources.OPEN_MENU.getText());
+            this.openMenu.add(getOpenSchemeMenuItem());
+            this.openMenu.add(getOpenPartMenuItem());
         }
-        return this.openMenuItem;
+        return this.openMenu;
+    }
+
+    /**
+     * Getter for <code>openPartMenuItem</code>.
+     *
+     * @return <code>openPartMenuItem</code> instance.
+     */
+    private JMenuItem getOpenPartMenuItem() {
+        if (this.openPartMenuItem == null) {
+            this.openPartMenuItem = new JMenuItem();
+            this.openPartMenuItem.setText(MenuBarResources.OPEN_PART_MENU_ITEM.getText());
+            this.openPartMenuItem.addActionListener(new OpenPartMenuItemListener());
+        }
+        return this.openPartMenuItem;
+    }
+
+    /**
+     * Getter for <code>openSchemeMenuItem</code>.
+     *
+     * @return <code>openSchemeMenuItem</code> instance.
+     */
+    private JMenuItem getOpenSchemeMenuItem() {
+        if (this.openSchemeMenuItem == null) {
+            this.openSchemeMenuItem = new JMenuItem();
+            this.openSchemeMenuItem.setText(MenuBarResources.OPEN_SCHEME_MENU_ITEM.getText());
+            this.openSchemeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK, true));
+            this.openSchemeMenuItem.addActionListener(new OpenSchemeMenuItemListener());
+        }
+        return this.openSchemeMenuItem;
     }
 
     /**

@@ -12,6 +12,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -80,44 +81,19 @@ public class Serialization {
     }
 
     /**
-     * Deserializes {@link GroupNode} from given file.
+     * Deserializes {@link Node} from given file.
      *
-     * @param clazz Class of deserialized {@link GroupNode}.
-     * @param file Path to file, where is serialized {@link GroupNode}.
-     * @return Deserialized {@link GroupNode} class.
+     * @param clazz Class of deserialized {@link Node}.
+     * @param file Path to file, where is serialized {@link Node}.
+     * @return Deserialized {@link Node} class.
      */
-    public static GroupNode deserialize(Class<? extends GroupNode> clazz, File file) {
+    public static Node deserialize(Class<?> clazz, File file) {
         XStream xstream = new XStream(new DomDriver());
 
         try {
-            // ZipInputStream zis = new ZipInputStream(new FileInputStream(file));
-            // processAnnotations(xstream);
-            // return (GroupNode) xstream.fromXML(zis);
             BufferedReader br = new BufferedReader(new FileReader(file));
             processAnnotations(xstream);
-            return (GroupNode) xstream.fromXML(br);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Deserializes {@link PartNode} from given file.
-     *
-     * @param clazz Class of deserialized {@link PartNode}.
-     * @param file Path to file, where is serialized {@link PartNode}.
-     * @return Deserialized {@link PartNode} class.
-     */
-    public static PartNode deserialize(Class<? extends PartNode> clazz, File file) {
-        XStream xstream = new XStream(new DomDriver());
-
-        try {
-            // ZipInputStream zis = new ZipInputStream(new FileInputStream(file));
-            // processAnnotations(xstream);
-            // return (PartNode) xstream.fromXML(zis);
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            processAnnotations(xstream);
-            return (PartNode) xstream.fromXML(br);
+            return (Node) xstream.fromXML(br);
         } catch (IOException e) {
             return null;
         }
