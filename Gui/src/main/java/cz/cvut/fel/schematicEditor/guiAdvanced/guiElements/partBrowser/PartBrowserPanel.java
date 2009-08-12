@@ -106,7 +106,7 @@ public class PartBrowserPanel extends JPanel {
                     result.add(generatePartTree(file.getPath()));
                 } else if (file.getName().indexOf("prt") > -1) {
                     // deserialize
-                    PartNode pn = Serialization.deserialize(PartNode.class, file);
+                    PartNode pn = (PartNode) Serialization.deserialize(PartNode.class, file);
                     // update part properties
                     boolean updateStatus = ((Part) pn.getElement()).getPartProperties().update();
                     logger.trace("Status of part updating process (true=updated/false=not updates): " + updateStatus);

@@ -8,21 +8,22 @@ import javax.swing.JFileChooser;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.Serialization;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
- * This class implements {@link ActionListener} for <code>openMenuItem</code> in {@link MenuBar}.
+ * This class implements {@link ActionListener} for <code>openSchemeMenuItem</code> in {@link MenuBar}.
  *
  * @author Urban Kravjansky
  */
-public final class OpenMenuItemListener implements ActionListener {
+public final class OpenSchemeMenuItemListener implements ActionListener {
 
     /**
      * Default constructor. It only calls constructor of super class.
      */
-    public OpenMenuItemListener() {
+    public OpenSchemeMenuItemListener() {
         super();
     }
 
@@ -48,12 +49,10 @@ public final class OpenMenuItemListener implements ActionListener {
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             env.setLastOpenFolder(file.getParent());
-            Gui.getInstance().getSchemeScenePanel().getSceneGraph().initSceneGraph(
-                                                                                   Serialization.deserialize(Gui
-                                                                                           .getActiveScenePanel()
-                                                                                           .getSceneGraph()
-                                                                                           .getTopNode().getClass(),
-                                                                                                          file));
+            Gui.getInstance().getSchemeScenePanel().getSceneGraph()
+                    .initSceneGraph(
+                                    (GroupNode) Serialization.deserialize(Gui.getActiveScenePanel().getSceneGraph()
+                                            .getTopNode().getClass(), file));
 
             Gui.getActiveScenePanel().sceneInvalidate(null);
         }

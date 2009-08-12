@@ -6,33 +6,26 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
-import org.apache.log4j.Logger;
-
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 
 /**
- * This class implements {@link ActionListener} for <code>importMenuItem</code> in {@link MenuBar}.
+ * This class implements {@link ActionListener} for <code>openSchemeMenuItem</code> in {@link MenuBar}.
  *
  * @author Urban Kravjansky
  */
-public final class AddPartMenuItemListener implements ActionListener {
-    private static Logger logger;
+public final class OpenPartMenuItemListener implements ActionListener {
 
     /**
      * Default constructor. It only calls constructor of super class.
      */
-    public AddPartMenuItemListener() {
+    public OpenPartMenuItemListener() {
         super();
-
-        logger = Logger.getLogger(this.getClass());
     }
 
     // FIXME add externalized strings
@@ -48,28 +41,22 @@ public final class AddPartMenuItemListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         EnvironmentConfiguration env = EnvironmentConfiguration.getInstance();
 
-        JFileChooser fileChooser = new JFileChooser(env.getLastImportFolder());
-        fileChooser.setDialogTitle("Choose part to add");
+        JFileChooser fileChooser = new JFileChooser(env.getLastOpenFolder());
+        fileChooser.setDialogTitle("Choose file to load");
         fileChooser.setFileFilter(new ExportFileFilter(ExportFileFilter.PRT, ExportFileFilter.PRTDESC));
 
         int retValue = fileChooser.showOpenDialog(Gui.getActiveScenePanel());
 
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            env.setLastImportFolder(file.getParent());
+            env.setLastOpenFolder(file.getParent());
 
-            // prepare PartNode, GroupNode and ParameterNode
-            PartNode partNode = (PartNode) Serialization.deserialize(PartNode.class, file);
-            GroupNode groupNode = NodeFactory.createGroupNode();
-            ParameterNode parameterNode = NodeFactory.createParameterNode();
+            PartNode pn = (PartNode) (Serialization.deserialize(Gui.getActiveScenePanel().getSceneGraph().getTopNode()
+                    .getClass(), file));
+            GroupNode gn = pn.getPartGroupNode();
 
-            groupNode.add(partNode);
-            groupNode.add(parameterNode);
-
-            // finally add to SceneGraph
-            Gui.getActiveScenePanel().getSceneGraph().getTopNode().add(groupNode);
-            Gui.getActiveScenePanel().getSceneGraph().fireSceneGraphUpdateEvent();
-            Gui.getActiveScenePanel().sceneInvalidate(null);
+            Gui.getInstance().getPartScenePanel().getSceneGraph().initSceneGraph(gn);
+            Gui.getInstance().getPartScenePanel().sceneInvalidate(null);
         }
     }
 }

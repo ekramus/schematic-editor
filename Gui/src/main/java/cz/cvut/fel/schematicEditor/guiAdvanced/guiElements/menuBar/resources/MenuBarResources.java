@@ -74,9 +74,17 @@ public enum MenuBarResources {
      */
     IMPORT_MENU_ITEM("Import"),
     /**
-     * Open menu item string.
+     * Open scheme menu item string.
      */
-    OPEN_MENU_ITEM("Open"),
+    OPEN_SCHEME_MENU_ITEM("Open scheme"),
+    /**
+     * Open part menu item string.
+     */
+    OPEN_PART_MENU_ITEM("Open part"),
+    /**
+     * Open menu string.
+     */
+    OPEN_MENU("Open"),
     /**
      * Paste menu item string.
      */
