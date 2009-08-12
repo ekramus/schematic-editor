@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup;
 
@@ -30,8 +30,8 @@ public class ScenePanelDrawingPopup extends JPopupMenu {
     public static final JPopupMenu getScenePanelDrawingPopup(MouseEvent e, Rectangle2D.Double r2d) {
         if (scenePanelDrawingPopup == null) {
             scenePanelDrawingPopup = new ScenePanelDrawingPopup();
+            scenePanelDrawingPopup.add(scenePanelDrawingPopup.getEndElementMenuItem(e, r2d));
         }
-        scenePanelDrawingPopup.add(scenePanelDrawingPopup.getEndElementMenuItem(e, r2d));
         return scenePanelDrawingPopup;
     }
 
@@ -42,8 +42,8 @@ public class ScenePanelDrawingPopup extends JPopupMenu {
         if (this.endElementMenuItem == null) {
             this.endElementMenuItem = new JMenuItem();
             this.endElementMenuItem.setText(END_ELEMENT_TEXT);
+            this.endElementMenuItem.addActionListener(new EndElementMenuItemListener(e, r2d));
         }
-        this.endElementMenuItem.addActionListener(new EndElementMenuItemListener(e, r2d));
         return this.endElementMenuItem;
     }
 
@@ -51,10 +51,10 @@ public class ScenePanelDrawingPopup extends JPopupMenu {
      * @return
      */
     private JMenuItem getAddPointMenuItem() {
-        if (addPointMenuItem == null) {
-            addPointMenuItem = new JMenuItem();
-            addPointMenuItem.setText(ADD_POINT_TEXT);
+        if (this.addPointMenuItem == null) {
+            this.addPointMenuItem = new JMenuItem();
+            this.addPointMenuItem.setText(ADD_POINT_TEXT);
         }
-        return addPointMenuItem;
+        return this.addPointMenuItem;
     }
 }
