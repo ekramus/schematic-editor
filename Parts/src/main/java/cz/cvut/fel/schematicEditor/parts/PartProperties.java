@@ -1,6 +1,6 @@
 package cz.cvut.fel.schematicEditor.parts;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * This interface defines LightweightPartProperties in general.
@@ -21,14 +21,14 @@ public interface PartProperties extends Iterable<PropertiesCategory> {
      *
      * @return the partPinNames
      */
-    public Vector<String> getPartPinNames();
+    public ArrayList<String> getPartPinNames();
 
     /**
      * Sets part pin names.
      *
-     * @param partPinNames {@link Vector} of part pin names.
+     * @param partPinNames {@link ArrayList} of part pin names.
      */
-    public void setPartPinNames(Vector<String> partPinNames);
+    public void setPartPinNames(ArrayList<String> partPinNames);
 
     /**
      * @return the partType

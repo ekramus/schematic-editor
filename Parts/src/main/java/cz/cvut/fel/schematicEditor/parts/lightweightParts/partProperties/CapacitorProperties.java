@@ -1,8 +1,7 @@
 package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
-import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
@@ -28,16 +27,11 @@ public class CapacitorProperties extends LightweightPartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinNames(java.util.ArrayList)
      */
-    public Vector<String> getPartPinNames() {
-        return null;
-    }
-
-    /**
-     * @see PartProperties#setPartPinNames(java.util.Vector)
-     */
-    public void setPartPinNames(Vector<String> partPinNames) {
+    public void setPartPinNames(ArrayList<String> partPinNames) {
+        getPartPinNames().add("n1");
+        getPartPinNames().add("n2");
     }
 
     /**

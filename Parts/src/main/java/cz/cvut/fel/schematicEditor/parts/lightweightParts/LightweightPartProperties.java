@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.parts.lightweightParts;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,17 +22,22 @@ public abstract class LightweightPartProperties implements PartProperties {
     /**
      * Netlist prototype {@link String} for this part.
      */
-    private String          netlistPrototype;
+    private String            netlistPrototype;
     /**
      * Array of part properties.
      */
-    private PropertiesArray partProperties;
+    private PropertiesArray   partProperties;
     /**
      * {@link Logger} for logging purposes.
      */
-    private static Logger   logger;
+    private static Logger     logger;
+    /**
+     * {@link ArrayList} of part pin names.
+     */
+    private ArrayList<String> partPinNames;
 
     static {
+
         System.err.println("Hello world");
         logger = Logger.getLogger(LightweightPartProperties.class);
     }
@@ -228,5 +234,12 @@ public abstract class LightweightPartProperties implements PartProperties {
      */
     public String getPartDescription() {
         return getPartType().getDescription();
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartPinNames()
+     */
+    public ArrayList<String> getPartPinNames() {
+        return this.partPinNames;
     }
 }

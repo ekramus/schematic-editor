@@ -1,6 +1,6 @@
 package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
@@ -35,16 +35,15 @@ public class TransformatorProperties extends LightweightPartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinNames(java.util.ArrayList)
      */
-    public Vector<String> getPartPinNames() {
-        return null;
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinNames(java.util.Vector)
-     */
-    public void setPartPinNames(Vector<String> partPinNames) {
+    public void setPartPinNames(ArrayList<String> partPinNames) {
+        getPartPinNames().add("n1");
+        getPartPinNames().add("n2");
+        getPartPinNames().add("n3");
+        getPartPinNames().add("n4");
+        getPartPinNames().add("Lx1");
+        getPartPinNames().add("Lx2");
     }
 
     /**
