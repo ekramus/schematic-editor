@@ -1,6 +1,6 @@
 package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
@@ -27,16 +27,11 @@ public class ResistorProperties extends LightweightPartProperties {
     }
 
     /**
-     * @see PartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinNames(java.util.ArrayList)
      */
-    public Vector<String> getPartPinNames() {
-        return null;
-    }
-
-    /**
-     * @see PartProperties#setPartPinNames(java.util.Vector)
-     */
-    public void setPartPinNames(Vector<String> partPinNames) {
+    public void setPartPinNames(ArrayList<String> partPinNames) {
+        getPartPinNames().add("n1");
+        getPartPinNames().add("n2");
     }
 
     /**
@@ -44,5 +39,14 @@ public class ResistorProperties extends LightweightPartProperties {
      */
     public PartType getPartType() {
         return PartType.RESISTOR;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties#getPartPinNames()
+     */
+    @Override
+    public ArrayList<String> getPartPinNames() {
+        // TODO Auto-generated method stub
+        return super.getPartPinNames();
     }
 }
