@@ -35,15 +35,21 @@ public class TransformatorProperties extends LightweightPartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinNames(java.util.ArrayList)
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartPinValues()
      */
-    public void setPartPinNames(ArrayList<String> partPinNames) {
-        getPartPinNames().add("n1");
-        getPartPinNames().add("n2");
-        getPartPinNames().add("n3");
-        getPartPinNames().add("n4");
-        getPartPinNames().add("Lx1");
-        getPartPinNames().add("Lx2");
+    @Override
+    public ArrayList<String> getPartPinValues() {
+        ArrayList<String> result = new ArrayList<String>();
+
+        result.add("n1");
+        result.add("n2");
+        result.add("n3");
+        result.add("n4");
+        result.add("Lx1");
+        result.add("Lx2");
+
+
+        return result;
     }
 
     /**

@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.core.plugins.checkNetlist.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -78,7 +79,7 @@ public class CheckNetlistActionListener implements ActionListener {
         // go through part vector and check one part after another
         for (PartNode partNode : partNodeVector) {
             Part part = (Part) partNode.getElement();
-            Vector<String> partPins = part.getPartProperties().getPartPinNames();
+            ArrayList<String> partPins = part.getPartProperties().getPartPinValues();
 
             result.append(" -part: " + part.getPartProperties().getProperty("name") + "\n");
             result.append("  -connectors: " + partPins + "\n");
@@ -111,7 +112,7 @@ public class CheckNetlistActionListener implements ActionListener {
     private final int checkPart(final PartNode partNode, final Vector<PartNode> partNodes,
             final Vector<Wire> wireVector, final Vector<Junction> junctionVector) {
         int notConnectedConnectors = 0;
-        Vector<String> pinNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
+        ArrayList<String> pinNames = ((Part) partNode.getElement()).getPartProperties().getPartPinValues();
 
         int i = 0;
         for (PinNode pinNode : partNode.getPartPins()) {
@@ -244,7 +245,7 @@ public class CheckNetlistActionListener implements ActionListener {
     private String getPinNameForUnitPoint(UnitPoint wup, Vector<PartNode> partNodes) {
         for (PartNode partNode : partNodes) {
             Vector<PinNode> cnv = partNode.getPartPins();
-            Vector<String> pinNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
+            ArrayList<String> pinNames = ((Part) partNode.getElement()).getPartProperties().getPartPinValues();
             int i = 0;
             // search for connector name
             for (PinNode cn : cnv) {

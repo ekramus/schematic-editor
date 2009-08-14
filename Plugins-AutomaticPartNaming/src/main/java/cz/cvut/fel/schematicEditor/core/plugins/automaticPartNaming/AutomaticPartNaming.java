@@ -1,7 +1,6 @@
 package cz.cvut.fel.schematicEditor.core.plugins.automaticPartNaming;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
@@ -83,14 +82,14 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
                 }
 
                 // do automatic part connector naming
-                Vector<String> pinNames = pp.getPartPinNames();
-                for (int j = 0; j < pinNames.size(); j++) {
-                    String pinName = pinNames.get(j);
-                    if (pinName.equals("")) {
-                        pinNames.set(j, "part_" + i + "_" + j);
+                ArrayList<String> pinValues = pp.getPartPinValues();
+                for (int j = 0; j < pinValues.size(); j++) {
+                    String pinValue = pinValues.get(j);
+                    if (pinValue.equals("")) {
+                        pinValues.set(j, "part_" + i + "_" + j);
                     }
                 }
-                pp.setPartPinNames(pinNames);
+                pp.setPartPinValues(pinValues);
             }
         }
     }

@@ -40,7 +40,7 @@ public class InductorProperties extends OriginalPartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties.properties.SynchronizedPartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties.properties.SynchronizedPartProperties#getPartPinValues()
      */
     @Override
     @Deprecated
