@@ -24,11 +24,18 @@ public interface PartProperties extends Iterable<PropertiesCategory> {
     public ArrayList<String> getPartPinNames();
 
     /**
-     * Sets part pin names.
+     * Sets part pin values.
      *
-     * @param partPinNames {@link ArrayList} of part pin names.
+     * @param partPinValues {@link ArrayList} of part pin values.
      */
-    public void setPartPinNames(ArrayList<String> partPinNames);
+    public void setPartPinValues(ArrayList<String> partPinValues);
+
+    /**
+     * Gets {@link ArrayList} of part pin values.
+     *
+     * @return {@link ArrayList} of part pin values.
+     */
+    public ArrayList<String> getPartPinValues();
 
     /**
      * @return the partType

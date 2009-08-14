@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties;
-import cz.cvut.fel.schematicEditor.parts.originalParts.partProperties.ResistorProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.ResistorProperties;
 
 /**
  * JUnit test class for {@link ResistorProperties}.
@@ -18,12 +18,12 @@ public class ResistorPropertiesTest {
      */
     @Test
     public void getNetlist() {
-        OriginalPartProperties pp = new ResistorProperties("resistor A", "This is variant A");
+        LightweightPartProperties pp = new ResistorProperties();
 
         pp.setProperty("value", "10");
         pp.setProperty("name", "R");
-        pp.setProperty("connectorP", "R+");
-        pp.setProperty("connectorM", "R-");
+        pp.setProperty("n1", "R+");
+        pp.setProperty("n2", "R-");
 
         assertEquals("rR R+ R- 10", pp.getNetlist());
     }

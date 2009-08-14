@@ -32,9 +32,10 @@ public abstract class LightweightPartProperties implements PartProperties {
      */
     private static Logger     logger;
     /**
-     * {@link ArrayList} of part pin names.
+     *
+     * {@link ArrayList} of part pin values.
      */
-    private ArrayList<String> partPinNames;
+    private ArrayList<String> partPinValues;
 
     static {
 
@@ -101,10 +102,10 @@ public abstract class LightweightPartProperties implements PartProperties {
                         propertiesCategory.getPropertiesForCategory().set(i, ppNew);
                         return;
                     }
-                    // else add at the end
-                    propertiesCategory.getPropertiesForCategory().add(ppNew);
-                    return;
                 }
+                // else add at the end
+                propertiesCategory.getPropertiesForCategory().add(ppNew);
+                return;
             }
         }
         // category was not found
@@ -237,9 +238,37 @@ public abstract class LightweightPartProperties implements PartProperties {
     }
 
     /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartPinValues()
+     */
+    public ArrayList<String> getPartPinValues() {
+        ArrayList<String> result = new ArrayList<String>();
+
+        for (String name : getPartPinNames()) {
+            result.add(getProperty(name));
+        }
+
+        return result;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#setPartPinValues(java.util.ArrayList)
+     */
+    public void setPartPinValues(ArrayList<String> partPinValues) {
+        int i = 0;
+        for (String name : getPartPinNames()) {
+            setProperty(name, partPinValues.get(i++));
+        }
+    }
+
+    /**
      * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartPinNames()
      */
     public ArrayList<String> getPartPinNames() {
-        return this.partPinNames;
+        ArrayList<String> result = new ArrayList<String>();
+
+        result.add("n1");
+        result.add("n2");
+
+        return result;
     }
 }

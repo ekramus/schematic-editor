@@ -40,7 +40,7 @@ public class VoltageSourceProperties extends OriginalPartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties.properties.SynchronizedPartProperties#getPartPinNames()
+     * @see cz.cvut.fel.schematicEditor.parts.originalParts.OriginalPartProperties.properties.SynchronizedPartProperties#getPartPinValues()
      */
     @Deprecated
     @Override
