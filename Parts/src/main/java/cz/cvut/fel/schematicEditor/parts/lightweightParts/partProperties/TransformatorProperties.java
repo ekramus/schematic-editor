@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
 import java.util.ArrayList;
 
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
@@ -48,7 +49,6 @@ public class TransformatorProperties extends LightweightPartProperties {
         result.add("Lx1");
         result.add("Lx2");
 
-
         return result;
     }
 
@@ -57,5 +57,12 @@ public class TransformatorProperties extends LightweightPartProperties {
      */
     public PartType getPartType() {
         return PartType.TRANSFORMATOR;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#duplicate()
+     */
+    public PartProperties duplicate() {
+        return new TransformatorProperties();
     }
 }

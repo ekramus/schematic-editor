@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
@@ -31,5 +32,12 @@ public class VoltageSourceProperties extends LightweightPartProperties {
      */
     public PartType getPartType() {
         return PartType.VOLTAGE_SOURCE;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#duplicate()
+     */
+    public PartProperties duplicate() {
+        return new VoltageSourceProperties();
     }
 }

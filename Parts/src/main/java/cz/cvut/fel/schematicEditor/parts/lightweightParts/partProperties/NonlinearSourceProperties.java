@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties;
 
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
@@ -29,5 +30,12 @@ public class NonlinearSourceProperties extends LightweightPartProperties {
      */
     public PartType getPartType() {
         return PartType.NONLINEAR_SOURCE;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#duplicate()
+     */
+    public PartProperties duplicate() {
+        return new NonlinearSourceProperties();
     }
 }

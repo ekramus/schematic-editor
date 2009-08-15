@@ -30,4 +30,11 @@ public class ResistorProperties extends LightweightPartProperties {
     public PartType getPartType() {
         return PartType.RESISTOR;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#duplicate()
+     */
+    public PartProperties duplicate() {
+        return new ResistorProperties();
+    }
 }
