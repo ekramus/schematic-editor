@@ -85,4 +85,12 @@ public class CheckNetlist implements Plugin {
     private void setSceneGraph(SceneGraph sceneGraph) {
         this.sceneGraph = sceneGraph;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#getIdentificator()
+     */
+    public String getIdentificator() {
+        // TODO Auto-generated method stub
+        return "CheckNetlist";
+    }
 }

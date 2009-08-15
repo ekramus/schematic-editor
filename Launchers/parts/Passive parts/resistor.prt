@@ -1,5 +1,5 @@
 <PartNode>
-  <id>1250282511593</id>
+  <id>1250353415609</id>
   <disabled>false</disabled>
   <element class="cz.cvut.fel.schematicEditor.element.element.part.Part">
     <editedCoordinateIndex>0</editedCoordinateIndex>
@@ -43,36 +43,36 @@
   <elementType>T_PART</elementType>
   <edited>false</edited>
   <partGroupNode>
-    <id>1250282511593</id>
+    <id>1250353415609</id>
     <disabled>false</disabled>
     <childrenGroupList>
       <GroupNode>
-        <id>1250282511593</id>
+        <id>1250353415625</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
           <ShapeNode>
-            <id>1250282511593</id>
+            <id>1250353415625</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.Line">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
                 <Pixel>
-                  <value>174.0</value>
+                  <value>212.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
                 <Pixel>
-                  <value>424.0</value>
+                  <value>238.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
               </x>
               <y>
                 <Pixel>
-                  <value>140.0</value>
+                  <value>259.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
                 <Pixel>
-                  <value>195.0</value>
+                  <value>259.0</value>
                   <doubleFactor>1.0</doubleFactor>
                 </Pixel>
               </y>
@@ -84,7 +84,123 @@
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1250282511593</id>
+          <id>1250353415625</id>
+          <disabled>false</disabled>
+          <color>
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+            <alpha>255</alpha>
+          </color>
+          <fill>
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+            <alpha>255</alpha>
+          </fill>
+          <width class="Pixel">
+            <value>1.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </width>
+        </chidrenParameterNode>
+      </GroupNode>
+      <GroupNode>
+        <id>1250353415625</id>
+        <disabled>false</disabled>
+        <childrenGroupList/>
+        <childrenElementList>
+          <ShapeNode>
+            <id>1250353415625</id>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Rectangle">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>238.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>314.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>250.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>269.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+            </element>
+            <elementType>T_RECTANGLE</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+        </childrenElementList>
+        <childrenTransformationList/>
+        <chidrenParameterNode>
+          <id>1250353415625</id>
+          <disabled>false</disabled>
+          <color>
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+            <alpha>255</alpha>
+          </color>
+          <fill>
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+            <alpha>255</alpha>
+          </fill>
+          <width class="Pixel">
+            <value>1.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </width>
+        </chidrenParameterNode>
+      </GroupNode>
+      <GroupNode>
+        <id>1250353415625</id>
+        <disabled>false</disabled>
+        <childrenGroupList/>
+        <childrenElementList>
+          <ShapeNode>
+            <id>1250353415625</id>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Line">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>316.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>328.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>261.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>261.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+            </element>
+            <elementType>T_LINE</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+        </childrenElementList>
+        <childrenTransformationList/>
+        <chidrenParameterNode>
+          <id>1250353415625</id>
           <disabled>false</disabled>
           <color>
             <red>0</red>
@@ -108,7 +224,7 @@
     <childrenElementList/>
     <childrenTransformationList/>
     <chidrenParameterNode>
-      <id>1250282511593</id>
+      <id>1250353415609</id>
       <disabled>false</disabled>
       <color>
         <red>0</red>
@@ -128,5 +244,64 @@
       </width>
     </chidrenParameterNode>
   </partGroupNode>
-  <partConnectors/>
+  <partConnectors>
+    <PinNode>
+      <id>1250353415609</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+        <x>
+          <Pixel>
+            <value>214.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>214.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </x>
+        <y>
+          <Pixel>
+            <value>258.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>258.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+    <PinNode>
+      <id>1250353415609</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+        <x>
+          <Pixel>
+            <value>330.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>331.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </x>
+        <y>
+          <Pixel>
+            <value>261.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+          <Pixel>
+            <value>261.0</value>
+            <doubleFactor>1.0</doubleFactor>
+          </Pixel>
+        </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+  </partConnectors>
 </PartNode>

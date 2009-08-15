@@ -18,35 +18,35 @@ public interface Plugin {
      *
      * @return <code>true</code>, if plugin provides menu item, <code>false</code> else.
      */
-    boolean providesMenuItem();
+    public boolean providesMenuItem();
 
     /**
      * Indicates, whether plugin provides drawing button, or not.
      *
      * @return <code>true</code>, if plugin provides drawing button, <code>false</code> else.
      */
-    boolean providesDrawingButton();
+    public boolean providesDrawingButton();
 
     /**
      * Indicates, whether plugin implements {@link SceneGraphUpdateListener}
      *
      * @return <code>true</code>, if plugin implements {@link SceneGraphUpdateListener}, <code>false</code> else.
      */
-    boolean implementsSceneGraphUpdateListener();
+    public boolean implementsSceneGraphUpdateListener();
 
     /**
      * Getter for drawing button provided by plugin.
      *
      * @return {@link JButton} instance provided by plugin.
      */
-    JButton getDrawingButton();
+    public JButton getDrawingButton();
 
     /**
      * Getter for menu item provided by plugin.
      *
      * @return {@link JMenuItem} instance provided by plugin.
      */
-    JMenuItem getMenuItem();
+    public JMenuItem getMenuItem();
 
     /**
      * Activates plugin, so it is able to process data and be accessed by the user.
@@ -55,5 +55,12 @@ public interface Plugin {
      *
      * @return <code>true</code>, if plugin was activated successfully, <code>false</code> else.
      */
-    boolean activate(SceneGraph sceneGraph);
+    public boolean activate(SceneGraph sceneGraph);
+
+    /**
+     * Returns identificator of plugin.
+     *
+     * @return Identificator of plugin.
+     */
+    public String getIdentificator();
 }

@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.core.plugins.automaticPartNaming;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
@@ -67,9 +68,11 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
      *      .cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent)
      */
     public void sceneGraphUpdateOccured(SceneGraphUpdateEvent e) {
-        SceneGraph sg = (SceneGraph) e.getSource();
+        // SceneGraph sg = (SceneGraph) e.getSource();
 
-        ArrayList<Node> nal = sg.getSceneGraphArray();
+        HashMap<String, Object> pluginPreferences = getSceneGraph().getPluginData().getData(getIdentificator());
+
+        ArrayList<Node> nal = getSceneGraph().getSceneGraphArray();
         for (Node node : nal) {
             if (node instanceof PartNode) {
                 // do automatic part naming
@@ -113,5 +116,12 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
      */
     public JMenuItem getMenuItem() {
         return null;
+    }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#getIdentificator()
+     */
+    public String getIdentificator() {
+        return "AutomaticPartNaming";
     }
 }
