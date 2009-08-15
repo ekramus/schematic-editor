@@ -49,6 +49,7 @@ public class Serialization {
     /**
      * Serializes given {@link GroupNode} into given file.
      *
+     * @param sceneGraph scene graph's {@link GroupNode} to serialize.
      * @param file Path to file, where should be {@link GroupNode} serialized.
      */
     public static void serialize(SceneGraph sceneGraph, File file) {
@@ -68,7 +69,10 @@ public class Serialization {
     }
 
     /**
-     * Serializes given {@link GroupNode} and return it as a String.
+     * Serializes given {@link SceneGraph}'s {@link GroupNode} and return it as a String.
+     *
+     * @param sceneGraph scene graph to serialize.
+     * @return Serialized group node.
      */
     public static String serialize(SceneGraph sceneGraph) {
         XStream xstream = new XStream(new DomDriver());
