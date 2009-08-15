@@ -20,15 +20,15 @@ public class Part extends Element {
      * Vector of connectors.
      */
     @Deprecated
-    private Vector<UnitPoint>       connectorVector;
+    private Vector<UnitPoint> connectorVector;
     /**
      * Field containing part properties.
      */
-    private PartProperties partProperties;
+    private PartProperties    partProperties;
     /**
      * Field containing part rotation center.
      */
-    private UnitPoint               rotationCenter;
+    private UnitPoint         rotationCenter;
 
     /**
      * Default constructor. It initializes {@link Part} element.
@@ -50,7 +50,7 @@ public class Part extends Element {
      */
     @Override
     public Element duplicate() {
-        Part p = new Part(getPartProperties());
+        Part p = new Part(getPartProperties().duplicate());
         return p;
     }
 

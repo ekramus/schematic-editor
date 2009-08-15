@@ -22,20 +22,15 @@ public abstract class LightweightPartProperties implements PartProperties {
     /**
      * Netlist prototype {@link String} for this part.
      */
-    private String            netlistPrototype;
+    private String          netlistPrototype;
     /**
      * Array of part properties.
      */
-    private PropertiesArray   partProperties;
+    private PropertiesArray partProperties;
     /**
      * {@link Logger} for logging purposes.
      */
-    private static Logger     logger;
-    /**
-     *
-     * {@link ArrayList} of part pin values.
-     */
-    private ArrayList<String> partPinValues;
+    private static Logger   logger;
 
     static {
 

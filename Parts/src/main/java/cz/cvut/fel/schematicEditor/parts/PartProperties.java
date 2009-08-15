@@ -67,4 +67,6 @@ public interface PartProperties extends Iterable<PropertiesCategory> {
     public String getPartVariant();
 
     public String getPartDescription();
+
+    public PartProperties duplicate();
 }
