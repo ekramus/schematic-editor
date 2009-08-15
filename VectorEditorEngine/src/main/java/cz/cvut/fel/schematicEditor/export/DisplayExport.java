@@ -12,12 +12,15 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
@@ -32,6 +35,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -327,21 +331,21 @@ public class DisplayExport implements Export {
                 // TODO draw part specific descriptions and symbols, e.g. connector descriptions
                 PartNode partNode = (PartNode) elementNode;
 
-                // TODO retrieve connectors and match them to correct names
+                // TODO retrieve pins and match them to correct names
                 // for now, connectors are in fixed order as are they returned by getPartConnectors() method.
 
-                // Vector<String> connectorNames = ((Part) partNode.getElement()).getPartProperties().getPartPinNames();
-                // // search for connectors, draw them and display their names
-                // int i = 0;
-                // for (PinNode cn : partNode.getPartPins()) {
-                // Pin c = (Pin) cn.getElement();
-                // drawPin(c, parameterNode, nodeG2D);
-                // // check, whether connector names should be printed
-                // if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
-                // drawPinText(c, connectorNames.get(i), nodeG2D);
-                // }
-                // i++;
-                // }
+                ArrayList<String> connectorValues = ((Part) partNode.getElement()).getPartProperties().getPartPinValues();
+                // search for connectors, draw them and display their names
+                int i = 0;
+                for (PinNode cn : partNode.getPartPins()) {
+                    Pin c = (Pin) cn.getElement();
+                    drawPin(c, parameterNode, nodeG2D);
+                    // check, whether connector names should be printed
+                    if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
+                        drawPinText(c, connectorValues.get(i), nodeG2D);
+                    }
+                    i++;
+                }
 
                 // draw partRotationCenter, if different from [0,0]
                 UnitPoint rotationCenter = partNode.getRotationCenter();

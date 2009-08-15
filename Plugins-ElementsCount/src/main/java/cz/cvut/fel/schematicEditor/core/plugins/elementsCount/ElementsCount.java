@@ -86,4 +86,11 @@ public class ElementsCount implements Plugin {
     private SceneGraph getSceneGraph() {
         return this.sceneGraph;
     }
+
+    /**
+     * @see cz.cvut.fel.schematicEditor.core.Plugin#getIdentificator()
+     */
+    public String getIdentificator() {
+        return "ElementsCount";
+    }
 }

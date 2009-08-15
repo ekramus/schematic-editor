@@ -2,21 +2,19 @@ package cz.cvut.fel.schematicEditor.core.coreStructures;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.core.PluginData;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.types.SceneGraphIterator;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -50,65 +48,9 @@ public class SceneGraph implements Iterable<Node> {
      */
     private Vector<SceneGraphUpdateListener> listeners;
     /**
-     * HashMap of highest used part name.
+     * Plugin data.
      */
-    private HashMap<PartType, Integer>       partTypeCount;
-    /**
-     * HashSet of part names used for each part type.
-     */
-    private HashSet<String>                  partNames;
-
-    /**
-     * @param partType part type.
-     * @return Count for given part type.
-     */
-    public Integer getPartTypeCount(PartType partType) {
-        return this.partTypeCount.get(partType);
-    }
-
-    /**
-     * Increases count for given part type.
-     *
-     * @param partType part type.
-     */
-    public void increasePartTypeCount(PartType partType) {
-        try {
-            this.partTypeCount.put(partType, this.partTypeCount.get(partType) + 1);
-        } catch (NullPointerException e) {
-            this.partTypeCount.put(partType, 1);
-        }
-    }
-
-    /**
-     * @param partTypeCount the partTypeCount to set
-     */
-    private void setPartTypeCount(HashMap<PartType, Integer> partTypeCount) {
-        this.partTypeCount = partTypeCount;
-    }
-
-    /**
-     * @param name to look for.
-     * @return <code>true</code>, if name is contained, <code>false</code> else.
-     */
-    public boolean isPartName(String name) {
-        return this.partNames.contains(name);
-    }
-
-    /**
-     * Registers part name.
-     *
-     * @param name name to store.
-     */
-    public void addPartName(String name) {
-        this.partNames.add(name);
-    }
-
-    /**
-     * @param partTypeNames the partTypeNames to set
-     */
-    private void setPartNames(HashSet<String> partTypeNames) {
-        this.partNames = partTypeNames;
-    }
+    private PluginData                       pluginData;
 
     /**
      * This is the default constructor.
@@ -118,8 +60,7 @@ public class SceneGraph implements Iterable<Node> {
 
         // TODO add some stuff later
         this.editNode = null;
-        setPartTypeCount(new HashMap<PartType, Integer>());
-        setPartNames(new HashSet<String>());
+        setPluginData(new PluginData());
 
         setListeners(new Vector<SceneGraphUpdateListener>());
     }
@@ -290,5 +231,19 @@ public class SceneGraph implements Iterable<Node> {
             SceneGraphUpdateEvent sceneGraphUpdateEvent = new SceneGraphUpdateEvent(this);
             sceneGraphUpdateListener.sceneGraphUpdateOccured(sceneGraphUpdateEvent);
         }
+    }
+
+    /**
+     * @return the pluginData
+     */
+    public PluginData getPluginData() {
+        return this.pluginData;
+    }
+
+    /**
+     * @param pluginData the pluginData to set
+     */
+    private void setPluginData(PluginData pluginData) {
+        this.pluginData = pluginData;
     }
 }
