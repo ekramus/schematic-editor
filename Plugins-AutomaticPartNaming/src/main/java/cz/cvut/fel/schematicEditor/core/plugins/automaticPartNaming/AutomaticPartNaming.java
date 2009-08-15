@@ -95,6 +95,8 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
                 pp.setPartPinValues(pinValues);
             }
         }
+
+        getSceneGraph().getPluginData().setData(getIdentificator(), pluginPreferences);
     }
 
     /**
