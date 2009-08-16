@@ -35,7 +35,7 @@ public class NetListExport implements Export {
                 pn = (ParameterNode) node;
             } else if (node instanceof PartNode) {
                 PartNode partNode = (PartNode) node;
-                result = drawNode(partNode, pn, tn);
+                result += drawNode(partNode, pn, tn) + "\n";
             }
         }
 
