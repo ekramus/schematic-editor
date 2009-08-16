@@ -2,12 +2,12 @@ package cz.cvut.fel.schematicEditor.core.plugins.automaticPartNaming;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import cz.cvut.fel.schematicEditor.core.Plugin;
-import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
@@ -22,10 +22,13 @@ import cz.cvut.fel.schematicEditor.parts.PartProperties;
  * @author Urban Kravjansky
  */
 public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
+    private static final String PART_NAME_SET       = "part_name_set";
+    private static final String PART_MAX_NUMBER_MAP = "part_max_number_map";
+
     /**
      * {@link SceneGraph} instance.
      */
-    SceneGraph sceneGraph;
+    SceneGraph                  sceneGraph;
 
     /**
      * @see cz.cvut.fel.schematicEditor.core.Plugin#activate(SceneGraph)
@@ -68,23 +71,50 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
      *      .cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent)
      */
     public void sceneGraphUpdateOccured(SceneGraphUpdateEvent e) {
-        // SceneGraph sg = (SceneGraph) e.getSource();
-
+        // TODO somehow store pluginPreferences with topNode
         HashMap<String, Object> pluginPreferences = getSceneGraph().getPluginData().getData(getIdentificator());
+        HashSet<String> partNameSet;
+        HashMap<String, Integer> partMaxNumberMap;
+
+        // if plugin preferences are not yet initialized, initialize them
+        if (pluginPreferences == null) {
+            pluginPreferences = new HashMap<String, Object>();
+            partNameSet = new HashSet<String>();
+            partMaxNumberMap = new HashMap<String, Integer>();
+        } else {
+            partNameSet = (HashSet<String>) pluginPreferences.get(PART_NAME_SET);
+            partMaxNumberMap = (HashMap<String, Integer>) pluginPreferences.get(PART_MAX_NUMBER_MAP);
+        }
 
         ArrayList<Node> nal = getSceneGraph().getSceneGraphArray();
         for (Node node : nal) {
             if (node instanceof PartNode) {
                 // do automatic part naming
-                int i = Structures.getLastPartNumber();
                 PartProperties pp = ((Part) ((PartNode) node).getElement()).getPartProperties();
-                String name = pp.getProperty("name");
-                if (name.equals("")) {
-                    pp.setProperty("name", "part_" + i);
-                    Structures.setLastPartNumber(i + 1);
+                // get max i for given part variant
+                int i = 0;
+                try {
+                    i = partMaxNumberMap.get(pp.getPartType().getVariant());
+                } catch (NullPointerException npe) {
+                    // nothing to do
                 }
 
-                // do automatic part connector naming
+                // retrieve part property
+                String name = pp.getProperty("name");
+
+                // name part
+                if (name.equals("")) {
+                    // check, whether proposed name already exist in set
+                    String pn = pp.getPartType().getVariant() + i;
+                    while (partNameSet.contains(pn)) {
+                        pn = pp.getPartType().getVariant() + ++i;
+                    }
+                    pp.setProperty("name", pn);
+                    partMaxNumberMap.put(pp.getPartType().getVariant(), i);
+                    partNameSet.add(pn);
+                }
+
+                // do automatic part pin naming
                 ArrayList<String> pinValues = pp.getPartPinValues();
                 for (int j = 0; j < pinValues.size(); j++) {
                     String pinValue = pinValues.get(j);
@@ -96,6 +126,9 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
             }
         }
 
+        // add modified preferences and store them
+        pluginPreferences.put(PART_MAX_NUMBER_MAP, partMaxNumberMap);
+        pluginPreferences.put(PART_NAME_SET, partNameSet);
         getSceneGraph().getPluginData().setData(getIdentificator(), pluginPreferences);
     }
 
