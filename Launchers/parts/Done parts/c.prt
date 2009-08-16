@@ -296,5 +296,64 @@
       </width>
     </chidrenParameterNode>
   </partGroupNode>
-  <partConnectors/>
+  <partConnectors>
+    <PinNode>
+      <id>1250446573140</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>2.1599999999999997</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>2.1599999999999997</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+    <PinNode>
+      <id>1250446573140</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>38.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>38.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+  </partConnectors>
 </PartNode>
