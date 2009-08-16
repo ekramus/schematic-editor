@@ -378,5 +378,64 @@
       </width>
     </chidrenParameterNode>
   </partGroupNode>
-  <partConnectors/>
+  <partConnectors>
+    <PinNode>
+      <id>1250446573140</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>23.759999999999998</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>23.759999999999998</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+    <PinNode>
+      <id>1250446573140</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>20.16</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>58.31999999999999</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>58.31999999999999</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+  </partConnectors>
 </PartNode>
