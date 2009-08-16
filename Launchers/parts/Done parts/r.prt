@@ -241,5 +241,64 @@
       </width>
     </chidrenParameterNode>
   </partGroupNode>
-  <partConnectors/>
+  <partConnectors>
+    <PinNode>
+      <id>1250446573140</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Mil>
+                  <value>10.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+                <Mil>
+                  <value>10.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+              </x>
+              <y>
+                <Mil>
+                  <value>280.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+                <Mil>
+                  <value>280.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+              </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+    <PinNode>
+      <id>1250446573140</id>
+      <disabled>false</disabled>
+      <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
+        <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Mil>
+                  <value>610.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+                <Mil>
+                  <value>610.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+              </x>
+              <y>
+                <Mil>
+                  <value>280.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+                <Mil>
+                  <value>280.0</value>
+                  <doubleFactor>0.072</doubleFactor>
+                </Mil>
+              </y>
+        <elementModificator>NO_MODIFICATION</elementModificator>
+      </element>
+      <edited>false</edited>
+    </PinNode>
+  </partConnectors>
 </PartNode>
