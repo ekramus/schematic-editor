@@ -105,13 +105,13 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
                 // name part
                 if (name.equals("")) {
                     // check, whether proposed name already exist in set
-                    String pn = pp.getPartType().getVariant() + i;
-                    while (partNameSet.contains(pn)) {
-                        pn = pp.getPartType().getVariant() + ++i;
+                    name = pp.getPartType().getVariant() + i;
+                    while (partNameSet.contains(name)) {
+                        name = pp.getPartType().getVariant() + ++i;
                     }
-                    pp.setProperty("name", pn);
+                    pp.setProperty("name", name);
                     partMaxNumberMap.put(pp.getPartType().getVariant(), i);
-                    partNameSet.add(pn);
+                    partNameSet.add(name);
                 }
 
                 // do automatic part pin naming
@@ -119,7 +119,7 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
                 for (int j = 0; j < pinValues.size(); j++) {
                     String pinValue = pinValues.get(j);
                     if (pinValue.equals("")) {
-                        pinValues.set(j, "part_" + i + "_" + j);
+                        pinValues.set(j, name + "-" + j);
                     }
                 }
                 pp.setPartPinValues(pinValues);
