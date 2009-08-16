@@ -53,13 +53,13 @@ public class PartBrowserNode {
      * @return the partVariant
      */
     public String getVariant() {
-        return ((Part) getPartNode().getElement()).getPartProperties().getPartVariant();
+        return ((Part) getPartNode().getElement()).getPartProperties().getPartType().getVariant();
     }
 
     /**
      * @return the partDescription
      */
     public String getDescription() {
-        return ((Part) getPartNode().getElement()).getPartProperties().getPartDescription();
+        return ((Part) getPartNode().getElement()).getPartProperties().getPartType().getDescription();
     }
 }

@@ -219,20 +219,6 @@ public abstract class LightweightPartProperties implements PartProperties {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartVariant()
-     */
-    public String getPartVariant() {
-        return getPartType().getVariant();
-    }
-
-    /**
-     * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartDescription()
-     */
-    public String getPartDescription() {
-        return getPartType().getDescription();
-    }
-
-    /**
      * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartPinValues()
      */
     public ArrayList<String> getPartPinValues() {

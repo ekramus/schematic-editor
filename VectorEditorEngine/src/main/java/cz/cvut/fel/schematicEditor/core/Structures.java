@@ -22,10 +22,6 @@ public class Structures {
      * Hash map of menu items of plugins for each scene tab.
      */
     private static HashMap<SceneTabbedPaneTabs, Vector<JMenuItem>> pluginMenuItems        = null;
-    /**
-     * Counter of last part number for automatic Part and PIN naming.
-     */
-    private static int                                             lastPartNumber         = 0;
 
     /**
      * Getter for <code>loadedPluginProperties</code>.
@@ -37,20 +33,6 @@ public class Structures {
             loadedPluginProperties = new Vector<Properties>();
         }
         return loadedPluginProperties;
-    }
-
-    /**
-     * @return the lastPartNumber
-     */
-    public static int getLastPartNumber() {
-        return lastPartNumber;
-    }
-
-    /**
-     * @param lastPartNumber the lastPartNumber to set
-     */
-    public static void setLastPartNumber(int lastPartNumber) {
-        Structures.lastPartNumber = lastPartNumber;
     }
 
     /**
