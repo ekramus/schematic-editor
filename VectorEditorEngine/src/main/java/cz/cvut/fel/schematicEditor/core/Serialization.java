@@ -16,6 +16,7 @@ import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial.Mil;
 
 /**
  * This class implements methods for serialization.
@@ -125,5 +126,6 @@ public class Serialization {
     private static void processAnnotations(XStream xstream) {
         xstream.processAnnotations(NodeFactory.getInstance().getClassArray());
         xstream.processAnnotations(Pixel.class);
+        xstream.processAnnotations(Mil.class);
     }
 }
