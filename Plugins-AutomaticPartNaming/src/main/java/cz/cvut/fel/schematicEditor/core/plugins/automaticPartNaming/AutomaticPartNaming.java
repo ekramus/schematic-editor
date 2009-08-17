@@ -105,9 +105,9 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
                 // name part
                 if (name.equals("")) {
                     // check, whether proposed name already exist in set
-                    name = pp.getPartType().getVariant() + i;
+                    name = Integer.toString(i);
                     while (partNameSet.contains(name)) {
-                        name = pp.getPartType().getVariant() + ++i;
+                        name = Integer.toString(++i);
                     }
                     pp.setProperty("name", name);
                     partMaxNumberMap.put(pp.getPartType().getVariant(), i);
@@ -119,7 +119,7 @@ public class AutomaticPartNaming implements Plugin, SceneGraphUpdateListener {
                 for (int j = 0; j < pinValues.size(); j++) {
                     String pinValue = pinValues.get(j);
                     if (pinValue.equals("")) {
-                        pinValues.set(j, name + "-" + j);
+                        pinValues.set(j, Integer.toString(j));
                     }
                 }
                 pp.setPartPinValues(pinValues);
