@@ -37,6 +37,7 @@ import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.parts.PartProperties;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
@@ -334,8 +335,15 @@ public class DisplayExport implements Export {
                 // TODO retrieve pins and match them to correct names
                 // for now, connectors are in fixed order as are they returned by getPartConnectors() method.
 
-                ArrayList<String> connectorValues = ((Part) partNode.getElement()).getPartProperties().getPartPinValues();
-                // search for connectors, draw them and display their names
+                // draw name and value
+                if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
+                    drawPartText(((Part) partNode.getElement()).getPartProperties(), partNode.getRotationCenter(),
+                                 nodeG2D);
+                }
+
+                ArrayList<String> connectorValues = ((Part) partNode.getElement()).getPartProperties()
+                        .getPartPinValues();
+                // search for pins, draw them and display their names
                 int i = 0;
                 for (PinNode cn : partNode.getPartPins()) {
                     Pin c = (Pin) cn.getElement();
@@ -465,7 +473,15 @@ public class DisplayExport implements Export {
 
     private void drawPinText(Pin pin, String connectorName, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
-        nodeG2D.drawString(connectorName, (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) - 10,
+        nodeG2D.drawString(connectorName, (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) - 1,
                            (int) (pin.getY().firstElement().floatValue() * getZoomFactor()) - 10);
+    }
+
+    private void drawPartText(PartProperties pp, UnitPoint rc, Graphics2D nodeG2D) {
+        nodeG2D.setColor(Color.BLACK);
+        nodeG2D.drawString(pp.getProperty("name"), (int) (rc.getX() * getZoomFactor()) - 1,
+                           (int) (rc.getY() * getZoomFactor()) - 20);
+        nodeG2D.drawString(pp.getProperty("value"), (int) (rc.getX() * getZoomFactor()) - 1,
+                           (int) (rc.getY() * getZoomFactor()) + 20);
     }
 }
