@@ -5,21 +5,21 @@ import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.parts.lightweightParts.LightweightPartProperties;
 
 /**
- * This class implements properties with are unique for nonlinear source part.
+ * This class implements properties with are unique for diode part.
  *
  * @author Urban Kravjansky
  */
-public class NonlinearSourceProperties extends LightweightPartProperties {
+public class MesFetProperties extends LightweightPartProperties {
 
     /**
      * This method instantiates new instance.
      */
-    public NonlinearSourceProperties() {
+    public MesFetProperties() {
         super();
 
-        setNetlistPrototype("B<name> <n1> <n2> V=<expression>");
+        setNetlistPrototype("");
 
-        setProperty("expression", "");
+        setProperty("value", "");
         setProperty("name", "");
         setProperty("n1", "");
         setProperty("n2", "");
@@ -29,13 +29,13 @@ public class NonlinearSourceProperties extends LightweightPartProperties {
      * @see cz.cvut.fel.schematicEditor.parts.PartProperties#getPartType()
      */
     public PartType getPartType() {
-        return PartType.NONLINEAR_SOURCE;
+        return PartType.MES_FET;
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.parts.PartProperties#duplicate()
      */
     public PartProperties duplicate() {
-        return new NonlinearSourceProperties();
+        return new MesFetProperties();
     }
 }
