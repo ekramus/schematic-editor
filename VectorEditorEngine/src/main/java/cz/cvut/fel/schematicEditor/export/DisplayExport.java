@@ -159,7 +159,10 @@ public class DisplayExport implements Export {
             nodeG2D.drawRect(0, 0, (int) bounds.getWidth() - 1, (int) bounds.getHeight() - 1);
         }
 
-        BasicStroke basicStroke = new BasicStroke(parameterNode.getWidth().floatValue());
+        // set stroke - rescaling on zoomin and modified ends and joins
+        BasicStroke basicStroke = new BasicStroke(
+                (float) (parameterNode.getWidth().floatValue() * (getZoomFactor() > 1 ? getZoomFactor() : 1)),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         nodeG2D.setStroke(basicStroke);
         logger.trace("Stroke width: " + basicStroke.getLineWidth());
 
