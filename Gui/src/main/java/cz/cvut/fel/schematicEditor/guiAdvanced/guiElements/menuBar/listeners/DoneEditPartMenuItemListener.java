@@ -3,9 +3,9 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
+import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
 
 /**
  * This class implements {@link ActionListener} for <code>doneEditPartMenuItem</code> in {@link MenuBar}.

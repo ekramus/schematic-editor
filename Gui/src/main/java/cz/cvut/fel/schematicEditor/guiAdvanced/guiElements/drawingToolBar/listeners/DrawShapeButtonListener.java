@@ -7,16 +7,16 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.element.element.shape.Shape;
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.original.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.ShapeNode;
 
 /**
  * This class implements listener for every shape drawing button. It is implemented by instantiating a new class of

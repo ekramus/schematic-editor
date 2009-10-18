@@ -20,6 +20,7 @@
 		<module>Plugins-AutomaticPartNaming</module>
 		<module>Plugins-ElementsCount</module>
 		<module>Plugins-CheckNetlist</module>
+		<module>PiccoloGui</module>
 	</modules>
 	<build>
 		<plugins>
