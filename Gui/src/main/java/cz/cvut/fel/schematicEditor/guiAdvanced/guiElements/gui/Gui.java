@@ -33,8 +33,8 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.DrawingToolBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.listeners.SceneTabbedPaneChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.piccoloScenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesSelectorToolBar;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 
 /**
  * This class represents GUI of schematic editor.
@@ -249,7 +249,8 @@ public class Gui extends JApplet {
         if (this.schemePartRootPanel == null) {
             this.schemePartRootPanel = new JPanel();
             this.schemePartRootPanel.setLayout(new BorderLayout());
-            this.schemePartRootPanel.add(getSchemeJScrollPane(), BorderLayout.CENTER);
+//            this.schemePartRootPanel.add(getSchemeJScrollPane(), BorderLayout.CENTER);
+            this.schemePartRootPanel.add(getSchemeScenePanel(), BorderLayout.CENTER);
         }
         return this.schemePartRootPanel;
     }
