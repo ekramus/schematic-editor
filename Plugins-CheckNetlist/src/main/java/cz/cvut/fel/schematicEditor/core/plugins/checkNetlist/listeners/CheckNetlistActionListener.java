@@ -12,11 +12,11 @@ import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
-import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
-import cz.cvut.fel.schematicEditor.graphNode.Node;
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.graphNode.PinNode;
-import cz.cvut.fel.schematicEditor.graphNode.WireNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.JunctionNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.Node;
+import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.PinNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.WireNode;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**

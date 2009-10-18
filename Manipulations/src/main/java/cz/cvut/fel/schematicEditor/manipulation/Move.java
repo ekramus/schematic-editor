@@ -6,11 +6,11 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.original.graphNode.TransformationNode;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Transformation;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;

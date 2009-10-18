@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
-import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.original.graphNode.ElementNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.Node;
 
 /**
  * This class implements action listener for Elements count plugin menu item.

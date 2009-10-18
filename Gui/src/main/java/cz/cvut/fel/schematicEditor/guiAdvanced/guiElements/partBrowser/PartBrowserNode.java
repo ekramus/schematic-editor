@@ -3,7 +3,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser;
 import javax.swing.Icon;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
 
 /**
  * This class incorporates part browser node. It contains reference to part node and part specifying icon.

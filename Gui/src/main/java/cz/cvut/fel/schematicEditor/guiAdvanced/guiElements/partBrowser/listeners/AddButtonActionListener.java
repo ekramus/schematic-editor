@@ -5,16 +5,16 @@ import java.awt.event.ActionListener;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.PartBrowserPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.original.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
 
 /**
  * @author uk
