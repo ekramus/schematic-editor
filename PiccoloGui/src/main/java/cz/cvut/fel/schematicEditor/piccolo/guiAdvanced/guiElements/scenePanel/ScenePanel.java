@@ -238,7 +238,7 @@ public class ScenePanel extends JPanel {
         this.sceneInvalidRect = bounds;
 
         // set scene dim
-        Dimension dim = config.getSceneDim();
+        Dimension dim = config.getSchemeDim();
         dim = new Dimension((int) (dim.getWidth() * getZoomFactor()), (int) (dim.getHeight() * getZoomFactor()));
         setMinimumSize(dim);
         setMaximumSize(dim);
@@ -603,7 +603,7 @@ public class ScenePanel extends JPanel {
     private void init() {
         GuiConfiguration config = GuiConfiguration.getInstance();
 
-        this.setPreferredSize(new Dimension(config.getSceneDim()));
+        this.setPreferredSize(new Dimension(config.getSchemeDim()));
         this.setBackground(config.getSceneBackgroundColor());
 
         // initialize grid properties

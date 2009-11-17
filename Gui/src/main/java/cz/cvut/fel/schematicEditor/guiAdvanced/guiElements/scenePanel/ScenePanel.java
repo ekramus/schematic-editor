@@ -51,7 +51,10 @@ public class ScenePanel extends JPanel {
      * This field represents grid.
      */
     private BufferedImage     grid;
-
+    /**
+     * Native {@link ScenePanel} dimensions.
+     */
+    private Dimension         dim;
     /**
      * This field represents grid validity.
      */
@@ -216,13 +219,15 @@ public class ScenePanel extends JPanel {
 
     /**
      * This is the default constructor
+     *
+     * @param dim dimenstions of scene panel.
      */
-    public ScenePanel() {
+    public ScenePanel(Dimension dim) {
         super();
 
         logger = Logger.getLogger(this.getClass().getName());
 
-        init();
+        init(dim);
     }
 
     /**
@@ -238,7 +243,7 @@ public class ScenePanel extends JPanel {
         this.sceneInvalidRect = bounds;
 
         // set scene dim
-        Dimension dim = config.getSceneDim();
+        Dimension dim = getDim();
         dim = new Dimension((int) (dim.getWidth() * getZoomFactor()), (int) (dim.getHeight() * getZoomFactor()));
         setMinimumSize(dim);
         setMaximumSize(dim);
@@ -599,11 +604,14 @@ public class ScenePanel extends JPanel {
 
     /**
      * This method initializes this.
+     *
+     * @param dim dimensions of scene panel.
      */
-    private void init() {
+    private void init(Dimension dim) {
         GuiConfiguration config = GuiConfiguration.getInstance();
 
-        this.setPreferredSize(new Dimension(config.getSceneDim()));
+        this.setDim(dim);
+        this.setPreferredSize(dim);
         this.setBackground(config.getSceneBackgroundColor());
 
         // initialize grid properties
@@ -642,5 +650,19 @@ public class ScenePanel extends JPanel {
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
         }
+    }
+
+    /**
+     * @param dim the dim to set
+     */
+    private void setDim(Dimension dim) {
+        this.dim = dim;
+    }
+
+    /**
+     * @return the dim
+     */
+    private Dimension getDim() {
+        return this.dim;
     }
 }
