@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.Plugin;
 import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
@@ -289,7 +290,10 @@ public class Gui extends JApplet {
      */
     public ScenePanel getSchemeScenePanel() {
         if (this.schemeScenePanel == null) {
-            this.schemeScenePanel = new ScenePanel();
+            GuiConfiguration config = GuiConfiguration.getInstance();
+
+            this.schemeScenePanel = new ScenePanel(config.getSchemeDim());
+            this.schemeScenePanel.setZoomFactor(config.getSchemeZoomFactor());
         }
         return this.schemeScenePanel;
     }
@@ -301,7 +305,10 @@ public class Gui extends JApplet {
      */
     public ScenePanel getPartScenePanel() {
         if (this.partScenePanel == null) {
-            this.partScenePanel = new ScenePanel();
+            GuiConfiguration config = GuiConfiguration.getInstance();
+
+            this.partScenePanel = new ScenePanel(config.getPartDim());
+            this.partScenePanel.setZoomFactor(config.getPartZoomFactor());
         }
         return this.partScenePanel;
     }

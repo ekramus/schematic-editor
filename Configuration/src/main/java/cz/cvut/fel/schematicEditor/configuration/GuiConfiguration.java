@@ -70,9 +70,21 @@ public class GuiConfiguration extends Configuration {
      */
     private Color          sceneBackgroundColor  = new Color(255, 255, 255);
     /**
-     * ScenePanel X and Y dimension.
+     * Scheme ScenePanel X and Y dimension.
      */
-    private Dimension      sceneDim              = new Dimension(1280, 1024);
+    private Dimension      schemeDim             = new Dimension(1280, 1024);
+    /**
+     * Scheme zoom factor.
+     */
+    private float          schemeZoomFactor      = 1;
+    /**
+     * Part zoom factor.
+     */
+    private float          partZoomFactor        = 10;
+    /**
+     * Part ScenePanel X and Y dimension.
+     */
+    private Dimension      partDim               = new Dimension(150, 150);
     /**
      * Scheme antialiasing indicator.
      */
@@ -119,10 +131,10 @@ public class GuiConfiguration extends Configuration {
     }
 
     /**
-     * @return the sceneDim
+     * @return the schemeDim
      */
-    public Dimension getSceneDim() {
-        return this.sceneDim;
+    public Dimension getSchemeDim() {
+        return this.schemeDim;
     }
 
     /**
@@ -182,10 +194,10 @@ public class GuiConfiguration extends Configuration {
     }
 
     /**
-     * @param sceneDim the sceneDim to set
+     * @param schemeDim the schemeDim to set
      */
-    public void setSceneDim(Dimension sceneDim) {
-        this.sceneDim = sceneDim;
+    public void setSchemeDim(Dimension schemeDim) {
+        this.schemeDim = schemeDim;
     }
 
     /**
@@ -235,5 +247,47 @@ public class GuiConfiguration extends Configuration {
      */
     public boolean isConnectorNamesVisible() {
         return this.connectorNamesVisible;
+    }
+
+    /**
+     * @param partDim the partDim to set
+     */
+    public void setPartDim(Dimension partDim) {
+        this.partDim = partDim;
+    }
+
+    /**
+     * @return the partDim
+     */
+    public Dimension getPartDim() {
+        return this.partDim;
+    }
+
+    /**
+     * @param partZoomFactor the partZoomFactor to set
+     */
+    public void setPartZoomFactor(float partZoomFactor) {
+        this.partZoomFactor = partZoomFactor;
+    }
+
+    /**
+     * @return the partZoomFactor
+     */
+    public float getPartZoomFactor() {
+        return this.partZoomFactor;
+    }
+
+    /**
+     * @param schemeZoomFactor the schemeZoomFactor to set
+     */
+    public void setSchemeZoomFactor(float schemeZoomFactor) {
+        this.schemeZoomFactor = schemeZoomFactor;
+    }
+
+    /**
+     * @return the schemeZoomFactor
+     */
+    public float getSchemeZoomFactor() {
+        return this.schemeZoomFactor;
     }
 }
