@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.part;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
@@ -58,7 +59,7 @@ public class Part extends Element {
      * @see Element#getBounds()
      */
     @Override
-    public UnitRectangle getBounds() {
+    public UnitRectangle getBounds(Graphics2D g2d) {
         // part as such has no bounds
         return null;
     }

@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
@@ -123,9 +124,10 @@ public abstract class Element {
     /**
      * Calculates and then returns bounds of the element. This bound does not need to be necesserilly the closest.
      *
+     * @param g2d Graphics2D context.
      * @return Bounds of element.
      */
-    public abstract UnitRectangle getBounds();
+    public abstract UnitRectangle getBounds(Graphics2D g2d);
 
     /**
      * Indicates, whether given rectangle hits this element.

@@ -3,6 +3,7 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -323,6 +324,15 @@ public class Gui extends JApplet {
             return getInstance().getSchemeScenePanel();
         }
         return getInstance().getPartScenePanel();
+    }
+
+    /**
+     * Getter for active <code>Graphics2D</code>.
+     *
+     * @return active {@link Graphics2D} context.
+     */
+    public static Graphics2D getActiveGraphics2D() {
+        return (Graphics2D) getActiveScenePanel().getGraphics();
     }
 
     /**

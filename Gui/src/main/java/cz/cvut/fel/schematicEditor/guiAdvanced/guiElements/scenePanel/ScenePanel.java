@@ -335,9 +335,11 @@ public class ScenePanel extends JPanel {
         Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) editFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX() * getZoomFactor(),
-                gn.getBounds().getY() * getZoomFactor(), gn.getBounds().getWidth() * getZoomFactor(), gn.getBounds()
-                        .getHeight() * getZoomFactor());
+        Rectangle2D.Double rect = new Rectangle2D.Double(
+                gn.getBounds((Graphics2D) getGraphics()).getX() * getZoomFactor(), gn
+                        .getBounds((Graphics2D) getGraphics()).getY() * getZoomFactor(), gn
+                        .getBounds((Graphics2D) getGraphics()).getWidth() * getZoomFactor(), gn
+                        .getBounds((Graphics2D) getGraphics()).getHeight() * getZoomFactor());
         rect = t.shift(rect);
         g2d.setColor(Color.ORANGE);
         g2d.draw(rect);
@@ -523,9 +525,11 @@ public class ScenePanel extends JPanel {
         Transformation t = m.getManipulatedGroup().getTransformation();
 
         Graphics2D g2d = (Graphics2D) selectionFrame.getGraphics();
-        Rectangle2D.Double rect = new Rectangle2D.Double(gn.getBounds().getX() * getZoomFactor(),
-                gn.getBounds().getY() * getZoomFactor(), gn.getBounds().getWidth() * getZoomFactor(), gn.getBounds()
-                        .getHeight() * getZoomFactor());
+        Rectangle2D.Double rect = new Rectangle2D.Double(
+                gn.getBounds((Graphics2D) getGraphics()).getX() * getZoomFactor(), gn
+                        .getBounds((Graphics2D) getGraphics()).getY() * getZoomFactor(), gn
+                        .getBounds((Graphics2D) getGraphics()).getWidth() * getZoomFactor(), gn
+                        .getBounds((Graphics2D) getGraphics()).getHeight() * getZoomFactor());
         rect = t.shift(rect);
         g2d.setColor(Color.GRAY);
         g2d.draw(rect);

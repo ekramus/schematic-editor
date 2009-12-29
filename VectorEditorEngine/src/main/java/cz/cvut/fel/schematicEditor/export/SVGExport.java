@@ -1,7 +1,9 @@
 package cz.cvut.fel.schematicEditor.export;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -441,6 +443,8 @@ public class SVGExport implements Export {
      * Draw text
      */
     private void drawText(Text text, Point2D.Double start, ParameterNode pn, Transformation tn) {
+        BufferedImage bi = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+
         Color color = pn.getColor();
 
         if (color == null) {
@@ -451,7 +455,7 @@ public class SVGExport implements Export {
                 + "\" y=\""
                 + start.getY()
                 + "\" font-size=\""
-                + text.getSize()
+                + text.getFontMetrics((Graphics2D) bi.getGraphics()).getHeight()
                 + "\" font-family=\"Helvetica\" fill=\"rgb("
                 + String.valueOf(color.getRed() + ","
                         + color.getGreen()
@@ -461,7 +465,7 @@ public class SVGExport implements Export {
                         + createTransformString(tn)
                         + " >"));
 
-        this.out.println(text.getText());
+        this.out.println(text.getValue());
 
         this.out.println("</text>");
 

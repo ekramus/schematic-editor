@@ -3,7 +3,6 @@ package cz.cvut.fel.schematicEditor.core.coreStructures;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -11,14 +10,10 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.core.PluginData;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
-import cz.cvut.fel.schematicEditor.original.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.original.graphNode.Node;
 import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.types.SceneGraphIterator;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
-import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
-import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class represents <em>Scene Graph</em>.
@@ -143,51 +138,6 @@ public class SceneGraph implements Iterable<Node> {
     public void setTopNode(GroupNode topNode) {
         this.topNode = topNode;
         fireSceneGraphUpdateEvent();
-    }
-
-    /**
-     * @deprecated This method returns list of bounding Boxes of each group. It should be not used, as it does not
-     *             provide direct link to Elements , which Bounding Box is linked to which element.
-     * @return
-     */
-    @Deprecated
-    public LinkedList<UnitRectangle> getBouningBoxList() {
-        LinkedList<UnitRectangle> result = new LinkedList<UnitRectangle>();
-
-        for (Node node : this) {
-            if (node instanceof GroupNode) {
-                result.add(((GroupNode) node).getBounds());
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * This method returns LinkedList of ElementNodes within given areaOfInterest.
-     *
-     * @param areaOfInterest rectangular area, in which are (possibly) some ElementNodes.
-     * @return LinkedList of GroupNodes, which were located at least partly inside given areaOfInterest.
-     */
-    public LinkedList<ElementNode> getElementNodeList(Rectangle2D.Double areaOfInterest) {
-        LinkedList<ElementNode> result = new LinkedList<ElementNode>();
-
-        Unit boundModifier = new Pixel(0);
-        for (Node node : this) {
-            if (node instanceof GroupNode) {
-                // get actual bound modifier from parameter node
-                boundModifier = ((GroupNode) node).getChildrenParameterNode().getWidth();
-            }
-            if (node instanceof ElementNode) {
-                ElementNode en = (ElementNode) node;
-                if (areaOfInterest.contains(en.getBounds(boundModifier)) || areaOfInterest.intersects(en
-                        .getBounds(boundModifier))) {
-                    result.add((ElementNode) node);
-                }
-            }
-        }
-
-        return result;
     }
 
     /**

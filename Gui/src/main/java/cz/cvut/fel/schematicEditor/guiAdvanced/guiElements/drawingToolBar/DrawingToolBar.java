@@ -103,8 +103,8 @@ public final class DrawingToolBar extends JToolBar {
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.RECTANGLE_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
-            // drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.TEXT_BUTTON));
-            // bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.TEXT_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(Box.createVerticalStrut(20));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PIN_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));

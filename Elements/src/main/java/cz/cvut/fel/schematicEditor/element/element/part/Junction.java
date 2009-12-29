@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.part;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
@@ -37,7 +38,7 @@ public class Junction extends Element {
      * @see Element#getBounds()
      */
     @Override
-    public UnitRectangle getBounds() {
+    public UnitRectangle getBounds(Graphics2D g2d) {
         double x = getX().firstElement().doubleValue();
         double y = getY().firstElement().doubleValue();
 

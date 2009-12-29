@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.original.graphNode;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,22 +92,23 @@ public class PartNode extends ElementNode {
      * Getter for element bounds.
      *
      * @param boundModifier modifier which affects boundary size of element.
+     * @param g2d Graphics2D context.
      * @return Bounds of element.
      */
     @Override
-    public UnitRectangle getBounds(Unit boundModifier) {
+    public UnitRectangle getBounds(Unit boundModifier, Graphics2D g2d) {
         UnitRectangle result;
 
-        double x = getPartGroupNode().getBounds().getX() - 50 * boundModifier.doubleValue();
-        double y = getPartGroupNode().getBounds().getY() - 50 * boundModifier.doubleValue();
-        double w = getPartGroupNode().getBounds().getWidth() + 2 * 50 * boundModifier.doubleValue();
-        double h = getPartGroupNode().getBounds().getHeight() + 2 * 50 * boundModifier.doubleValue();
+        double x = getPartGroupNode().getBounds(g2d).getX() - 50 * boundModifier.doubleValue();
+        double y = getPartGroupNode().getBounds(g2d).getY() - 50 * boundModifier.doubleValue();
+        double w = getPartGroupNode().getBounds(g2d).getWidth() + 2 * 50 * boundModifier.doubleValue();
+        double h = getPartGroupNode().getBounds(g2d).getHeight() + 2 * 50 * boundModifier.doubleValue();
 
         result = new UnitRectangle(x, y, w, h);
 
         for (PinNode cn : getPartPins()) {
             Pin c = (Pin) cn.getElement();
-            result = (UnitRectangle) result.createUnion(c.getBounds());
+            result = (UnitRectangle) result.createUnion(c.getBounds(g2d));
         }
 
         return result;
