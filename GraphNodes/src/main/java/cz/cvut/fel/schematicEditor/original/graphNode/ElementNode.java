@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.original.graphNode;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -113,13 +114,14 @@ public class ElementNode extends Node {
      * Getter for element bounds.
      *
      * @param boundModifier modifier which affects boundary size of element.
+     * @param Graphics2D context.
      * @return Bounds of element.
      */
-    public UnitRectangle getBounds(Unit boundModifier) {
-        double x = getElement().getBounds().getX() - boundModifier.doubleValue();
-        double y = getElement().getBounds().getY() - boundModifier.doubleValue();
-        double w = getElement().getBounds().getWidth() + 2 * boundModifier.doubleValue();
-        double h = getElement().getBounds().getHeight() + 2 * boundModifier.doubleValue();
+    public UnitRectangle getBounds(Unit boundModifier, Graphics2D g2d) {
+        double x = getElement().getBounds(g2d).getX() - boundModifier.doubleValue();
+        double y = getElement().getBounds(g2d).getY() - boundModifier.doubleValue();
+        double w = getElement().getBounds(g2d).getWidth() + 2 * boundModifier.doubleValue();
+        double h = getElement().getBounds(g2d).getHeight() + 2 * boundModifier.doubleValue();
 
         return new UnitRectangle(x, y, w, h);
     }

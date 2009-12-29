@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.original.graphNode;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -397,9 +398,10 @@ public class GroupNode extends Node {
     /**
      * Computes bounds of all elements contained inside this {@link GroupNode}.
      *
+     * @param g2d Graphics2D context.
      * @return bounds union of all elements contained in this {@link GroupNode}.
      */
-    public UnitRectangle getBounds() {
+    public UnitRectangle getBounds(Graphics2D g2d) {
         UnitRectangle result = null;
 
         if (isDisabled()) {
@@ -409,12 +411,12 @@ public class GroupNode extends Node {
         // get bounds from child elements
         Unit width = getChildrenParameterNode().getWidth();
         for (ElementNode child : getChildrenElementList()) {
-            result = new UnitRectangle(child.getBounds(width).createUnion(result));
+            result = new UnitRectangle(child.getBounds(width, g2d).createUnion(result));
         }
 
         // get bounds from child group nodes
         for (GroupNode groupNode : getChildrenGroupList()) {
-            result = new UnitRectangle(groupNode.getBounds().createUnion(result));
+            result = new UnitRectangle(groupNode.getBounds(g2d).createUnion(result));
         }
 
         return result;

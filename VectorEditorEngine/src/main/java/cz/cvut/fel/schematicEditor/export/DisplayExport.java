@@ -149,7 +149,7 @@ public class DisplayExport implements Export {
     private void drawNode(ElementNode elementNode, ParameterNode parameterNode, TransformationNode transformationNode,
             BufferedImage bufferedImage) {
         UnitRectangle bounds = transformBounds(transformationNode.getTransformation(), elementNode
-                .getBounds(parameterNode.getWidth()));
+                .getBounds(parameterNode.getWidth(), (Graphics2D) bufferedImage.getGraphics()));
         BufferedImage nodeImg = new BufferedImage((int) bounds.getWidth(), (int) bounds.getHeight(),
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D nodeG2D = (Graphics2D) nodeImg.getGraphics();
@@ -297,7 +297,8 @@ public class DisplayExport implements Export {
                 // layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
                 // break;
                 Text text = (Text) elementNode.getElement();
-                drawText(text.getText(), new UnitPoint(text.getX().firstElement(), text.getY().firstElement()), nodeG2D);
+                drawText(text.getValue(), new UnitPoint(text.getX().firstElement(), text.getY().firstElement()),
+                         nodeG2D);
                 break;
 
             case T_WIRE:

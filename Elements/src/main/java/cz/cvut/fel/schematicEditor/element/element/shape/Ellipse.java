@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
@@ -29,7 +30,7 @@ public class Ellipse extends Shape {
      * @see element.Element#getBounds()
      */
     @Override
-    public UnitRectangle getBounds() {
+    public UnitRectangle getBounds(Graphics2D gd2) {
         return new UnitRectangle(getTopLeftX() - 2, getTopLeftY() - 2, getWidth() + 5, getHeight() + 5);
     }
 

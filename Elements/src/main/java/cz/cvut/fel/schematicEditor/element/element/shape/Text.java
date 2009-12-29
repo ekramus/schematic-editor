@@ -1,6 +1,9 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
@@ -10,81 +13,60 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 public class Text extends Shape {
 
-    public static final int PLAIN  = Font.PLAIN;
-    public static final int BOLD   = Font.BOLD;
-    public static final int ITALIC = Font.ITALIC;
+    private String value = null;
+    private Font   font  = null;
+    private Color  color = null;
 
-    String                  textValue;
-    String                  fontName;
-    int                     size;
-    int                     style;
-
+    /**
+     * @see cz.cvut.fel.schematicEditor.element.element.Element#getBounds(java.awt.Graphics2D)
+     */
     @Override
-    public UnitRectangle getBounds() {
-        return new UnitRectangle(getX().firstElement().doubleValue(), getY().firstElement().doubleValue(), 100, 100);
+    public UnitRectangle getBounds(Graphics2D g2d) {
+        FontMetrics metrics = g2d.getFontMetrics();
+        return new UnitRectangle(metrics.getStringBounds(getValue(), g2d));
     }
 
-    public Text(UnitPoint start, String text, int size) {
+    public FontMetrics getFontMetrics(Graphics2D g2d) {
+        return g2d.getFontMetrics();
+    }
+
+    public Text() {
+        this(new UnitPoint(0, 0), "asd");
+    }
+
+    public Text(UnitPoint start, String value) {
         super();
 
         getX().add(start.getUnitX());
         getY().add(start.getUnitY());
 
-        setText(text);
-        setSize(size);
-        setStyle(Text.PLAIN);
-        setFontName("Helvetica");
+        setValue(value);
     }
 
-    public Text(UnitPoint start, String text, int size, int style, String fontName) {
-        super();
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-        getX().add(start.getUnitX());
-        getY().add(start.getUnitY());
-
-        setText(text);
-        setSize(size);
-        setFontName(fontName);
-        setStyle(style);
+    public String getValue() {
+        return this.value;
     }
 
     /**
-     *
+     * @param font the font to set
      */
-    public Text() {
-        setText("empty_string");
+    public void setFont(Font font) {
+        if (font == null) {
+            this.font = new Font("Monospaced", Font.PLAIN, 13);
+        } else {
+            this.font = font;
+        }
     }
 
-    public void setText(String textValue) {
-        this.textValue = textValue;
-    }
-
-    public String getText() {
-        return this.textValue;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getSize() {
-        return this.size;
-    }
-
-    public void setFontName(String fontName) {
-        this.fontName = fontName;
-    }
-
-    public String getFontName() {
-        return this.fontName;
-    }
-
-    public void setStyle(int style) {
-        this.style = style;
-    }
-
-    public int getStyle() {
-        return this.style;
+    /**
+     * @return the font
+     */
+    public Font getFont() {
+        return this.font;
     }
 
     /**
@@ -121,7 +103,7 @@ public class Text extends Shape {
      */
     @Override
     public Element duplicate() {
-        Text t = new Text();
+        Text t = new Text(new UnitPoint(getX().firstElement(), getY().firstElement()), getValue());
 
         t.duplicateCoordinates(this);
 
@@ -134,5 +116,23 @@ public class Text extends Shape {
     @Override
     public String toString() {
         return "TEXT";
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(Color color) {
+        if (color == null) {
+            this.color = Color.BLACK;
+        } else {
+            this.color = color;
+        }
+    }
+
+    /**
+     * @return the color
+     */
+    public Color getColor() {
+        return this.color;
     }
 }

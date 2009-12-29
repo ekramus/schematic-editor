@@ -1,7 +1,9 @@
 package cz.cvut.fel.schematicEditor.export;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -76,6 +78,7 @@ public class PSExport implements Export {
     }
 
     private void drawNode(ElementNode en, ParameterNode pn, TransformationNode tn) {
+        BufferedImage bi = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
         switch (en.getElement().getElementType()) {
 
@@ -131,8 +134,8 @@ public class PSExport implements Export {
 
             case T_TEXT:
                 Text t = (Text) en.getElement();
-                drawText(t.getText(), t.getSize(), new Point2D.Double(t.getX().get(0).doubleValue(), t.getY().get(0)
-                        .doubleValue()), pn, tn.getTransformation());
+                drawText(t.getValue(), t.getFontMetrics((Graphics2D)bi.getGraphics()).getHeight(), new Point2D.Double(t.getX().get(0)
+                        .doubleValue(), t.getY().get(0).doubleValue()), pn, tn.getTransformation());
                 break;
             case T_WIRE:
                 Wire w = (Wire) en.getElement();

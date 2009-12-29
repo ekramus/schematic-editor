@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.part;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
@@ -38,7 +39,7 @@ public class Wire extends Element {
      * @see Element#getBounds()
      */
     @Override
-    public UnitRectangle getBounds() {
+    public UnitRectangle getBounds(Graphics2D g2d) {
         double top = Double.MAX_VALUE;
         double bottom = Double.MIN_VALUE;
         double left = Double.MAX_VALUE;
