@@ -274,28 +274,6 @@ public class DisplayExport implements Export {
                 break;
 
             case T_TEXT:
-                // Text text = (Text) elementNode.getElement();
-                //
-                // Font font = new Font(text.getFontName(), text.getStyle(), text.getSize());
-                // FontRenderContext frc = nodeG2D.getFontRenderContext();
-                //
-                // TextLayout layout = new TextLayout(text.getText(), font, frc);
-                //
-                // Rectangle2D rec = layout.getBounds();
-                // bounds = new UnitRectangle(rec.getX() + text.getX().get(0).doubleValue(), rec.getY() + text.getY()
-                // .get(0).doubleValue(), rec.getWidth(), rec.getHeight());
-                // nodeImg = new BufferedImage((int) rec.getWidth(), (int) rec.getHeight(),
-                // BufferedImage.TYPE_INT_ARGB);
-                //
-                // nodeG2D = (Graphics2D) nodeImg.getGraphics();
-                // nodeG2D.translate(-bounds.getX(), -bounds.getY());
-                //
-                // if (parameterNode.getColor() != null) {
-                // nodeG2D.setColor(parameterNode.getColor());
-                // }
-                //
-                // layout.draw(nodeG2D, text.getX().get(0).floatValue(), text.getY().get(0).floatValue());
-                // break;
                 Text text = (Text) elementNode.getElement();
                 drawText(text.getValue(), new UnitPoint(text.getX().firstElement(), text.getY().firstElement()),
                          nodeG2D);

@@ -23,7 +23,9 @@ public class Text extends Shape {
     @Override
     public UnitRectangle getBounds(Graphics2D g2d) {
         FontMetrics metrics = g2d.getFontMetrics();
-        return new UnitRectangle(metrics.getStringBounds(getValue(), g2d));
+        Rectangle2D r2d = metrics.getStringBounds(getValue(), g2d);
+
+        return new UnitRectangle(0, 0, r2d.getWidth(), r2d.getHeight());
     }
 
     public FontMetrics getFontMetrics(Graphics2D g2d) {
