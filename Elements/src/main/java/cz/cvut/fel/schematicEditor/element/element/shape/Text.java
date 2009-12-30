@@ -25,10 +25,14 @@ public class Text extends Shape {
         FontMetrics metrics = g2d.getFontMetrics();
         Rectangle2D r2d = metrics.getStringBounds(getValue(), g2d);
 
+        // get x
         double x = getX().firstElement().doubleValue();
-        double y = getY().firstElement().doubleValue();
+        // get y (it is on the baseline, it is necessary to put into the top left corner)
+        double y = getY().firstElement().doubleValue() - r2d.getHeight() - metrics.getAscent();
 
-        return new UnitRectangle(x, y, r2d.getWidth(), r2d.getHeight());
+        return new UnitRectangle(x - 1, y, r2d.getWidth() + 2, r2d.getHeight() + metrics.getAscent()
+                + metrics.getDescent()
+                + 2);
     }
 
     public FontMetrics getFontMetrics(Graphics2D g2d) {
@@ -36,7 +40,8 @@ public class Text extends Shape {
     }
 
     public Text() {
-        this(new UnitPoint(0, 0), "asd");
+        this(new UnitPoint(0, 0), "Mqtlá∑†¥¥¨˙©ƒ∂ßååœ∑™¡£¢∞");
+        // this(new UnitPoint(0, 0), "Mqtlá");
     }
 
     public Text(UnitPoint start, String value) {

@@ -52,9 +52,9 @@ public class UnitRectangle extends Rectangle2D {
      * @param d 4th point.
      */
     public UnitRectangle(final UnitPoint a, final UnitPoint b, final UnitPoint c, final UnitPoint d) {
-        Rectangle2D.Double r2d = new Rectangle2D.Double();
+        Rectangle2D.Double r2d = new Rectangle2D.Double(a.getX(), a.getY(), 0, 0);
 
-        r2d.add(new Point2D.Double(a.getX(), a.getY()));
+        // r2d.add(new Point2D.Double(a.getX(), a.getY()));
         r2d.add(new Point2D.Double(b.getX(), b.getY()));
         r2d.add(new Point2D.Double(c.getX(), c.getY()));
         r2d.add(new Point2D.Double(d.getX(), d.getY()));
