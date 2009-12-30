@@ -25,7 +25,10 @@ public class Text extends Shape {
         FontMetrics metrics = g2d.getFontMetrics();
         Rectangle2D r2d = metrics.getStringBounds(getValue(), g2d);
 
-        return new UnitRectangle(0, 0, r2d.getWidth(), r2d.getHeight());
+        double x = getX().firstElement().doubleValue();
+        double y = getY().firstElement().doubleValue();
+
+        return new UnitRectangle(x, y, r2d.getWidth(), r2d.getHeight());
     }
 
     public FontMetrics getFontMetrics(Graphics2D g2d) {
