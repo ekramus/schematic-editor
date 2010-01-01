@@ -105,10 +105,10 @@ public class ParameterNode extends Node {
         }
 
         // TODO make proper combining
-        result.setWidth(p.getWidth());
-        result.setFillStyle(p.getFillStyle());
-        result.setLineStyle(p.getLineStyle());
-        result.setFont(p.getFont());
+        result.setWidth(getWidth());
+        result.setFillStyle(getFillStyle());
+        result.setLineStyle(getLineStyle());
+        result.setFont(getFont());
 
         result.setDisabled(p.isDisabled());
 
