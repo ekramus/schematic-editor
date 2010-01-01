@@ -154,7 +154,7 @@ public class ParameterNode extends Node {
     protected Node duplicate() {
         ParameterNode result = new ParameterNode();
 
-        result.setProperties(getProperties());
+        result.setProperties(getProperties().duplicate());
 
         return result;
     }

@@ -396,6 +396,8 @@ public class DisplayExport implements Export {
     private void drawShape(Graphics2D g2d, Shape shape, Color strokeColor, ElementStyle strokeStyle, Color fillColor,
             ElementStyle fillStyle) {
 
+        logger.trace("stroke: " + g2d.getStroke());
+
         if (fillStyle != ElementStyle.NONE) {
             g2d.setColor(fillColor);
             g2d.fill(shape);
