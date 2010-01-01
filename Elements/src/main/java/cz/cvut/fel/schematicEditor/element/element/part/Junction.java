@@ -46,10 +46,10 @@ public class Junction extends Element {
     }
 
     /**
-     * @see Element#isHit(Rectangle2D)
+     * @see Element#isHit(Rectangle2D, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         double x = getX().firstElement().doubleValue();
         double y = getY().firstElement().doubleValue();
 

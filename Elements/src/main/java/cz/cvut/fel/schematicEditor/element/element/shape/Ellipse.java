@@ -34,13 +34,11 @@ public class Ellipse extends Shape {
         return new UnitRectangle(getTopLeftX() - 2, getTopLeftY() - 2, getWidth() + 5, getHeight() + 5);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
+    /**
+     * @see element.Element#isHit(Rectangle2D, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         // check, whether is not within limit
         Ellipse2D e2d = new Ellipse2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight());
 

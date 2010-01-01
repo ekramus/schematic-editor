@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
@@ -34,13 +35,11 @@ public class Polygon extends Polyline {
         return ElementType.T_POLYGON;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cz.cvut.fel.schematicEditor.element.shape.Polyline#isHit(java.awt.geom.Rectangle2D.Double)
+    /**
+     * @see Polyline#isHit(Rectangle2D, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         java.awt.Polygon p = new java.awt.Polygon();
 
         Vector<Unit> xPg = getX();

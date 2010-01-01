@@ -135,7 +135,7 @@ public class ElementNode extends Node {
         return this.element;
     }
 
-    protected boolean isHit(Rectangle2D r2d) {
+    protected boolean isHit(Rectangle2D r2d, Graphics2D g2d) {
         if (isDisabled()) {
             return false;
         }
@@ -148,7 +148,7 @@ public class ElementNode extends Node {
         }
 
         // check element itself
-        return this.element.isHit(r2d);
+        return this.element.isHit(r2d, g2d);
     }
 
     protected Element startEdit(Rectangle2D.Double r2d) {

@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -125,13 +126,11 @@ public class Arc extends Ellipse {
         return Math.acos((j * j + k * k - l * l) / (2 * j * k)) / Math.PI * 180;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
+    /**
+     * @see element.Element#isHit(Rectangle2D, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         Arc2D.Double a2d = new Arc2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight(), getStartAngle(),
                 getArcAngle(), Arc2D.PIE);
         if (a2d.intersects(rectangle) || a2d.contains(rectangle)) {

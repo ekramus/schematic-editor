@@ -141,7 +141,7 @@ public class GroupNode extends Node {
      * @param rectangle
      * @return
      */
-    public boolean isHit(Rectangle2D rectangle, double zoomFactor) {
+    public boolean isHit(Rectangle2D rectangle, double zoomFactor, Graphics2D g2d) {
         if (isDisabled()) {
             return false;
         }
@@ -155,14 +155,14 @@ public class GroupNode extends Node {
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isHit(r)) {
+            if (child.isHit(r, g2d)) {
                 logger.trace("element HIT: " + child);
                 return true;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            if (child.isHit(r, 1)) {
+            if (child.isHit(r, 1, g2d)) {
                 return true;
             }
         }
@@ -208,7 +208,7 @@ public class GroupNode extends Node {
      * @param zoomFactor
      * @return <code>true</code>, if hit and deleted, else <code>false</code>.
      */
-    public boolean deleteHit(Rectangle2D.Double r2d, double zoomFactor) {
+    public boolean deleteHit(Rectangle2D.Double r2d, double zoomFactor, Graphics2D g2d) {
         if (isDisabled()) {
             return false;
         }
@@ -221,14 +221,14 @@ public class GroupNode extends Node {
 
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isHit(getTransformation().shiftInverse(r2d))) {
+            if (child.isHit(getTransformation().shiftInverse(r2d), g2d)) {
                 getChildrenElementList().remove(i);
                 return true;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            if (child.deleteHit(r2d, 1)) {
+            if (child.deleteHit(r2d, 1, g2d)) {
                 return true;
             }
         }
@@ -366,7 +366,7 @@ public class GroupNode extends Node {
      * @param point
      * @return
      */
-    public GroupNode findHit(Rectangle2D rectangle, double zoomFactor) {
+    public GroupNode findHit(Rectangle2D rectangle, double zoomFactor, Graphics2D g2d) {
         if (isDisabled()) {
             return null;
         }
@@ -380,13 +380,13 @@ public class GroupNode extends Node {
 
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
             ElementNode child = getChildrenElementList().get(i);
-            if (child.isHit(getTransformation().shiftInverse(r))) {
+            if (child.isHit(getTransformation().shiftInverse(r), g2d)) {
                 return this;
             }
         }
         for (int i = getChildrenGroupList().size() - 1; i >= 0; i--) {
             GroupNode child = getChildrenGroupList().get(i);
-            GroupNode gn = child.findHit(r, 1);
+            GroupNode gn = child.findHit(r, 1, g2d);
             if (gn != null) {
                 return gn;
             }

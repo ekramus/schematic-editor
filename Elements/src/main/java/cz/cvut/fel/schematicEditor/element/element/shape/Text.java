@@ -60,11 +60,11 @@ public class Text extends Shape {
     }
 
     /**
-     * @see element.Element#isHit(Rectangle2D.Double, double)
+     * @see element.Element#isHit(Rectangle2D.Double, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
-        // TODO Auto-generated method stub
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
+
         return false;
     }
 

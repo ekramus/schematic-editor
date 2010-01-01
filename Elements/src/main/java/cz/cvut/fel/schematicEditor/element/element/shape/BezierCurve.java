@@ -45,13 +45,11 @@ public class BezierCurve extends Shape {
         return new UnitRectangle(left - 2, top - 2, right - left + 5, bottom - top + 5);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see element.Element#isHit(java.awt.geom.cz.cvut.fel.schematicEditor.types.Point2D.Double)
+    /**
+     * @see element.Element#isHit(Rectangle2D, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         // check, whether is not within limit
         CubicCurve2D cc2d = new CubicCurve2D.Double(getStart().getX(), getStart().getY(), getControl1().getX(),
                 getControl1().getY(), getControl2().getX(), getControl2().getY(), getEnd().getX(), getEnd().getY());
