@@ -56,7 +56,7 @@ public class Part extends Element {
     }
 
     /**
-     * @see Element#getBounds()
+     * @see Element#getBounds(Graphics2D)
      */
     @Override
     public UnitRectangle getBounds(Graphics2D g2d) {
@@ -97,10 +97,10 @@ public class Part extends Element {
     }
 
     /**
-     * @see Element#isHit(java.awt.geom.Rectangle2D)
+     * @see Element#isHit(Rectangle2D, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         // part cannot be hit
         return false;
     }

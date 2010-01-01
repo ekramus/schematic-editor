@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
@@ -68,24 +69,24 @@ public class Delete extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, double, boolean)
+     *      ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException {
         if (isMouseClicked && isActive()) {
-            setManipulatedGroup(getTopNode().findHit(r2d, zoomFactor));
+            setManipulatedGroup(getTopNode().findHit(r2d, zoomFactor, g2d));
         }
         return this;
     }
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, double, boolean)
+     *      ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException {
         setActive(true);
 
         return this;

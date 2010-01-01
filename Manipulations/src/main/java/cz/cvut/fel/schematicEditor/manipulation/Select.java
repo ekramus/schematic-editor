@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
@@ -75,19 +76,19 @@ public class Select extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, double, boolean)
+     *      ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException {
         // mouse clicked and hit something
         if (isMouseClicked) {
             // some group is hit
-            if (getTopNode().isHit(r2d, zoomFactor)) {
+            if (getTopNode().isHit(r2d, zoomFactor, g2d)) {
                 logger.trace("object for SELECTION hit");
 
                 // set selected group
-                GroupNode gn = getTopNode().findHit(r2d, zoomFactor);
+                GroupNode gn = getTopNode().findHit(r2d, zoomFactor, g2d);
 
                 setManipulatedGroup(gn);
             }
@@ -101,16 +102,16 @@ public class Select extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, double, boolean)
+     *      ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClick) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClick, Graphics2D g2d) throws UnknownManipulationException {
         Manipulation result = this;
 
         // select is active AND GroupNode is already selected
-        if ((getManipulatedGroup() != null) && ((getTopNode().findHit(r2d, zoomFactor) == getManipulatedGroup()) || (getManipulatedGroup()
-                .isHit(r2d, zoomFactor)))) {
+        if ((getManipulatedGroup() != null) && ((getTopNode().findHit(r2d, zoomFactor, g2d) == getManipulatedGroup()) || (getManipulatedGroup()
+                .isHit(r2d, zoomFactor, g2d)))) {
             // select is in edit active zone
             if (getManipulatedGroup().startEdit(r2d, zoomFactor)) {
                 // create Edit manipulation
@@ -119,7 +120,7 @@ public class Select extends Manipulation {
                 edit.setActive(true);
 
                 // continue with edit manipulation start
-                edit.manipulationStart(e, r2d, manipulationQueue, zoomFactor, isMouseClick);
+                edit.manipulationStart(e, r2d, manipulationQueue, zoomFactor, isMouseClick, g2d);
 
                 result = edit;
             }
@@ -138,7 +139,7 @@ public class Select extends Manipulation {
                 move.setActive(true);
 
                 // continue with move manipulation start
-                result = move.manipulationStart(e, r2d, manipulationQueue, zoomFactor, isMouseClick);
+                result = move.manipulationStart(e, r2d, manipulationQueue, zoomFactor, isMouseClick, g2d);
             }
         }
         return result;

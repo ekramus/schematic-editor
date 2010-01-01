@@ -112,7 +112,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 // set manipulated group from select manipulation
                 copy.setManipulatedGroup(Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup());
                 copy.manipulationStop(null, null, Gui.getActiveScenePanel().getManipulationQueue(), Gui
-                        .getActiveScenePanel().getZoomFactor(), false);
+                        .getActiveScenePanel().getZoomFactor(), false, Gui.getActiveGraphics2D());
 
                 // set copy as active manipulation
                 Gui.getActiveScenePanel().setActiveManipulation(copy);
@@ -129,7 +129,7 @@ public class ScenePanelKeyListener implements KeyListener {
                 Paste paste = (Paste) ManipulationFactory.create(ManipulationType.PASTE, Gui.getActiveScenePanel()
                         .getSceneGraph().getTopNode(), e.getSource());
                 paste.manipulationStop(null, null, Gui.getActiveScenePanel().getManipulationQueue(), Gui
-                        .getActiveScenePanel().getZoomFactor(), false);
+                        .getActiveScenePanel().getZoomFactor(), false, Gui.getActiveGraphics2D());
 
                 // set paste as active manipulation
                 Gui.getActiveScenePanel().setActiveManipulation(paste);
@@ -157,8 +157,10 @@ public class ScenePanelKeyListener implements KeyListener {
 
                     // execute manipulation
                     Gui.getActiveScenePanel().setActiveManipulation(m);
-                    m.manipulationStart(null, r2d, null, Gui.getActiveScenePanel().getZoomFactor(), true);
-                    m.manipulationStop(null, r2d, null, Gui.getActiveScenePanel().getZoomFactor(), true);
+                    m.manipulationStart(null, r2d, null, Gui.getActiveScenePanel().getZoomFactor(), true, Gui
+                            .getActiveGraphics2D());
+                    m.manipulationStop(null, r2d, null, Gui.getActiveScenePanel().getZoomFactor(), true, Gui
+                            .getActiveGraphics2D());
                     Gui.getActiveScenePanel().getManipulationQueue().execute(m);
 
                     // redraw scheme and update scene graph

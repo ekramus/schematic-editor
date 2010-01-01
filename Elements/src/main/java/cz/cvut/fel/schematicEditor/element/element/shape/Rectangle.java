@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
@@ -97,13 +98,11 @@ public class Rectangle extends Polygon {
         return h;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cz.cvut.fel.schematicEditor.element.shape.Polygon#isHit(java.awt.geom.Rectangle2D.Double)
+    /**
+     * @see Polygon#isHit(Rectangle2D, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         Rectangle2D r2d = new Rectangle2D.Double(getTopLeftX(), getTopLeftY(), getWidth(), getHeight());
 
         if (r2d.intersects(rectangle) || r2d.contains(rectangle)) {

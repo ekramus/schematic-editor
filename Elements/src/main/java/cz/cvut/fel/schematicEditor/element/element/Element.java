@@ -132,10 +132,12 @@ public abstract class Element {
     /**
      * Indicates, whether given rectangle hits this element.
      *
+     *
      * @param r2d hit rectangle to check.
+     * @param g2d Graphics2D context.
      * @return Status of hit.
      */
-    public abstract boolean isHit(Rectangle2D r2d);
+    public abstract boolean isHit(Rectangle2D r2d, Graphics2D g2d);
 
     /**
      * Checks, whether given rectangle is in edit zone or not. In case it is, this <code>element</code> is returned.

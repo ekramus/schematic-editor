@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
@@ -127,11 +128,12 @@ public abstract class Manipulation {
      * @param manipulationQueue used for {@link Manipulation} history and execution.
      * @param zoomFactor zoom factor in the moment of manipulation start.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
+     * @param g2d {@link Graphics2D} context.
      * @return Pointer to manipulation or <code>null</code>, if manipulation was unsuccessful.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
     public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException;
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException;
 
     /**
      * Finishes everything at the end of manipulation correctly.
@@ -141,11 +143,12 @@ public abstract class Manipulation {
      * @param manipulationQueue used for {@link Manipulation} history and execution.
      * @param zoomFactor zoom factor in the moment of manipulation start.
      * @param isMouseClicked Indicates, whether mouse was clicked or not.
+     * @param g2d {@link Graphics2D} context.
      * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
      * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
      */
     public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException;
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException;
 
     /**
      * Replaces last manipulation <code>x</code>, <code>y</code> coordinates with given ones.

@@ -19,6 +19,7 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneProperties;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.export.DisplayExport;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesPanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners.ScenePanelKeyListener;
@@ -273,7 +274,7 @@ public class ScenePanel extends JPanel {
             boolean isMouseClicked) throws UnknownManipulationException {
         // try to finish manipulation
         Manipulation m = getActiveManipulation().manipulationStop(e, r2d, manipulationQueue, getZoomFactor(),
-                                                                  isMouseClicked);
+                                                                  isMouseClicked, Gui.getActiveGraphics2D());
         if (m != null) {
             // execute manipulation
             manipulationQueue.execute(getActiveManipulation());

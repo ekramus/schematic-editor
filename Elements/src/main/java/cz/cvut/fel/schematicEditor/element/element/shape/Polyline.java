@@ -65,10 +65,10 @@ public class Polyline extends Shape {
     }
 
     /**
-     * @see element.Element#isHit(Rectangle2D.Double)
+     * @see element.Element#isHit(Rectangle2D.Double, Graphics2D)
      */
     @Override
-    public boolean isHit(Rectangle2D rectangle) {
+    public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
         Iterator<Unit> itX = this.getX().iterator();
         Iterator<Unit> itY = this.getY().iterator();
 

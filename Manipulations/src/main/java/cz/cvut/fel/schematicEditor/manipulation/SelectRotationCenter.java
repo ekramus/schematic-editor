@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
@@ -44,11 +45,11 @@ public class SelectRotationCenter extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent,
-     *      java.awt.geom.Rectangle2D, ManipulationQueue, double, boolean)
+     *      java.awt.geom.Rectangle2D, ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException {
         // check, whether select rotation center is possible or not
         if (isActive()) {
             // add coordinate
@@ -67,11 +68,11 @@ public class SelectRotationCenter extends Manipulation {
 
     /**
      * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, double, boolean) ManipulationQueue, GroupNode, boolean)
+     *      ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException {
         return this;
     }
 

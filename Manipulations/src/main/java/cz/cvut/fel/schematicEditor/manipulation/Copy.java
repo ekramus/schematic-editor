@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
@@ -38,24 +39,22 @@ public class Copy extends Manipulation {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStart(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, double, boolean)
+     * @see Manipulation#manipulationStart(MouseEvent, Rectangle2D, ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException {
 
         // nothing to do
         return this;
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.manipulation.Manipulation#manipulationStop(MouseEvent, Rectangle2D,
-     *      ManipulationQueue, double, boolean)
+     * @see Manipulation#manipulationStop(MouseEvent, Rectangle2D, ManipulationQueue, double, boolean, Graphics2D)
      */
     @Override
     public Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked) throws UnknownManipulationException {
+            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException {
         setManipulationQueue(manipulationQueue);
 
         // nothing to do

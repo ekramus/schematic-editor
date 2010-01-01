@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.core.coreStructures;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -125,10 +126,11 @@ public class SceneGraph implements Iterable<Node> {
 
     /**
      * @param editNode the editNode to set
+     * @param g2d {@link Graphics2D} context.
      * @param zoomFactor to use.
      */
-    public void setEditNode(Rectangle2D.Double rectangle, double zoomFactor) {
-        this.editNode = this.topNode.findHit(rectangle, zoomFactor);
+    public void setEditNode(Rectangle2D.Double rectangle, double zoomFactor, Graphics2D g2d) {
+        this.editNode = this.topNode.findHit(rectangle, zoomFactor, g2d);
         fireSceneGraphUpdateEvent();
     }
 
