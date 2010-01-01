@@ -26,10 +26,6 @@ public class ElementProperties {
      */
     private Color        contourColor;
     /**
-     * Alpha level of contour color.
-     */
-    private int          contourColorAlpha;
-    /**
      * Style of fill.
      */
     private ElementStyle fillStyle;
@@ -37,10 +33,6 @@ public class ElementProperties {
      * Color of fill.
      */
     private Color        fillColor;
-    /**
-     * Alpha level of fill color.
-     */
-    private int          fillColorAlpha;
     /**
      * Font used for text displaying.
      */
@@ -53,10 +45,8 @@ public class ElementProperties {
         setContourStyle(ElementStyle.NORMAL);
         setContourLineWidth(new Pixel(1));
         setContourColor(Color.BLACK);
-        setContourColorAlpha(255);
         setFillStyle(ElementStyle.NORMAL);
         setFillColor(Color.WHITE);
-        setFillColorAlpha(255);
         setFont(new Font("Monospaced", Font.PLAIN, 13));
     }
 
@@ -106,28 +96,30 @@ public class ElementProperties {
      * @return the contourColorAlpha
      */
     public int getContourColorAlpha() {
-        return this.contourColorAlpha;
+        return this.contourColor.getAlpha();
     }
 
     /**
      * @return the fillColorAlpha
      */
     public int getFillColorAlpha() {
-        return this.fillColorAlpha;
+        return this.fillColor.getAlpha();
     }
 
     /**
      * @param contourColorAlpha the contourColorAlpha to set
      */
     public void setContourColorAlpha(int contourColorAlpha) {
-        this.contourColorAlpha = contourColorAlpha;
+        this.contourColor = new Color(this.contourColor.getRed(), this.contourColor.getGreen(), this.contourColor
+                .getBlue(), contourColorAlpha);
     }
 
     /**
      * @param fillColorAlpha the fillColorAlpha to set
      */
     public void setFillColorAlpha(int fillColorAlpha) {
-        this.fillColorAlpha = fillColorAlpha;
+        this.fillColor = new Color(this.fillColor.getRed(), this.fillColor.getGreen(), this.fillColor.getBlue(),
+                fillColorAlpha);
     }
 
     public void setContourStyle(ElementStyle contourStyle) {
