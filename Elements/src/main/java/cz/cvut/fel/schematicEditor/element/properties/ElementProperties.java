@@ -151,4 +151,24 @@ public class ElementProperties {
     public Font getFont() {
         return this.font;
     }
+
+    /**
+     * Duplicates {@link ElementProperties} instance.
+     *
+     * @return duplicate instance of this {@link ElementProperties}.
+     */
+    public ElementProperties duplicate() {
+        ElementProperties result = new ElementProperties();
+
+        result.setContourColor(new Color(getContourColor().getRGB()));
+        result.setContourColorAlpha(getContourColorAlpha());
+        result.setContourLineWidth(getContourLineWidth().duplicate());
+        result.setContourStyle(getContourStyle());
+        result.setFillColor(new Color(getFillColor().getRGB()));
+        result.setFillColorAlpha(getFillColorAlpha());
+        result.setFillStyle(getFillStyle());
+        result.setFont(new Font(getFont().getName(), getFont().getStyle(), getFont().getSize()));
+
+        return result;
+    }
 }
