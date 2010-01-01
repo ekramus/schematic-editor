@@ -94,7 +94,6 @@ public class GeneralPropertiesPanel extends JPanel {
      * Fill {@link JCheckBox} instance.
      */
     private JCheckBox                     fillCheckBox            = null;
-
     /**
      * Fill color {@link JButton} instance.
      */
@@ -115,6 +114,14 @@ public class GeneralPropertiesPanel extends JPanel {
      * Fill {@link JPanel} instance.
      */
     private JPanel                        fillPanel               = null;
+    /**
+     * Font {@link JButton} instance.
+     */
+    private JButton                       fontButton              = null;
+    /**
+     * Text {@link JPanel} instance.
+     */
+    private JPanel                        textPanel               = null;
     /**
      * Details {@link JPanel} instance.
      */
@@ -197,6 +204,27 @@ public class GeneralPropertiesPanel extends JPanel {
     }
 
     /**
+     * Getter for <code>textPanel</code>.
+     *
+     * @return <code>textPanel</code> instance.
+     */
+    private final JPanel getTextPanel() {
+        if (this.textPanel == null) {
+            // create and set JPanel instance
+            this.textPanel = new JPanel();
+            this.textPanel.setBorder(BorderFactory.createTitledBorder("Text"));
+
+            // attach MiG layout to panel
+            this.textPanel.setLayout(new MigLayout("wrap 2"));
+
+            // add components in left to right order
+            this.textPanel.add(new JLabel("set font: "));
+            this.textPanel.add(getFontButton());
+        }
+        return this.textPanel;
+    }
+
+    /**
      * Getter for {@link GeneralPropertiesPanel} singleton instance.
      *
      * @return {@link GeneralPropertiesPanel} singleton instance.
@@ -210,6 +238,7 @@ public class GeneralPropertiesPanel extends JPanel {
             propertiesToolBar.add(Box.createVerticalStrut(20));
             propertiesToolBar.add(propertiesToolBar.getContourPanel(), "width 210");
             propertiesToolBar.add(propertiesToolBar.getFillPanel(), "width 210");
+            propertiesToolBar.add(propertiesToolBar.getTextPanel(), "width 210");
             propertiesToolBar.add(propertiesToolBar.getDetailsPanel(), "width 210");
         }
         return propertiesToolBar;
@@ -250,6 +279,8 @@ public class GeneralPropertiesPanel extends JPanel {
         getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
         getNamePanelTextField()
                 .setText(Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getId());
+        // TODO fix text implementation
+        // getFontButton().setText(ep);
 
         logger.debug("Contour style: " + ep.getContourStyle());
     }
@@ -391,5 +422,16 @@ public class GeneralPropertiesPanel extends JPanel {
         g2d.fillRect(0, 0, 25, 25);
 
         return new ImageIcon(result);
+    }
+
+    /**
+     * @return the fontButton
+     */
+    private JButton getFontButton() {
+        if (this.fontButton == null) {
+            this.fontButton = new JButton();
+            this.fontButton.setText("Font");
+        }
+        return this.fontButton;
     }
 }
