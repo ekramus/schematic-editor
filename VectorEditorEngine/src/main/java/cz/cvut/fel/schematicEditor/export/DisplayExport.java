@@ -2,6 +2,7 @@ package cz.cvut.fel.schematicEditor.export;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
@@ -275,8 +276,9 @@ public class DisplayExport implements Export {
 
             case T_TEXT:
                 Text text = (Text) elementNode.getElement();
-                drawText(text.getValue(), new UnitPoint(text.getX().firstElement(), text.getY().firstElement()),
-                         nodeG2D);
+                drawText(nodeG2D, text.getValue(),
+                         new UnitPoint(text.getX().firstElement(), text.getY().firstElement()), parameterNode
+                                 .getColor(), parameterNode.getFont());
                 break;
 
             case T_WIRE:
@@ -446,10 +448,11 @@ public class DisplayExport implements Export {
         drawShape(nodeG2D, e2d, Color.RED, ElementStyle.NORMAL, Color.RED, ElementStyle.NORMAL);
     }
 
-    private void drawText(String text, UnitPoint coordinates, Graphics2D nodeG2D) {
+    private void drawText(Graphics2D nodeG2D, String text, UnitPoint coordinates, Color color, Font font) {
         logger.trace("drawing text <" + text + "> at coordinates: " + coordinates);
 
-        nodeG2D.setColor(Color.BLACK);
+        nodeG2D.setColor(color);
+        nodeG2D.setFont(font);
         nodeG2D.drawString(text, coordinates.getUnitX().floatValue(), coordinates.getUnitY().floatValue());
     }
 

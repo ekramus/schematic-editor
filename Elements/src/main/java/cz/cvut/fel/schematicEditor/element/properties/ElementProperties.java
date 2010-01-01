@@ -4,6 +4,7 @@
 package cz.cvut.fel.schematicEditor.element.properties;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -40,6 +41,10 @@ public class ElementProperties {
      * Alpha level of fill color.
      */
     private int          fillColorAlpha;
+    /**
+     * Font used for text displaying.
+     */
+    private Font         font = null;
 
     /**
      *
@@ -52,6 +57,7 @@ public class ElementProperties {
         setFillStyle(ElementStyle.NORMAL);
         setFillColor(Color.WHITE);
         setFillColorAlpha(255);
+        setFont(new Font("Monospaced", Font.PLAIN, 13));
     }
 
     /**
@@ -62,8 +68,7 @@ public class ElementProperties {
     }
 
     /**
-     * @param contourLineWidth
-     *            the contourLineWidth to set
+     * @param contourLineWidth the contourLineWidth to set
      */
     public final void setContourLineWidth(Unit contourLineWidth) {
         this.contourLineWidth = contourLineWidth;
@@ -77,8 +82,7 @@ public class ElementProperties {
     }
 
     /**
-     * @param contourColor
-     *            the contourColor to set
+     * @param contourColor the contourColor to set
      */
     public final void setContourColor(Color contourColor) {
         this.contourColor = contourColor;
@@ -92,8 +96,7 @@ public class ElementProperties {
     }
 
     /**
-     * @param fillColor
-     *            the fillColor to set
+     * @param fillColor the fillColor to set
      */
     public final void setFillColor(Color fillColor) {
         this.fillColor = fillColor;
@@ -114,16 +117,14 @@ public class ElementProperties {
     }
 
     /**
-     * @param contourColorAlpha
-     *            the contourColorAlpha to set
+     * @param contourColorAlpha the contourColorAlpha to set
      */
     public void setContourColorAlpha(int contourColorAlpha) {
         this.contourColorAlpha = contourColorAlpha;
     }
 
     /**
-     * @param fillColorAlpha
-     *            the fillColorAlpha to set
+     * @param fillColorAlpha the fillColorAlpha to set
      */
     public void setFillColorAlpha(int fillColorAlpha) {
         this.fillColorAlpha = fillColorAlpha;
@@ -134,14 +135,28 @@ public class ElementProperties {
     }
 
     public ElementStyle getContourStyle() {
-        return contourStyle;
+        return this.contourStyle;
     }
 
     public ElementStyle getFillStyle() {
-        return fillStyle;
+        return this.fillStyle;
     }
 
     public void setFillStyle(ElementStyle fillStyle) {
         this.fillStyle = fillStyle;
+    }
+
+    /**
+     * @param font the font to set
+     */
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
+    /**
+     * @return the font
+     */
+    public Font getFont() {
+        return this.font;
     }
 }

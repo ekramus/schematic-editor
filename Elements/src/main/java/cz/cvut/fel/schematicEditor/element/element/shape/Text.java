@@ -1,7 +1,6 @@
 package cz.cvut.fel.schematicEditor.element.element.shape;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -14,7 +13,6 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 public class Text extends Shape {
 
     private String value = null;
-    private Font   font  = null;
     private Color  color = null;
 
     /**
@@ -59,24 +57,6 @@ public class Text extends Shape {
 
     public String getValue() {
         return this.value;
-    }
-
-    /**
-     * @param font the font to set
-     */
-    public void setFont(Font font) {
-        if (font == null) {
-            this.font = new Font("Monospaced", Font.PLAIN, 13);
-        } else {
-            this.font = font;
-        }
-    }
-
-    /**
-     * @return the font
-     */
-    public Font getFont() {
-        return this.font;
     }
 
     /**

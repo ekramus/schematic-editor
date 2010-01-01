@@ -1,5 +1,5 @@
-<cz.cvut.fel.schematicEditor.graphNode.PartNode>
-  <id>1232451374843</id>
+<PartNode>
+  <id>1250446573140</id>
   <disabled>false</disabled>
   <element class="cz.cvut.fel.schematicEditor.element.element.part.Part">
     <editedCoordinateIndex>0</editedCoordinateIndex>
@@ -7,109 +7,84 @@
     <y/>
     <elementModificator>NO_MODIFICATION</elementModificator>
     <connectorVector/>
-    <partProperties class="cz.cvut.fel.schematicEditor.element.properties.partProperties.InductorProperties">
-      <partDescription>Inductor</partDescription>
-      <partVariant>L</partVariant>
-      <partPropertiesMap>
-        <entry>
-          <string>connectorP</string>
-          <cz.cvut.fel.schematicEditor.support.Property>
-            <key class="string">connectorP</key>
-            <value class="string"></value>
-            <description></description>
-          </cz.cvut.fel.schematicEditor.support.Property>
-        </entry>
-        <entry>
-          <string>initial_current</string>
-          <cz.cvut.fel.schematicEditor.support.Property>
-            <key class="string">initial_current</key>
-            <value class="string"></value>
-            <description></description>
-          </cz.cvut.fel.schematicEditor.support.Property>
-        </entry>
-        <entry>
-          <string>connectorM</string>
-          <cz.cvut.fel.schematicEditor.support.Property>
-            <key class="string">connectorM</key>
-            <value class="string"></value>
-            <description></description>
-          </cz.cvut.fel.schematicEditor.support.Property>
-        </entry>
-        <entry>
-          <string>name</string>
-          <cz.cvut.fel.schematicEditor.support.Property>
-            <key class="string">name</key>
-            <value class="string"></value>
-            <description></description>
-          </cz.cvut.fel.schematicEditor.support.Property>
-        </entry>
-        <entry>
-          <string>value</string>
-          <cz.cvut.fel.schematicEditor.support.Property>
-            <key class="string">value</key>
-            <value class="string"></value>
-            <description></description>
-          </cz.cvut.fel.schematicEditor.support.Property>
-        </entry>
-      </partPropertiesMap>
-      <netlistPrototype>l&lt;name&gt; &lt;connectorP&gt; &lt;connectorM&gt; &lt;value&gt; [ic=&lt;initial_current&gt;]</netlistPrototype>
+    <partProperties class="cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.InductorProperties">
+      <netlistPrototype>l&lt;name&gt; &lt;n1&gt; &lt;n2&gt; &lt;value&gt;</netlistPrototype>
+      <partProperties>
+        <categoriesForPropertiesArray>
+          <cz.cvut.fel.schematicEditor.parts.PropertiesCategory>
+            <key>general</key>
+            <propertiesForCategory>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">value</key>
+                <value class="string"></value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">name</key>
+                <value class="string"></value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">n1</key>
+                <value class="string"></value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">n2</key>
+                <value class="string"></value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+            </propertiesForCategory>
+          </cz.cvut.fel.schematicEditor.parts.PropertiesCategory>
+        </categoriesForPropertiesArray>
+      </partProperties>
     </partProperties>
-    <rotationCenter>
-      <unitX class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
-        <value>0.0</value>
-        <doubleFactor>1.0</doubleFactor>
-      </unitX>
-      <unitY class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
-        <value>0.0</value>
-        <doubleFactor>1.0</doubleFactor>
-      </unitY>
-    </rotationCenter>
   </element>
   <elementType>T_PART</elementType>
   <edited>false</edited>
   <partGroupNode>
-    <id>1232451374843</id>
+    <id>1250446573140</id>
     <disabled>false</disabled>
     <childrenGroupList>
-      <cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-        <id>1232451374859</id>
+      <GroupNode>
+        <id>1250446573156</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
-            <id>1232451374859</id>
+          <ShapeNode>
+            <id>1250446573156</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.Line">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>220.0</value>
+                <Pixel>
+                  <value>1.44</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>240.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>8.639999999999999</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </x>
               <y>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </y>
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <elementType>T_LINE</elementType>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
+          </ShapeNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1232451374859</id>
+          <id>1250446573156</id>
           <disabled>false</disabled>
           <color>
             <red>0</red>
@@ -123,69 +98,68 @@
             <blue>255</blue>
             <alpha>255</alpha>
           </fill>
-          <width class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
-            <value>1.0</value>
-            <doubleFactor>1.0</doubleFactor>
+          <width class="Pixel">
+            <value>10.0</value>
+            <doubleFactor>0.072</doubleFactor>
           </width>
         </chidrenParameterNode>
-      </cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-      <cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-        <id>1232451374859</id>
+      </GroupNode>
+      <GroupNode>
+        <id>1250446573156</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
-            <id>1232451374859</id>
+          <ShapeNode>
+            <id>1250446573156</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>240.0</value>
+                <Pixel>
+                  <value>8.639999999999999</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>270.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>270.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>240.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>8.639999999999999</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </x>
               <y>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>210.0</value>
+                <Pixel>
+                  <value>19.439999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>170.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>12.239999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </y>
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <elementType>T_ARC_SEGMENT</elementType>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
+          </ShapeNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1232451374859</id>
+          <id>1250446573156</id>
           <disabled>false</disabled>
-          <fillStyle>NONE</fillStyle>
           <color>
             <red>0</red>
             <green>0</green>
@@ -196,71 +170,70 @@
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
-            <alpha>255</alpha>
+            <alpha>0</alpha>
           </fill>
-          <width class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
-            <value>1.0</value>
-            <doubleFactor>1.0</doubleFactor>
+          <width class="Pixel">
+            <value>10.0</value>
+            <doubleFactor>0.072</doubleFactor>
           </width>
         </chidrenParameterNode>
-      </cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-      <cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-        <id>1232451374859</id>
+      </GroupNode>
+      <GroupNode>
+        <id>1250446573156</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
-            <id>1232451374859</id>
+          <ShapeNode>
+            <id>1250446573156</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>270.0</value>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>300.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>23.04</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>300.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>23.04</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>270.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </x>
               <y>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>210.0</value>
+                <Pixel>
+                  <value>19.439999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>170.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>12.239999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </y>
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <elementType>T_ARC_SEGMENT</elementType>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
+          </ShapeNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1232451374859</id>
+          <id>1250446573156</id>
           <disabled>false</disabled>
-          <fillStyle>NONE</fillStyle>
           <color>
             <red>0</red>
             <green>0</green>
@@ -271,68 +244,67 @@
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
-            <alpha>255</alpha>
+            <alpha>0</alpha>
           </fill>
-          <width class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel" reference="../../../cz.cvut.fel.schematicEditor.graphNode.GroupNode[2]/chidrenParameterNode/width"/>
+          <width class="Pixel" reference="../../../GroupNode[2]/chidrenParameterNode/width"/>
         </chidrenParameterNode>
-      </cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-      <cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-        <id>1232451374859</id>
+      </GroupNode>
+      <GroupNode>
+        <id>1250446573156</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
-            <id>1232451374859</id>
+          <ShapeNode>
+            <id>1250446573156</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>300.0</value>
+                <Pixel>
+                  <value>23.04</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>330.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>30.24</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>330.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>30.24</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>300.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>23.04</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </x>
               <y>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>210.0</value>
+                <Pixel>
+                  <value>19.439999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>170.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>12.239999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </y>
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <elementType>T_ARC_SEGMENT</elementType>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
+          </ShapeNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1232451374859</id>
+          <id>1250446573156</id>
           <disabled>false</disabled>
-          <fillStyle>NONE</fillStyle>
           <color>
             <red>0</red>
             <green>0</green>
@@ -343,68 +315,67 @@
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
-            <alpha>255</alpha>
+            <alpha>0</alpha>
           </fill>
-          <width class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel" reference="../../../cz.cvut.fel.schematicEditor.graphNode.GroupNode[2]/chidrenParameterNode/width"/>
+          <width class="Pixel" reference="../../../GroupNode[2]/chidrenParameterNode/width"/>
         </chidrenParameterNode>
-      </cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-      <cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-        <id>1232451374859</id>
+      </GroupNode>
+      <GroupNode>
+        <id>1250446573156</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
-            <id>1232451374859</id>
+          <ShapeNode>
+            <id>1250446573156</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.ArcSegment">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>330.0</value>
+                <Pixel>
+                  <value>30.24</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>360.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>37.44</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>360.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>37.44</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>330.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>30.24</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </x>
               <y>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>210.0</value>
+                <Pixel>
+                  <value>19.439999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>170.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>12.239999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </y>
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <elementType>T_ARC_SEGMENT</elementType>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
+          </ShapeNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1232451374859</id>
+          <id>1250446573156</id>
           <disabled>false</disabled>
-          <fillStyle>NONE</fillStyle>
           <color>
             <red>0</red>
             <green>0</green>
@@ -415,50 +386,50 @@
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
-            <alpha>255</alpha>
+            <alpha>0</alpha>
           </fill>
-          <width class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel" reference="../../../cz.cvut.fel.schematicEditor.graphNode.GroupNode[2]/chidrenParameterNode/width"/>
+          <width class="Pixel" reference="../../../GroupNode[2]/chidrenParameterNode/width"/>
         </chidrenParameterNode>
-      </cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-      <cz.cvut.fel.schematicEditor.graphNode.GroupNode>
-        <id>1232451374859</id>
+      </GroupNode>
+      <GroupNode>
+        <id>1250446573140</id>
         <disabled>false</disabled>
         <childrenGroupList/>
         <childrenElementList>
-          <cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
-            <id>1232451374859</id>
+          <ShapeNode>
+            <id>1250446573156</id>
             <disabled>false</disabled>
             <element class="cz.cvut.fel.schematicEditor.element.element.shape.Line">
               <editedCoordinateIndex>0</editedCoordinateIndex>
               <x>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>360.0</value>
+                <Pixel>
+                  <value>37.44</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>380.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>44.63999999999999</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </x>
               <y>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-                  <value>190.0</value>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
                   <doubleFactor>1.0</doubleFactor>
-                </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
+                </Pixel>
               </y>
               <elementModificator>NO_MODIFICATION</elementModificator>
             </element>
             <elementType>T_LINE</elementType>
             <edited>false</edited>
-          </cz.cvut.fel.schematicEditor.graphNode.ShapeNode>
+          </ShapeNode>
         </childrenElementList>
         <childrenTransformationList/>
         <chidrenParameterNode>
-          <id>1232451374859</id>
+          <id>1250446573156</id>
           <disabled>false</disabled>
           <color>
             <red>0</red>
@@ -472,17 +443,14 @@
             <blue>255</blue>
             <alpha>255</alpha>
           </fill>
-          <width class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
-            <value>1.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </width>
+          <width class="Pixel" reference="../../../GroupNode/chidrenParameterNode/width"/>
         </chidrenParameterNode>
-      </cz.cvut.fel.schematicEditor.graphNode.GroupNode>
+      </GroupNode>
     </childrenGroupList>
     <childrenElementList/>
     <childrenTransformationList/>
     <chidrenParameterNode>
-      <id>1232451374843</id>
+      <id>1250446573140</id>
       <disabled>false</disabled>
       <color>
         <red>0</red>
@@ -496,70 +464,70 @@
         <blue>255</blue>
         <alpha>255</alpha>
       </fill>
-      <width class="cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel">
+      <width class="Pixel">
         <value>1.0</value>
-        <doubleFactor>1.0</doubleFactor>
+        <doubleFactor>0.072</doubleFactor>
       </width>
     </chidrenParameterNode>
   </partGroupNode>
   <partConnectors>
-    <cz.cvut.fel.schematicEditor.graphNode.PinNode>
-      <id>1232451374843</id>
+    <PinNode>
+      <id>1250446573140</id>
       <disabled>false</disabled>
       <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
         <editedCoordinateIndex>0</editedCoordinateIndex>
-        <x>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>220.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>220.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-        </x>
-        <y>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>190.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>190.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-        </y>
+              <x>
+                <Pixel>
+                  <value>1.44</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>1.44</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>15.839999999999998</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
         <elementModificator>NO_MODIFICATION</elementModificator>
       </element>
       <edited>false</edited>
-    </cz.cvut.fel.schematicEditor.graphNode.PinNode>
-    <cz.cvut.fel.schematicEditor.graphNode.PinNode>
-      <id>1232451374843</id>
+    </PinNode>
+    <PinNode>
+      <id>1250446573140</id>
       <disabled>false</disabled>
       <element class="cz.cvut.fel.schematicEditor.element.element.part.Pin">
         <editedCoordinateIndex>0</editedCoordinateIndex>
-        <x>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>380.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>380.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-        </x>
-        <y>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>190.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-          <cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-            <value>190.0</value>
-            <doubleFactor>1.0</doubleFactor>
-          </cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel>
-        </y>
+              <x>
+                <Pixel>
+                  <value>44.63999999999999</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>44.63999999999999</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>15.839999999999998</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+                <Pixel>
+                  <value>15.839999999999998</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
         <elementModificator>NO_MODIFICATION</elementModificator>
       </element>
       <edited>false</edited>
-    </cz.cvut.fel.schematicEditor.graphNode.PinNode>
+    </PinNode>
   </partConnectors>
-</cz.cvut.fel.schematicEditor.graphNode.PartNode>
+</PartNode>
