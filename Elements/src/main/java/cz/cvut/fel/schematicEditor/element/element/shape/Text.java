@@ -60,11 +60,13 @@ public class Text extends Shape {
     }
 
     /**
-     * @see element.Element#isHit(Rectangle2D.Double, Graphics2D)
+     * @see Element#isHit(Rectangle2D, Graphics2D)
      */
     @Override
     public boolean isHit(Rectangle2D rectangle, Graphics2D g2d) {
-
+        if (getBounds(g2d).contains(rectangle)) {
+            return true;
+        }
         return false;
     }
 
