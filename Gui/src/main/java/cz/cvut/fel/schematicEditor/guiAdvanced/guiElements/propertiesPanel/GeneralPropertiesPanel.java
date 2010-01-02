@@ -20,6 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.properties.ElementProperties;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
@@ -29,8 +30,8 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.liste
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillCheckBoxListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorAlphaSliderChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorButtonActionListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FontApplyButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.LineWidthComboBoxActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.TextApplyButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.resources.PropertiesToolBarResources;
 
 /**
@@ -110,15 +111,19 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * Font apply {@link JButton} instance.
      */
-    private JButton                       fontApplyButton         = null;
+    private JButton                       textApplyButton         = null;
     /**
-     * Font name {@link JTextField} instance.
+     * Text font name {@link JTextField} instance.
      */
     private JTextField                    textFontTextField       = null;
     /**
-     * Font size {@link JTextField} instance.
+     * Text font size {@link JTextField} instance.
      */
     private JTextField                    textSizeTextField       = null;
+    /**
+     * Text value {@link JTextField} instance.
+     */
+    private JTextField                    textValueTextField      = null;
     /**
      * Text {@link JPanel} instance.
      */
@@ -219,11 +224,13 @@ public class GeneralPropertiesPanel extends JPanel {
             this.textPanel.setLayout(new MigLayout("wrap 2"));
 
             // add components in left to right order
+            this.textPanel.add(new JLabel("value: "));
+            this.textPanel.add(getTextValueTextField());
             this.textPanel.add(new JLabel("name: "));
             this.textPanel.add(getTextFontTextField());
             this.textPanel.add(new JLabel("size: "));
-            this.textPanel.add(geTextSizeTextField());
-            this.textPanel.add(getFontApplyButton(), "span 2");
+            this.textPanel.add(getTextSizeTextField());
+            this.textPanel.add(getTextApplyButton());
         }
         return this.textPanel;
     }
@@ -286,7 +293,9 @@ public class GeneralPropertiesPanel extends JPanel {
         getNamePanelTextField().setText(
                                         Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getId());
         getTextFontTextField().setText(ep.getFont().getFontName());
-        geTextSizeTextField().setText(Integer.toString(ep.getFont().getSize()));
+        getTextSizeTextField().setText(Integer.toString(ep.getFont().getSize()));
+        getTextValueTextField().setText(
+                                        ((Text) Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getChildrenElementList().getFirst().getElement()).getValue());
 
         logger.debug("Contour style: " + ep.getContourStyle());
     }
@@ -438,15 +447,15 @@ public class GeneralPropertiesPanel extends JPanel {
     }
 
     /**
-     * @return the fontApplyButton
+     * @return the textApplyButton
      */
-    private JButton getFontApplyButton() {
-        if (this.fontApplyButton == null) {
-            this.fontApplyButton = new JButton();
-            this.fontApplyButton.addActionListener(new FontApplyButtonActionListener(
-                    this.fontApplyButton));
+    private JButton getTextApplyButton() {
+        if (this.textApplyButton == null) {
+            this.textApplyButton = new JButton();
+            this.textApplyButton.addActionListener(new TextApplyButtonActionListener(
+                    this.textApplyButton));
         }
-        return this.fontApplyButton;
+        return this.textApplyButton;
     }
 
     /**
@@ -457,7 +466,7 @@ public class GeneralPropertiesPanel extends JPanel {
             this.textValueTextField = new JTextField();
             this.textValueTextField.setPreferredSize(new Dimension(150, 20));
         }
-        return this.ValueFontTextField;
+        return this.textValueTextField;
     }
 
     /**
@@ -474,7 +483,7 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * @return the textSizeTextField.
      */
-    public JTextField geTextSizeTextField() {
+    public JTextField getTextSizeTextField() {
         if (this.textSizeTextField == null) {
             this.textSizeTextField = new JTextField();
             this.textSizeTextField.setPreferredSize(new Dimension(150, 20));
