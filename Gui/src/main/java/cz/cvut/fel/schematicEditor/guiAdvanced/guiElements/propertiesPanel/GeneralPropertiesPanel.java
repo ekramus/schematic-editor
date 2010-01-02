@@ -29,13 +29,13 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.liste
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillCheckBoxListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorAlphaSliderChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorButtonActionListener;
-import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FontButtonActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FontApplyButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.LineWidthComboBoxActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.resources.PropertiesToolBarResources;
 
 /**
  * This class implements properties tool bar.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class GeneralPropertiesPanel extends JPanel {
@@ -59,16 +59,8 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * Contour width predefined values.
      */
-    private static final String[]         CONTOUR_WIDTH           = { "1 px",
-            "2 px",
-            "3 px",
-            "4 px",
-            "5 px",
-            "6 px",
-            "7 px",
-            "8 px",
-            "9 px",
-            "10 px"                                              };
+    private static final String[]         CONTOUR_WIDTH           = { "1 px", "2 px", "3 px",
+            "4 px", "5 px", "6 px", "7 px", "8 px", "9 px", "10 px" };
     /**
      * Value for maximum alpha value (minimal transparency).
      */
@@ -116,9 +108,17 @@ public class GeneralPropertiesPanel extends JPanel {
      */
     private JPanel                        fillPanel               = null;
     /**
-     * Font {@link JButton} instance.
+     * Font apply {@link JButton} instance.
      */
-    private JButton                       fontButton              = null;
+    private JButton                       fontApplyButton         = null;
+    /**
+     * Font name {@link JTextField} instance.
+     */
+    private JTextField                    textFontTextField       = null;
+    /**
+     * Font size {@link JTextField} instance.
+     */
+    private JTextField                    textSizeTextField       = null;
     /**
      * Text {@link JPanel} instance.
      */
@@ -139,7 +139,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>contourPanel</code>.
-     *
+     * 
      * @return <code>contourPanel</code> instance.
      */
     private final JPanel getContourPanel() {
@@ -163,7 +163,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>fillPanel</code>.
-     *
+     * 
      * @return <code>fillPanel</code> instance.
      */
     private final JPanel getFillPanel() {
@@ -185,7 +185,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>detailsPanel</code>.
-     *
+     * 
      * @return <code>detailsPanel</code> instance.
      */
     private final JPanel getDetailsPanel() {
@@ -206,7 +206,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>textPanel</code>.
-     *
+     * 
      * @return <code>textPanel</code> instance.
      */
     private final JPanel getTextPanel() {
@@ -220,16 +220,17 @@ public class GeneralPropertiesPanel extends JPanel {
 
             // add components in left to right order
             this.textPanel.add(new JLabel("name: "));
-            this.textPanel.add(getFontNameTextField());
+            this.textPanel.add(getTextFontTextField());
             this.textPanel.add(new JLabel("size: "));
-            this.textPanel.add(getFontSizeTextField());
+            this.textPanel.add(geTextSizeTextField());
+            this.textPanel.add(getFontApplyButton(), "span 2");
         }
         return this.textPanel;
     }
 
     /**
      * Getter for {@link GeneralPropertiesPanel} singleton instance.
-     *
+     * 
      * @return {@link GeneralPropertiesPanel} singleton instance.
      */
     public static GeneralPropertiesPanel getInstance() {
@@ -249,7 +250,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for text filed on name panel.
-     *
+     * 
      * @return Instance of element name text field.
      */
     private JTextField getNamePanelTextField() {
@@ -276,26 +277,29 @@ public class GeneralPropertiesPanel extends JPanel {
         getContourWidthComboBox().setSelectedItem(String.valueOf(ep.getContourLineWidth()));
         getContourCheckBox().setSelected(ep.getContourStyle() == ElementStyle.NONE ? false : true);
         getFillCheckBox().setSelected(ep.getFillStyle() == ElementStyle.NONE ? false : true);
-        getContourColorButton().setIcon(getColorIcon(ep.getContourColor(), ep.getContourColorAlpha()));
+        getContourColorButton().setIcon(
+                                        getColorIcon(ep.getContourColor(),
+                                                     ep.getContourColorAlpha()));
         getFillColorButton().setIcon(getColorIcon(ep.getFillColor(), ep.getFillColorAlpha()));
         getContourColorAlphaSlider().setValue(ep.getContourColorAlpha());
         getFillColorAlphaSlider().setValue(ep.getFillColorAlpha());
-        getNamePanelTextField()
-                .setText(Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getId());
-        // TODO fix text implementation
-        // getFontButton().setText(ep);
+        getNamePanelTextField().setText(
+                                        Gui.getActiveScenePanel().getActiveManipulation().getManipulatedGroup().getId());
+        getTextFontTextField().setText(ep.getFont().getFontName());
+        geTextSizeTextField().setText(Integer.toString(ep.getFont().getSize()));
 
         logger.debug("Contour style: " + ep.getContourStyle());
     }
 
     /**
      * Getter for <code>contourCheckBox</code>.
-     *
+     * 
      * @return <code>contourCheckBox</code> instance.
      */
     private JCheckBox getContourCheckBox() {
         if (this.contourCheckBox == null) {
-            this.contourCheckBox = new JCheckBox(PropertiesToolBarResources.CONTOUR_CHECK_BOX.getText());
+            this.contourCheckBox = new JCheckBox(
+                    PropertiesToolBarResources.CONTOUR_CHECK_BOX.getText());
             this.contourCheckBox.setSelected(true);
             this.contourCheckBox.addActionListener(new ContourCheckBoxListener(this.contourCheckBox));
         }
@@ -304,7 +308,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>contourColorAlphaSlider</code>.
-     *
+     * 
      * @return <code>contourColorAlphaSlider</code> instance.
      */
     private JSlider getContourColorAlphaSlider() {
@@ -319,7 +323,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>fillCheckBox</code> instance.
-     *
+     * 
      * @return <code>fillCheckBox</code> instance.
      */
     private JCheckBox getFillCheckBox() {
@@ -335,7 +339,7 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>fillColorAlphaSlider</code>.
-     *
+     * 
      * @return <code>fillColorAlphaSlider</code> instance.
      */
     private JSlider getFillColorAlphaSlider() {
@@ -351,57 +355,63 @@ public class GeneralPropertiesPanel extends JPanel {
 
     /**
      * Getter for <code>contourWidthComboBox</code>.
-     *
+     * 
      * @return <code>contourWidthComboBox</code> instance.
      */
     private final JComboBox getContourWidthComboBox() {
         if (this.contourWidthComboBox == null) {
             this.contourWidthComboBox = new JComboBox(CONTOUR_WIDTH);
             this.contourWidthComboBox.setEditable(true);
-            this.contourWidthComboBox.addActionListener(new LineWidthComboBoxActionListener(this.contourWidthComboBox));
+            this.contourWidthComboBox.addActionListener(new LineWidthComboBoxActionListener(
+                    this.contourWidthComboBox));
         }
         return this.contourWidthComboBox;
     }
 
     /**
      * Getter for <code>contourColorButton</code>.
-     *
+     * 
      * @return <code>contourColorButton</code> instance.
      */
     private final JButton getContourColorButton() {
         if (this.contourColorButton == null) {
             this.contourColorButton = new JButton();
             // this.contourColorButton.setText(PropertiesToolBarResources.CONTOUR_COLOR_BTN.getText());
-            this.contourColorButton.setIcon(getColorIcon(Gui.getActiveScenePanel().getSceneProperties()
-                    .getSceneElementProperties().getContourColor(), Gui.getActiveScenePanel().getSceneProperties()
-                    .getSceneElementProperties().getContourColorAlpha()));
-            this.contourColorButton.addActionListener(new ContourColorButtonActionListener(this.contourColorButton));
+            this.contourColorButton.setIcon(getColorIcon(
+                                                         Gui.getActiveScenePanel().getSceneProperties().getSceneElementProperties().getContourColor(),
+                                                         Gui.getActiveScenePanel().getSceneProperties().getSceneElementProperties().getContourColorAlpha()));
+            this.contourColorButton.addActionListener(new ContourColorButtonActionListener(
+                    this.contourColorButton));
         }
         return this.contourColorButton;
     }
 
     /**
      * Getter for <code>fillColorButton</code>.
-     *
+     * 
      * @return <code>fillColorButton</code> instance.
      */
     private JButton getFillColorButton() {
         if (this.fillColorButton == null) {
             this.fillColorButton = new JButton();
             // this.fillColorButton.setText(PropertiesToolBarResources.FILL_COLOR_BTN.getText());
-            this.fillColorButton.setIcon(getColorIcon(Gui.getActiveScenePanel().getSceneProperties()
-                    .getSceneElementProperties().getFillColor(), Gui.getActiveScenePanel().getSceneProperties()
-                    .getSceneElementProperties().getFillColorAlpha()));
-            this.fillColorButton.addActionListener(new FillColorButtonActionListener(this.fillColorButton));
+            this.fillColorButton.setIcon(getColorIcon(
+                                                      Gui.getActiveScenePanel().getSceneProperties().getSceneElementProperties().getFillColor(),
+                                                      Gui.getActiveScenePanel().getSceneProperties().getSceneElementProperties().getFillColorAlpha()));
+            this.fillColorButton.addActionListener(new FillColorButtonActionListener(
+                    this.fillColorButton));
         }
         return this.fillColorButton;
     }
 
     /**
-     * Getter for image representing selected color on button. TODO Should be moved into some adequate package.
-     *
-     * @param color color to be present on image.
-     * @param alpha alpha of given color.
+     * Getter for image representing selected color on button. TODO Should be moved into some
+     * adequate package.
+     * 
+     * @param color
+     *            color to be present on image.
+     * @param alpha
+     *            alpha of given color.
      * @return Image with given color.
      */
     @Deprecated
@@ -428,14 +438,47 @@ public class GeneralPropertiesPanel extends JPanel {
     }
 
     /**
-     * @return the fontButton
+     * @return the fontApplyButton
      */
-    private JButton getFontNameTextField() {
-        if (this.fontButton == null) {
-            this.fontButton = new JButton();
-            this.fontButton.setText("Font");
-            this.fontButton.addActionListener(new FontButtonActionListener(this.fontButton));
+    private JButton getFontApplyButton() {
+        if (this.fontApplyButton == null) {
+            this.fontApplyButton = new JButton();
+            this.fontApplyButton.addActionListener(new FontApplyButtonActionListener(
+                    this.fontApplyButton));
         }
-        return this.fontButton;
+        return this.fontApplyButton;
+    }
+
+    /**
+     * @return the textValueTextField.
+     */
+    public JTextField getTextValueTextField() {
+        if (this.textValueTextField == null) {
+            this.textValueTextField = new JTextField();
+            this.textValueTextField.setPreferredSize(new Dimension(150, 20));
+        }
+        return this.ValueFontTextField;
+    }
+
+    /**
+     * @return the textFontTextField.
+     */
+    public JTextField getTextFontTextField() {
+        if (this.textFontTextField == null) {
+            this.textFontTextField = new JTextField();
+            this.textFontTextField.setPreferredSize(new Dimension(150, 20));
+        }
+        return this.textFontTextField;
+    }
+
+    /**
+     * @return the textSizeTextField.
+     */
+    public JTextField geTextSizeTextField() {
+        if (this.textSizeTextField == null) {
+            this.textSizeTextField = new JTextField();
+            this.textSizeTextField.setPreferredSize(new Dimension(150, 20));
+        }
+        return this.textSizeTextField;
     }
 }
