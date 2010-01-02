@@ -29,6 +29,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.liste
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillCheckBoxListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorAlphaSliderChangeListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FillColorButtonActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.FontButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.listeners.LineWidthComboBoxActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.resources.PropertiesToolBarResources;
 
@@ -218,8 +219,10 @@ public class GeneralPropertiesPanel extends JPanel {
             this.textPanel.setLayout(new MigLayout("wrap 2"));
 
             // add components in left to right order
-            this.textPanel.add(new JLabel("set font: "));
-            this.textPanel.add(getFontButton());
+            this.textPanel.add(new JLabel("name: "));
+            this.textPanel.add(getFontNameTextField());
+            this.textPanel.add(new JLabel("size: "));
+            this.textPanel.add(getFontSizeTextField());
         }
         return this.textPanel;
     }
@@ -427,10 +430,11 @@ public class GeneralPropertiesPanel extends JPanel {
     /**
      * @return the fontButton
      */
-    private JButton getFontButton() {
+    private JButton getFontNameTextField() {
         if (this.fontButton == null) {
             this.fontButton = new JButton();
             this.fontButton.setText("Font");
+            this.fontButton.addActionListener(new FontButtonActionListener(this.fontButton));
         }
         return this.fontButton;
     }

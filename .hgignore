@@ -32,3 +32,8 @@ bin
 deploy/*.xml
 deploy/config/*
 deploy/parts/*
+\.orig\..*$
+\.orig$
+\.chg\..*$
+\.rej$
+\.conflict\~$
