@@ -25,7 +25,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
  * This class represents Element Node in scene graph.
- *
+ * 
  * @author uk
  */
 @XStreamAlias("ElementNode")
@@ -49,8 +49,9 @@ public class ElementNode extends Node {
 
     /**
      * This is constructor.
-     *
-     * @param element <code>Element</code> to create <code>ElementNode</code> with.
+     * 
+     * @param element
+     *            <code>Element</code> to create <code>ElementNode</code> with.
      */
     protected ElementNode(Element element) {
         super();
@@ -59,9 +60,11 @@ public class ElementNode extends Node {
 
     /**
      * This is constructor.
-     *
-     * @param element <code>Element</code> to create <code>ElementNode</code> with.
-     * @param id this <code>ElementNode</code> identifier.
+     * 
+     * @param element
+     *            <code>Element</code> to create <code>ElementNode</code> with.
+     * @param id
+     *            this <code>ElementNode</code> identifier.
      */
     protected ElementNode(Element element, String id) {
         super(id);
@@ -70,7 +73,7 @@ public class ElementNode extends Node {
 
     /**
      * This method is used to initialize element.
-     *
+     * 
      * @param element
      */
     private void initialize(Element element) {
@@ -112,9 +115,11 @@ public class ElementNode extends Node {
 
     /**
      * Getter for element bounds.
-     *
-     * @param boundModifier modifier which affects boundary size of element.
-     * @param Graphics2D context.
+     * 
+     * @param boundModifier
+     *            modifier which affects boundary size of element.
+     * @param Graphics2D
+     *            context.
      * @return Bounds of element.
      */
     public UnitRectangle getBounds(Unit boundModifier, Graphics2D g2d) {
@@ -128,7 +133,7 @@ public class ElementNode extends Node {
 
     /**
      * Getter for <code>element</code>.
-     *
+     * 
      * @return the element
      */
     public Element getElement() {
@@ -142,7 +147,8 @@ public class ElementNode extends Node {
 
         // check element coordinates
         for (int i = 0; i < this.element.getX().size(); i++) {
-            if (r2d.contains(this.element.getX().get(i).doubleValue(), this.element.getY().get(i).doubleValue())) {
+            if (r2d.contains(this.element.getX().get(i).doubleValue(),
+                             this.element.getY().get(i).doubleValue())) {
                 return true;
             }
         }
@@ -167,9 +173,10 @@ public class ElementNode extends Node {
     }
 
     /**
-     * @param edited the editing to set
+     * @param edited
+     *            the editing to set
      */
-    private void setEdited(boolean edited) {
+    protected void setEdited(boolean edited) {
         this.edited = edited;
     }
 
@@ -203,7 +210,8 @@ public class ElementNode extends Node {
     }
 
     /**
-     * @param elementType the elementType to set
+     * @param elementType
+     *            the elementType to set
      */
     private void setElementType(ElementType elementType) {
         this.elementType = elementType;
@@ -211,8 +219,9 @@ public class ElementNode extends Node {
 
     /**
      * Modifies coordinates according to given {@link Transformation}.
-     *
-     * @param t {@link Transformation} to apply.
+     * 
+     * @param t
+     *            {@link Transformation} to apply.
      */
     public void modifyCoordinates(Transformation t) {
         Element element = getElement();
@@ -228,7 +237,7 @@ public class ElementNode extends Node {
 
     /**
      * Getter for rotation center of element stored in element node.
-     *
+     * 
      * @return {@link UnitPoint} of rotation center.
      */
     public UnitPoint getRotationCenter() {

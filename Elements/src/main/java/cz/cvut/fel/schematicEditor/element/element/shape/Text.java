@@ -28,9 +28,9 @@ public class Text extends Shape {
         // get y (it is on the baseline, it is necessary to put into the top left corner)
         double y = getY().firstElement().doubleValue() - r2d.getHeight() - metrics.getAscent();
 
-        return new UnitRectangle(x - 1, y, r2d.getWidth() + 2, r2d.getHeight() + metrics.getAscent()
-                + metrics.getDescent()
-                + 2);
+        return new UnitRectangle(x - 1, y, r2d.getWidth() + 2, r2d.getHeight()
+                                                               + metrics.getAscent()
+                                                               + metrics.getDescent() + 2);
     }
 
     public FontMetrics getFontMetrics(Graphics2D g2d) {
@@ -45,6 +45,7 @@ public class Text extends Shape {
     public Text(UnitPoint start, String value) {
         super();
 
+        // TODO remove, obsolete
         getX().add(start.getUnitX());
         getY().add(start.getUnitY());
 
@@ -72,7 +73,6 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
-     *
      * @see cz.cvut.fel.schematicEditor.element.Element#getElementType()
      */
     @Override
@@ -90,7 +90,6 @@ public class Text extends Shape {
 
     /*
      * (non-Javadoc)
-     *
      * @see cz.cvut.fel.schematicEditor.element.Element#newInstance()
      */
     @Override
@@ -111,7 +110,8 @@ public class Text extends Shape {
     }
 
     /**
-     * @param color the color to set
+     * @param color
+     *            the color to set
      */
     public void setColor(Color color) {
         if (color == null) {
