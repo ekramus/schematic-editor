@@ -37,3 +37,6 @@ deploy/parts/*
 \.chg\..*$
 \.rej$
 \.conflict\~$
+
+# skip local helper files
+stahni.bat
