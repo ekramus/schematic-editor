@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LIB_PATH="lib/log4j-1.2.14.jar:lib/looks-1.2.2.jar:lib/xstream-1.3.jar:lib/miglayout-3.6.1.jar"
+LIB_PATH="lib/log4j-1.2.14.jar:lib/xstream-1.3.jar:lib/miglayout-3.6.1.jar"
 
 JAR_PATH="jar/Launchers-1.0-SNAPSHOT.jar"
 JAR_PATH="$JAR_PATH:jar/Gui-1.0-SNAPSHOT.jar"

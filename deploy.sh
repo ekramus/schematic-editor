@@ -9,6 +9,10 @@ PLUGIN=$DEPLOY/plugins
 PARTS=$DEPLOY/parts
 M2_REPO=~/.m2/repository
 
+JAR_CERT_NAME="mykey"
+JAR_CERT_PASS="qwerty"
+
+
 # start deploy batch
 rm -fR $LIB
 rm -fR $JAR
@@ -24,7 +28,6 @@ mkdir $PLUGIN
 mkdir $PARTS
 
 cp "$M2_REPO/log4j/log4j/1.2.14/log4j-1.2.14.jar" "$LIB"
-cp "$M2_REPO/jgoodies/looks/1.2.2/looks-1.2.2.jar" "$LIB"
 cp "$M2_REPO/com/miglayout/miglayout/3.6.1/miglayout-3.6.1.jar" "$LIB"
 cp "$M2_REPO/com/thoughtworks/xstream/xstream/1.3/xstream-1.3.jar" "$LIB"
 
@@ -49,4 +52,7 @@ cp "Plugins-AutomaticPartNaming/target/Plugins-AutomaticPartNaming-1.0-SNAPSHOT.
 # copy parts
 cp -r "Launchers/parts" "$PARTS"
 
-
+# sign libraries
+jarsigner -storepass "$JAR_CERT_PASS" "$LIB/log4j-1.2.14.jar" "$JAR_CERT_NAME"
+jarsigner -storepass "$JAR_CERT_PASS" "$LIB/miglayout-3.6.1.jar" "$JAR_CERT_NAME"
+jarsigner -storepass "$JAR_CERT_PASS" "$LIB/xstream-1.3.jar" "$JAR_CERT_NAME"
