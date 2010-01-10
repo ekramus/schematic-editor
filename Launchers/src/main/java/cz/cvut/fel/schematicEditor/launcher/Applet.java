@@ -11,12 +11,13 @@ import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
 
 /**
  * This class implements applet launcher. It is used to launch <em>SchematicEditor</em> as applet.
- *
+ * 
  * @author Urban Kravjansky
  */
 public class Applet extends JApplet {
     /**
-     * This method overrides {@link JApplet} <code>init</code> method. It is used to initialize applet.
+     * This method overrides {@link JApplet} <code>init</code> method. It is used to initialize
+     * applet.
      */
     @Override
     public void init() {
@@ -50,7 +51,7 @@ public class Applet extends JApplet {
 
     /**
      * Getter for XML serialized session.
-     *
+     * 
      * @return XML serialized session.
      */
     public String getSession() {
@@ -59,8 +60,9 @@ public class Applet extends JApplet {
 
     /**
      * Setter for XML serialized session.
-     *
-     * @param session XML serialized session.
+     * 
+     * @param session
+     *            XML serialized session.
      */
     public void setSession(String session) {
         SceneGraph sg = Gui.getActiveScenePanel().getSceneGraph();
@@ -70,7 +72,7 @@ public class Applet extends JApplet {
 
     /**
      * Getter for scene netlist.
-     *
+     * 
      * @return scene netlist.
      */
     public String getNetlist() {
