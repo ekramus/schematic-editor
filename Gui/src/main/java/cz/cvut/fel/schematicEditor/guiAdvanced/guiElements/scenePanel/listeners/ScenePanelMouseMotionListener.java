@@ -12,24 +12,20 @@ import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
-import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
-import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
-import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.original.graphNode.JunctionNode;
 import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.original.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.xstreamConverter.GroupNodeLinkedListConditionalCoverter;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -170,6 +166,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 									
 											
 									//if the new line is vertical
+									// TODO getX() and getY() from Manipulation classes should be private, try to find workaround
 									if( m.getX().get(m.getX().size()-1).doubleValue() == m.getX().get(m.getX().size()-2).doubleValue() ) 
 									{
 										logger.error("vertical line");

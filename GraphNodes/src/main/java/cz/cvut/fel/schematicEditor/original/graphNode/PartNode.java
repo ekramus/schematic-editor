@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import cz.cvut.fel.schematicEditor.element.element.Element;
@@ -28,6 +30,10 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 @XStreamAlias("PartNode")
 public class PartNode extends ElementNode {
     /**
+     * {@link Logger} instance for logging purposes.
+     */
+    private static Logger     logger;
+    /**
      * GroupNode containing graphic representation of part shape.
      */
     private GroupNode         partGroupNode     = null;
@@ -43,6 +49,13 @@ public class PartNode extends ElementNode {
      * {@link Vector} of part labels.
      */
     private Vector<GroupNode> partLabels        = null;
+
+    /**
+     * Static logger instance initialization.
+     */
+    {
+        logger = Logger.getLogger(PartNode.class);
+    }
 
     /**
      * @param partLabels
@@ -61,9 +74,7 @@ public class PartNode extends ElementNode {
      *            graphical representation of part.
      */
     protected PartNode(Part part, GroupNode partGroupNode) {
-        super(part);
-
-        initialize(partGroupNode);
+        this(part, partGroupNode, "");
     }
 
     /**
@@ -85,6 +96,8 @@ public class PartNode extends ElementNode {
      */
     protected PartNode(Part part, GroupNode partGroupNode, String id) {
         super(part, id);
+
+        // logger = Logger.getLogger(this.getClass().getName());
 
         initialize(partGroupNode);
     }
@@ -136,8 +149,12 @@ public class PartNode extends ElementNode {
         // TODO fix for scaling
         boolean hit = false;
 
-        for (GroupNode gn : getPartLabels()) {
-            hit = hit || gn.isHit(point, 1, g2d);
+        try {
+            for (GroupNode gn : getPartLabels()) {
+                hit = hit || gn.isHit(point, 1, g2d);
+            }
+        } catch (NullPointerException e) {
+            // nothing to do
         }
 
         return getPartGroupNode().isHit(point, 1, g2d) || hit;
@@ -181,11 +198,19 @@ public class PartNode extends ElementNode {
         PartNode result = new PartNode((Part) getElement(),
                 (GroupNode) getPartGroupNode().duplicate());
 
+        // duplicate partConnectors
         Vector<PinNode> partConnectors = new Vector<PinNode>();
         for (PinNode pinNode : getPartPins()) {
-            partConnectors.add((PinNode) pinNode.duplicate());
+            partConnectors.add((PinNode) NodeFactory.duplicate(pinNode));
         }
         result.setPartConnectors(partConnectors);
+
+        // duplicate partLabels
+        Vector<GroupNode> partLabels = new Vector<GroupNode>();
+        for (GroupNode groupNode : getPartLabels()) {
+            partLabels.add((GroupNode) NodeFactory.duplicate(groupNode));
+        }
+        result.setPartLabels(partLabels);
 
         return result;
     }
