@@ -1,5 +1,6 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
@@ -157,6 +158,8 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
 									mess.add(option);
 									mess.add(point);
+									
+									option.setColor(Color.red);
 
 									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
 											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
@@ -170,19 +173,23 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 									if( m.getX().get(m.getX().size()-1).doubleValue() == m.getX().get(m.getX().size()-2).doubleValue() ) 
 									{
 										logger.error("vertical line");
-										 x =  m.getX().get(m.getX().size()-1).getValue();
+										 x =  m.getX().get(m.getX().size()-1).doubleValue();
 										 //x =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getX();
-										 y =  r2d.getCenterY();
+										 //y =  r2d.getCenterY(); 
+										 y =  (r2d.getY() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterY() - r2d.getY());
 									} else // new line is horizontal 
 										{
 										logger.error("horizontal line");
-										y =  m.getY().get(m.getY().size()-1).getValue();
+										y =  m.getY().get(m.getY().size()-1).doubleValue();
 										//y =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getY();
-										x =  r2d.getCenterX();
+										//x =  r2d.getCenterX();
+										x =  (r2d.getX() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterX() - r2d.getX()); 
 										}
 										
 									
-									newBorn.addManipulationCoordinates(new Pixel(x),new Pixel(y));
+									newBorn.addManipulationCoordinates(
+											new Pixel(x),
+											new Pixel(y)  );
 
 									if(Gui.isDoAfterActive()){
 										lejblik.setText("Máme pøipraveno");
