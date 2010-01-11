@@ -37,6 +37,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.listeners.SceneTa
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PropertiesSelectorToolBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
+import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 
 /**
  * This class represents GUI of schematic editor.
@@ -93,6 +94,8 @@ public class Gui extends JApplet {
      */
     private JTabbedPane       schemePartTabbedPane = null;
 
+    private static Manipulation doAfter = null;
+    
     /**
      * Default singleton constructor.
      */
@@ -204,7 +207,7 @@ public class Gui extends JApplet {
      */
     private void initRootComponent(Container container) {
         // set container parameters
-        container.setMinimumSize(new Dimension(1000, 800));
+        container.setMinimumSize(new Dimension(700, 700));
         container.setLayout(new BorderLayout());
 
         // add components
@@ -457,5 +460,24 @@ public class Gui extends JApplet {
         }
 
         return result;
+    }
+    
+    public static Manipulation getDoAfter() {
+    	return Gui.doAfter;
+    }
+    
+    public static boolean isDoAfterActive(){
+    	return (Gui.doAfter == null);
+    }
+    
+    public static void clearDoAfter(){
+    	Gui.doAfter = null;
+    }
+    
+    public static void setDoAfter(Manipulation inserted){
+    	Gui.doAfter = inserted;
+    	Gui.getActiveScenePanel().getManipulationQueue().execute(Gui.doAfter);
+    	Gui.getActiveScenePanel().sceneInvalidate(null);
+    	
     }
 }
