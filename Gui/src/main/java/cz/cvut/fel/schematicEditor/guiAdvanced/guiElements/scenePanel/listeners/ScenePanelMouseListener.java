@@ -182,8 +182,8 @@ public class ScenePanelMouseListener implements MouseListener {
                                     	logger.trace("Let's execute prepared Junction");
 	                                    Gui.getActiveScenePanel().getManipulationQueue().execute(Gui.getDoAfter());
 	                                    // clear buffer to make new Junction next time
-	                                    Gui.setDoAfter(null); 
-										Gui.getActiveScenePanel().sceneInvalidate(null);
+	                                    Gui.clearDoAfter();
+										
                                       }
 	                                    
                                 } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {

@@ -470,8 +470,14 @@ public class Gui extends JApplet {
     	return (Gui.doAfter == null);
     }
     
+    public static void clearDoAfter(){
+    	Gui.doAfter = null;
+    }
+    
     public static void setDoAfter(Manipulation inserted){
     	Gui.doAfter = inserted;
+    	Gui.getActiveScenePanel().getManipulationQueue().execute(Gui.doAfter);
+    	Gui.getActiveScenePanel().sceneInvalidate(null);
     	
     }
 }

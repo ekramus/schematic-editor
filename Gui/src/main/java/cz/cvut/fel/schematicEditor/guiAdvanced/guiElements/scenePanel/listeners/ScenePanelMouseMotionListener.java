@@ -128,8 +128,12 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 					snap = Snap.getSnap(up, m.getSnapCoordinates(), el.getX(), el.getY());
 
 					// get pointer rectangle
-					Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
-							GuiConfiguration.getInstance().getPointerRectangle());
+					Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),new Point2D.Double(1,1));
+							
+					
+							
+							//new Point2D.Double(e.getX(), e.getY()),
+							//GuiConfiguration.getInstance().getPointerRectangle());
 
 					System.err.println(Boolean.toString(el.getElementType() == ElementType.T_WIRE));
 					if (el.getElementType() == ElementType.T_WIRE) {
@@ -156,11 +160,12 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
 											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
 									// newBorn.setManipulatedGroup(mess);
-									newBorn.addManipulationCoordinates(new Pixel(r2d.x), new Pixel(r2d.y));
+									newBorn.addManipulationCoordinates(new Pixel(r2d.getCenterX()),new Pixel(r2d.getCenterY()));
 
 									if(Gui.isDoAfterActive()){
 										lejblik.setText("Máme pøipraveno");
 										Gui.setDoAfter(newBorn);
+										
 									} else lejblik.setText("Nemáme pøipraveno");
 										
 
