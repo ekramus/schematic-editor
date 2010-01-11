@@ -246,14 +246,14 @@ public abstract class Manipulation {
     /**
      * @return the x
      */
-    protected Vector<Unit> getX() {
+    public Vector<Unit> getX() {
         return this.x;
     }
 
     /**
      * @return the y
      */
-    protected Vector<Unit> getY() {
+    public Vector<Unit> getY() {
         return this.y;
     }
 

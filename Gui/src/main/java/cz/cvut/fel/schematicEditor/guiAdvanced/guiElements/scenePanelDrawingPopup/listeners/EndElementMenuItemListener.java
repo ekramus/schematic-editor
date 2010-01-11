@@ -53,8 +53,10 @@ public class EndElementMenuItemListener implements ActionListener {
      */
     public final void actionPerformed(final ActionEvent ae) {
         try {
+         
             Create create = (Create) Gui.getActiveScenePanel().getActiveManipulation();
             create.setFinished(true);
+            
             Gui.getActiveScenePanel().tryFinishManipulation(
                                                                     getE(),
                                                                     getR2d(),
@@ -63,6 +65,11 @@ public class EndElementMenuItemListener implements ActionListener {
         } catch (UnknownManipulationException e) {
             logger.error(e.getMessage());
         }
+        
+        
+    	Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);
+    	//Gui.getActiveScenePanel().getManipulationQueue().unexecute();
+
     }
 
     /**
