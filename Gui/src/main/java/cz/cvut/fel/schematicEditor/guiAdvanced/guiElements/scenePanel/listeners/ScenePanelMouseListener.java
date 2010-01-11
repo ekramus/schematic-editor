@@ -174,11 +174,25 @@ public class ScenePanelMouseListener implements MouseListener {
                                 if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
                                     JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
                                     popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
-                                    logger.trace("Show right-click popup");
+                                    logger.trace("Show right-click popup2");
+                                    
+                                    // check buffer doAfter if we have to create Junction
+                                    if(Gui.getDoAfter()!= null)
+                                      {
+                                    	logger.trace("Let's execute prepared Junction");
+	                                    Gui.getActiveScenePanel().getManipulationQueue().execute(Gui.getDoAfter());
+	                                    // clear buffer to make new Junction next time
+	                                    Gui.setDoAfter(null); 
+										Gui.getActiveScenePanel().sceneInvalidate(null);
+                                      }
+	                                    
                                 } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
                                     JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
                                     popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
-                                    logger.trace("Show right-click popup");
+                                    logger.trace("Show right-click popup and make Junction");
+                                    
+									
+                                    
                                 }
                             }
                             // left mouse button is clicked
