@@ -40,3 +40,4 @@ deploy/parts/*
 
 # skip local helper files
 stahni.bat
+upload.bat
