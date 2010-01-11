@@ -56,7 +56,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 		lejblik = new JTextArea("init");
 		okno.add(lejblik);
 		okno.setBounds(0, 0, 200, 200);
-		okno.setVisible(true);
+		//okno.setVisible(true);
 
 	}
 
