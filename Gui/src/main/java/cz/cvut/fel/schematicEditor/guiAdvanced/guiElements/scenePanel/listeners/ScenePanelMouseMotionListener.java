@@ -18,6 +18,7 @@ import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
+import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
@@ -160,11 +161,33 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
 											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
 									// newBorn.setManipulatedGroup(mess);
-									newBorn.addManipulationCoordinates(new Pixel(r2d.getCenterX()),new Pixel(r2d.getCenterY()));
+									
+									double x;
+									double y;
+									
+											
+									//if the new line is vertical
+									if( m.getX().get(m.getX().size()-1).doubleValue() == m.getX().get(m.getX().size()-2).doubleValue() ) 
+									{
+										logger.error("vertical line");
+										 x =  m.getX().get(m.getX().size()-1).getValue();
+										 //x =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getX();
+										 y =  r2d.getCenterY();
+									} else // new line is horizontal 
+										{
+										logger.error("horizontal line");
+										y =  m.getY().get(m.getY().size()-1).getValue();
+										//y =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getY();
+										x =  r2d.getCenterX();
+										}
+										
+									
+									newBorn.addManipulationCoordinates(new Pixel(x),new Pixel(y));
 
 									if(Gui.isDoAfterActive()){
 										lejblik.setText("Máme pøipraveno");
 										Gui.setDoAfter(newBorn);
+										newBorn = null;
 										
 									} else lejblik.setText("Nemáme pøipraveno");
 										
@@ -197,8 +220,6 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 	}
 
 	private boolean findHit(GroupNode stromek, Rectangle2D r2d) {
-
-		Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
 		LinkedList<GroupNode> mapleLeaves;
 
 		// during the Creation do the check if other Element is hit
@@ -208,11 +229,13 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 		boolean spojeni = false;
 
 		int i = 0;
-		this.lejblik.setText(lejblik.getText() + "\n prvku " + mapleLeaves.size());
+		lejblik.setText(lejblik.getText() + "\n prvku " + mapleLeaves.size());
 
 		for (i = 0; i < mapleLeaves.size(); i++) {
 			// let me know that you're going through the list
-
+			
+			if(mapleLeaves.get(i).isDisabled())continue;
+			
 			spojeni = mapleLeaves.get(i).isHit(r2d, Gui.getActiveScenePanel().getZoomFactor(), null);
 
 			// did I hit against the wire
