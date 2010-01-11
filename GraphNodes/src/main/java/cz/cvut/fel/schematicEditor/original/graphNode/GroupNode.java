@@ -20,9 +20,9 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class represents <em>Group node</em> in scene graph. Group node is node which groups other nodes as its
- * children, allowing existence of tree-like scheme structures.
- *
+ * This class represents <em>Group node</em> in scene graph. Group node is node which groups other
+ * nodes as its children, allowing existence of tree-like scheme structures.
+ * 
  * @author Urban Kravjansky
  */
 @XStreamAlias("GroupNode")
@@ -54,12 +54,18 @@ public class GroupNode extends Node {
     private Element                        editedElement;
 
     /**
-     * Default constructor. It initializes all fields with default values, thus creating empty {@link GroupNode}.
+     * Static logger instance initialization.
+     */
+    {
+        logger = Logger.getLogger(GroupNode.class);
+    }
+
+    /**
+     * Default constructor. It initializes all fields with default values, thus creating empty
+     * {@link GroupNode}.
      */
     protected GroupNode() {
         super();
-
-        logger = Logger.getLogger(this.getClass().getName());
 
         init();
     }
@@ -76,9 +82,11 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Initialize {@link GroupNode} with given {@link GroupNode}. Children elements are not duplicated.
-     *
-     * @param topNode {@link GroupNode} used for initialization of this node.
+     * Initialize {@link GroupNode} with given {@link GroupNode}. Children elements are not
+     * duplicated.
+     * 
+     * @param topNode
+     *            {@link GroupNode} used for initialization of this node.
      */
     public void init(GroupNode topNode) {
         setChildrenGroupList(topNode.getChildrenGroupList());
@@ -90,8 +98,9 @@ public class GroupNode extends Node {
 
     /**
      * Adds any {@link Node} as child into this {@link GroupNode}. Node is saved into correct field.
-     *
-     * @param child child node to add.
+     * 
+     * @param child
+     *            child node to add.
      */
     public void add(Node child) {
         if (child instanceof GroupNode) {
@@ -123,7 +132,7 @@ public class GroupNode extends Node {
 
     /**
      * Returns transformation applied on this {@link GroupNode}.
-     *
+     * 
      * @return Transformation made as matrix multiplication of all contained transformations.
      */
     @Deprecated
@@ -137,7 +146,7 @@ public class GroupNode extends Node {
 
     /**
      * Indicates, whether {@link GroupNode} is hit by mouse cursor or not.
-     *
+     * 
      * @param rectangle
      * @return
      */
@@ -148,9 +157,11 @@ public class GroupNode extends Node {
 
         Rectangle2D r = rectangle;
         if (zoomFactor != 1) {
-            r = new Rectangle2D.Double(rectangle.getX() / zoomFactor, rectangle.getY() / zoomFactor, rectangle
-                    .getWidth(), rectangle.getHeight());
+            r = new Rectangle2D.Double(rectangle.getX() / zoomFactor,
+                    rectangle.getY() / zoomFactor, rectangle.getWidth(), rectangle.getHeight());
         }
+
+        logger.trace("Searching for elements to hit");
 
         // TODO implement hit trigger into elements, so selection can be faster
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
@@ -203,7 +214,7 @@ public class GroupNode extends Node {
 
     /**
      * Delete element, which is hit.
-     *
+     * 
      * @param r2d
      * @param zoomFactor
      * @return <code>true</code>, if hit and deleted, else <code>false</code>.
@@ -215,8 +226,8 @@ public class GroupNode extends Node {
 
         // modify rectangle if zoomFactor != 1
         if (zoomFactor != 1) {
-            r2d = new Rectangle2D.Double(r2d.getX() / zoomFactor, r2d.getY() / zoomFactor, r2d.getWidth(), r2d
-                    .getHeight());
+            r2d = new Rectangle2D.Double(r2d.getX() / zoomFactor, r2d.getY() / zoomFactor,
+                    r2d.getWidth(), r2d.getHeight());
         }
 
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
@@ -238,7 +249,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns list of GroupNode children
-     *
+     * 
      * @return children GroupList
      */
     public LinkedList<GroupNode> getChildrenGroupList() {
@@ -247,7 +258,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns GroupNode with enabled Nodes only.
-     *
+     * 
      * @return GroupNode with only enabled Nodes
      */
     public GroupNode getEnabledOnly() {
@@ -277,7 +288,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns list of ElementNode children
-     *
+     * 
      * @return childrenElementList;
      */
     public LinkedList<ElementNode> getChildrenElementList() {
@@ -286,7 +297,7 @@ public class GroupNode extends Node {
 
     /**
      * This method returns ParameterNode
-     *
+     * 
      * @return childrenParameterNode;
      */
     public ParameterNode getChildrenParameterNode() {
@@ -312,10 +323,13 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Getter for <code>NodeArray</code> with corrected <code>TransformationNode</code> and <code>ParameterNode</code>.
-     *
-     * @param tn transformation node.
-     * @param pn parameter node.
+     * Getter for <code>NodeArray</code> with corrected <code>TransformationNode</code> and
+     * <code>ParameterNode</code>.
+     * 
+     * @param tn
+     *            transformation node.
+     * @param pn
+     *            parameter node.
      * @return <code>ArrayList</code> of nodes.
      */
     public ArrayList<Node> getNodeArray(TransformationNode tn, ParameterNode pn) {
@@ -333,7 +347,8 @@ public class GroupNode extends Node {
         if (tn == null) {
             t = new TransformationNode(getTransformation());
         } else {
-            t = new TransformationNode(Transformation.multiply(getTransformation(), tn.getTransformation()));
+            t = new TransformationNode(Transformation.multiply(getTransformation(),
+                                                               tn.getTransformation()));
         }
 
         result.add(t);
@@ -343,7 +358,8 @@ public class GroupNode extends Node {
                 if (elementNode.getElement().getElementType() == ElementType.T_PART) {
                     PartNode partNode = (PartNode) elementNode;
                     result.addAll(partNode.getPartGroupNode().getNodeArray(t, p));
-                    // TODO optimize, this doubles data value (as complete part node is sent twice into queue)
+                    // TODO optimize, this doubles data value (as complete part node is sent twice
+                    // into queue)
                     // partNode is sent as second, because of exporting priority
                     result.add(partNode);
                 } else {
@@ -374,8 +390,8 @@ public class GroupNode extends Node {
         // modify rectangle if zoomFactor != 1
         Rectangle2D r = rectangle;
         if (zoomFactor != 1) {
-            r = new Rectangle2D.Double(rectangle.getX() / zoomFactor, rectangle.getY() / zoomFactor, rectangle
-                    .getWidth(), rectangle.getHeight());
+            r = new Rectangle2D.Double(rectangle.getX() / zoomFactor,
+                    rectangle.getY() / zoomFactor, rectangle.getWidth(), rectangle.getHeight());
         }
 
         for (int i = getChildrenElementList().size() - 1; i >= 0; i--) {
@@ -397,8 +413,9 @@ public class GroupNode extends Node {
 
     /**
      * Computes bounds of all elements contained inside this {@link GroupNode}.
-     *
-     * @param g2d Graphics2D context.
+     * 
+     * @param g2d
+     *            Graphics2D context.
      * @return bounds union of all elements contained in this {@link GroupNode}.
      */
     public UnitRectangle getBounds(Graphics2D g2d) {
@@ -424,10 +441,13 @@ public class GroupNode extends Node {
 
     /**
      * Detects, whether given rectangle is in edit zone. If it is, it means, edit should be invoked.
-     *
-     * @param r2d rectangle around pointer.
-     * @param zoomFactor zoomFactor of current scene.
-     * @return <code>true</code> if given rectangle contains any edit point from group, else <code>false</code>.
+     * 
+     * @param r2d
+     *            rectangle around pointer.
+     * @param zoomFactor
+     *            zoomFactor of current scene.
+     * @return <code>true</code> if given rectangle contains any edit point from group, else
+     *         <code>false</code>.
      */
     public boolean startEdit(Rectangle2D r2d, double zoomFactor) {
         if (isDisabled()) {
@@ -439,8 +459,8 @@ public class GroupNode extends Node {
         // modify rectangle if zoomFactor != 1
         Rectangle2D r = r2d;
         if (zoomFactor != 1) {
-            r = new Rectangle2D.Double(r2d.getX() / zoomFactor, r2d.getY() / zoomFactor, r2d.getWidth(), r2d
-                    .getHeight());
+            r = new Rectangle2D.Double(r2d.getX() / zoomFactor, r2d.getY() / zoomFactor,
+                    r2d.getWidth(), r2d.getHeight());
         }
 
         // TODO implement hit trigger into elements, so selection can be faster
@@ -448,7 +468,8 @@ public class GroupNode extends Node {
             ElementNode child = getChildrenElementList().get(i);
             setEditedElement(child.startEdit(getTransformation().shiftInverse(r)));
             if (getEditedElement() != null) {
-                logger.debug("element edit zone HIT: " + child + " transformation: " + getTransformation());
+                logger.debug("element edit zone HIT: " + child + " transformation: "
+                             + getTransformation());
                 return true;
             }
         }
@@ -463,10 +484,13 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Detects, whether given rectangle is in rotate zone. If it is, it means, rotate should be invoked.
-     *
-     * @param r2d rectangle around pointer.
-     * @return <code>true</code> if given rectangle is in rotate point of whole group, else <code>false</code>.
+     * Detects, whether given rectangle is in rotate zone. If it is, it means, rotate should be
+     * invoked.
+     * 
+     * @param r2d
+     *            rectangle around pointer.
+     * @return <code>true</code> if given rectangle is in rotate point of whole group, else
+     *         <code>false</code>.
      */
     public boolean isRotateZone(Rectangle2D r2d) {
         // TODO implement functionality
@@ -575,30 +599,35 @@ public class GroupNode extends Node {
     }
 
     /**
-     * @param chidrenParameterNode the chidrenParameterNode to set
+     * @param chidrenParameterNode
+     *            the chidrenParameterNode to set
      */
     private void setChidrenParameterNode(ParameterNode chidrenParameterNode) {
         this.chidrenParameterNode = chidrenParameterNode;
     }
 
     /**
-     * @param childrenElementList the childrenElementList to set
+     * @param childrenElementList
+     *            the childrenElementList to set
      */
     private void setChildrenElementList(LinkedList<ElementNode> childrenElementList) {
         this.childrenElementList = childrenElementList;
     }
 
     /**
-     * @param childrenGroupList the childrenGroupList to set
+     * @param childrenGroupList
+     *            the childrenGroupList to set
      */
     private void setChildrenGroupList(LinkedList<GroupNode> childrenGroupList) {
         this.childrenGroupList = childrenGroupList;
     }
 
     /**
-     * @param childrenTransformationList the childrenTransformationList to set
+     * @param childrenTransformationList
+     *            the childrenTransformationList to set
      */
-    private void setChildrenTransformationList(LinkedList<TransformationNode> childrenTransformationList) {
+    private void setChildrenTransformationList(
+            LinkedList<TransformationNode> childrenTransformationList) {
         this.childrenTransformationList = childrenTransformationList;
     }
 
@@ -611,7 +640,7 @@ public class GroupNode extends Node {
 
     /**
      * Calculates number of coordinates used for construction of {@link GroupNode}.
-     *
+     * 
      * @return
      */
     public int getNumberOfCoordinates() {
@@ -626,7 +655,7 @@ public class GroupNode extends Node {
 
     /**
      * Getter for {@link GroupNode} elements {@link ElementModificator}.
-     *
+     * 
      * @return
      */
     public ElementModificator getElementModificator() {
@@ -661,7 +690,8 @@ public class GroupNode extends Node {
     }
 
     /**
-     * @param editedElement the editedElement to set
+     * @param editedElement
+     *            the editedElement to set
      */
     private void setEditedElement(Element editedElement) {
         this.editedElement = editedElement;
@@ -716,8 +746,9 @@ public class GroupNode extends Node {
     }
 
     /**
-     * Retrieves {@link Vector} of pin nodes and removes them from group node, so they do not duplicate.
-     *
+     * Retrieves {@link Vector} of pin nodes and removes them from group node, so they do not
+     * duplicate.
+     * 
      * @return
      */
     public Vector<PinNode> getAndRemovePinNodes() {

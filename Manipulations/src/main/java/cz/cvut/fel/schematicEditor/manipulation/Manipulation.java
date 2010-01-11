@@ -15,8 +15,9 @@ import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
- * This is parental class for all manipulations. It implements basic methods necessary for every manipulation.
- *
+ * This is parental class for all manipulations. It implements basic methods necessary for every
+ * manipulation.
+ * 
  * @author Urban Kravjansky
  */
 public abstract class Manipulation {
@@ -56,9 +57,11 @@ public abstract class Manipulation {
     /**
      * Default constructor. It is private, because of {@link Manipulation}s are created using
      * {@link ManipulationFactory}.
-     *
-     * @param topNode top node of scene graph.
-     * @param source object, which initiated creation of this {@link Manipulation}.
+     * 
+     * @param topNode
+     *            top node of scene graph.
+     * @param source
+     *            object, which initiated creation of this {@link Manipulation}.
      */
     protected Manipulation(GroupNode topNode, Object source) {
         setTopNode(topNode);
@@ -69,12 +72,15 @@ public abstract class Manipulation {
     }
 
     /**
-     * Constructor with {@link GroupNode} parameter. It is protected because of {@link Manipulation}s are created using
-     * {@link ManipulationFactory}.
-     *
-     * @param manipulatedGroup instance of manipulated group.
-     * @param topNode top node of scene graph.
-     * @param source object, which initiated creation of this {@link Manipulation}.
+     * Constructor with {@link GroupNode} parameter. It is protected because of {@link Manipulation}
+     * s are created using {@link ManipulationFactory}.
+     * 
+     * @param manipulatedGroup
+     *            instance of manipulated group.
+     * @param topNode
+     *            top node of scene graph.
+     * @param source
+     *            object, which initiated creation of this {@link Manipulation}.
      */
     protected Manipulation(GroupNode topNode, GroupNode manipulatedGroup, Object source) {
         setTopNode(topNode);
@@ -86,9 +92,11 @@ public abstract class Manipulation {
 
     /**
      * Add given manipulation coordinates.
-     *
-     * @param x <code>x</code> to add.
-     * @param y <code>y</code> to add.
+     * 
+     * @param x
+     *            <code>x</code> to add.
+     * @param y
+     *            <code>y</code> to add.
      */
     public void addManipulationCoordinates(Unit x, Unit y) {
         this.x.add(new Pixel(x.doubleValue()));
@@ -106,14 +114,15 @@ public abstract class Manipulation {
 
     /**
      * This method returns manipulation type of used manipulation.
-     *
+     * 
      * @return Type of {@link Manipulation}.
      */
     public abstract ManipulationType getManipulationType();
 
     /**
-     * Manipulation active state. If is manipulation active, it means, it is being currently processed.
-     *
+     * Manipulation active state. If is manipulation active, it means, it is being currently
+     * processed.
+     * 
      * @return active state of current manipulation.
      */
     public boolean isActive() {
@@ -122,39 +131,57 @@ public abstract class Manipulation {
 
     /**
      * Initializes all necessary structures at the beginning of manipulation correctly.
-     *
-     * @param e {@link MouseEvent}, that invoked this method.
-     * @param r2d Rectangle, which contains mouse pointer.
-     * @param manipulationQueue used for {@link Manipulation} history and execution.
-     * @param zoomFactor zoom factor in the moment of manipulation start.
-     * @param isMouseClicked Indicates, whether mouse was clicked or not.
-     * @param g2d {@link Graphics2D} context.
+     * 
+     * @param e
+     *            {@link MouseEvent}, that invoked this method.
+     * @param r2d
+     *            Rectangle, which contains mouse pointer.
+     * @param manipulationQueue
+     *            used for {@link Manipulation} history and execution.
+     * @param zoomFactor
+     *            zoom factor in the moment of manipulation start.
+     * @param isMouseClicked
+     *            Indicates, whether mouse was clicked or not.
+     * @param g2d
+     *            {@link Graphics2D} context.
      * @return Pointer to manipulation or <code>null</code>, if manipulation was unsuccessful.
-     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
+     * @throws UnknownManipulationException
+     *             In case of unknown {@link Manipulation}.
      */
-    public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException;
+    public abstract Manipulation manipulationStart(MouseEvent e, Rectangle2D r2d,
+            ManipulationQueue manipulationQueue, double zoomFactor, boolean isMouseClicked,
+            Graphics2D g2d) throws UnknownManipulationException;
 
     /**
      * Finishes everything at the end of manipulation correctly.
-     *
-     * @param e {@link MouseEvent}, that invoked this method.
-     * @param r2d Rectangle, which contains mouse pointer.
-     * @param manipulationQueue used for {@link Manipulation} history and execution.
-     * @param zoomFactor zoom factor in the moment of manipulation start.
-     * @param isMouseClicked Indicates, whether mouse was clicked or not.
-     * @param g2d {@link Graphics2D} context.
+     * 
+     * @param e
+     *            {@link MouseEvent}, that invoked this method.
+     * @param r2d
+     *            Rectangle, which contains mouse pointer.
+     * @param manipulationQueue
+     *            used for {@link Manipulation} history and execution.
+     * @param zoomFactor
+     *            zoom factor in the moment of manipulation start.
+     * @param isMouseClicked
+     *            Indicates, whether mouse was clicked or not.
+     * @param g2d
+     *            {@link Graphics2D} context.
      * @return {@link Manipulation}, if manipulation ended successfully, <code>null</code> else.
-     * @throws UnknownManipulationException In case of unknown {@link Manipulation}.
+     * @throws UnknownManipulationException
+     *             In case of unknown {@link Manipulation}.
      */
-    public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d, ManipulationQueue manipulationQueue,
-            double zoomFactor, boolean isMouseClicked, Graphics2D g2d) throws UnknownManipulationException;
+    public abstract Manipulation manipulationStop(MouseEvent e, Rectangle2D r2d,
+            ManipulationQueue manipulationQueue, double zoomFactor, boolean isMouseClicked,
+            Graphics2D g2d) throws UnknownManipulationException;
 
     /**
      * Replaces last manipulation <code>x</code>, <code>y</code> coordinates with given ones.
-     *
-     * @param x new <code>x</code> coordinate.
-     * @param y new <code>y</code> coordinate.
+     * 
+     * @param x
+     *            new <code>x</code> coordinate.
+     * @param y
+     *            new <code>y</code> coordinate.
      */
     public void replaceLastManipulationCoordinates(Unit x, Unit y) {
         try {
@@ -169,10 +196,13 @@ public abstract class Manipulation {
 
     /**
      * Getter for scaled unit point.
-     *
-     * @param x x coordinate.
-     * @param y y coordinate.
-     * @param zoomFactor <code>zoomFactor</code> used for coordinates normalization.
+     * 
+     * @param x
+     *            x coordinate.
+     * @param y
+     *            y coordinate.
+     * @param zoomFactor
+     *            <code>zoomFactor</code> used for coordinates normalization.
      * @return Scaled unit point.
      */
     public UnitPoint getScaledUnitPoint(double x, double y, double zoomFactor) {
@@ -180,14 +210,16 @@ public abstract class Manipulation {
     }
 
     /**
-     * @param active the active to set
+     * @param active
+     *            the active to set
      */
     public void setActive(boolean active) {
         this.active = active;
     }
 
     /**
-     * @param manipulatedGroup the manipulatedGroup to set
+     * @param manipulatedGroup
+     *            the manipulatedGroup to set
      */
     public void setManipulatedGroup(GroupNode manipulatedGroup) {
         this.manipulatedGroup = manipulatedGroup;
@@ -222,7 +254,7 @@ public abstract class Manipulation {
 
     /**
      * Creates next {@link Manipulation} by duplicating its values according to create order.
-     *
+     * 
      * @return Creates next instance of {@link Manipulation}.
      */
     protected Manipulation createNext() {
@@ -231,21 +263,23 @@ public abstract class Manipulation {
 
     /**
      * Creates duplicate instance of {@link Manipulation} by duplicating its values.
-     *
+     * 
      * @return Duplicated instance of {@link Manipulation}.
      */
     protected abstract Manipulation duplicate();
 
     /**
      * Executes manipulation.
-     *
-     * @throws ManipulationExecutionException in case of some error while executing manipulation.
+     * 
+     * @throws ManipulationExecutionException
+     *             in case of some error while executing manipulation.
      */
     protected abstract void execute() throws ManipulationExecutionException;
 
     /**
      * @return the x
      */
+    // TODO getX() and getY() from Manipulation classes should be private, try to find workaround
     public Vector<Unit> getX() {
         return this.x;
     }
@@ -253,14 +287,17 @@ public abstract class Manipulation {
     /**
      * @return the y
      */
+    // TODO getX() and getY() from Manipulation classes should be private, try to find workaround
     public Vector<Unit> getY() {
         return this.y;
     }
 
     /**
-     * Reexecutes manipulation. Mostly it only executes it, for special purposes it needs to be overwritten.
-     *
-     * @throws ManipulationExecutionException in case of some error while reexecuting manipulation.
+     * Reexecutes manipulation. Mostly it only executes it, for special purposes it needs to be
+     * overwritten.
+     * 
+     * @throws ManipulationExecutionException
+     *             in case of some error while reexecuting manipulation.
      */
     protected void reexecute() throws ManipulationExecutionException {
         execute();
@@ -268,9 +305,11 @@ public abstract class Manipulation {
 
     /**
      * Sets manipulation coordinates according to given ones.
-     *
-     * @param x new <code>x</code> coordinates.
-     * @param y new <code>y</code> coordinates.
+     * 
+     * @param x
+     *            new <code>x</code> coordinates.
+     * @param y
+     *            new <code>y</code> coordinates.
      */
     protected void setManipulationCoordinates(Vector<Unit> x, Vector<Unit> y) {
         this.x = x;
@@ -279,13 +318,15 @@ public abstract class Manipulation {
 
     /**
      * Unexecutes (undoes) manipulation.
-     *
-     * @throws ManipulationExecutionException in case of some error while removing manipulation.
+     * 
+     * @throws ManipulationExecutionException
+     *             in case of some error while removing manipulation.
      */
     protected abstract void unexecute() throws ManipulationExecutionException;
 
     /**
-     * @param snapCoordinates the snapCoordinates to set
+     * @param snapCoordinates
+     *            the snapCoordinates to set
      */
     public void setSnapCoordinates(Vector<UnitPoint> snapCoordinates) {
         this.snapCoordinates = snapCoordinates;
@@ -300,7 +341,7 @@ public abstract class Manipulation {
 
     /**
      * Returns {@link UnitPoint} of last manipulation coordinate.
-     *
+     * 
      * @return Value of last manipulation coordinate.
      */
     public UnitPoint getLastManipulationCoordinate() {
@@ -315,14 +356,16 @@ public abstract class Manipulation {
     }
 
     /**
-     * @param topNode the topNode to set
+     * @param topNode
+     *            the topNode to set
      */
     protected void setTopNode(GroupNode topNode) {
         this.topNode = topNode;
     }
 
     /**
-     * @param source the source to set
+     * @param source
+     *            the source to set
      */
     private void setSource(Object source) {
         this.source = source;
