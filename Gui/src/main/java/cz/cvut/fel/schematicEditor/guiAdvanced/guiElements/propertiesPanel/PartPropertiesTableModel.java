@@ -10,9 +10,8 @@ import cz.cvut.fel.schematicEditor.parts.PropertiesCategory;
 
 /**
  * This class implements table model for part properties.
- *
+ * 
  * @author Urban Kravjansky
- *
  */
 public class PartPropertiesTableModel extends AbstractTableModel {
     /**
@@ -36,7 +35,8 @@ public class PartPropertiesTableModel extends AbstractTableModel {
     }
 
     /**
-     * @param partPropertiesSize the partPropertiesSize to set
+     * @param partPropertiesSize
+     *            the partPropertiesSize to set
      */
     private void setPartPropertiesSize(int partPropertiesSize) {
         this.partPropertiesSize = partPropertiesSize;
@@ -66,11 +66,15 @@ public class PartPropertiesTableModel extends AbstractTableModel {
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
         // check, if not netlist is wanted
-        if (rowIndex >= getPartPropertiesSize()) {
-            return (columnIndex == 0) ? "netlist" : getPartProperties().getNetlist();
+        try {
+            if (rowIndex >= getPartPropertiesSize()) {
+                return (columnIndex == 0) ? "netlist" : getPartProperties().getNetlist();
+            }
+            PartProperty<String, String> pp = getPartProperty(rowIndex);
+            return (columnIndex == 0) ? pp.getKey() : pp.getValue();
+        } catch (NullPointerException e) {
+            return null;
         }
-        PartProperty<String, String> pp = getPartProperty(rowIndex);
-        return (columnIndex == 0) ? pp.getKey() : pp.getValue();
     }
 
     /**
@@ -90,7 +94,8 @@ public class PartPropertiesTableModel extends AbstractTableModel {
     }
 
     /**
-     * @param partProperties the partProperties to set
+     * @param partProperties
+     *            the partProperties to set
      */
     public void setPartProperties(PartProperties partProperties) {
         this.partProperties = partProperties;
@@ -121,8 +126,7 @@ public class PartPropertiesTableModel extends AbstractTableModel {
     private PartProperty<String, String> getPartProperty(int index) {
         int i = 0;
 
-        Iterator<PropertiesCategory> it = getPartProperties().getPartPropertiesArray()
-                .getCategoriesForPropertiesArray().iterator();
+        Iterator<PropertiesCategory> it = getPartProperties().getPartPropertiesArray().getCategoriesForPropertiesArray().iterator();
         PropertiesCategory pc = it.next();
         while (i < index) {
             // i has to be maximally equal to index, so we can advance to the next category
@@ -144,8 +148,7 @@ public class PartPropertiesTableModel extends AbstractTableModel {
     private void setPartProperty(String value, int index) {
         int i = 0;
 
-        Iterator<PropertiesCategory> it = getPartProperties().getPartPropertiesArray()
-                .getCategoriesForPropertiesArray().iterator();
+        Iterator<PropertiesCategory> it = getPartProperties().getPartPropertiesArray().getCategoriesForPropertiesArray().iterator();
         PropertiesCategory pc = it.next();
         while (i < index) {
             // i has to be maximally equal to index, so we can advance to the next category
