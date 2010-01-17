@@ -340,6 +340,8 @@ public class GroupNode extends Node {
         // get correct ParameterNode for this level.
         if (pn == null) {
             p = this.chidrenParameterNode;
+        } else if (this.chidrenParameterNode == null) {
+            p = pn;
         } else {
             p = this.chidrenParameterNode.combine(pn);
         }
