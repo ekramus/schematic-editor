@@ -12,7 +12,7 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 public class Text extends Shape {
 
-    private String value = null;
+    private String value = "";
     private Color  color = null;
 
     /**
@@ -57,6 +57,9 @@ public class Text extends Shape {
     }
 
     public String getValue() {
+        if (this.value == null) {
+            return "";
+        }
         return this.value;
     }
 
