@@ -32,23 +32,23 @@ public class PartNode extends ElementNode {
     /**
      * {@link Logger} instance for logging purposes.
      */
-    private static Logger     logger;
+    private static Logger   logger;
     /**
      * GroupNode containing graphic representation of part shape.
      */
-    private GroupNode         partGroupNode     = null;
+    private GroupNode       partGroupNode       = null;
     /**
      * {@link ParameterNode} containing parameters of part shape.
      */
-    private ParameterNode     partParameterNode = null;
+    private ParameterNode   partParameterNode   = null;
     /**
      * {@link Vector} of part connectors.
      */
-    private Vector<PinNode>   partConnectors    = null;
+    private Vector<PinNode> partConnectors      = null;
     /**
-     * {@link Vector} of part labels.
+     * Top {@link GroupNode} for part labels.
      */
-    private Vector<GroupNode> partLabels        = null;
+    private GroupNode       partLabelsGroupNode = null;
 
     /**
      * Static logger instance initialization.
@@ -58,11 +58,11 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * @param partLabels
+     * @param partLabelsGroupNode
      *            the partLabels to set
      */
-    private void setPartLabels(Vector<GroupNode> partLabels) {
-        this.partLabels = partLabels;
+    private void setPartLabelsGroupNode(GroupNode partLabelsGroupNode) {
+        this.partLabelsGroupNode = partLabelsGroupNode;
     }
 
     /**
@@ -80,8 +80,8 @@ public class PartNode extends ElementNode {
     /**
      * @return the partLabels
      */
-    public Vector<GroupNode> getPartLabels() {
-        return this.partLabels;
+    public GroupNode getPartLabelsGroupNode() {
+        return this.partLabelsGroupNode;
     }
 
     /**
@@ -122,23 +122,23 @@ public class PartNode extends ElementNode {
         setPartGroupNode(partGroupNode.getEnabledOnly());
 
         // set part labels
-        Vector<GroupNode> partLabels = new Vector<GroupNode>();
+        GroupNode partLabelsGroupNode = new GroupNode();
 
         Part part = (Part) getElement();
         String[] index = { "name", "value", "n1", "n2", "n3", "n4" };
+        GroupNode g = new GroupNode();
         for (String i : index) {
             String value = part.getPartProperties().getProperty(i);
 
             ShapeNode s = new ShapeNode(new Text(new UnitPoint(0, 0), value));
 
-            GroupNode g = new GroupNode();
             ParameterNode p = new ParameterNode();
             g.add(p);
             g.add(s);
-            partLabels.add(g);
+            partLabelsGroupNode.add(g);
         }
 
-        setPartLabels(partLabels);
+        setPartLabelsGroupNode(partLabelsGroupNode);
     }
 
     /**
@@ -150,7 +150,7 @@ public class PartNode extends ElementNode {
         boolean hit = false;
 
         try {
-            for (GroupNode gn : getPartLabels()) {
+            for (GroupNode gn : getPartLabelsGroupNode().getChildrenGroupList()) {
                 hit = hit || gn.isHit(point, 1, g2d);
             }
         } catch (NullPointerException e) {
@@ -206,11 +206,11 @@ public class PartNode extends ElementNode {
         result.setPartConnectors(partConnectors);
 
         // duplicate partLabels
-        Vector<GroupNode> partLabels = new Vector<GroupNode>();
-        for (GroupNode groupNode : getPartLabels()) {
-            partLabels.add((GroupNode) NodeFactory.duplicate(groupNode));
+        GroupNode partLabelsGroupNode = new GroupNode();
+        for (GroupNode groupNode : getPartLabelsGroupNode().getChildrenGroupList()) {
+            partLabelsGroupNode.add((GroupNode) NodeFactory.duplicate(groupNode));
         }
-        result.setPartLabels(partLabels);
+        result.setPartLabelsGroupNode(partLabelsGroupNode);
 
         return result;
     }
@@ -324,8 +324,8 @@ public class PartNode extends ElementNode {
             return null;
         }
 
-        for (int i = getPartLabels().size() - 1; i >= 0; i--) {
-            GroupNode child = getPartLabels().get(i);
+        for (int i = getPartLabelsGroupNode().getChildrenGroupList().size() - 1; i >= 0; i--) {
+            GroupNode child = getPartLabelsGroupNode().getChildrenGroupList().get(i);
             if (child.startEdit(r2d, 1)) {
                 return child.getEditedElement();
             }
@@ -343,8 +343,8 @@ public class PartNode extends ElementNode {
             getElement().setEditedCoordinate(delta);
             setEdited(false);
         } else {
-            for (int i = getPartLabels().size() - 1; i >= 0; i--) {
-                GroupNode child = getPartLabels().get(i);
+            for (int i = getPartLabelsGroupNode().getChildrenGroupList().size() - 1; i >= 0; i--) {
+                GroupNode child = getPartLabelsGroupNode().getChildrenGroupList().get(i);
                 if (child.isEdited()) {
                     child.stopEdit(delta);
                 }
