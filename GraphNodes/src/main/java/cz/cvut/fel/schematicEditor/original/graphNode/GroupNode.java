@@ -340,6 +340,8 @@ public class GroupNode extends Node {
         // get correct ParameterNode for this level.
         if (pn == null) {
             p = this.chidrenParameterNode;
+        } else if (this.chidrenParameterNode == null) {
+            p = pn;
         } else {
             p = this.chidrenParameterNode.combine(pn);
         }
@@ -357,7 +359,10 @@ public class GroupNode extends Node {
             if (!elementNode.isDisabled()) {
                 if (elementNode.getElement().getElementType() == ElementType.T_PART) {
                     PartNode partNode = (PartNode) elementNode;
+                    // add all part node visual elements
                     result.addAll(partNode.getPartGroupNode().getNodeArray(t, p));
+                    // add all part node text elements
+                    result.addAll(partNode.getPartLabelsGroupNode().getNodeArray(t, pn));
                     // TODO optimize, this doubles data value (as complete part node is sent twice
                     // into queue)
                     // partNode is sent as second, because of exporting priority

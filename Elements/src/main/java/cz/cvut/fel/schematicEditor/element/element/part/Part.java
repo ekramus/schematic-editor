@@ -7,14 +7,15 @@ import java.util.Vector;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.parts.PartProperties;
+import cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.ResistorProperties;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
- * This class encapsulates electronic part informations. Shape of part is represented as <code>GroupNode</code>.
- *
+ * This class encapsulates electronic part informations. Shape of part is represented as
+ * <code>GroupNode</code>.
+ * 
  * @author Urban Kravjansky
- *
  */
 public class Part extends Element {
     /**
@@ -33,8 +34,9 @@ public class Part extends Element {
 
     /**
      * Default constructor. It initializes {@link Part} element.
-     *
-     * @param partProperties part properties containing part variant and part description.
+     * 
+     * @param partProperties
+     *            part properties containing part variant and part description.
      */
     public Part(PartProperties partProperties) {
         super();
@@ -42,7 +44,8 @@ public class Part extends Element {
         setConnectorVector(new Vector<UnitPoint>());
         setPartProperties(partProperties);
 
-        // rotation center will be obtained either dynamically or, after setting, from rotationCenter variable
+        // rotation center will be obtained either dynamically or, after setting, from
+        // rotationCenter variable
         setRotationCenter(null);
     }
 
@@ -51,7 +54,12 @@ public class Part extends Element {
      */
     @Override
     public Element duplicate() {
-        Part p = new Part(getPartProperties().duplicate());
+        Part p;
+        try {
+            p = new Part(getPartProperties().duplicate());
+        } catch (NullPointerException e) {
+            p = new Part(new ResistorProperties());
+        }
         return p;
     }
 
@@ -106,14 +114,16 @@ public class Part extends Element {
     }
 
     /**
-     * @param partProperties the partProperties to set
+     * @param partProperties
+     *            the partProperties to set
      */
     public void setPartProperties(PartProperties partProperties) {
         this.partProperties = partProperties;
     }
 
     /**
-     * @param connectorVector the connectorVector to set
+     * @param connectorVector
+     *            the connectorVector to set
      */
     @Deprecated
     private void setConnectorVector(Vector<UnitPoint> connectorVector) {
@@ -129,7 +139,8 @@ public class Part extends Element {
     }
 
     /**
-     * @param rotationCenter the rotationCenter to set
+     * @param rotationCenter
+     *            the rotationCenter to set
      */
     public void setRotationCenter(UnitPoint rotationCenter) {
         this.rotationCenter = rotationCenter;
