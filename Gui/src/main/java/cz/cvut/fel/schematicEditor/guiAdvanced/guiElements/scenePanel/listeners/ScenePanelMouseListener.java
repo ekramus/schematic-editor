@@ -1,9 +1,11 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedList;
 
 import javax.swing.JPopupMenu;
 
@@ -12,15 +14,22 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
 import cz.cvut.fel.schematicEditor.manipulation.Create;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
+import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.JunctionNode;
+import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.original.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.support.Support;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 
 /**
  * This class implements {@link MouseListener} for {@link ScenePanel}.
@@ -164,6 +173,7 @@ public class ScenePanelMouseListener implements MouseListener {
                 Manipulation manipulation = Gui.getActiveScenePanel().getActiveManipulation();
                 try {
                     ManipulationType mt = manipulation.getManipulationType();
+                    Element el = manipulation.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
 
                     switch (mt) {
                         case CREATE:
@@ -175,6 +185,91 @@ public class ScenePanelMouseListener implements MouseListener {
                                     JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
                                     popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup2");
+                                    
+                                    if (el.getElementType() == ElementType.T_WIRE) {
+            							
+                						// test, if distance between start of wire and current
+                						// pointer position is greater, than 20
+                						//	if (p1.distance(p2) > 20) {
+                							if (findHit(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d)) {
+
+
+                								try {
+
+                								    JunctionNode point = NodeFactory.createJunctionNode(new Junction());
+                									GroupNode mess = NodeFactory.createGroupNode();
+                									ParameterNode option = NodeFactory.createParameterNode();
+
+                									mess.add(option);
+                									mess.add(point);
+                									
+                									option.setColor(Color.red);
+
+                									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
+                											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
+                									// newBorn.setManipulatedGroup(mess);
+                									
+                									double x;
+                									double y;
+                									
+                											
+                									//if the new line is vertical
+                									// TODO getX() and getY() from Manipulation classes should be private, try to find workaround
+                									if( manipulation.getX().get(manipulation.getX().size()-1).doubleValue() == manipulation.getX().get(manipulation.getX().size()-2).doubleValue() ) 
+                									{
+                										logger.error("vertical line");
+                										 x =  manipulation.getX().get(manipulation.getX().size()-1).doubleValue();
+                										 //x =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getX();
+                										 //y =  r2d.getCenterY(); 
+                										 y =  (r2d.getY() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterY() - r2d.getY());
+                									} else // new line is horizontal 
+                										{
+                										logger.error("horizontal line");
+                										y =  manipulation.getY().get(manipulation.getY().size()-1).doubleValue();
+                										//y =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getY();
+                										//x =  r2d.getCenterX();
+                										x =  (r2d.getX() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterX() - r2d.getX()); 
+                										}
+                										
+                									
+                									newBorn.addManipulationCoordinates(
+                											new Pixel(x),
+                											new Pixel(y)  );
+
+                									if(Gui.isDoAfterActive()){
+                									
+                										Gui.setDoAfter(newBorn);
+                										newBorn = null;
+                										
+                									} else ;
+                										
+
+
+                									logger.info("XXXXXXXXXX  Vyrobeno krizeni XXXXXXXXXXXXX");
+
+                								} catch (UnknownManipulationException h) {
+                									logger.error("Error making Junction " + h.toString());
+                								} catch (UnknownError f) {
+                									logger.error("Neznámá chyba");
+                								}
+
+                							}
+                						//}
+                					}
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                     
                                     // check buffer doAfter if we have to create Junction
                                     if(Gui.getDoAfter()!= null)
@@ -194,6 +289,10 @@ public class ScenePanelMouseListener implements MouseListener {
 									
                                     
                                 }
+                                
+                                
+                                
+                                
                             }
                             // left mouse button is clicked
                             else if (e.getButton() == MouseEvent.BUTTON1) {
@@ -232,4 +331,42 @@ public class ScenePanelMouseListener implements MouseListener {
     private void setMouseReleasedPoint(Point2D.Double mouseReleasedPoint) {
         this.mouseReleasedPoint = mouseReleasedPoint;
     }
+    
+    private boolean findHit(GroupNode stromek, Rectangle2D r2d) {
+		LinkedList<GroupNode> mapleLeaves;
+
+		// during the Creation do the check if other Element is hit
+
+		mapleLeaves = stromek.getChildrenGroupList();
+
+		boolean spojeni = false;
+
+		int i = 0;
+		
+
+		for (i = 0; i < mapleLeaves.size(); i++) {
+			// let me know that you're going through the list
+			
+			if(mapleLeaves.get(i).isDisabled())continue;
+			
+			spojeni = mapleLeaves.get(i).isHit(r2d, Gui.getActiveScenePanel().getZoomFactor(), null);
+
+			// did I hit against the wire
+			if (mapleLeaves.get(i).getElementType() == ElementType.T_WIRE)
+				spojeni = spojeni && true;
+			else
+				spojeni = false;
+
+			// if both conditions works
+			if (spojeni) {
+				return true;
+			}
+
+			spojeni = findHit(mapleLeaves.get(i), r2d);
+			if (spojeni)
+				return true;
+		}
+		return false;
+	}
+    
 }
