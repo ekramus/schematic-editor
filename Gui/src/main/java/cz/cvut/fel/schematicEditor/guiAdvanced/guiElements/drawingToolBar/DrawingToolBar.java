@@ -87,6 +87,10 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.DELETE_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(Box.createVerticalStrut(20));
+            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.WIRE_BUTTON));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+            drawingToolBar.add(Box.createVerticalStrut(20));
+            
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.LINE_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.BEZIER_CURVE_BUTTON));
@@ -110,8 +114,7 @@ public final class DrawingToolBar extends JToolBar {
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.JUNCTION_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
-            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.WIRE_BUTTON));
-            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+            
         }
         return drawingToolBar;
     }
