@@ -173,10 +173,10 @@ public class ScenePanelMouseListener implements MouseListener {
                 Manipulation manipulation = Gui.getActiveScenePanel().getActiveManipulation();
                 try {
                     ManipulationType mt = manipulation.getManipulationType();
-                    Element el = manipulation.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
 
                     switch (mt) {
                         case CREATE:
+                            Element el = manipulation.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
                             Create create = (Create) manipulation;
                             // right mouse button is clicked
                             if (e.getButton() == MouseEvent.BUTTON3) {
@@ -186,6 +186,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                     popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup2");
                                     
+
                                     if (el.getElementType() == ElementType.T_WIRE) {
             							
                 						// test, if distance between start of wire and current
