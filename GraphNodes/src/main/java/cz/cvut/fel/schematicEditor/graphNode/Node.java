@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode;
+package cz.cvut.fel.schematicEditor.graphNode;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

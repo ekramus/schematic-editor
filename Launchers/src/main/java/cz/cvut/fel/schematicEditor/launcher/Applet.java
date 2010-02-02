@@ -6,8 +6,8 @@ import cz.cvut.fel.schematicEditor.configuration.Configuration;
 import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.export.NetListExport;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
 
 /**
  * This class implements applet launcher. It is used to launch <em>SchematicEditor</em> as applet.

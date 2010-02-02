@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode.xstreamConverter;
+package cz.cvut.fel.schematicEditor.graphNode.xstreamConverter;
 
 import java.util.LinkedList;
 
@@ -10,7 +10,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.mapper.DefaultMapper;
 
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 
 /**
  * This class implements converter for <code>GroupNode</code>. Conversion is conditional based on enabled status of

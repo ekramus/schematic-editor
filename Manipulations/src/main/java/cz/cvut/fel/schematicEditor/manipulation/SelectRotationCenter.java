@@ -7,9 +7,9 @@ import java.awt.geom.Rectangle2D;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.support.Snap;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 

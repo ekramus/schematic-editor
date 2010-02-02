@@ -10,13 +10,13 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.Serialization;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.original.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
 
 /**
  * This class implements {@link ActionListener} for <code>importMenuItem</code> in {@link MenuBar}.

@@ -1,7 +1,7 @@
 package cz.cvut.fel.schematicEditor.manipulation;
 
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
 
 /**
  * This class implements factory pattern for {@link Manipulation} creation.

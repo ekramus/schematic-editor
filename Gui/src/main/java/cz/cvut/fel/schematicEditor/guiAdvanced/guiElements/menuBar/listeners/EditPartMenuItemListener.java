@@ -6,14 +6,14 @@ import java.awt.event.ActionListener;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.ElementType;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.PinNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.Select;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.PinNode;
 
 /**
  * This class implements {@link ActionListener} for <code>editPartMenuItem</code> in {@link MenuBar}.

@@ -12,8 +12,8 @@ import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
-import cz.cvut.fel.schematicEditor.original.graphNode.Node;
-import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.parts.PartProperties;
 
 /**

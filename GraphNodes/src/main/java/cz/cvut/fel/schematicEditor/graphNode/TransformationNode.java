@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode;
+package cz.cvut.fel.schematicEditor.graphNode;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -52,7 +52,7 @@ public class TransformationNode extends Node {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.Node#duplicate()
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
     protected Node duplicate() {

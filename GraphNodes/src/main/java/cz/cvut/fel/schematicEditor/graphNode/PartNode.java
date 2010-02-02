@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode;
+package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -191,7 +191,7 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.Node#duplicate()
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
     protected Node duplicate() {
@@ -238,7 +238,7 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.ElementNode#toString()
+     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#toString()
      */
     @Override
     public String toString() {
@@ -246,7 +246,7 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.ElementNode#modifyCoordinates(cz.cvut.fel.schematicEditor.support.Transformation)
+     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#modifyCoordinates(cz.cvut.fel.schematicEditor.support.Transformation)
      */
     @Override
     public void modifyCoordinates(Transformation t) {
@@ -295,7 +295,7 @@ public class PartNode extends ElementNode {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.ElementNode#getRotationCenter()
+     * @see cz.cvut.fel.schematicEditor.graphNode.ElementNode#getRotationCenter()
      */
     @Override
     public UnitPoint getRotationCenter() {
