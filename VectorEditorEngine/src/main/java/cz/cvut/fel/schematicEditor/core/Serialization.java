@@ -11,10 +11,10 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.Node;
-import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
-import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.imperial.Mil;
 

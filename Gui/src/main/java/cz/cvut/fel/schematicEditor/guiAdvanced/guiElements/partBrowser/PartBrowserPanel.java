@@ -14,9 +14,9 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.core.Serialization;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.PartBrowserTreeSelectionListener;
-import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
 
 /**
  * @author Urban Kravjansky

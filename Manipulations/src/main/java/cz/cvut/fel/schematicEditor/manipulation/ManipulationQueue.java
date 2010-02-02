@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
 
 /**
  * This class encapsulates manipulations, which are to be executed or already were executed.

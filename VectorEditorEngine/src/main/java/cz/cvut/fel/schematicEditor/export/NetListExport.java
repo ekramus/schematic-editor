@@ -7,10 +7,10 @@ import java.io.PrintStream;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
-import cz.cvut.fel.schematicEditor.original.graphNode.Node;
-import cz.cvut.fel.schematicEditor.original.graphNode.ParameterNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.PartNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.TransformationNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.TransformationNode;
 
 public class NetListExport implements Export {
 

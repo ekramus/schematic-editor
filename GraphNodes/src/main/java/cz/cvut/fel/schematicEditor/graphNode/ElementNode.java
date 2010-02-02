@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode;
+package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -200,7 +200,7 @@ public class ElementNode extends Node {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.Node#duplicate()
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
     protected Node duplicate() {

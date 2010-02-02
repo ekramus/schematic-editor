@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode;
+package cz.cvut.fel.schematicEditor.graphNode;
 
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;

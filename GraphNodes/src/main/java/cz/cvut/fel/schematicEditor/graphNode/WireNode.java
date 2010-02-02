@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode;
+package cz.cvut.fel.schematicEditor.graphNode;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -31,7 +31,7 @@ public class WireNode extends ElementNode {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.Node#duplicate()
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
     protected Node duplicate() {

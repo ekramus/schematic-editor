@@ -11,9 +11,9 @@ import org.apache.log4j.Logger;
 import cz.cvut.fel.schematicEditor.core.PluginData;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateEvent;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
-import cz.cvut.fel.schematicEditor.original.graphNode.GroupNode;
-import cz.cvut.fel.schematicEditor.original.graphNode.Node;
-import cz.cvut.fel.schematicEditor.original.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.types.SceneGraphIterator;
 
 /**

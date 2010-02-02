@@ -1,4 +1,4 @@
-package cz.cvut.fel.schematicEditor.original.graphNode;
+package cz.cvut.fel.schematicEditor.graphNode;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -148,7 +148,7 @@ public class ParameterNode extends Node {
     }
 
     /**
-     * @see cz.cvut.fel.schematicEditor.original.graphNode.Node#duplicate()
+     * @see cz.cvut.fel.schematicEditor.graphNode.Node#duplicate()
      */
     @Override
     protected Node duplicate() {
