@@ -182,8 +182,9 @@ public class ScenePanelMouseListener implements MouseListener {
                             if (e.getButton() == MouseEvent.BUTTON3) {
                                 // element has infinite coordinates
                                 if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
-                                    JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                    popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
+                                	
+                                	                                    JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                                    //popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup2");
                                     
 
@@ -258,7 +259,30 @@ public class ScenePanelMouseListener implements MouseListener {
                 						//}
                 					}
                                     
+                                    logger.info("Kliknuto na objekt " + el.getElementType().toString());
                                     
+                                 // the touched element is pin (or the part?)
+                                	if(el.getElementType() == ElementType.T_WIRE)
+                                	{
+
+                                        try {
+                                         
+                                            Create create2 = (Create) Gui.getActiveScenePanel().getActiveManipulation();
+                                            create2.setFinished(true);
+                                            
+                                            Gui.getActiveScenePanel().tryFinishManipulation(
+                                                                                                    e,
+                                                                                                    r2d,
+                                                                                                    Gui.getActiveScenePanel()
+                                                                                                            .getManipulationQueue(), false);
+                                        } catch (UnknownManipulationException ee) {
+                                            logger.error(ee.getMessage());
+                                        }
+                                        
+                                        
+                                    	Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);
+                                    	//Gui.getActiveScenePanel().getManipulationQueue().unexecute();
+                                	}
                                     
                                     
                                     
