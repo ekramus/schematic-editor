@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -17,12 +18,17 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
  * @author Urban Kravjansky
  */
 public class Pin extends Element {
+	/*
+	 * Get potentials to Pins
+	 */
+	public static ElementPotential potential;
 
     /**
      * Default {@link Pin} constructor.
      */
     public Pin() {
         super();
+      
     }
 
     /**
@@ -93,5 +99,10 @@ public class Pin extends Element {
     @Override
     public String toString() {
         return "PIN";
+    }
+    
+    public String getPotential(){
+    	return Pin.potential.getName(this.hashCode());
+   
     }
 }
