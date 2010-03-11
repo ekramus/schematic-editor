@@ -31,6 +31,7 @@ import cz.cvut.fel.schematicEditor.core.Structures;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneTabbedPaneTabs;
 import cz.cvut.fel.schematicEditor.core.coreStructures.sceneGraph.SceneGraphUpdateListener;
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.guiAdvanced.StatusBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.DrawingToolBar;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.listeners.SceneTabbedPaneChangeListener;
@@ -96,11 +97,14 @@ public class Gui extends JApplet {
 
     private static Manipulation doAfter = null;
     
+    public static ElementPotential voltageLevel = null;
+    
     /**
      * Default singleton constructor.
      */
     private Gui() {
         logger = Logger.getLogger(this.getClass());
+        voltageLevel = new ElementPotential();
     }
 
     /**

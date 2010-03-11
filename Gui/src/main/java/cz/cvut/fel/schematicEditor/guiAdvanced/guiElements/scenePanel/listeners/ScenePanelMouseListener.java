@@ -15,6 +15,7 @@ import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
@@ -187,6 +188,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                     //popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup2");
                                     
+                                   
 
                                     if (el.getElementType() == ElementType.T_WIRE) {
             							
@@ -284,8 +286,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                     	//Gui.getActiveScenePanel().getManipulationQueue().unexecute();
                                 	}
                                     
-                                    
-                                    
+                                	
                                     
                                     
                                     

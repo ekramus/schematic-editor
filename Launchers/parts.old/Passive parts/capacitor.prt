@@ -86,22 +86,62 @@
         <chidrenParameterNode>
           <id>1250446365640</id>
           <disabled>false</disabled>
-          <color>
+          <properties>
+            <contourLineWidth class="Pixel">
+              <value>1.0</value>
+              <doubleFactor>1.0</doubleFactor>
+            </contourLineWidth>
+            <contourStyle>NORMAL</contourStyle>
+            <contourColor>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
             <alpha>255</alpha>
-          </color>
-          <fill>
+            </contourColor>
+            <fillStyle>NORMAL</fillStyle>
+            <fillColor>
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
             <alpha>255</alpha>
-          </fill>
-          <width class="Pixel">
-            <value>10.0</value>
-            <doubleFactor>0.072</doubleFactor>
-          </width>
+            </fillColor>
+            <font>
+              <attributes>
+                <entry>
+                  <awt-text-attribute>posture</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>width</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>family</awt-text-attribute>
+                  <string>Monospaced</string>
+                </entry>
+                <entry>
+                  <awt-text-attribute>size</awt-text-attribute>
+                  <float>13.0</float>
+                </entry>
+                <entry>
+                  <awt-text-attribute>weight</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>superscript</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>tracking</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>transform</awt-text-attribute>
+                  <null/>
+                </entry>
+              </attributes>
+            </font>
+          </properties>
         </chidrenParameterNode>
       </GroupNode>
       <GroupNode>
@@ -144,22 +184,66 @@
         <chidrenParameterNode>
           <id>1250446365640</id>
           <disabled>false</disabled>
-          <color>
+          <properties>
+            <contourLineWidth class="Pixel">
+              <value>1.0</value>
+              <doubleFactor>1.0</doubleFactor>
+            </contourLineWidth>
+            <contourStyle>NORMAL</contourStyle>
+            <contourColor>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
             <alpha>255</alpha>
-          </color>
-          <fill>
+            </contourColor>
+            <fillStyle>NORMAL</fillStyle>
+            <fillColor>
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
             <alpha>255</alpha>
-          </fill>
+            </fillColor>
           <width class="Pixel">
             <value>10.0</value>
             <doubleFactor>0.072</doubleFactor>
           </width>
+    <font>
+              <attributes>
+                <entry>
+                  <awt-text-attribute>posture</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>width</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>family</awt-text-attribute>
+                  <string>Monospaced</string>
+                </entry>
+                <entry>
+                  <awt-text-attribute>size</awt-text-attribute>
+                  <float>13.0</float>
+                </entry>
+                <entry>
+                  <awt-text-attribute>weight</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>superscript</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>tracking</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>transform</awt-text-attribute>
+                  <null/>
+                </entry>
+              </attributes>
+            </font>
+          </properties>
         </chidrenParameterNode>
       </GroupNode>
       <GroupNode>
@@ -202,19 +286,64 @@
         <chidrenParameterNode>
           <id>1250446365640</id>
           <disabled>false</disabled>
-          <color>
+         <properties>
+            <contourLineWidth class="Pixel">
+              <value>1.0</value>
+              <doubleFactor>1.0</doubleFactor>
+            </contourLineWidth>
+            <contourStyle>NORMAL</contourStyle>
+            <contourColor>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
             <alpha>255</alpha>
-          </color>
-          <fill>
+            </contourColor>
+            <fillStyle>NORMAL</fillStyle>
+            <fillColor>
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
             <alpha>255</alpha>
-          </fill>
+            </fillColor>
           <width class="Pixel" reference="../../../GroupNode[2]/chidrenParameterNode/width"/>
+   <font>
+              <attributes>
+                <entry>
+                  <awt-text-attribute>posture</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>width</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>family</awt-text-attribute>
+                  <string>Monospaced</string>
+                </entry>
+                <entry>
+                  <awt-text-attribute>size</awt-text-attribute>
+                  <float>13.0</float>
+                </entry>
+                <entry>
+                  <awt-text-attribute>weight</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>superscript</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>tracking</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>transform</awt-text-attribute>
+                  <null/>
+                </entry>
+              </attributes>
+            </font>
+          </properties>
+
         </chidrenParameterNode>
       </GroupNode>
       <GroupNode>
@@ -257,19 +386,62 @@
         <chidrenParameterNode>
           <id>1250446365625</id>
           <disabled>false</disabled>
-          <color>
+          <properties>
+            <contourLineWidth class="Pixel">
+              <value>1.0</value>
+              <doubleFactor>1.0</doubleFactor>
+            </contourLineWidth>
+            <contourStyle>NORMAL</contourStyle>
+            <contourColor>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
             <alpha>255</alpha>
           </color>
-          <fill>
+            <fillStyle>NORMAL</fillStyle>
+            <fillColor>
             <red>255</red>
             <green>255</green>
             <blue>255</blue>
             <alpha>255</alpha>
-          </fill>
+            </fillColor>
           <width class="Pixel" reference="../../../GroupNode/chidrenParameterNode/width"/>
+          <font>
+              <attributes>
+                <entry>
+                  <awt-text-attribute>posture</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>width</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>family</awt-text-attribute>
+                  <string>Monospaced</string>
+                </entry>
+                <entry>
+                  <awt-text-attribute>size</awt-text-attribute>
+                  <float>13.0</float>
+                </entry>
+                <entry>
+                  <awt-text-attribute>weight</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>superscript</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>tracking</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>transform</awt-text-attribute>
+                  <null/>
+                </entry>
+              </attributes>
+            </font>
         </chidrenParameterNode>
       </GroupNode>
     </childrenGroupList>
@@ -356,4 +528,226 @@
       <edited>false</edited>
     </PinNode>
   </partConnectors>
+  <partLabelsGroupNode>
+    <id>1267900757203</id>
+    <disabled>false</disabled>
+    <childrenGroupList>
+      <GroupNode>
+        <id>1267900757203</id>
+        <parent reference="../../.."/>
+        <disabled>false</disabled>
+        <childrenGroupList/>
+        <childrenElementList>
+          <ShapeNode>
+            <id>1267900757203</id>
+            <parent reference="../../.."/>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Text">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+              <value></value>
+            </element>
+            <elementType>T_TEXT</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+          <ShapeNode>
+            <id>1267900757203</id>
+            <parent reference="../../.."/>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Text">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+              <value></value>
+            </element>
+            <elementType>T_TEXT</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+          <ShapeNode>
+            <id>1267900757203</id>
+            <parent reference="../../.."/>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Text">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+              <value></value>
+            </element>
+            <elementType>T_TEXT</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+          <ShapeNode>
+            <id>1267900757203</id>
+            <parent reference="../../.."/>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Text">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+              <value></value>
+            </element>
+            <elementType>T_TEXT</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+          <ShapeNode>
+            <id>1267900757203</id>
+            <parent reference="../../.."/>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Text">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+              <value></value>
+            </element>
+            <elementType>T_TEXT</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+          <ShapeNode>
+            <id>1267900757203</id>
+            <parent reference="../../.."/>
+            <disabled>false</disabled>
+            <element class="cz.cvut.fel.schematicEditor.element.element.shape.Text">
+              <editedCoordinateIndex>0</editedCoordinateIndex>
+              <x>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </x>
+              <y>
+                <Pixel>
+                  <value>0.0</value>
+                  <doubleFactor>1.0</doubleFactor>
+                </Pixel>
+              </y>
+              <elementModificator>NO_MODIFICATION</elementModificator>
+              <value></value>
+            </element>
+            <elementType>T_TEXT</elementType>
+            <edited>false</edited>
+          </ShapeNode>
+        </childrenElementList>
+        <childrenTransformationList/>
+        <chidrenParameterNode>
+          <id>1267900757203</id>
+          <parent reference="../.."/>
+          <disabled>false</disabled>
+          <properties>
+            <contourLineWidth class="Pixel">
+              <value>1.0</value>
+              <doubleFactor>1.0</doubleFactor>
+            </contourLineWidth>
+            <contourStyle>NORMAL</contourStyle>
+            <contourColor>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+              <alpha>255</alpha>
+            </contourColor>
+            <fillStyle>NORMAL</fillStyle>
+            <fillColor>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+              <alpha>255</alpha>
+            </fillColor>
+            <font>
+              <attributes>
+                <entry>
+                  <awt-text-attribute>posture</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>width</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>family</awt-text-attribute>
+                  <string>Monospaced</string>
+                </entry>
+                <entry>
+                  <awt-text-attribute>size</awt-text-attribute>
+                  <float>13.0</float>
+                </entry>
+                <entry>
+                  <awt-text-attribute>weight</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>superscript</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>tracking</awt-text-attribute>
+                  <null/>
+                </entry>
+                <entry>
+                  <awt-text-attribute>transform</awt-text-attribute>
+                  <null/>
+                </entry>
+              </attributes>
+            </font>
+          </properties>
+        </chidrenParameterNode>
+      </GroupNode>
+    </childrenGroupList>
+    <childrenElementList/>
+    <childrenTransformationList/>
+  </partLabelsGroupNode>
 </PartNode>

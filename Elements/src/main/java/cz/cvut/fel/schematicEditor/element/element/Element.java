@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -18,7 +19,8 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
  * @author uk
  */
 public abstract class Element {
-    /**
+    
+	/**
      * Infinite number of coordinates.
      */
     public static final int    INFINITE_COORDINATES  = -1;
@@ -48,6 +50,7 @@ public abstract class Element {
      */
     private ElementModificator elementModificator;
 
+    
     /**
      * Default constructor. It instantiates new {@link Element} instance with default values set.
      */
@@ -55,6 +58,7 @@ public abstract class Element {
         setX(new Vector<Unit>());
         setY(new Vector<Unit>());
         setElementModificator(ElementModificator.NO_MODIFICATION);
+        
     }
 
     /**
