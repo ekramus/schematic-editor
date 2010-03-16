@@ -16,10 +16,12 @@ import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
@@ -31,6 +33,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
 /**
  * This class implements {@link MouseListener} for {@link ScenePanel}.
@@ -203,9 +206,11 @@ public class ScenePanelMouseListener implements MouseListener {
                 								    JunctionNode point = NodeFactory.createJunctionNode(new Junction());
                 									GroupNode mess = NodeFactory.createGroupNode();
                 									ParameterNode option = NodeFactory.createParameterNode();
-
+                									ShapeNode tvary = NodeFactory.createShapeNode(new Text(new UnitPoint(r2d.getCenterX(), r2d.getCenterY()),point.getElement().getPinPotential(0))); 
+                									
                 									mess.add(option);
                 									mess.add(point);
+                									mess.add(tvary);
                 									
                 									option.setColor(Color.red);
 
@@ -254,7 +259,7 @@ public class ScenePanelMouseListener implements MouseListener {
                 								} catch (UnknownManipulationException h) {
                 									logger.error("Error making Junction " + h.toString());
                 								} catch (UnknownError f) {
-                									logger.error("Neznámá chyba");
+                									logger.error("Neznámá chyba: " + f.toString());
                 								}
 
                 							}

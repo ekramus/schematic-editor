@@ -5,10 +5,11 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
-import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
+import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
 
 /**
@@ -18,17 +19,12 @@ import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitRectangle;
  * @author Urban Kravjansky
  */
 public class Pin extends Element {
-	/*
-	 * Get potentials to Pins
-	 */
-	public static ElementPotential potential;
 
     /**
      * Default {@link Pin} constructor.
      */
     public Pin() {
-        super();
-      
+        super();            
     }
 
     /**
@@ -101,8 +97,5 @@ public class Pin extends Element {
         return "PIN";
     }
     
-    public String getPotential(){
-    	return Pin.potential.getName(this.hashCode());
-   
-    }
+    
 }

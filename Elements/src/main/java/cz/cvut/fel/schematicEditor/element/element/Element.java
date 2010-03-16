@@ -50,7 +50,7 @@ public abstract class Element {
      */
     private ElementModificator elementModificator;
 
-    
+    private static  ElementPotential elementPotential;
     /**
      * Default constructor. It instantiates new {@link Element} instance with default values set.
      */
@@ -58,8 +58,9 @@ public abstract class Element {
         setX(new Vector<Unit>());
         setY(new Vector<Unit>());
         setElementModificator(ElementModificator.NO_MODIFICATION);
-        
-    }
+        if (elementPotential == null)
+        	elementPotential = new ElementPotential();
+        }
 
     /**
      * Constructor with coordinates. It instantiates new {@link Element} instance with coordinates set.
@@ -87,7 +88,8 @@ public abstract class Element {
         getX().add(b.getUnitX());
         getY().add(a.getUnitY());
         getY().add(b.getUnitY());
-    }
+        
+     }
 
     /**
      * Getter for <code>x</code> coordinates.
@@ -287,4 +289,16 @@ public abstract class Element {
 
         return new UnitPoint(x, y);
     }
+
+	/*public static void setElementPotential(ElementPotential elementPotential) {
+		Element.elementPotential = elementPotential;
+	}*/
+    
+    // I want a unique number from every made potential and all PINs in it.
+    //	if it works, we're making unique from PINs only
+
+	public String getPinPotential(int ID) {
+		if(ID == 0)ID = this.hashCode();
+		return elementPotential.getName(ID);
+	}
 }
