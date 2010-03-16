@@ -8,8 +8,12 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
+import cz.cvut.fel.schematicEditor.graphNode.xstreamConverter.GroupNodeLinkedListConditionalCoverter;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Snap;
@@ -147,6 +151,7 @@ public class Create extends Manipulation {
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
         addManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
+        
         return this;
     }
 
@@ -241,7 +246,7 @@ public class Create extends Manipulation {
 
         setActive(false);
         setFinished(true);
-
+        
         getTopNode().add(gn);
         logger.trace(this + " executed");
     }
