@@ -11,10 +11,12 @@ import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
+import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
 import cz.cvut.fel.schematicEditor.manipulation.Manipulation;
@@ -66,6 +68,10 @@ public class DrawCircuitPartButtonListener implements ActionListener {
             switch (getElement().getElementType()) {
                 case T_PIN:
                     en = NodeFactory.createPinNode((Pin) getElement());
+                    ShapeNode tvary = NodeFactory.createShapeNode(new Text(new UnitPoint(100,100),en.getElement().getPinPotential(0)));
+
+                    gn.add(tvary);
+                    
                     break;
                 case T_JUNCTION:
                     en = NodeFactory.createJunctionNode((Junction) getElement());
@@ -82,12 +88,14 @@ public class DrawCircuitPartButtonListener implements ActionListener {
 
             gn.add(pn);
             gn.add(en);
-
+            
+           
+            
             // get all coordinates for snapping
             Vector<UnitPoint> snapCoordinates = new Vector<UnitPoint>();
             snapCoordinates = Gui.getActiveScenePanel().getSceneGraph().getTopNode().getPartsCoordinates();
 
-            // create active manipulation
+            //create active manipulation
             Manipulation m = ManipulationFactory.create(ManipulationType.CREATE, Gui.getActiveScenePanel()
                     .getSceneGraph().getTopNode(), ae.getSource(), gn);
             m.setSnapCoordinates(snapCoordinates);
