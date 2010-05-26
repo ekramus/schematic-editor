@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
@@ -34,6 +35,7 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.element.properties.ElementStyle;
 import cz.cvut.fel.schematicEditor.graphNode.ElementNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
+import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.PinNode;
@@ -331,7 +333,10 @@ public class DisplayExport implements Export {
             case T_PIN:
                 Pin pin = (Pin) elementNode.getElement();
                 drawPin(pin, parameterNode, nodeG2D);
-                break;
+           
+                drawPinText(pin, parameterNode, transformationNode, bufferedImage);
+                
+          		break;
 
             case T_JUNCTION:
                 Junction junction = (Junction) elementNode.getElement();
@@ -344,6 +349,14 @@ public class DisplayExport implements Export {
                         (junction.getY().firstElement().doubleValue() * getZoomFactor()) - 2, 5, 5);
                 drawShape(nodeG2D, e2d, parameterNode.getColor(), ElementStyle.NORMAL, Color.BLACK,
                           ElementStyle.NORMAL);
+                
+                //drawPinText(new Pin(junction.getX(), junction.getY()), junction.getPinPotential(junction.hashCode()),nodeG2D);
+              /*/  drawText(nodeG2D, junction.getPinPotential(junction.hashCode()), new UnitPoint(junction.getX().firstElement().doubleValue() * getZoomFactor(),
+                		junction.getX().firstElement().doubleValue() * getZoomFactor()),
+                		Color.BLACK, parameterNode.getFont()); //*/
+                
+                drawPinText(junction, parameterNode, transformationNode, bufferedImage);
+                
                 break;
 
             case T_PART:
@@ -355,7 +368,8 @@ public class DisplayExport implements Export {
                 // getPartConnectors() method.
 
                 // draw name and value
-                if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
+                //if (GuiConfiguration.getInstance().isConnectorNamesVisible()) 
+                {
                     drawPartText(((Part) partNode.getElement()).getPartProperties(),
                                  partNode.getRotationCenter(), nodeG2D);
                 }
@@ -367,9 +381,12 @@ public class DisplayExport implements Export {
                     Pin c = (Pin) cn.getElement();
                     drawPin(c, parameterNode, nodeG2D);
                     // check, whether connector names should be printed
-                    if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
-                        drawPinText(c, connectorValues.get(i), nodeG2D);
-                    }
+               //   if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
+                        drawPinText(c, c.getPinPotential(c.hashCode()), nodeG2D);
+                   // } //*/
+                    
+                   // drawPinText(c, parameterNode, transformationNode, bufferedImage);     
+                    
                     i++;
                 }
 
@@ -453,6 +470,8 @@ public class DisplayExport implements Export {
             g2d.draw(shape);
         }
     }
+    
+   // private void drawLabel
 
     /**
      * @return the antialiased
@@ -504,6 +523,32 @@ public class DisplayExport implements Export {
         nodeG2D.setFont(font);
         nodeG2D.drawString(text, coordinates.getUnitX().floatValue(),
                            coordinates.getUnitY().floatValue());
+    }
+    
+    
+    private void drawPinText(Element element, ParameterNode parameterNode, TransformationNode transformationNode, BufferedImage bufferedImage){
+    	/**
+    	 * @author Karel Körber
+    	 * 
+    	 */
+    	UnitPoint up = new UnitPoint((int) (element.getX().firstElement().floatValue()), 
+				(int)(element.getY().firstElement().floatValue()));
+		
+    	Element em = new Text(up, element.getPinPotential(element.hashCode()));
+        ElementNode en = NodeFactory.createElementNode(em);
+        
+        /*
+        BufferedImage novy = new BufferedImage((int)(bufferedImage.getWidth() * getZoomFactor()),
+        		(int)(bufferedImage.getWidth()*getZoomFactor()), bufferedImage.getType());
+        
+        bufferedImage.setData(novy.getData());
+       
+        //*/
+        
+    	drawNode(en, parameterNode, transformationNode, bufferedImage);
+    	
+    	
+    	
     }
 
     private void drawPinText(Pin pin, String connectorName, Graphics2D nodeG2D) {

@@ -301,4 +301,9 @@ public abstract class Element {
 		if(ID == 0)ID = this.hashCode();
 		return elementPotential.getName(ID);
 	}
+	
+	public void setPinPotential(String nazev) {
+		elementPotential.setName(this.hashCode(), nazev);
+	}
+	
 }
