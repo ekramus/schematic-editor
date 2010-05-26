@@ -187,7 +187,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                 // element has infinite coordinates
                                 if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
                                 	
-                                	                                    JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                                	JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
                                     //popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup2");
                                     
@@ -206,11 +206,13 @@ public class ScenePanelMouseListener implements MouseListener {
                 								    JunctionNode point = NodeFactory.createJunctionNode(new Junction());
                 									GroupNode mess = NodeFactory.createGroupNode();
                 									ParameterNode option = NodeFactory.createParameterNode();
-                									ShapeNode tvary = NodeFactory.createShapeNode(new Text(new UnitPoint(r2d.getCenterX(), r2d.getCenterY()),point.getElement().getPinPotential(0))); 
+                								//	ShapeNode tvary = NodeFactory.createShapeNode(new Text(new UnitPoint(r2d.getCenterX(), r2d.getCenterY()),point.getElement().getPinPotential(0))); 
+                									
+                									point.getElement().setPinPotential(el.getPinPotential(el.hashCode()));
                 									
                 									mess.add(option);
                 									mess.add(point);
-                									mess.add(tvary);
+                								//	mess.add(tvary);
                 									
                 									option.setColor(Color.red);
 
@@ -292,15 +294,6 @@ public class ScenePanelMouseListener implements MouseListener {
                                 	}
                                     
                                 	
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
                                     
                                     // check buffer doAfter if we have to create Junction
                                     if(Gui.getDoAfter()!= null)

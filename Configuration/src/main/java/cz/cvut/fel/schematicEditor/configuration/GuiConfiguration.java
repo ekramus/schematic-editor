@@ -100,7 +100,7 @@ public class GuiConfiguration extends Configuration {
     /**
      * Indicate, whether are connector names visible or not.
      */
-    private boolean        connectorNamesVisible = false;
+    private boolean        connectorNamesVisible = true;
 
     /**
      *
@@ -288,6 +288,7 @@ public class GuiConfiguration extends Configuration {
      * @return the schemeZoomFactor
      */
     public float getSchemeZoomFactor() {
-        return this.schemeZoomFactor;
+        
+    	return this.schemeZoomFactor;
     }
 }
