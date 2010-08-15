@@ -69,9 +69,7 @@ public class DrawCircuitPartButtonListener implements ActionListener {
                 case T_PIN:
                     en = NodeFactory.createPinNode((Pin) getElement());
                     //ShapeNode tvary = NodeFactory.createShapeNode(new Text(new UnitPoint(100,100),en.getElement().getPinPotential(0)));
-
-                   // gn.add(tvary);
-                    
+                    // gn.add(tvary);
                     break;
                 case T_JUNCTION:
                     en = NodeFactory.createJunctionNode((Junction) getElement());
@@ -88,8 +86,6 @@ public class DrawCircuitPartButtonListener implements ActionListener {
 
             gn.add(pn);
             gn.add(en);
-            
-           
             
             // get all coordinates for snapping
             Vector<UnitPoint> snapCoordinates = new Vector<UnitPoint>();

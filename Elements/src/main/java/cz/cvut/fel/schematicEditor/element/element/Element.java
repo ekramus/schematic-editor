@@ -60,7 +60,11 @@ public abstract class Element {
         setElementModificator(ElementModificator.NO_MODIFICATION);
         if (elementPotential == null)
         	elementPotential = new ElementPotential();
+        
+        //String name = elementPotential.findName(hashCode());
         }
+    	
+    	
 
     /**
      * Constructor with coordinates. It instantiates new {@link Element} instance with coordinates set.
@@ -298,12 +302,12 @@ public abstract class Element {
     //	if it works, we're making unique from PINs only
 
 	public String getPinPotential(int ID) {
-		if(ID == 0)ID = this.hashCode();
-		return elementPotential.getName(ID);
+		if(ID == 0)ID = hashCode();
+		return elementPotential.findName(ID);
 	}
 	
 	public void setPinPotential(String nazev) {
-		elementPotential.setName(this.hashCode(), nazev);
+		elementPotential.setName(hashCode(), nazev);
 	}
 	
 }
