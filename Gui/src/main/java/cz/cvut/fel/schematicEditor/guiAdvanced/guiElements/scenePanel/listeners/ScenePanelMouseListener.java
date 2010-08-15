@@ -1,27 +1,35 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.listeners;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.Vector;
 
 import javax.swing.JPopupMenu;
 
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
+import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
 import cz.cvut.fel.schematicEditor.graphNode.ParameterNode;
+import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.graphNode.ShapeNode;
+import cz.cvut.fel.schematicEditor.graphNode.xstreamConverter.GroupNodeLinkedListConditionalCoverter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel.ScenePanel;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanelDrawingPopup.ScenePanelDrawingPopup;
@@ -32,6 +40,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
 import cz.cvut.fel.schematicEditor.support.Support;
+import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
 import cz.cvut.fel.schematicEditor.unit.twoDimesional.UnitPoint;
 
@@ -182,6 +191,8 @@ public class ScenePanelMouseListener implements MouseListener {
                         case CREATE:
                             Element el = manipulation.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
                             Create create = (Create) manipulation;
+
+                            //xxx                
                             // right mouse button is clicked
                             if (e.getButton() == MouseEvent.BUTTON3) {
                                 // element has infinite coordinates
@@ -191,9 +202,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                     //popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
                                     logger.trace("Show right-click popup2");
                                     
-                                   
-
-                                    if (el.getElementType() == ElementType.T_WIRE) {
+                                   if (el.getElementType() == ElementType.T_WIRE) {
             							
                 						// test, if distance between start of wire and current
                 						// pointer position is greater, than 20
@@ -202,24 +211,23 @@ public class ScenePanelMouseListener implements MouseListener {
 
 
                 								try {
-
-                								    JunctionNode point = NodeFactory.createJunctionNode(new Junction());
+                									JunctionNode point = NodeFactory.createJunctionNode(new Junction());
                 									GroupNode mess = NodeFactory.createGroupNode();
                 									ParameterNode option = NodeFactory.createParameterNode();
-                								//	ShapeNode tvary = NodeFactory.createShapeNode(new Text(new UnitPoint(r2d.getCenterX(), r2d.getCenterY()),point.getElement().getPinPotential(0))); 
                 									
-                									point.getElement().setPinPotential(el.getPinPotential(el.hashCode()));
-                									
+                									String volt = ElementPotential.getHitObject().getPinPotential(0);
+                									el.setPinPotential(volt);
+                									point.getElement().setPinPotential(volt);
+                									               											
                 									mess.add(option);
                 									mess.add(point);
-                								//	mess.add(tvary);
                 									
                 									option.setColor(Color.red);
 
                 									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
                 											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
-                									// newBorn.setManipulatedGroup(mess);
-                									
+                									       									
+                									                									
                 									double x;
                 									double y;
                 									
@@ -230,15 +238,11 @@ public class ScenePanelMouseListener implements MouseListener {
                 									{
                 										logger.error("vertical line");
                 										 x =  manipulation.getX().get(manipulation.getX().size()-1).doubleValue();
-                										 //x =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getX();
-                										 //y =  r2d.getCenterY(); 
                 										 y =  (r2d.getY() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterY() - r2d.getY());
                 									} else // new line is horizontal 
                 										{
                 										logger.error("horizontal line");
                 										y =  manipulation.getY().get(manipulation.getY().size()-1).doubleValue();
-                										//y =  m.getSnapCoordinates().get(m.getSnapCoordinates().size()-1).getY();
-                										//x =  r2d.getCenterX();
                 										x =  (r2d.getX() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterX() - r2d.getX()); 
                 										}
                 										
@@ -261,7 +265,7 @@ public class ScenePanelMouseListener implements MouseListener {
                 								} catch (UnknownManipulationException h) {
                 									logger.error("Error making Junction " + h.toString());
                 								} catch (UnknownError f) {
-                									logger.error("Neznámá chyba: " + f.toString());
+                									logger.error("Neznï¿½mï¿½ chyba: " + f.toString());
                 								}
 
                 							}
@@ -290,8 +294,7 @@ public class ScenePanelMouseListener implements MouseListener {
                                         
                                         
                                     	Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);
-                                    	//Gui.getActiveScenePanel().getManipulationQueue().unexecute();
-                                	}
+                                    }
                                     
                                 	
                                     
@@ -320,7 +323,21 @@ public class ScenePanelMouseListener implements MouseListener {
                             }
                             // left mouse button is clicked
                             else if (e.getButton() == MouseEvent.BUTTON1) {
+                            	
+                            	// PIN is touched 
+                                if (el.getElementType() == ElementType.T_JUNCTION)
+                                   {
+                                   if (findHitPin(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d))
+                                   	{
+                                	   String volt = ElementPotential.getHitObject().getPinPotential(0);
+                                	   el.setPinPotential(volt);
+                                   	}
+       								
+                                   }  //*/
+                            	
                                 Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
+                                
+                             
                             }
                             break;
                         case SELECT:
@@ -356,6 +373,81 @@ public class ScenePanelMouseListener implements MouseListener {
         this.mouseReleasedPoint = mouseReleasedPoint;
     }
     
+    private boolean findHitPin(GroupNode stromek, Rectangle2D r2d) {
+		LinkedList<GroupNode> mapleLeaves;
+
+		// during the Creation do the check if other Element is hit
+
+		mapleLeaves = stromek.getChildrenGroupList();
+
+		boolean spojeni = false;
+
+		int i = 0;
+		
+
+		for (i = 0; i < mapleLeaves.size(); i++) {
+			// let me know that you're going through the list
+			try {
+			if(mapleLeaves.get(i).isDisabled())continue;
+			
+			//if(mapleLeaves.get(i).getElementType() == ElementType.T_PART){
+			{
+				String potencial = "";
+				while(mapleLeaves.get(i).getAndRemovePinNodes().elements().hasMoreElements())
+					{
+						Pin part = (Pin) mapleLeaves.get(i).getAndRemovePinNodes().elements().nextElement().getElement();
+						if(potencial == "") potencial = part.getPinPotential(0);
+					}
+				
+				
+				if(potencial != "")
+				{
+					Pin pin = new Pin();	
+					pin.setPinPotential(potencial);
+					ElementPotential.setHitObject(pin);
+					return true;	
+				}
+				
+					
+					
+					/*for (int m = 0; m < souradnice.size(); m++){
+						if(souradnice.get(m).distance(r2d.getCenterX(), r2d.getCenterY()) < 20){
+							int k = 5;					
+							String pismo = mapleLeaves.get(i).getChildrenElementList().getFirst().getElement().getPinPotential(0);
+							String pism  = mapleLeaves.get(i).getEditedElement().getPinPotential(0);
+							
+						}
+					}	*/
+				
+				
+					// if both conditions works
+					if (spojeni) {
+						//ElementPotential.setHitObject(mapleLeaves.get(i).getChildrenElementList().getLast().getElement());
+						return true;
+					}
+
+			}
+			
+			}
+			catch (NoSuchElementException e) {
+			logger.info("");	
+			}
+			
+			spojeni = findHitPin(mapleLeaves.get(i), r2d);
+			if (spojeni)
+			{
+				//ElementPotential.posledniString = mapleLeaves.get(i).getChildrenElementList().getFirst().getElement().getPinPotential(0);
+				ElementPotential.setHitObject(mapleLeaves.get(i).getChildrenElementList().getLast().getElement());
+				
+				//return true;
+			}
+				
+		}
+		return false;
+	}
+    
+
+    
     private boolean findHit(GroupNode stromek, Rectangle2D r2d) {
 		LinkedList<GroupNode> mapleLeaves;
 
@@ -377,10 +469,21 @@ public class ScenePanelMouseListener implements MouseListener {
 
 			// did I hit against the wire
 			if (mapleLeaves.get(i).getElementType() == ElementType.T_WIRE)
+				{
 				spojeni = spojeni && true;
+				
+				mapleLeaves.get(i).getChildrenElementList().getLast().getElement().getPinPotential(0);
+				ElementPotential.setHitObject(mapleLeaves.get(i).getChildrenElementList().getLast().getElement());
+				}
 			else
+				{
+						
 				spojeni = false;
-
+				
+				}
+			
+			
+			
 			// if both conditions works
 			if (spojeni) {
 				return true;
@@ -388,7 +491,11 @@ public class ScenePanelMouseListener implements MouseListener {
 
 			spojeni = findHit(mapleLeaves.get(i), r2d);
 			if (spojeni)
+			{
+				//ElementPotential.posledniString = mapleLeaves.get(i).getChildrenElementList().getFirst().getElement().getPinPotential(0);
 				return true;
+			}
+				
 		}
 		return false;
 	}

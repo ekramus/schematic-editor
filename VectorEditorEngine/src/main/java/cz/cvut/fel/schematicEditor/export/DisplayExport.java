@@ -206,6 +206,7 @@ public class DisplayExport implements Export {
 
                 drawShape(nodeG2D, l2d, parameterNode.getColor(), parameterNode.getLineStyle(),
                           null, parameterNode.getFillStyle());
+                
 
                 break;
 
@@ -315,7 +316,8 @@ public class DisplayExport implements Export {
 
             case T_WIRE:
                 Wire wire = (Wire) elementNode.getElement();
-
+                
+//                wire.getPinPotential(0);
                 Vector<Unit> xWi = wire.getX();
                 Vector<Unit> yWi = wire.getY();
 
@@ -327,6 +329,7 @@ public class DisplayExport implements Export {
                             yWi.get(i + 1).doubleValue() * getZoomFactor());
                     drawShape(nodeG2D, line2d, parameterNode.getColor(), ElementStyle.DASHED, null,
                               parameterNode.getFillStyle());
+                    //drawPinText(null, elementNode.getElement().getPinPotential(elementNode.getElement().hashCode()), nodeG2D);
                 }
                 break;
 
@@ -534,7 +537,7 @@ public class DisplayExport implements Export {
     	UnitPoint up = new UnitPoint((int) (element.getX().firstElement().floatValue()), 
 				(int)(element.getY().firstElement().floatValue()));
 		
-    	Element em = new Text(up, element.getPinPotential(element.hashCode()));
+    	Element em = new Text(up, element.getPinPotential(0));
         ElementNode en = NodeFactory.createElementNode(em);
         
         /*
