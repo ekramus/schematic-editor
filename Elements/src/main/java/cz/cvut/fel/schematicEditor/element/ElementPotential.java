@@ -22,6 +22,7 @@ public class ElementPotential {
 	private static Stack<String>  lineOfTypes;	
 	static Element touchedObject;
 	private static int orderNumber;
+	private static String treePrint;
 	
 	public ElementPotential() {
 		/**
@@ -37,6 +38,7 @@ public class ElementPotential {
 		lineOfIDs 	= new Stack<Integer>();
 		lineOfTypes = new Stack<String>();
 		orderNumber = 0;
+		treePrint = "Netlist \n";
 		}
 		//getName(0);
 	}
@@ -115,6 +117,16 @@ public class ElementPotential {
 	public static void setHitObject(Element object)
 	{
 		touchedObject = object;
+	}
+	
+	public static String Tree (String add){
+		/**
+		 * @author Karel
+		 * 
+		 * Provides full info of tree of Nodes.
+		 */
+		 treePrint = treePrint + add + "\n";
+		 return (treePrint + "\n");
 	}
 	
 	

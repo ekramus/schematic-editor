@@ -3,11 +3,17 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.JFileChooser;
 
 import cz.cvut.fel.schematicEditor.configuration.EnvironmentConfiguration;
 import cz.cvut.fel.schematicEditor.core.Serialization;
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.guiAdvanced.ExportFileFilter;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.MenuBar;
@@ -23,9 +29,30 @@ public final class SaveMenuItemListener implements ActionListener {
      * Default constructor. It only calls constructor of super class.
      */
     public SaveMenuItemListener() {
-        super();
-    }
+    	 
+           //getAppletContext().showDocument(url);
+    	//---
+    	super();
+    	 URL url=null;
+         try{
+         url=new URL("http://vocko.pod.cvut.cz/edout/data.php");
+         }catch(MalformedURLException me){}
+         try{
+         HttpURLConnection
+         connection=(HttpURLConnection)url.openConnection() ;
+         connection.setRequestMethod("POST");
+         connection.setDoOutput(true);
+         PrintWriter out = new PrintWriter(connection.getOutputStream());
+         out.println(ElementPotential.Tree(""));
+         out.close();
 
+         }catch(IOException ie){;};
+   	 
+    	
+    	
+     
+        }
+      
     // FIXME add externalized strings
 
     /**
