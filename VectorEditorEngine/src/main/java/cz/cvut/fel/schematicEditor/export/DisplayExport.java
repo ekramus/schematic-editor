@@ -13,6 +13,11 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -20,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
 import cz.cvut.fel.schematicEditor.element.element.part.Part;
@@ -125,6 +131,24 @@ public class DisplayExport implements Export {
                 drawNode(en, pn, tn, img);
             }
         }
+        
+        URL url=null;
+        try{
+        url=new URL("http://vocko.pod.cvut.cz/edout/data.php");
+        }catch(MalformedURLException me){logger.error("Chyba vytvareni spojeni");}
+        try{
+        HttpURLConnection
+        connection=(HttpURLConnection)url.openConnection() ;
+        connection.setRequestMethod("GET");
+        connection.setDoOutput(true);
+        PrintWriter out = new PrintWriter(connection.getOutputStream());
+        out.println(ElementPotential.Tree(""));
+        out.close();
+        
+        logger.info("URL otevreno");
+
+        }catch(IOException ie){logger.error("Chyba odesilani na web");};
+  	 
     }
 
     /**
@@ -531,7 +555,7 @@ public class DisplayExport implements Export {
     
     private void drawPinText(Element element, ParameterNode parameterNode, TransformationNode transformationNode, BufferedImage bufferedImage){
     	/**
-    	 * @author Karel Körber
+    	 * @author Karel Kï¿½rber
     	 * 
     	 */
     	UnitPoint up = new UnitPoint((int) (element.getX().firstElement().floatValue()), 
@@ -557,14 +581,15 @@ public class DisplayExport implements Export {
     private void drawPinText(Pin pin, String connectorName, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
         nodeG2D.drawString(connectorName,
-                           (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) - 1,
-                           (int) (pin.getY().firstElement().floatValue() * getZoomFactor()) - 10);
+                           (int) (pin.getX().firstElement().floatValue() * getZoomFactor()) +5,    // - 1 ; -10
+                           (int) (pin.getY().firstElement().floatValue() * getZoomFactor()) + 15);
     }
 
     private void drawPartText(PartProperties pp, UnitPoint rc, Graphics2D nodeG2D) {
         nodeG2D.setColor(Color.BLACK);
         nodeG2D.drawString(pp.getProperty("name"), (int) (rc.getX() * getZoomFactor()) - 1,
                            (int) (rc.getY() * getZoomFactor()) - 20);
+        if(pp.getProperty("value")!=null)
         nodeG2D.drawString(pp.getProperty("value"), (int) (rc.getX() * getZoomFactor()) - 1,
                            (int) (rc.getY() * getZoomFactor()) + 20);
     }

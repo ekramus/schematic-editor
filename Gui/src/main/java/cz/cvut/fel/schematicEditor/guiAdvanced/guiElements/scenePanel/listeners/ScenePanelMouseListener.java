@@ -325,14 +325,21 @@ public class ScenePanelMouseListener implements MouseListener {
                             else if (e.getButton() == MouseEvent.BUTTON1) {
                             	
                             	// PIN is touched 
-                                if (el.getElementType() == ElementType.T_JUNCTION)
+                             ;//   if (el.getElementType() == ElementType.T_JUNCTION)
                                    {
+                             //   GroupNode gn = NodeFactory.createGroupNode();
+                              
+                                int l = Gui.getActiveScenePanel().getSceneGraph().getTopNode().getAndRemovePinNodes().size();
+                             //   gn.add(Gui.getActiveScenePanel().getSceneGraph().getTopNode());
+                                
+                                
+                                	   
                                    if (findHitPin(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d))
                                    	{
                                 	   String volt = ElementPotential.getHitObject().getPinPotential(0);
                                 	   el.setPinPotential(volt);
                                    	}
-       								
+       							logger.info(ElementPotential.Tree(""));
                                    }  //*/
                             	
                                 Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
@@ -373,73 +380,71 @@ public class ScenePanelMouseListener implements MouseListener {
         this.mouseReleasedPoint = mouseReleasedPoint;
     }
     
+   
     private boolean findHitPin(GroupNode stromek, Rectangle2D r2d) {
 		LinkedList<GroupNode> mapleLeaves;
 
 		// during the Creation do the check if other Element is hit
-
 		mapleLeaves = stromek.getChildrenGroupList();
-
 		boolean spojeni = false;
-
 		int i = 0;
-		
 
 		for (i = 0; i < mapleLeaves.size(); i++) {
+			//ElementPotential.Tree(mapleLeaves.get(i).getElementType().toString());
 			// let me know that you're going through the list
-			try {
+			
 			if(mapleLeaves.get(i).isDisabled())continue;
-			
-			//if(mapleLeaves.get(i).getElementType() == ElementType.T_PART){
-			{
-				String potencial = "";
-				while(mapleLeaves.get(i).getAndRemovePinNodes().elements().hasMoreElements())
-					{
-						Pin part = (Pin) mapleLeaves.get(i).getAndRemovePinNodes().elements().nextElement().getElement();
-						if(potencial == "") potencial = part.getPinPotential(0);
-					}
-				
-				
-				if(potencial != "")
-				{
-					Pin pin = new Pin();	
-					pin.setPinPotential(potencial);
-					ElementPotential.setHitObject(pin);
-					return true;	
-				}
-				
-					
-					
-					/*for (int m = 0; m < souradnice.size(); m++){
-						if(souradnice.get(m).distance(r2d.getCenterX(), r2d.getCenterY()) < 20){
-							int k = 5;					
-							String pismo = mapleLeaves.get(i).getChildrenElementList().getFirst().getElement().getPinPotential(0);
-							String pism  = mapleLeaves.get(i).getEditedElement().getPinPotential(0);
-							
-						}
-					}	*/
-				
-				
-					// if both conditions works
-					if (spojeni) {
-						//ElementPotential.setHitObject(mapleLeaves.get(i).getChildrenElementList().getLast().getElement());
-						return true;
-					}
+			spojeni = mapleLeaves.get(i).isHit(r2d, Gui.getActiveScenePanel().getZoomFactor(), null);
 
-			}
+			// did I hit against the wire
+			if (mapleLeaves.get(i).getElementType() == ElementType.T_PART)
+				{
+				spojeni = spojeni && true;
+			    PartNode soucastka = (PartNode) mapleLeaves.get(i).getChildrenElementList().getFirst();
+			    Pin m = new Pin();
+			    
+			    String netListEntry = "";
+			    
+			    for(int o = 0; o < soucastka.getPartPins().size(); o++){
+			    	netListEntry = netListEntry + " " + soucastka.getPartPins().get(o).getElement().getPinPotential(0);
+			    	if(soucastka.getPartPins().get(o).getElement().isHit(r2d, Gui.getActiveGraphics2D()))
+			    	{
+			    		if(ElementPotential.getHitObject()!=null)
+			    			{
+			    			soucastka.getPartPins().get(o).getElement().setPinPotential(ElementPotential.getHitObject().getPinPotential(0));
+			    	        }
+			    			
+			    		m.setPinPotential(soucastka.getPartPins().get(o).getElement().getPinPotential(0));
+			    		ElementPotential.setHitObject(m);
+			    	}
+			    	
+			    }
+			    
+			    Part sou = (Part) soucastka.getElement(); 
+			    
+			    netListEntry = netListEntry + " " + sou.getPartProperties().getNetlist();
+			    
+			   if (sou.getPartProperties().getNetlist() != "")
+				   ElementPotential.Tree(netListEntry);
+			    
+				}
+			else
+				{
+					spojeni = false;
+				}
 			
-			}
-			catch (NoSuchElementException e) {
-			logger.info("");	
-			}
 			
+			
+			// if both conditions works
+			if (spojeni) {
+				return true;
+			}
+
 			spojeni = findHitPin(mapleLeaves.get(i), r2d);
 			if (spojeni)
 			{
 				//ElementPotential.posledniString = mapleLeaves.get(i).getChildrenElementList().getFirst().getElement().getPinPotential(0);
-				ElementPotential.setHitObject(mapleLeaves.get(i).getChildrenElementList().getLast().getElement());
-				
-				//return true;
+				return true;
 			}
 				
 		}

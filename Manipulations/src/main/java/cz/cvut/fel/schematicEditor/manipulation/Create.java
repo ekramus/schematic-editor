@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.ElementModificator;
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
@@ -164,7 +165,7 @@ public class Create extends Manipulation {
         logger.trace(this + " manipulation END");
         UnitPoint up;
         UnitPoint snap;
-        // check, what to do
+         // check, what to do
         switch (getPointsLeft()) {
             case Element.ZERO_COORDINATES:
                 setFinished(true);
@@ -207,7 +208,7 @@ public class Create extends Manipulation {
      * @param finished the finished to set
      */
     public final void setFinished(boolean finished) {
-        this.finished = finished;
+    	this.finished = finished;
     }
 
     /**
@@ -249,6 +250,7 @@ public class Create extends Manipulation {
         
         getTopNode().add(gn);
         logger.trace(this + " executed");
+        ElementPotential.setHitObject(null);
     }
 
     /**
