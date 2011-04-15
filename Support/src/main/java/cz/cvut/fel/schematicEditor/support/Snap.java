@@ -116,13 +116,18 @@ public class Snap {
 
         double deltaX = Math.abs(coordinate.getX() - previousX.doubleValue());
         double deltaY = Math.abs(coordinate.getY() - previousY.doubleValue());
-
-        if (deltaX < deltaY) {
-            result.setUnitX(previousX);
-        } else {
-            result.setUnitY(previousY);
+              
+        
+       // if(GuiConfiguration.getInstance().getHorVer()){
+       if(true){   
+    	   
+        	if (deltaX < deltaY) {
+	            result.setUnitX(previousX);
+	        } else {
+	            result.setUnitY(previousY);
+	        } 
         }
-
+        
         return getSnap(result, snapPoints);
     }
 }

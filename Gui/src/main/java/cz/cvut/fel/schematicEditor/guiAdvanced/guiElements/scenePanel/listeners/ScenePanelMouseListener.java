@@ -170,6 +170,8 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public void mouseReleased(MouseEvent e) {
         try {
+        	
+        
             ManipulationQueue mq = Gui.getActiveScenePanel().getManipulationQueue();
 
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
@@ -203,12 +205,12 @@ public class ScenePanelMouseListener implements MouseListener {
                                     logger.trace("Show right-click popup2");
                                     
                                    if (el.getElementType() == ElementType.T_WIRE) {
-            							
-                						// test, if distance between start of wire and current
-                						// pointer position is greater, than 20
-                						//	if (p1.distance(p2) > 20) {
+            								// Before we go thru parts we need empty list
+                                	   		//or not -- ElementPotential.resetTree();
+                						    // test, if distance between start of wire and current
+                						    // pointer position is greater, than 20
+                						    //	if (p1.distance(p2) > 20) {
                 							if (findHit(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d)) {
-
 
                 								try {
                 									JunctionNode point = NodeFactory.createJunctionNode(new Junction());
@@ -227,11 +229,9 @@ public class ScenePanelMouseListener implements MouseListener {
                 									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
                 											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
                 									       									
-                									                									
                 									double x;
                 									double y;
                 									
-                											
                 									//if the new line is vertical
                 									// TODO getX() and getY() from Manipulation classes should be private, try to find workaround
                 									if( manipulation.getX().get(manipulation.getX().size()-1).doubleValue() == manipulation.getX().get(manipulation.getX().size()-2).doubleValue() ) 
@@ -265,9 +265,17 @@ public class ScenePanelMouseListener implements MouseListener {
                 								} catch (UnknownManipulationException h) {
                 									logger.error("Error making Junction " + h.toString());
                 								} catch (UnknownError f) {
-                									logger.error("Neznï¿½mï¿½ chyba: " + f.toString());
+                									logger.error("Neznama chyba: " + f.toString());
                 								}
 
+                							}
+                							else {
+                								// if we start wire in the air
+                								//
+                                         //	   Gui.getActiveScenePanel().getActiveManipulation().setActive(false);
+                                        /*	   Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, Gui.getActiveScenePanel().getManipulationQueue(), true);
+                                        	   Gui.getActiveScenePanel().getManipulationQueue().unexecute();*/
+                								
                 							}
                 						//}
                 					}
@@ -323,23 +331,38 @@ public class ScenePanelMouseListener implements MouseListener {
                             }
                             // left mouse button is clicked
                             else if (e.getButton() == MouseEvent.BUTTON1) {
-                            	
-                            	// PIN is touched 
-                             ;//   if (el.getElementType() == ElementType.T_JUNCTION)
+                                                        	
                                    {
-                             //   GroupNode gn = NodeFactory.createGroupNode();
+                    
                               
                                 int l = Gui.getActiveScenePanel().getSceneGraph().getTopNode().getAndRemovePinNodes().size();
-                             //   gn.add(Gui.getActiveScenePanel().getSceneGraph().getTopNode());
-                                
+                                                  
                                 
                                 	   
                                    if (findHitPin(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d))
                                    	{
                                 	   String volt = ElementPotential.getHitObject().getPinPotential(0);
+                                	  
                                 	   el.setPinPotential(volt);
+                                   	} else {
+                                   		// if during (creation &&  left click) is not found and PIN hit
+                                   		//Gui.getActiveScenePanel().setActiveManipulation(null);
+                                       if(create.getManipulatedGroup().getElementType() == ElementType.T_WIRE)
+                                   		  {
+                                    	   /**
+                                    	    * @author Kájínek
+                                    	    * 
+                                    	    */
+                                    	                                       	   
+                                    	  Gui.getActiveScenePanel().getActiveManipulation().setActive(false);
+                                    //       Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, Gui.getActiveScenePanel().getManipulationQueue(), true);
+                                    	   Gui.getActiveScenePanel().getManipulationQueue().unexecute();
+                                   		  }
+                                    
+                                   		
+                                   		
                                    	}
-       							logger.info(ElementPotential.Tree(""));
+       							logger.info(ElementPotential.Tree(0,""));
                                    }  //*/
                             	
                                 Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
@@ -405,7 +428,16 @@ public class ScenePanelMouseListener implements MouseListener {
 			    
 			    String netListEntry = "";
 			    
+			    Part sou = (Part) soucastka.getElement(); 
+
+			    // if the name was not set we do it
+			    if(sou.getPartProperties().getProperty("name") == "")
+			    	sou.getPartProperties().setProperty("name", sou.getPartProperties().getPartType() .toString().substring(0,2) +  i);
+			    	
+			    netListEntry = netListEntry + " " + sou.getPartProperties().getProperty("name");
+			    
 			    for(int o = 0; o < soucastka.getPartPins().size(); o++){
+			    	if(soucastka.isDisabled()==true)break;
 			    	netListEntry = netListEntry + " " + soucastka.getPartPins().get(o).getElement().getPinPotential(0);
 			    	if(soucastka.getPartPins().get(o).getElement().isHit(r2d, Gui.getActiveGraphics2D()))
 			    	{
@@ -420,12 +452,15 @@ public class ScenePanelMouseListener implements MouseListener {
 			    	
 			    }
 			    
-			    Part sou = (Part) soucastka.getElement(); 
-			    
-			    netListEntry = netListEntry + " " + sou.getPartProperties().getNetlist();
-			    
+			    			    			    
 			   if (sou.getPartProperties().getNetlist() != "")
-				   ElementPotential.Tree(netListEntry);
+			   		{
+				   if(!soucastka.isDisabled()) // if the part is enabled, insert a row into Netlist tree or empty space
+					   ElementPotential.Tree(sou.hashCode(), netListEntry);
+					   else 
+						   	// or insert empty space
+						   ElementPotential.Tree(sou.hashCode(), "");
+			   		}
 			    
 				}
 			else
@@ -505,4 +540,8 @@ public class ScenePanelMouseListener implements MouseListener {
 		return false;
 	}
     
+    public static void runForNetlist(){
+    	//ScenePanelMouseListener nic = new ScenePanelMouseListener();
+    	//nic.findHit(stromek,);
+    }
 }

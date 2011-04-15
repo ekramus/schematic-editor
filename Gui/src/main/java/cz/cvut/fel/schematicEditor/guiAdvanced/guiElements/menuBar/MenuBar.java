@@ -34,6 +34,7 @@ import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.Sav
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveAsPartMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SavePreferencesMenuItemListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.SaveToWebMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ScaleMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ShowConnectorNamesMenuItemListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.menuBar.listeners.ShowGridCheckBoxMenuItemListener;
@@ -180,6 +181,10 @@ public final class MenuBar extends JMenuBar {
      * Save preferences menu item instance.
      */
     private JMenuItem         savePreferencesMenuItem     = null;
+    /**
+     * Save to web menu item instance.
+     */
+    private JMenuItem         saveToWebMenuItem     = null;
     /**
      * Show grid check box menu item instance.
      */
@@ -636,6 +641,7 @@ public final class MenuBar extends JMenuBar {
             this.fileMenu.add(getSaveMenu());
             this.fileMenu.addSeparator();
             this.fileMenu.add(getSavePreferencesMenuItem());
+            this.fileMenu.add(getSaveToWebMenuItem());
             this.fileMenu.add(getExitMenuItem());
         }
         return this.fileMenu;
@@ -858,6 +864,19 @@ public final class MenuBar extends JMenuBar {
         return this.savePreferencesMenuItem;
     }
 
+    /**
+     * Getter for <code>savePreferencesMenuItem</code>.
+     *
+     * @return <code>savePreferencesMenuItem</code> instance.
+     */
+    private JMenuItem getSaveToWebMenuItem() {
+        if (this.saveToWebMenuItem == null) {
+            this.saveToWebMenuItem = new JMenuItem();
+            this.saveToWebMenuItem.setText(MenuBarResources.SAVE_TO_WEB_MENU_ITEM.getText());
+            this.saveToWebMenuItem.addActionListener(new SaveToWebMenuItemListener());
+        }
+        return this.saveToWebMenuItem;
+    }
     /**
      * Getter for <code>showGridCheckBoxMenuItem</code>.
      *

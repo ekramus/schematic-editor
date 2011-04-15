@@ -1,6 +1,7 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar;
 
 import java.awt.event.ActionListener;
+import java.io.IOError;
 import java.net.URL;
 
 import javax.swing.AbstractButton;
@@ -8,12 +9,15 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
+import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.element.element.part.Wire;
 import cz.cvut.fel.schematicEditor.element.element.shape.Arc;
@@ -28,9 +32,13 @@ import cz.cvut.fel.schematicEditor.element.element.shape.Text;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.DeleteButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.DrawCircuitPartButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.DrawShapeButtonListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.OptionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.listeners.SelectButtonListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.drawingToolBar.resources.DrawingToolBarResources;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.gui.Gui;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddPartButtonActionListener;
+import cz.cvut.fel.schematicEditor.parts.PartType;
 
 /**
  * This class implements drawing tool bar. It is used for drawing tool selection.
@@ -89,8 +97,49 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(Box.createVerticalStrut(20));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.WIRE_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+          
+            
+          /*  JLabel popisek = new JLabel("-|-");
+            drawingToolBar.add(popisek);*/
+            
+
+                        
+            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PART_BUTTON_R));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+        
+            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PART_BUTTON_C));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+        
+            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PART_BUTTON_L));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+
+            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PART_BUTTON_U));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+        
+            drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PART_BUTTON_I));
+            bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+
             drawingToolBar.add(Box.createVerticalStrut(20));
             
+                      
+            JCheckBox skrtatko = new JCheckBox("V & H");
+            skrtatko.setAlignmentX(CENTER_ALIGNMENT);
+            skrtatko.setToolTipText("Vertical and horizontal wires only");
+            skrtatko.setSelected(true);
+            skrtatko.addActionListener(new OptionListener(skrtatko,1));
+            
+            JCheckBox cisla = new JCheckBox("1,2,3");
+            cisla.setAlignmentX(CENTER_ALIGNMENT);
+            cisla.setToolTipText("Show node numbers");
+            cisla.setSelected(false);
+            cisla.addActionListener(new OptionListener(cisla, 2));
+            
+            
+            drawingToolBar.add(skrtatko);
+            drawingToolBar.add(cisla);
+            drawingToolBar.add(Box.createVerticalStrut(20));
+            
+            /*
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.LINE_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.BEZIER_CURVE_BUTTON));
@@ -114,6 +163,7 @@ public final class DrawingToolBar extends JToolBar {
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.JUNCTION_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
+            */
             
         }
         return drawingToolBar;
@@ -136,15 +186,15 @@ public final class DrawingToolBar extends JToolBar {
         switch (Gui.getActiveScenePanelTab()) {
             case TAB_SCHEME:
                 // wire button
-                getComponent(14).setEnabled(true);
+          //      getComponent(14).setEnabled(true);
                 // pin button
-                getComponent(12).setEnabled(false);
+          //      getComponent(12).setEnabled(false);
                 break;
             case TAB_PART:
                 // wire button
-                getComponent(14).setEnabled(false);
+         //       getComponent(14).setEnabled(false);
                 // pin button
-                getComponent(12).setEnabled(true);
+         //       getComponent(12).setEnabled(true);
                 break;
             default:
                 break;
@@ -173,8 +223,15 @@ public final class DrawingToolBar extends JToolBar {
 
         // set resources and tooltip
         logger.trace("Loading resource " + buttonType.getResource());
+        try{
         URL url = this.getClass().getResource(buttonType.getResource());
         result.setIcon(new ImageIcon(url));
+        } catch (IOError chyba){
+        	Logger.getRootLogger().error("File not found at " + chyba);
+        }
+        catch (Exception chyba){
+        	Logger.getRootLogger().error("Filesystem error: "+ chyba);
+        }
         result.setToolTipText(buttonType.getText());
 
         // setListener
@@ -222,6 +279,25 @@ public final class DrawingToolBar extends JToolBar {
             case JUNCTION_BUTTON:
                 l = new DrawCircuitPartButtonListener(new Junction());
                 break;
+            case PART_BUTTON_R:
+            	l = new AddPartButtonActionListener(PartType.RESISTOR);
+            	break;
+            case PART_BUTTON_C:
+            	l = new AddPartButtonActionListener(PartType.CAPACITOR);
+            	break;
+            case PART_BUTTON_L:
+            	l = new AddPartButtonActionListener(PartType.INDUCTOR);
+            	break;
+            case PART_BUTTON_U:
+            	l = new AddPartButtonActionListener(PartType.VOLTAGE_SOURCE);
+            	break;
+            case PART_BUTTON_I:
+            	l = new AddPartButtonActionListener(PartType.CURRENT_SOURCE);
+            	break;	
+            	
+            	
+            	
+                
             default:
                 break;
         }

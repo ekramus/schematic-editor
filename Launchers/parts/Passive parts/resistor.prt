@@ -8,7 +8,7 @@
     <elementModificator>NO_MODIFICATION</elementModificator>
     <connectorVector/>
     <partProperties class="cz.cvut.fel.schematicEditor.parts.lightweightParts.partProperties.ResistorProperties">
-      <netlistPrototype>r&lt;name&gt; &lt;n1&gt; &lt;n2&gt; &lt;value&gt;</netlistPrototype>
+      <netlistPrototype>r&lt;name&gt; &lt;n1&gt; &lt;n2&gt; &lt;value&gt;model&gt;</netlistPrototype>
       <partProperties>
         <categoriesForPropertiesArray>
           <cz.cvut.fel.schematicEditor.parts.PropertiesCategory>
@@ -17,6 +17,11 @@
               <cz.cvut.fel.schematicEditor.parts.PartProperty>
                 <key class="string">value</key>
                 <value class="string"></value>
+                <description></description>
+              </cz.cvut.fel.schematicEditor.parts.PartProperty>
+              <cz.cvut.fel.schematicEditor.parts.PartProperty>
+                <key class="string">model</key>
+                <value class="string">rezistivita</value>
                 <description></description>
               </cz.cvut.fel.schematicEditor.parts.PartProperty>
               <cz.cvut.fel.schematicEditor.parts.PartProperty>

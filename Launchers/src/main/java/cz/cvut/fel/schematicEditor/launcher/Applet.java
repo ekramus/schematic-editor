@@ -30,8 +30,8 @@ public class Applet extends JApplet {
     @Override
     public void start() {
         Gui gui = Gui.getInstance();
-
         Configuration.getInstance();
+        Configuration.base = getCodeBase();
         Launcher.setUI();
 
         this.setContentPane(gui.getAppletPanel());

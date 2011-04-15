@@ -68,9 +68,7 @@ public class DrawCircuitPartButtonListener implements ActionListener {
             switch (getElement().getElementType()) {
                 case T_PIN:
                     en = NodeFactory.createPinNode((Pin) getElement());
-                    //ShapeNode tvary = NodeFactory.createShapeNode(new Text(new UnitPoint(100,100),en.getElement().getPinPotential(0)));
-                    // gn.add(tvary);
-                    break;
+                   break;
                 case T_JUNCTION:
                     en = NodeFactory.createJunctionNode((Junction) getElement());
                     break;

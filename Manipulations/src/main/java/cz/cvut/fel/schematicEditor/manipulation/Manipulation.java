@@ -5,8 +5,11 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
+import javax.security.auth.login.Configuration;
+
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.configuration.GuiConfiguration;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.manipulation.exception.ManipulationExecutionException;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
@@ -227,6 +230,11 @@ public abstract class Manipulation {
         try {
             switch (getManipulatedGroup().getElementType()) {
                 case T_WIRE:
+                	// give chance to make straight lines to connectors
+                	if(!GuiConfiguration.getInstance().getHorVer()){
+                		//setSnapCoordinates(getTopNode().getPartsCoordinates());
+                		break;
+                	} 
                 case T_PIN:
                 case T_JUNCTION:
                 case T_PART:

@@ -128,7 +128,7 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 
 					System.err.println(Boolean.toString(el.getElementType() == ElementType.T_WIRE));
 					
-				} else {
+				} else { // if not CREATE 
 					snap = Snap.getSnap(up, m.getSnapCoordinates());
 				}
 				m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());

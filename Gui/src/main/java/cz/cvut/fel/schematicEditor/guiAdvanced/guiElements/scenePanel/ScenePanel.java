@@ -1,5 +1,8 @@
 package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.scenePanel;
 
+
+import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.propertiesPanel.PartPropertiesPanel;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -361,17 +364,20 @@ public class ScenePanel extends JPanel {
         logger.trace("Scene Panel width: " + getWidth() + " | height: " + getHeight());
         Graphics2D gridG2D = (Graphics2D) grid.getGraphics();
 
+        double keš = getZoomFactor();
+        setZoomFactor(getZoomFactor()*1);
+        
         // draw first rectangle
         gridG2D.setColor(new Color(210, 220, 255));
-        Rectangle2D r = new Rectangle2D.Double(0, 0, configuration.getGridSize().doubleValue() * getZoomFactor(),
+        Rectangle2D r = new Rectangle2D.Double(0, 0, configuration.getGridSize().doubleValue() * getZoomFactor() ,
                 configuration.getGridSize().doubleValue() * getZoomFactor());
         gridG2D.draw(r);
-
+        
         // copy rectangle in row
         for (double d = configuration.getGridSize().doubleValue() * getZoomFactor(); d <= grid.getWidth(); d += configuration
                 .getGridSize().doubleValue() * getZoomFactor()) {
             gridG2D.copyArea(0, 0, (int) (configuration.getGridSize().doubleValue() * getZoomFactor()) + 1,
-                             (int) (configuration.getGridSize().intValue() * getZoomFactor()) + 1, (int) d, 0);
+                             (int) (configuration.getGridSize().intValue() * getZoomFactor()) +1, (int) d, 0);
         }
 
         // copy row of rectangles
@@ -379,6 +385,8 @@ public class ScenePanel extends JPanel {
             gridG2D.copyArea(0, 0, (int) (grid.getWidth() * getZoomFactor()), (int) (configuration.getGridSize()
                     .doubleValue() * getZoomFactor()) + 1, 0, (int) d);
         }
+        
+        setZoomFactor(keš);
 
         // return result
         return grid;
@@ -462,6 +470,12 @@ public class ScenePanel extends JPanel {
                 manipulatedElement = drawManipulatedGroup();
                 g2d.drawImage(manipulatedElement, 0, 0, null);
 
+                // go and get PropertiesBar
+                if (m.getManipulationType() != ManipulationType.SELECT) {
+                  ;      
+                    
+                }
+                
                 // draw snap symbol
                 if (m.getManipulationType() != ManipulationType.SELECT) {
                     BufferedImage snapSymbol = drawSnapSymbol();
