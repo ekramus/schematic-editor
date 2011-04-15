@@ -2,7 +2,9 @@ package cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser;
 
 import java.awt.BorderLayout;
 import java.io.File;
+import java.util.Stack;
 
+import javax.security.auth.login.Configuration;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -17,6 +19,7 @@ import cz.cvut.fel.schematicEditor.element.element.part.Part;
 import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.PartBrowserTreeSelectionListener;
+import cz.cvut.fel.schematicEditor.parts.PartType;
 
 /**
  * @author Urban Kravjansky
@@ -26,6 +29,7 @@ public class PartBrowserPanel extends JPanel {
     /**
      * Logger instance.
      */
+
     private static Logger           logger;
     /**
      * {@link PartBrowserPanel} singleton instance.
@@ -34,7 +38,8 @@ public class PartBrowserPanel extends JPanel {
 
     private static JButton          addButton        = null;
     private PartNode                selectedPartNode = null;
-
+    private Stack<PartNode> suplik = null;
+    
     private PartBrowserPanel() {
         logger = Logger.getLogger(getClass());
 
@@ -70,6 +75,33 @@ public class PartBrowserPanel extends JPanel {
     }
 
     /**
+     *  Should select one of standard Parts
+     * @return
+     */
+    
+    public PartNode pickPartNode(PartType partType){
+    	
+    	PartNode chosen;
+    	Part soucastka;
+    	if(suplik == null)
+    		suplik = new Stack<PartNode>();
+     	
+      	for(int i = 0; i < suplik.size() ;i++) {
+    		
+    		chosen = suplik.get(i);
+    		soucastka = (Part) chosen.getElement();
+    		
+    		if(soucastka.getPartProperties().getPartType()== partType)
+    			return chosen;
+    		
+    	}
+    	
+    	
+    	
+    	return null;
+    	
+    }
+    /**
      * @return the instance
      */
     public static PartBrowserPanel getInstance() {
@@ -85,9 +117,13 @@ public class PartBrowserPanel extends JPanel {
      * @param path
      * @return
      */
+    
     private DefaultMutableTreeNode generatePartTree(String path) {
+    	
         DefaultMutableTreeNode result;
-
+        Logger.getRootLogger().info("Nacitam externi soubor:" + path);
+        // initialize list of parts
+        
         // strip folder from path
         String folderName;
         try {
@@ -99,7 +135,11 @@ public class PartBrowserPanel extends JPanel {
         result = new DefaultMutableTreeNode(folderName.replaceAll("[/\\\\]", ""));
 
         // recursively add folders and parts
-        File folder = new File(path);
+        
+        Logger.getRootLogger().info("Nacitam cestu:" + path);
+        //path = "./parts";
+         File folder = new File(path);
+        //File folder = new File("/editor/parts");
         try {
             for (File file : folder.listFiles()) {
                 if (file.isDirectory()) {
@@ -107,6 +147,10 @@ public class PartBrowserPanel extends JPanel {
                 } else if (file.getName().indexOf("prt") > -1) {
                     // deserialize
                     PartNode pn = (PartNode) Serialization.deserialize(PartNode.class, file);
+                    // add to suplik
+                    if(suplik == null)
+                    	suplik = new Stack<PartNode>();
+                    suplik.add(pn);
                     // update part properties
                     boolean updateStatus = ((Part) pn.getElement()).getPartProperties().update();
                     logger.trace("Status of part updating process (true=updated/false=not updates): " + updateStatus);
@@ -126,7 +170,7 @@ public class PartBrowserPanel extends JPanel {
                 }
             }
         } catch (NullPointerException e) {
-            logger.info("No parts folder found");
+            logger.info("No parts folder found - " + e.getLocalizedMessage() + e);
         }
 
         return result;

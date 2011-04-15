@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 
+import sun.awt.HorizBagLayout;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
@@ -101,7 +103,17 @@ public class GuiConfiguration extends Configuration {
      * Indicate, whether are connector names visible or not.
      */
     private boolean        connectorNamesVisible = true;
-
+    /**
+     *  Make wires Horizontal and Vertical only
+     */
+    private boolean      wiresHorVer = true;
+    /*
+     *  Make visible numbers for potential
+     *  
+     */
+    private boolean		potentialVisible = false;
+    
+    
     /**
      *
      */
@@ -113,7 +125,8 @@ public class GuiConfiguration extends Configuration {
      * @return the gridSize
      */
     public Unit getGridSize() {
-        return this.gridSize;
+        //this.gridSize.setValue(this.gridSize.getValue()*0.5);
+    	return this.gridSize;
     }
 
     /**
@@ -291,4 +304,34 @@ public class GuiConfiguration extends Configuration {
         
     	return this.schemeZoomFactor;
     }
+    
+    /**
+     * @return Horizontal and vertical wires only
+     **/
+    public boolean getHorVer(){
+    	return wiresHorVer;
+    }
+    	
+    /**
+     * @return Horizontal and vertical wires only
+     **/
+    public void setHorVer(boolean wiresOnlyHV){
+    	 wiresHorVer = wiresOnlyHV;
+    }
+
+    /**
+     * @author Karel Korber
+     * @param setting makes visible numbers at potential crossings
+     */
+	public void setPotentialVisible(boolean setting) {
+		// TODO Auto-generated method stub
+		potentialVisible = setting;
+	}
+	
+	public boolean getPotentialVisible(){
+		return potentialVisible;
+		
+	}
+    
+    
 }

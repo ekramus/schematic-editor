@@ -132,22 +132,7 @@ public class DisplayExport implements Export {
             }
         }
         
-        URL url=null;
-        try{
-        url=new URL("http://vocko.pod.cvut.cz/edout/data.php");
-        }catch(MalformedURLException me){logger.error("Chyba vytvareni spojeni");}
-        try{
-        HttpURLConnection
-        connection=(HttpURLConnection)url.openConnection() ;
-        connection.setRequestMethod("GET");
-        connection.setDoOutput(true);
-        PrintWriter out = new PrintWriter(connection.getOutputStream());
-        out.println(ElementPotential.Tree(""));
-        out.close();
         
-        logger.info("URL otevreno");
-
-        }catch(IOException ie){logger.error("Chyba odesilani na web");};
   	 
     }
 
@@ -338,6 +323,9 @@ public class DisplayExport implements Export {
                          parameterNode.getFont());
                 break;
 
+
+                
+         //       Used to be HOR-VER wire     
             case T_WIRE:
                 Wire wire = (Wire) elementNode.getElement();
                 
@@ -356,12 +344,14 @@ public class DisplayExport implements Export {
                     //drawPinText(null, elementNode.getElement().getPinPotential(elementNode.getElement().hashCode()), nodeG2D);
                 }
                 break;
+              //  **
 
             case T_PIN:
                 Pin pin = (Pin) elementNode.getElement();
                 drawPin(pin, parameterNode, nodeG2D);
            
-                drawPinText(pin, parameterNode, transformationNode, bufferedImage);
+                if(GuiConfiguration.getInstance().getPotentialVisible())
+                	drawPinText(pin, parameterNode, transformationNode, bufferedImage);
                 
           		break;
 
@@ -382,6 +372,7 @@ public class DisplayExport implements Export {
                 		junction.getX().firstElement().doubleValue() * getZoomFactor()),
                 		Color.BLACK, parameterNode.getFont()); //*/
                 
+                if(GuiConfiguration.getInstance().getPotentialVisible())
                 drawPinText(junction, parameterNode, transformationNode, bufferedImage);
                 
                 break;
@@ -409,6 +400,7 @@ public class DisplayExport implements Export {
                     drawPin(c, parameterNode, nodeG2D);
                     // check, whether connector names should be printed
                //   if (GuiConfiguration.getInstance().isConnectorNamesVisible()) {
+                    	if(GuiConfiguration.getInstance().getPotentialVisible())
                         drawPinText(c, c.getPinPotential(c.hashCode()), nodeG2D);
                    // } //*/
                     
@@ -420,7 +412,7 @@ public class DisplayExport implements Export {
                 // draw partRotationCenter, if different from [0,0]
                 UnitPoint rotationCenter = partNode.getRotationCenter();
                 if ((rotationCenter.getX() != 0) && (rotationCenter.getY() != 0)) {
-                    nodeG2D.setColor(Color.RED);
+                    nodeG2D.setColor(Color.WHITE);
                     nodeG2D.drawOval((int) (rotationCenter.getX() * getZoomFactor()) - 2,
                                      (int) (rotationCenter.getY() * getZoomFactor()) - 2, 4, 4);
                 }

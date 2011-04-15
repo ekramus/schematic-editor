@@ -108,7 +108,11 @@ public enum MenuBarResources {
     /**
      * Save preferences menu item string.
      */
-    SAVE_PREFERENCES_MENU_ITEM("Save Preferences"),
+    SAVE_PREFERENCES_MENU_ITEM("Save Preferences"), 
+    /**
+     * Save to Web menu item string.
+     */
+    SAVE_TO_WEB_MENU_ITEM("Save to web"),
     /**
      * Show grid check box menu item string.
      */

@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 
 import org.apache.log4j.Logger;
 
@@ -47,6 +48,7 @@ public class Configuration {
         logger = Logger.getLogger(Configuration.class);
     }
 
+    public static URL base;
     /**
      * Deserializes configuration from given file.
      * 

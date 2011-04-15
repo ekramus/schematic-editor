@@ -33,24 +33,7 @@ public final class SaveMenuItemListener implements ActionListener {
            //getAppletContext().showDocument(url);
     	//---
     	super();
-    	 URL url=null;
-         try{
-         url=new URL("http://vocko.pod.cvut.cz/edout/data.php");
-         }catch(MalformedURLException me){}
-         try{
-         HttpURLConnection
-         connection=(HttpURLConnection)url.openConnection() ;
-         connection.setRequestMethod("POST");
-         connection.setDoOutput(true);
-         PrintWriter out = new PrintWriter(connection.getOutputStream());
-         out.println(ElementPotential.Tree(""));
-         out.close();
-
-         }catch(IOException ie){;};
-   	 
-    	
-    	
-     
+    	 
         }
       
     // FIXME add externalized strings

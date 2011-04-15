@@ -64,8 +64,21 @@ public enum DrawingToolBarResources {
     /**
      * Ellipse button caption.
      */
-    ELLIPSE_BUTTON("Ellipse", "resources/ellipse_32.png");
-
+    ELLIPSE_BUTTON("Ellipse", "resources/ellipse_32.png"),
+    /**
+     * Part button caption.
+     */
+    PART_BUTTON_R("Resistor", "resources/resistor.png"),
+    PART_BUTTON_C("Capacitor", "resources/capacitor.png"),
+    PART_BUTTON_L("Inductor", "resources/inductor.png"),
+    
+    PART_BUTTON_U("Voltage source", "resources/voltage.png"),
+    PART_BUTTON_I("Current source",   "resources/current.png");
+     
+    
+    
+    
+    
     /**
      * String value of item.
      */

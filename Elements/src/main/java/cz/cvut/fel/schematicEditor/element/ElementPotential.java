@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import cz.cvut.fel.schematicEditor.element.element.Element;
 
+
 /**
  * 
  * @author Karel
@@ -23,6 +24,8 @@ public class ElementPotential {
 	static Element touchedObject;
 	private static int orderNumber;
 	private static String treePrint;
+	private static Stack<String> soucastky;
+	private static Stack<Integer> sou_id;
 	
 	public ElementPotential() {
 		/**
@@ -37,8 +40,12 @@ public class ElementPotential {
 		lineOfNames = new Stack<String>();
 		lineOfIDs 	= new Stack<Integer>();
 		lineOfTypes = new Stack<String>();
+		soucastky = new Stack<String>();
+		sou_id = new Stack<Integer>();
+		
 		orderNumber = 0;
 		treePrint = "Netlist \n";
+		resetTree();
 		}
 		//getName(0);
 	}
@@ -81,8 +88,7 @@ public class ElementPotential {
 			{
 				nakonec = (Integer) (lineOfNos.size());
 				lineOfNos.insertElementAt( nakonec, 0);
-				
-			}
+    		}
 		
 				
 		//lineOfIDs.add(ID);
@@ -106,7 +112,6 @@ public class ElementPotential {
 		createNew(ID);
 		
 		setName(ID, name);
-		int mrkvicka = 5;
 	}
 	
 	public static Element getHitObject()
@@ -119,16 +124,54 @@ public class ElementPotential {
 		touchedObject = object;
 	}
 	
-	public static String Tree (String add){
-		/**
-		 * @author Karel
-		 * 
-		 * Provides full info of tree of Nodes.
-		 */
-		 treePrint = treePrint + add + "\n";
-		 return (treePrint + "\n");
+	public static void resetTree(){
+		soucastky = null;
 	}
 	
+	public static String Tree (int id, String add){
+		/**
+		 * @author Karel
+		 * @return netlist
+		 * Provides full info of tree of Nodes.
+		 * Works with two stacks, soucastky, sou_id
+		 *  
+		 */	
+		
+		treePrint = "";
+		boolean changed = false;
+		
+		if(soucastky == null){
+			soucastky = new Stack<String>();
+			sou_id = new Stack<Integer>();
+		}
+		
 	
+		for(int i = 0; i < soucastky.size(); i++){
+			if(sou_id.get(i)==id)
+				{
+				soucastky.set(i, add);
+				changed = true;
+				}
+			
+			treePrint = treePrint + soucastky.get(i) + "\n";
+		}
+		
+		if(!changed){
+			soucastky.add(add);
+			sou_id.add(id);
+			treePrint = treePrint + add + "\n";
+		}
+		
+		if(soucastky.size()==0){
+			return "Error: No connections in the scheme";
+		}
+		
+		return treePrint;
+		
+}
+	public static void TreeRemove(String del){
+		//int pozice = soucastky.search(del);
+		soucastky.remove(del);
+	}
 	
 }
