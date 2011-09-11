@@ -57,6 +57,7 @@ public class Snap {
      * @param snapPoints {@link Vector} of {@link UnitPoint}s, from which snap point is selected.
      * @return Snapped coordinate value.
      */
+    
     public static UnitPoint getSnap(UnitPoint coordinate, Vector<UnitPoint> snapPoints) {
         GuiConfiguration configuration = GuiConfiguration.getInstance();
         UnitPoint result = new UnitPoint(coordinate);
@@ -118,8 +119,8 @@ public class Snap {
         double deltaY = Math.abs(coordinate.getY() - previousY.doubleValue());
               
         
-       // if(GuiConfiguration.getInstance().getHorVer()){
-       if(true){   
+       if(GuiConfiguration.getInstance().getHorVer()){
+       //if(true){   
     	   
         	if (deltaX < deltaY) {
 	            result.setUnitX(previousX);

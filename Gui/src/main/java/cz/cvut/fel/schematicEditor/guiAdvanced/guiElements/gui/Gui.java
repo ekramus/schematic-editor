@@ -217,6 +217,8 @@ public class Gui extends JApplet {
         // add components
         container.add(MenuBar.getInstance(), BorderLayout.NORTH);
         container.add(DrawingToolBar.getInstance(), BorderLayout.EAST);
+        //container.add(DrawingToolBar.getInstance(), BorderLayout.WEST);
+        
         container.add(PropertiesSelectorToolBar.getInstance(), BorderLayout.WEST);
         container.add(StatusBar.getInstance(), BorderLayout.SOUTH);
         container.add(getSchemePartTabbedPane(), BorderLayout.CENTER);

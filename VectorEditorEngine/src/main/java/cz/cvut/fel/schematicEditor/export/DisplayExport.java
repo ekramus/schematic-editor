@@ -348,6 +348,8 @@ public class DisplayExport implements Export {
 
             case T_PIN:
                 Pin pin = (Pin) elementNode.getElement();
+                
+                if (pin.getVisible())
                 drawPin(pin, parameterNode, nodeG2D);
            
                 if(GuiConfiguration.getInstance().getPotentialVisible())
@@ -525,7 +527,8 @@ public class DisplayExport implements Export {
      *            {@link Graphics2D} for painting.
      */
     private void drawPin(final Pin pin, ParameterNode parameterNode, Graphics2D nodeG2D) {
-        logger.trace("drawing connector at coordinates: "
+        if(!pin.getVisible())return;
+    	logger.trace("drawing connector at coordinates: "
                      + new UnitPoint(pin.getX().firstElement(), pin.getY().firstElement()));
 
         Ellipse2D.Double e2d = new Ellipse2D.Double(

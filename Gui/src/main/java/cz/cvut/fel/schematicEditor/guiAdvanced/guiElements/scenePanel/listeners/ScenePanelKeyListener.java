@@ -177,6 +177,11 @@ public class ScenePanelKeyListener implements KeyListener {
                 Gui.getActiveScenePanel().setRelativeStart();
                 StatusBar.getInstance().refresh();
             }
+            
+            // R like Reload
+            else if (e.getKeyChar() == 'r'){
+            	Gui.getInstance().getSchemeScenePanel().repaint();
+            }
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
         } catch (NullPointerException npe) {

@@ -20,6 +20,7 @@ import cz.cvut.fel.schematicEditor.graphNode.PartNode;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.AddButtonActionListener;
 import cz.cvut.fel.schematicEditor.guiAdvanced.guiElements.partBrowser.listeners.PartBrowserTreeSelectionListener;
 import cz.cvut.fel.schematicEditor.parts.PartType;
+import cz.cvut.fel.schematicEditor.support.ReadFile;
 
 /**
  * @author Urban Kravjansky
@@ -133,20 +134,22 @@ public class PartBrowserPanel extends JPanel {
         }
         // create root node with folder name (remove all forward slashes)
         result = new DefaultMutableTreeNode(folderName.replaceAll("[/\\\\]", ""));
-
-        // recursively add folders and parts
         
+    	String seznam = ReadFile.getContents("http://vocko.pod.cvut.cz/edout/parts/index.php");
+    	String[] soubory = seznam.split(";");
+
+          
+        // recursively add folders and parts
         Logger.getRootLogger().info("Nacitam cestu:" + path);
         //path = "./parts";
          File folder = new File(path);
         //File folder = new File("/editor/parts");
         try {
-            for (File file : folder.listFiles()) {
-                if (file.isDirectory()) {
-                    result.add(generatePartTree(file.getPath()));
-                } else if (file.getName().indexOf("prt") > -1) {
-                    // deserialize
-                    PartNode pn = (PartNode) Serialization.deserialize(PartNode.class, file);
+        	
+            for (int prvky = 0; prvky < soubory.length;prvky++) {
+            	
+            	PartNode pn = (PartNode) Serialization.deserializeURL(PartNode.class, "http://vocko.pod.cvut.cz/edout/parts/" + soubory[prvky]);
+                    
                     // add to suplik
                     if(suplik == null)
                     	suplik = new Stack<PartNode>();
@@ -155,12 +158,12 @@ public class PartBrowserPanel extends JPanel {
                     boolean updateStatus = ((Part) pn.getElement()).getPartProperties().update();
                     logger.trace("Status of part updating process (true=updated/false=not updates): " + updateStatus);
                     // set image icon
-                    ImageIcon icon = new ImageIcon(file.getPath().replaceAll("prt", "png"));
+         //           ImageIcon icon = new ImageIcon(file.getPath().replaceAll("prt", "png"));
 
                     // create part browser node
                     PartBrowserNode pbn = new PartBrowserNode();
                     pbn.setPartNode(pn);
-                    pbn.setIcon(icon);
+      //              pbn.setIcon(icon);
 
                     // create tree node
                     DefaultMutableTreeNode node = new DefaultMutableTreeNode(pbn);
@@ -168,7 +171,7 @@ public class PartBrowserPanel extends JPanel {
                     // add node to result
                     result.add(node);
                 }
-            }
+            
         } catch (NullPointerException e) {
             logger.info("No parts folder found - " + e.getLocalizedMessage() + e);
         }

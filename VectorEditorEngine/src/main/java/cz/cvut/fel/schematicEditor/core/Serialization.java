@@ -6,11 +6,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.apache.log4j.Logger;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import cz.cvut.fel.schematicEditor.core.coreStructures.SceneGraph;
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.Node;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
@@ -104,6 +112,50 @@ public class Serialization {
         }
     }
 
+    /** Function may load part from HTML file     * 
+     * @param clazz
+     * @param address - URL of file with part
+     * @return
+     */
+    public static Node deserializeURL(Class<?> clazz, String address) {
+        XStream xstream = new XStream(new DomDriver());
+        InputStreamReader content = null;
+
+        URL url = null;
+		try{
+            url=new URL(address);
+            }catch(MalformedURLException me){
+           	 Logger.getRootLogger().error("URL for web saving is wrong formatted");
+            }
+            catch(Exception unknown ){
+         		Logger.getRootLogger().error("Unknown error:" + unknown.toString()); }
+            try{
+            HttpURLConnection  connection= (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            //connection.connect();
+             content =  new InputStreamReader(connection.getInputStream());
+            
+           
+            
+            }
+            	catch(IOException ie){
+            		Logger.getRootLogger().error("Impossible to save to web, because " + ie.toString());}
+            	catch(Exception unknown ){
+            		Logger.getRootLogger().error("Unknown error:" + unknown.toString()); }
+           
+       
+        
+        
+        
+        try {
+            processAnnotations(xstream);
+            return (Node) xstream.fromXML(content);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    
     /**
      * Deserializes {@link GroupNode} from given file.
      *

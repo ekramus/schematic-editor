@@ -39,6 +39,7 @@ import cz.cvut.fel.schematicEditor.manipulation.ManipulationFactory;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationQueue;
 import cz.cvut.fel.schematicEditor.manipulation.ManipulationType;
 import cz.cvut.fel.schematicEditor.manipulation.exception.UnknownManipulationException;
+import cz.cvut.fel.schematicEditor.parts.PartType;
 import cz.cvut.fel.schematicEditor.support.Support;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.Unit;
 import cz.cvut.fel.schematicEditor.unit.oneDimensional.computer.Pixel;
@@ -64,6 +65,12 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     private Point2D.Double mouseReleasedPoint = null;
 
+    /**
+     * Click buffer for PIN hits. Do not end on first PIN; 
+     **/
+    private static int hitPinOrder = 0;
+    
+    
     /**
      * Default constructor. It initializes super instance and logger.
      */
@@ -143,6 +150,9 @@ public class ScenePanelMouseListener implements MouseListener {
                                                                     GuiConfiguration.getInstance()
                                                                             .getPointerRectangle());
 
+
+
+            
             Manipulation m = Gui.getActiveScenePanel().getActiveManipulation();
             try {
                 if (!m.isActive() || (m.getManipulationType() == ManipulationType.SELECT)) {
@@ -153,6 +163,26 @@ public class ScenePanelMouseListener implements MouseListener {
                                                            .getManipulationQueue(), Gui.getActiveScenePanel()
                                                            .getZoomFactor(), isMouseClicked(), Gui
                                                            .getActiveGraphics2D()));
+                    
+                    
+  
+                    
+                    /*
+                    if(!findHitPin(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d))
+                    	{
+                    		if(m.getManipulatedGroup().getElementType() == ElementType.T_WIRE)
+                    		{
+                    			m.setActive(false);
+                    		}	
+                    		
+                    		m.clearManipulationCoordinates();	
+                    		Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, Gui.getActiveScenePanel().getManipulationQueue(), true);
+                    		m.clearManipulationCoordinates();
+                    			// Kajinek
+                    			// ElementPotential.setHitObject(null);
+                    		
+                    	}*/
+                    
                 }
             } catch (NullPointerException npe) {
                 logger.warn("No manipulation");
@@ -161,6 +191,7 @@ public class ScenePanelMouseListener implements MouseListener {
         } catch (UnknownManipulationException ume) {
             logger.error(ume.getMessage());
         }
+        logger.info("Zmacknul jsi prvek (mouse down)" + ElementPotential.getHitObject());
     }
 
     /**
@@ -170,13 +201,11 @@ public class ScenePanelMouseListener implements MouseListener {
      */
     public void mouseReleased(MouseEvent e) {
         try {
-        	
-        
+        	        
             ManipulationQueue mq = Gui.getActiveScenePanel().getManipulationQueue();
-
             setMouseReleasedPoint(new Point2D.Double(e.getPoint().getX(), e.getPoint().getY()));
-
             // get pointer rectangle
+                        
             Rectangle2D.Double r2d = Support.createPointerRectangle(new Point2D.Double(e.getX(), e.getY()),
                                                                     GuiConfiguration.getInstance()
                                                                             .getPointerRectangle());
@@ -193,182 +222,232 @@ public class ScenePanelMouseListener implements MouseListener {
                         case CREATE:
                             Element el = manipulation.getManipulatedGroup().getChildrenElementList().getFirst().getElement();
                             Create create = (Create) manipulation;
-
-                            //xxx                
-                            // right mouse button is clicked
-                            if (e.getButton() == MouseEvent.BUTTON3) {
-                                // element has infinite coordinates
-                                if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
-                                	
-                                	JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                    //popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
-                                    logger.trace("Show right-click popup2");
-                                    
-                                   if (el.getElementType() == ElementType.T_WIRE) {
-            								// Before we go thru parts we need empty list
-                                	   		//or not -- ElementPotential.resetTree();
-                						    // test, if distance between start of wire and current
-                						    // pointer position is greater, than 20
-                						    //	if (p1.distance(p2) > 20) {
-                							if (findHit(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d)) {
-
-                								try {
-                									JunctionNode point = NodeFactory.createJunctionNode(new Junction());
-                									GroupNode mess = NodeFactory.createGroupNode();
-                									ParameterNode option = NodeFactory.createParameterNode();
-                									
-                									String volt = ElementPotential.getHitObject().getPinPotential(0);
-                									el.setPinPotential(volt);
-                									point.getElement().setPinPotential(volt);
-                									               											
-                									mess.add(option);
-                									mess.add(point);
-                									
-                									option.setColor(Color.red);
-
-                									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
-                											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
-                									       									
-                									double x;
-                									double y;
-                									
-                									//if the new line is vertical
-                									// TODO getX() and getY() from Manipulation classes should be private, try to find workaround
-                									if( manipulation.getX().get(manipulation.getX().size()-1).doubleValue() == manipulation.getX().get(manipulation.getX().size()-2).doubleValue() ) 
-                									{
-                										logger.error("vertical line");
-                										 x =  manipulation.getX().get(manipulation.getX().size()-1).doubleValue();
-                										 y =  (r2d.getY() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterY() - r2d.getY());
-                									} else // new line is horizontal 
-                										{
-                										logger.error("horizontal line");
-                										y =  manipulation.getY().get(manipulation.getY().size()-1).doubleValue();
-                										x =  (r2d.getX() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterX() - r2d.getX()); 
-                										}
-                										
-                									
-                									newBorn.addManipulationCoordinates(
-                											new Pixel(x),
-                											new Pixel(y)  );
-
-                									if(Gui.isDoAfterActive()){
-                									
-                										Gui.setDoAfter(newBorn);
-                										newBorn = null;
-                										
-                									} else ;
-                										
-
-
-                									logger.info("XXXXXXXXXX  Vyrobeno krizeni XXXXXXXXXXXXX");
-
-                								} catch (UnknownManipulationException h) {
-                									logger.error("Error making Junction " + h.toString());
-                								} catch (UnknownError f) {
-                									logger.error("Neznama chyba: " + f.toString());
-                								}
-
-                							}
-                							else {
-                								// if we start wire in the air
-                								//
-                                         //	   Gui.getActiveScenePanel().getActiveManipulation().setActive(false);
-                                        /*	   Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, Gui.getActiveScenePanel().getManipulationQueue(), true);
-                                        	   Gui.getActiveScenePanel().getManipulationQueue().unexecute();*/
-                								
-                							}
-                						//}
-                					}
-                                    
-                                    logger.info("Kliknuto na objekt " + el.getElementType().toString());
-                                    
-                                 // the touched element is pin (or the part?)
-                                	if(el.getElementType() == ElementType.T_WIRE)
-                                	{
-
-                                        try {
-                                         
-                                            Create create2 = (Create) Gui.getActiveScenePanel().getActiveManipulation();
-                                            create2.setFinished(true);
-                                            
-                                            Gui.getActiveScenePanel().tryFinishManipulation(
-                                                                                                    e,
-                                                                                                    r2d,
-                                                                                                    Gui.getActiveScenePanel()
-                                                                                                            .getManipulationQueue(), false);
-                                        } catch (UnknownManipulationException ee) {
-                                            logger.error(ee.getMessage());
-                                        }
-                                        
-                                        
-                                    	Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);
-                                    }
-                                    
-                                	
-                                    
-                                    // check buffer doAfter if we have to create Junction
-                                    if(Gui.getDoAfter()!= null)
-                                      {
-                                    	logger.trace("Let's execute prepared Junction");
-	                                    Gui.getActiveScenePanel().getManipulationQueue().execute(Gui.getDoAfter());
-	                                    // clear buffer to make new Junction next time
-	                                    Gui.clearDoAfter();
-										
-                                      }
-	                                    
-                                } else if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
-                                    JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
-                                    popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
-                                    logger.trace("Show right-click popup and make Junction");
-                                    
-									
-                                    
-                                }
-                                
-                                
-                                
-                                
-                            }
-                            // left mouse button is clicked
-                            else if (e.getButton() == MouseEvent.BUTTON1) {
-                                                        	
-                                   {
-                    
-                              
-                                int l = Gui.getActiveScenePanel().getSceneGraph().getTopNode().getAndRemovePinNodes().size();
-                                                  
-                                
-                                	   
-                                   if (findHitPin(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d))
-                                   	{
-                                	   String volt = ElementPotential.getHitObject().getPinPotential(0);
-                                	  
-                                	   el.setPinPotential(volt);
-                                   	} else {
-                                   		// if during (creation &&  left click) is not found and PIN hit
-                                   		//Gui.getActiveScenePanel().setActiveManipulation(null);
-                                       if(create.getManipulatedGroup().getElementType() == ElementType.T_WIRE)
-                                   		  {
-                                    	   /**
-                                    	    * @author Kájínek
-                                    	    * 
-                                    	    */
-                                    	                                       	   
-                                    	  Gui.getActiveScenePanel().getActiveManipulation().setActive(false);
-                                    //       Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, Gui.getActiveScenePanel().getManipulationQueue(), true);
-                                    	   Gui.getActiveScenePanel().getManipulationQueue().unexecute();
-                                   		  }
-                                    
-                                   		
-                                   		
-                                   	}
-       							logger.info(ElementPotential.Tree(0,""));
-                                   }  //*/
+                            /*
+                             *  this means LEFT CLICK
+                             */
+                            if (e.getButton() == MouseEvent.BUTTON1) {
                             	
-                                Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
+                                {
+                                                     
+                                if (findHitPin(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d))
+                                	{
+                                	// this hits against PIN of the part, make JUNCTION and leave
+                                	logger.info("Zmacknul jsi prvek (mouse Released)" + ElementPotential.getHitObject()); 
+                                	/*
+                                	 * Finish the wire if exists.
+                                	 */
+                                	  if(Gui.getDoAfter()!= null)
+                                      {
+                              		                           		  
+                                    	logger.trace("Let's execute prepared Junction");
+                          //              Gui.getActiveScenePanel().getManipulationQueue().execute(Gui.getDoAfter());
+                                        // clear buffer to make new Junction next time
+                                        Gui.clearDoAfter();
+                                                								
+                                      }                                	  
+                                	
+                                	String volt = "";
                                 
+                                	if(hitPinOrder==0)
+                                		{
+                                		volt = ElementPotential.getHitObject().getPinPotential(0);
+                                		//hitPinOrder = 1;
+                                		}
+                                		else 
+                                			{
+                                	//		ElementPotential.getHitObject().setPinPotential(volt);
+                                		//	hitPinOrder = 0;
+                                			}
+                                	
+                                	// ElementPotential.setHitObject(null);
+                             	   
+                                	/**
+                             	    * TODO hide original pin mark
+                             	    **/
+                                                                	                           	
+                                	
+                                   //if(hitPinOrder==1)
+                                   {
+                                	  logger.info("Rozdil potencialu!");
+	                                  Pin pin = (Pin)  ElementPotential.getHitObject();
+                                	  pin.setVisible(false);
+	                                   pin.setPinPotential(volt);  // */
+                                	  
+	                                   Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true);
+	                                   Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);
+	                                   Gui.getActiveScenePanel().getManipulationQueue().execute(manipulation);
+	                                   
+	                                   Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().clearManipulationCoordinates();
+	                                  
+	                                   //  return;
+                                    } 
+                         //        else {                                	 hitPinOrder = 1;   }
+                                   
+                                   
+                                   
+                       //        	el.setPinPotential(volt);
+                               		                                   
+                                	} else { // means the PIN is not touched -> air or wire //
+                                		{
+                                        	// element has infinite coordinates
+                                            if (create.getPointsLeft() == Element.INFINITE_COORDINATES) {
+                                            	                                            	
+                                            	JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+                                                //popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
+                                                logger.trace("Show right-click popup2");
+                                                
+                                               if (el.getElementType() == ElementType.T_WIRE) {
+                            						    // test, if distance between start of wire and current
+                            						    // pointer position is greater, than 20
+                            						    //	if (p1.distance(p2) > 20) {
+                            							if (findHit(Gui.getActiveScenePanel().getSceneGraph().getTopNode(), r2d)) {
+                            							  
+                            								logger.info("Zmacknul jsi prvek (mouse down)" + ElementPotential.getHitObject());
+                            							
+                            								try {
+                            									JunctionNode point = NodeFactory.createJunctionNode(new Junction());
+                            									GroupNode mess = NodeFactory.createGroupNode();
+                            									ParameterNode option = NodeFactory.createParameterNode();
+                            									
+                            									String volt = ElementPotential.getHitObject().getPinPotential(0);
+                            									
+                            									
+                            									if(ElementPotential.getHitObject().getElementType() == ElementType.T_PART)
+                                								{
+                                									Part maybeGnd = (Part) ElementPotential.getHitObject();
+                                									                         									
+    																if(maybeGnd.getPartProperties().getPartType()==PartType.GROUND_SOURCE)
+                                									volt = "0";	
+                                									
+                                								}
+                                								
+                            									if(volt == "0")
+                            									{
+                            									el.setPinPotential(volt);
+                            									point.getElement().setPinPotential(volt);
+                            									}
+                            									               											
+                            									mess.add(option);
+                            									mess.add(point);
+                            									
+                            									option.setColor(Color.red);
+
+                            									Manipulation newBorn = ManipulationFactory.create(ManipulationType.CREATE, Gui
+                            											.getActiveScenePanel().getSceneGraph().getTopNode(), null, mess);
+                            									       									
+                            									double x;
+                            									double y;
+                            									
+                            									//if the new line is vertical
+                            									// TODO getX() and getY() from Manipulation classes should be private, try to find workaround
+                            									if( manipulation.getX().get(manipulation.getX().size()-1).doubleValue() == manipulation.getX().get(manipulation.getX().size()-2).doubleValue() ) 
+                            									{
+                            										logger.error("vertical line");
+                            										 x =  manipulation.getX().get(manipulation.getX().size()-1).doubleValue();
+                            										 //y =  (r2d.getY() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterY() - r2d.getY());
+                            										 y = ElementPotential.getHitObject().getY().lastElement().doubleValue();
+                            										 //y = getMousePressedPoint().y;
+                            									} else // new line is horizontal 
+                            										{
+                            										logger.error("horizontal line");
+                            										y =  manipulation.getY().get(manipulation.getY().size()-1).doubleValue();
+                            										// x =  (r2d.getX() / Gui.getActiveScenePanel().getZoomFactor()) + (r2d.getCenterX() - r2d.getX());
+                            										x = ElementPotential.getHitObject().getX().lastElement().doubleValue();
+                            										}
+                            										
+                            									
+                            									newBorn.addManipulationCoordinates(
+                            											new Pixel(x),
+                            											new Pixel(y)  );
+
+                            									if(Gui.isDoAfterActive()){
+                            									
+                            										Gui.setDoAfter(newBorn);
+                            										newBorn = null;
+                            										
+                            										}   //** else                   
+                            											if(!el.equals(ElementPotential.getHitObject())){
+                            												
+                            												Gui.getActiveScenePanel().getManipulationQueue().execute(manipulation);
+                            												//Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);
+                            												Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, Gui.getActiveScenePanel().getManipulationQueue(), true);
+                            											}
+                            											
+                            										
+                            								} catch (UnknownManipulationException h) {
+                            									logger.error("Error making Junction " + h.toString());
+                            								} catch (UnknownError f) {
+                            									logger.error("Neznama chyba: " + f.toString());
+                            								}
+
+                            							}
+                            							else {
+                            								// if we click the wire (finish) in the air
+                            								logger.info("hit the air");
+                            								
+                            								if(hitPinOrder==0)
+                            									if(el.getElementType()==ElementType.T_WIRE){
+                            							  
+                            								//		Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);
+                            								//		Gui.getActiveScenePanel().getManipulationQueue().unexecute();
+                            										// ElementPotential.setHitObject(null);
+                            										
+                            									}
+                            								
+                            							}
+                            					
+                            					}
+                                                
+                                                                                            
+                                             /*/ the touched element is pin (or the part?)
+                                            	if      (
+                                            				el.getElementType() == ElementType.T_WIRE
+                                            			)
+                                            	{
+                                            		logger.info("Kliknuto na objekt " + ElementPotential.getHitObject().getElementType().toString());
+                                                    
+                                                     try {
+                                                     
+                                                        Create create2 = (Create) Gui.getActiveScenePanel().getActiveManipulation();
+                                                        create2.setFinished(true);
+                                                        
+                                                        Gui.getActiveScenePanel().tryFinishManipulation(
+                                                                                                                e,
+                                                                                                                r2d,
+                                                                                                                Gui.getActiveScenePanel()
+                                                                                                                        .getManipulationQueue(), false);
+                                                    } catch (UnknownManipulationException ee) {
+                                                        logger.error(ee.getMessage());
+                                                    } 
+                                                    
+                                                     Gui.getActiveScenePanel().getManipulationQueue().getActiveManipulation().setActive(false);  //*/
+                                                }
+                                		//}                                
+                                	   else // means FINITE COORDINATES 
+                                            		if (create.getManipulatedGroup().getElementType() == ElementType.T_BEZIER) {
+			                                                JPopupMenu popup = ScenePanelDrawingPopup.getScenePanelDrawingPopup(e, r2d);
+			                                                popup.show(Gui.getActiveScenePanel(), e.getX(), e.getY());
+			                                                logger.trace("Show right-click popup and make Junction");
+			                                           }
+
+                                        	}  //     if (e.getButton() == MouseEvent.BUTTON3) {
+                                		
+                                		                                		
+                                		// if during (creation &&  left click) is not found and PIN hit
+                                		//Gui.getActiveScenePanel().setActiveManipulation(null);
+                           
+                                	}
+    							logger.info(ElementPotential.Tree(0,""));
+                                }  //*/
+                         	
+                                
+                         //* if((create.getSnapCoordinates().size()<2))
+                //         Gui.getActiveScenePanel().tryFinishManipulation(e, r2d, mq, true); // */
                              
+                          
                             }
+
+                           
                             break;
                         case SELECT:
                         case DELETE:
@@ -432,7 +511,7 @@ public class ScenePanelMouseListener implements MouseListener {
 
 			    // if the name was not set we do it
 			    if(sou.getPartProperties().getProperty("name") == "")
-			    	sou.getPartProperties().setProperty("name", sou.getPartProperties().getPartType() .toString().substring(0,2) +  i);
+			    	sou.getPartProperties().setProperty("name", sou.getPartProperties().getPartType() .toString().substring(0,1) +  i);
 			    	
 			    netListEntry = netListEntry + " " + sou.getPartProperties().getProperty("name");
 			    
@@ -444,7 +523,12 @@ public class ScenePanelMouseListener implements MouseListener {
 			    		if(ElementPotential.getHitObject()!=null)
 			    			{
 			    			soucastka.getPartPins().get(o).getElement().setPinPotential(ElementPotential.getHitObject().getPinPotential(0));
-			    	        }
+			    			// ElementPotential.setHitObject(null);
+			    			
+			    			// Set the GND potential to ZERO
+			    			if(sou.getPartProperties().getPartType()==PartType.GROUND_SOURCE)
+			    				soucastka.getPartPins().get(o).getElement().setPinPotential("0");
+			    			}
 			    			
 			    		m.setPinPotential(soucastka.getPartPins().get(o).getElement().getPinPotential(0));
 			    		ElementPotential.setHitObject(m);
@@ -472,6 +556,7 @@ public class ScenePanelMouseListener implements MouseListener {
 			
 			// if both conditions works
 			if (spojeni) {
+				logger.info("You hit PIN");
 				return true;
 			}
 
@@ -479,6 +564,7 @@ public class ScenePanelMouseListener implements MouseListener {
 			if (spojeni)
 			{
 				//ElementPotential.posledniString = mapleLeaves.get(i).getChildrenElementList().getFirst().getElement().getPinPotential(0);
+				logger.info("You hit PIN.");
 				return true;
 			}
 				
@@ -533,6 +619,7 @@ public class ScenePanelMouseListener implements MouseListener {
 			if (spojeni)
 			{
 				//ElementPotential.posledniString = mapleLeaves.get(i).getChildrenElementList().getFirst().getElement().getPinPotential(0);
+				logger.info("You hit WIRE");
 				return true;
 			}
 				

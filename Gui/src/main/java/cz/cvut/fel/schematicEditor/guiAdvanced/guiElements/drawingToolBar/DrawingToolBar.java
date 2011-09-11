@@ -59,6 +59,7 @@ public final class DrawingToolBar extends JToolBar {
      */
     private ButtonGroup           buttonGroup    = null;
 
+    private static int poradi = 0;
     /**
      * Getter for <code>buttonGroup</code>.
      *
@@ -78,7 +79,8 @@ public final class DrawingToolBar extends JToolBar {
      * @return instance of {@link DrawingToolBar}.
      */
     public static DrawingToolBar getInstance() {
-        if (drawingToolBar == null) {
+        if (drawingToolBar == null)
+        {
             // create drawing tool bar
             drawingToolBar = new DrawingToolBar();
 
@@ -102,8 +104,8 @@ public final class DrawingToolBar extends JToolBar {
           /*  JLabel popisek = new JLabel("-|-");
             drawingToolBar.add(popisek);*/
             
-
-                        
+            if(true){
+            // if(poradi<1){
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.PART_BUTTON_R));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
         
@@ -138,8 +140,8 @@ public final class DrawingToolBar extends JToolBar {
             drawingToolBar.add(skrtatko);
             drawingToolBar.add(cisla);
             drawingToolBar.add(Box.createVerticalStrut(20));
-            
-            /*
+          poradi = 5;
+            } else { // poradi >0
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.LINE_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.BEZIER_CURVE_BUTTON));
@@ -163,7 +165,8 @@ public final class DrawingToolBar extends JToolBar {
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
             drawingToolBar.add(drawingToolBar.getButton(DrawingToolBarResources.JUNCTION_BUTTON));
             bg.add((JToggleButton) drawingToolBar.getComponent(drawingToolBar.getComponentCount() - 1));
-            */
+            // */
+            }
             
         }
         return drawingToolBar;

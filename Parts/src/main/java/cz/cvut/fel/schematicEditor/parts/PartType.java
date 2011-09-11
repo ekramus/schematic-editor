@@ -83,6 +83,10 @@ public enum PartType {
      */
     CURRENT_SOURCE("I", "Current Source"),
     /**
+     * Identifier for current source part.
+     */
+    GROUND_SOURCE("GND", "Ground"),
+    /**
      * Identifier for transformator part.
      */
     TRANSFORMATOR("T", "Transformator");
