@@ -107,7 +107,21 @@ public abstract class Manipulation {
 
         logger.trace("added manipulation coordinates");
     }
+    
+    /**
+     * Add given manipulation coordinates.
+     * 
+     * @param x
+     *            <code>x</code> to add.
+     * @param y
+     *            <code>y</code> to add.
+     */
+    public void clearManipulationCoordinates() {
+        this.x.clear();
+        this.y.clear();
 
+        logger.trace("added manipulation coordinates");
+    }
     /**
      * @return the manipulatedGroup
      */

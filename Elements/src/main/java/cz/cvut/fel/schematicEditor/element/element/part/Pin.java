@@ -97,5 +97,18 @@ public class Pin extends Element {
         return "PIN";
     }
     
+    /**
+     * Visibility of red PIN mark
+     * @param visible
+     */
+    private boolean visible = true;
+    
+    public void setVisible (boolean sv){
+    	this.visible = sv;
+    }
+    
+    public boolean getVisible (){
+    	return this.visible;
+    }
     
 }

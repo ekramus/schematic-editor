@@ -2,16 +2,17 @@ package cz.cvut.fel.schematicEditor.element;
 
 import java.util.Stack;
 
+import org.apache.log4j.Logger;
+
 import cz.cvut.fel.schematicEditor.element.element.Element;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 
 
 /**
- * 
- * @author Karel
- * 
  * The class concepted as static in GUI,
  * gives unique potential information
  * in system or readable format
+ * @author Karel
  * 
  */
 
@@ -79,7 +80,7 @@ public class ElementPotential {
 		
 		if(lineOfIDs.size()==0)
 			{
-			lineOfNos.add(1);
+			lineOfNos.add(0);
 			//lineOfIDs.add(ID);
 			//lineOfNames.add("");
 			}
@@ -116,12 +117,16 @@ public class ElementPotential {
 	
 	public static Element getHitObject()
 	{
+		if(touchedObject== null)
+			return new Pin();
+		else 
 		return touchedObject;
 	}
 	
 	public static void setHitObject(Element object)
 	{
 		touchedObject = object;
+		Logger.getRootLogger().info("setHit was set to " + object.toString() + "with potencial =" + object.getPinPotential(0));
 	}
 	
 	public static void resetTree(){

@@ -12,9 +12,11 @@ import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
+import cz.cvut.fel.schematicEditor.element.ElementPotential;
 import cz.cvut.fel.schematicEditor.element.ElementType;
 import cz.cvut.fel.schematicEditor.element.element.Element;
 import cz.cvut.fel.schematicEditor.element.element.part.Junction;
+import cz.cvut.fel.schematicEditor.element.element.part.Pin;
 import cz.cvut.fel.schematicEditor.graphNode.GroupNode;
 import cz.cvut.fel.schematicEditor.graphNode.JunctionNode;
 import cz.cvut.fel.schematicEditor.graphNode.NodeFactory;
@@ -82,6 +84,12 @@ public class ScenePanelMouseMotionListener implements MouseMotionListener {
 				} else {
 					snap = Snap.getSnap(up, m.getSnapCoordinates());
 				}
+			/*	if(m.getManipulatedGroup().getElementType() == ElementType.T_WIRE)
+				{
+					if(ElementPotential.getHitObject().getElementType()== ElementType.T_PIN)
+						m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
+					
+				} else  */
 				m.replaceLastManipulationCoordinates(snap.getUnitX(), snap.getUnitY());
 
 				// repaint scene, it is much faster than full scene invalidate
